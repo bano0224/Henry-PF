@@ -12,6 +12,7 @@ export default function NavBar() {
           <NavLink className={s.text} exact to="/CATEGORIAS">
             CATEGORIAS
           </NavLink>
+          
           <NavLink className={s.text} exact to="/OFERTAS">
             OFERTAS
           </NavLink>
@@ -19,9 +20,7 @@ export default function NavBar() {
             LOGIN
           </NavLink>
         </li>
-        <li>
-          {/* <Search /> */}
-        </li>
+        <li>{/* <Search /> */}</li>
       </ul>
     </div>
   );
