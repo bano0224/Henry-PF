@@ -1,11 +1,10 @@
-import React from 'react';
-import NavBar from '../NavBar/NavBar';
+import React from "react";
+import NavBar from "../NavBar/NavBar";
 // import { NavLink } from 'react-router-dom';
 // import {Link } from 'react-router-dom';
 import s from "./Home.module.css";
 
-function Home() {
-    
+function Home() { 
     return (
         <div className= {s.body3}>
            <NavBar/>
@@ -15,4 +14,4 @@ function Home() {
     )
 }
 
-export default Home
+export default Home;

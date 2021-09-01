@@ -1,4 +1,8 @@
 .body3 {
+  display: flex;
+  position: relative;
+  flex-wrap: nowrap;
+  align-content: center;
   overflow: hidden;
   background-color: rgba(236, 236, 236, 0.45);
   text-align: center;
