@@ -19,7 +19,6 @@
  .text {
     color: rgb(0, 0, 0);
     text-shadow: rgb(66, 233, 36);
-    
     align-items: center;
     justify-content: center;
     display:inline-flex;
@@ -36,7 +35,7 @@
     font-size: 20px;
     cursor: pointer;
     background-color: var(list-style-type);
-    box-shadow: 15px 6px 25px 10px rgb(8, 8, 8);
+    box-shadow: 15px 6px 25px 10px rgb(255, 255, 255);
     
  }
  .button:hover{
