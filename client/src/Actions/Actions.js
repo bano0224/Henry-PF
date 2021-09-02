@@ -10,6 +10,12 @@ export function postProduct(payload) {
         }
     }
 }
+//-----PRODUCT DETAIL-----
+export function getDetail(id){
+    return function () {
+        
+    };
+}
 
 //----------CREATE PRODUCT---------//
 export const POST_PRODUCT = 'POST_PRODUCT';
