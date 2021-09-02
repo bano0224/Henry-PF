@@ -21,9 +21,10 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
-    category:[{
+    category:[ {
         type: Schema.ObjectId, 
-        ref: "Category"
+        ref: "Category",
+        required: true
     }],
     featured: {
         type: Boolean,
@@ -32,7 +33,7 @@ const productSchema = new Schema({
     discount: {
         type: Number,
         default: 0,
-        /* required: false */
+        required: false
     }
 })
 

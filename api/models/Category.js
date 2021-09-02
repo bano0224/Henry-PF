@@ -7,14 +7,16 @@ const categorySchema = new Schema({
     },
     description: {
         type: String,
+        required: true
     },
     image: {
-        type: String
+        type: String,
+        required: true
     },
-    products:[{
+    product:[ {
         type: Schema.ObjectId, 
-        ref: "Product"
-    }]
+        ref: "Product",
+    }],
 })
 
 module.exports = model('Category', categorySchema);

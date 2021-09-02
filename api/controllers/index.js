@@ -4,16 +4,16 @@ const Category = require('../models/Category.js')
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
-  try { 
+  try {
     if(name) {
-      let productFind = await Product.find({'name': { $regex: name, $options:'i' }}).populate('category', {name:1, _id:0});
+      let productFind = await Product.find({'name': { $regex: name, $options:'i' }}).populate('category', {name:1});
       if(productFind.length) {
           res.status(200).json(productFind)
       } else {
           res.status(400).send('No se encontró el producto solicitado')
       }
     } else {
-      await Product.find({}).populate('category', { name: 1 })
+      const productFind = await Product.find({}).populate('category', { name: 1 })
       res.status(200).json(productFind)
     }
   } catch (err) {
@@ -80,6 +80,41 @@ const removeProduct = async (req, res) => {
   }
 }
 
+const updateProduct = async (req, res) => {
+  try {
+    if(req.body.id) {
+      await Product.findByIdAndUpdate(req.body.id, {
+        name: req.body.name, 
+        price: req.body.price,
+        description: req.body.description,
+        countInStock: req.body.countInStock,
+        imageUrl: req.body.imageUrl,
+        featured: req.body.featured,
+        discount: req.body.discount,
+        // category: [...category,req.body.category]
+        category: modifiedCategory(req.body.id, req.body.category)
+      })
+      res.status(200).send('El producto fue actualizado')
+    } else {
+      res.status(404).send('El producto no fue encontrado')
+    }
+  } catch (err) {
+    return err
+  }
+}
+
+const modifiedCategory= (idProducto, idCategory) => {
+  const product = Product.findById({idProducto}).stringify()
+  const category = product.category
+
+  console.log(product.name)
+
+  category.includes(idCategory)
+  ? category
+  : category.push(idCategory)
+}
+
+
 const getCategory = async (req, res) => {
   const { category } = req.query 
   try {
@@ -131,7 +166,7 @@ const updateCategory = async (req, res) => {
   const { id } = req.params
   try {
     if(id){
-      let updateCategory = await Category.updateOne({id})
+      await Category.updateOne({id})
       res.status(200).send('La categoría ha sido actualizada')
     } else {
       res.status(404).send('La categoría ingresada no existe')
@@ -150,7 +185,8 @@ module.exports = {
     getCategory, 
     createCategory,
     deleteCategory,
-    updateCategory
+    updateCategory,
+    updateProduct
 }
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */
