@@ -14,7 +14,7 @@ function CreateProduct() {
     imageUrl: "",
   });
   const handleChange = (e) => {
-      if (e.target.parentNode.parentNode.id === "category") {
+    if (e.target.parentNode.parentNode.id === "category") {
       if (e.target.checked) {
         setForm((prevState) => ({
           ...prevState,
@@ -126,7 +126,10 @@ function CreateProduct() {
               </div>
               <div className={s.divcategory}>
                 <label htmlFor="dairy products">Dairy products</label>
-                <input name="dairy products" type="checkbox" id="dairy products"
+                <input
+                  name="dairy products"
+                  type="checkbox"
+                  id="dairy products"
                 />
               </div>
               <div className={s.divcategory}>

@@ -1,11 +1,11 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require("mongoose");
 
 const orderSchema = new Schema({
-    status: {
-        enum: ['approved', 'canceled', 'pending', 'cart', 'created'],
-        default: 'cart',
-        required: true
-    }
-})
+  status: {
+    enum: ["approved", "canceled", "pending", "cart", "created"],
+    default: "cart",
+    required: true,
+  },
+});
 
-module.exports = model('Order', orderSchema);
+module.exports = model("Order", orderSchema);
