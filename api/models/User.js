@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose')
+const { Schema, model } = require('mongoose')
+const bcrypt = require('bcrypt')
 
 const userSchema = new Schema({
     email: {
@@ -9,7 +10,7 @@ const userSchema = new Schema({
     password: {
         type: String,
     },
-    firts_name: {
+    first_name: {
         type: String,
         require: true
     },
@@ -25,11 +26,10 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
-    user_role: {
-        enum: ['admin', 'user'],
-        default: 'user',
-        required: true
-    },
+    // user_role: {
+    //     enum: ['admin', 'user'],
+    //     required: true
+    // },
     address_line1:{
         type: String
     },
@@ -47,33 +47,23 @@ const userSchema = new Schema({
     },
     country:{
         type: String
+    },
+    email_notification:{
+        type: Boolean
+    },
+    verifyCode:{
+        type: Number
     }
-
 })
 
-module.exports = userSchema;
+userSchema.method.encryptPass = async password => {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
+}
 
-// billing_addres:{
-//     type:STRING
-// },
-// email_notification:{
-//     type:BOOLEAN
-// },
-// verifyCode:{
-//     type: BIGINT
-// },
-// verifyCodeExpireDate:{
-//     type: DATE
-// },
-// force_password:{
-//     type: ENUM("sin pedir","pendiente","hecho"),
-//     defaultValue: "sin pedir"
-// },
-// salt:{
-//     type: STRING,
-//     get() {
-//         return() => this.getDataValue('salt')
-//     }
-// }
+userSchema.method.matchPass = async function (password){
+    return await bcrypt.compare(password, this.password)
+}
 
-//https://stackoverflow.com/questions/14588032/mongoose-password-hashing
+module.exports = model('User', userSchema);
+
