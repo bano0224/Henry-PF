@@ -1,7 +1,8 @@
 const { Router } = require('express')
-const { getCategory } = require('../controllers/index.js')
+const { getCategory, createCategory } = require('../controllers/index.js')
 const server = Router();
 
-/* server.get('/', )
+server.get('/', getCategory)
+server.post('/create', createCategory)
 
-module.exports = server; */
+module.exports = server;

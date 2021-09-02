@@ -1,5 +1,6 @@
 const Product = require('../models/Product.js')
 const User = require('../models/User.js')
+const Category = require('../models/Category.js')
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
@@ -58,20 +59,21 @@ const getUsers = async (req, res) => {
     }
 }
 
-// const removeProduct = async (req, res) => {
-//   const { id } = req.body;
-//   try {
-//     const remove = await Product.
-//   } catch (error) {
-    
-//   }
-// }
+const removeProduct = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Product.findByIdAndDelete(id)
+    res.send('Producto eliminado')
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 const getCategory = async (req, res) => {
   const { category } = req.query 
   try {
       if(category) {
-        let categoryFind = await Category.find({'category': { $regex: category, $options:'i' }});
+        let categoryFind = await Category.find({'category': { $regex: name, $options:'i' }});
         if(categoryFind.length) {
         res.status(200).json(categoryFind)
       } else {
@@ -86,14 +88,28 @@ const getCategory = async (req, res) => {
   }
 }
 
-
+const createCategory = async (req, res) => {
+  const { name } = req.body
+  try {
+    let categoryFind = await Category.findOne({name})
+    if(categoryFind !== null) {res.status(200).json({msg: 'La categoría ya existe'})}
+    else {
+      await Category.insertMany({"name":`${name}`})
+      res.status(200).json("Su categoría ha sido creada");
+    }
+  } catch(err) {
+    return err
+  }
+}
 
 module.exports = {
     getProducts,
     createProduct,
     getProductsById,
     getUsers,
-    // removeProduct
+    removeProduct,
+    getCategory,
+    createCategory
 }
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

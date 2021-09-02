@@ -21,6 +21,9 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
+    category:{
+        type: Schema.ObjectId, ref: "Category" 
+    },
     featured: {
         type: Boolean,
         default: false
