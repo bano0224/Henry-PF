@@ -10,7 +10,11 @@ const categorySchema = new Schema({
     },
     image: {
         type: String
-    }
+    },
+    products:[{
+        type: Schema.ObjectId, 
+        ref: "Product"
+    }]
 })
 
 module.exports = model('Category', categorySchema);

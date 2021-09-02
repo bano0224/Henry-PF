@@ -6,14 +6,14 @@ const getProducts = async (req, res, next) => {
   const { name } = req.query;
   try { 
     if(name) {
-      let productFind = await Product.find({'name': { $regex: name, $options:'i' }})
+      let productFind = await Product.find({'name': { $regex: name, $options:'i' }}).populate('category', {name:1, _id:0});
       if(productFind.length) {
-          res.status(200).json(productFind);
+          res.status(200).json(productFind)
       } else {
           res.status(400).send('No se encontró el producto solicitado')
-      } 
+      }
     } else {
-      let productFind = await Product.find();
+      await Product.find({}).populate('category', { name: 1 })
       res.status(200).json(productFind)
     }
   } catch (err) {
@@ -29,6 +29,17 @@ const createProduct = async (req, res) => {
       return err
   }
 };
+
+//PRUEBA JOIN
+// const createProduct = async (req, res) => {
+//     try {
+//       console.log('entre')
+//         await Product.create(req.body)
+//         res.status(200).json("productos creados ok");
+//     } catch (err) {
+//         return err
+//     }
+//   };
 
 const getProductsById = async (req, res) => {
     const { id } = req.params;
@@ -94,7 +105,7 @@ const createCategory = async (req, res) => {
     let categoryFind = await Category.findOne({name})
     if(categoryFind !== null) {res.status(200).json({msg: 'La categoría ya existe'})}
     else {
-      await Category.insertMany({"name":`${name}`})
+      await Category.insertMany({"name":`${name}`}) //Agregar descripcion e imagen
       res.status(200).json("Su categoría ha sido creada");
     }
   } catch(err) {
@@ -102,14 +113,44 @@ const createCategory = async (req, res) => {
   }
 }
 
+const deleteCategory = async (req, res) => {
+  const { id } = req.params
+  try {
+    if(id) {
+      await Category.findByIdAndDelete({id})
+      res.status(200).send('La categoría ha sido eliminada')
+    } else {
+      res.send('La categoría ingresada no existe')
+    }
+  } catch(err) {
+    return err
+  }
+};
+
+const updateCategory = async (req, res) => {
+  const { id } = req.params
+  try {
+    if(id){
+      let updateCategory = await Category.updateOne({id})
+      res.status(200).send('La categoría ha sido actualizada')
+    } else {
+      res.status(404).send('La categoría ingresada no existe')
+    }
+  } catch(err) {
+    return err
+  }
+};
+
 module.exports = {
     getProducts,
     createProduct,
     getProductsById,
     getUsers,
     removeProduct,
-    getCategory,
-    createCategory
+    getCategory, 
+    createCategory,
+    deleteCategory,
+    updateCategory
 }
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

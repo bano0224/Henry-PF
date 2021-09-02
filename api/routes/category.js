@@ -1,8 +1,10 @@
 const { Router } = require('express')
-const { getCategory, createCategory } = require('../controllers/index.js')
+const { getCategory, createCategory, deleteCategory, updateCategory } = require('../controllers/index.js')
 const server = Router();
 
 server.get('/', getCategory)
 server.post('/create', createCategory)
+server.delete('/delete', deleteCategory)
+server.put('/update', updateCategory)
 
-module.exports = server;
+module.exports = server; 
