@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import s from "./CreateProduct.module.css";
 import NavBar from "../NavBar/NavBar";
-import axios from "axios";
+// import axios from "axios";
+import createProduct from "../../actions/createProduct";
+
 //--FUNCTION CREATE PRODUCT--//
-function CreateProduct() {
-  const [errors, setErrors] = useState({ form: "complete form" });
+function FormCreate(props) {
+  const [errors, setErrors] = useState({ description: "" });
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -59,7 +61,7 @@ function CreateProduct() {
     }
     if (!form.imageUrl) {
       errors.imageUrl = "URL is required";
-    } else if (!/^[1-1000]$/.test(form.imageUrl)) {
+    } else if (!/^[1-10000]$/.test(form.imageUrl)) {
       errors.imageUrl = "Enter a link of an image";
     }
     return errors;
@@ -73,8 +75,8 @@ function CreateProduct() {
     if (Object.values(errors).length || checkboxsErrors.length) {
       return alert(Object.values(errors).concat(checkboxsErrors).join("\n"));
     }
-    await axios.post("", form);
-    alert(`${form.name}The product created`);
+    props.createProduct(form);
+    alert(`${form.name}Product created`);
   };
   return (
     <div className={s.createproduct}>
@@ -108,12 +110,11 @@ function CreateProduct() {
             <br />
             <input
               name="imageUrl"
-              imgsrc= {""}
+              imgsrc=""
               className={errors.imageUrl && s.error}
               placeholder="URL image"
               type="tel"
               id="imageUrl"
-              
             />
             <br />
             <label htmlFor="price">Price: </label>
@@ -153,17 +154,8 @@ function CreateProduct() {
                 <label htmlFor="cleaning">Cleaning</label>
                 <input name="cleaning" type="checkbox" id="cleaning" />
               </div>
+              <br />
 
-              <br />
-              <label htmlFor="date">Expiration</label>
-              <br />
-              <input
-                name="releaseDate"
-                className={errors.releaseDate && s.error}
-                type="date"
-                id="date"
-                required
-              />
               <br />
             </div>
             <br />
@@ -176,4 +168,4 @@ function CreateProduct() {
     </div>
   );
 }
-export default CreateProduct;
+export default FormCreate;
