@@ -56,7 +56,11 @@ export default function ProductCard(name, image, description, price) {
             variant="h5"
             color="textSecondary"
           >
+<<<<<<< HEAD
             {price}
+=======
+            {"$ 129.50"}
+>>>>>>> Dev
           </Typography>
         }
         name={name}
@@ -69,7 +73,12 @@ export default function ProductCard(name, image, description, price) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
+<<<<<<< HEAD
           {description}
+=======
+          Crema liviana UAT. Libre de gluten. No es para batir. Con un contenido
+          graso min. del 12%.
+>>>>>>> Dev
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
