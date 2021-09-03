@@ -1,14 +1,14 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require("mongoose");
 
 const orderLineSchema = new Schema({
-    price:{
-        type: Number,
-        required: true
-    },
-    quantity: {
-        type: Number,
-        required: true
-    }
-})
+  price: {
+    type: Number,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+});
 
-module.exports = model('OrderLine', orderLineSchema);
+module.exports = model("OrderLine", orderLineSchema);
