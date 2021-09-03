@@ -108,11 +108,12 @@ function CreateProduct() {
             <br />
             <input
               name="imageUrl"
+              imgsrc= {""}
               className={errors.imageUrl && s.error}
               placeholder="URL image"
               type="tel"
               id="imageUrl"
-              maxLength=""
+              
             />
             <br />
             <label htmlFor="price">Price: </label>
