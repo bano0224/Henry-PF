@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default function getProducts() {
   return async function (dispatch) {
-    await axios.get(URL_PRODUCTS).the((res) => {
+    await axios.get(URL_PRODUCTS).then((res) => {
       dispatch({ type: GET_PRODUCTS, payload: res.data });
     });
   };
