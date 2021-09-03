@@ -1,4 +1,5 @@
-import { CREATE_PRODUCT, GET_PRODUCTS, GET_PRODUCT_BY_ID, DELETE_PRODUCT } from "../actions";
+import { CREATE_PRODUCT, GET_PRODUCT_BY_ID, DELETE_PRODUCT } from "../actions";
+import { GET_PRODUCTS } from '../actions/getProducts'
 
 const initialState = {
   products: [],
@@ -14,6 +15,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCTS:
+      console.log('REDUCERRRR')
       return {
         ...state,
         products: action.payload,

@@ -1,11 +1,27 @@
-import { GET_PRODUCTS } from "./index";
 import { URL_PRODUCTS } from "../utils/utils";
 import axios from "axios";
 
-export default function getProducts() {
-  return async function (dispatch) {
-    await axios.get(URL_PRODUCTS).then((res) => {
-      dispatch({ type: GET_PRODUCTS, payload: res.data });
-    });
-  };
+
+export const GET_PRODUCTS = "GET_PRODUCTS"
+
+  export default function getProducts(){
+    try {
+      return async function (dispatch) {
+        await axios.get(URL_PRODUCTS)
+        .then(res => {
+          dispatch({ type: GET_PRODUCTS, payload: res.data });
+        })
+        };
+    } catch(error) {
+      console.log('error')
+    }
 }
+
+const config = {
+  headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+  },
+};
+  
+

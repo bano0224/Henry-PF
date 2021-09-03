@@ -7,6 +7,7 @@ import {
     CCardHeader,
     CCol,
     CCollapse,
+    CContainer,
     CDropdownItem,
     CDropdownMenu,
     CDropdownToggle,
@@ -33,7 +34,7 @@ import {
   } from '@coreui/react'
 // import { DocsLink } from 'src/reusable'
 
-export function Admindashboard(props) {
+export default function Admindashboard(props) {
 
     return (
         <CContainer>

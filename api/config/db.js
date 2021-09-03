@@ -6,7 +6,7 @@ const { MONGO_URI } = process.env;
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI, {
+    await mongoose.connect("mongodb://127.0.0.1:27017/supermarketdb", {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
