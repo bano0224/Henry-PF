@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const orderSchema = new Schema({
     status: {
@@ -8,4 +8,4 @@ const orderSchema = new Schema({
     }
 })
 
-module.exports = orderSchema;
+module.exports = model('Order', orderSchema);

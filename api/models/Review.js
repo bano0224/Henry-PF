@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const reviewSchema = new Schema({
     rating: {
@@ -11,4 +11,4 @@ const reviewSchema = new Schema({
     }
 })
 
-module.exports = reviewSchema;
+module.exports = model('Review', reviewSchema);

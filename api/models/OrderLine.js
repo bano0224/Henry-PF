@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const orderLineSchema = new Schema({
     price:{
@@ -11,4 +11,4 @@ const orderLineSchema = new Schema({
     }
 })
 
-module.exports = orderLineSchema;
+module.exports = model('OrderLine', orderLineSchema);
