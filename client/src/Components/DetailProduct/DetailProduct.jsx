@@ -7,7 +7,6 @@
 // function DetailProduct() {
 //   const { id } = useParams();
 //   const dispatch = useDispatch();
-
 //   useEffect(() => {
 //     dispatch(id); //  pasar la action (Detail)
 //     // eslint-disable-next-line react-hooks/exhaustive-deps
