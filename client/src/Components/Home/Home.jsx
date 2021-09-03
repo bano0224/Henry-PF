@@ -2,6 +2,9 @@ import React from "react";
 import NavBar from "../NavBar/NavBar";
 import s from "./Home.module.css";
 import Cards from "../Cards/Cards";
+// import Pagination from '../pagination/Pagination';
+
+
 
 function Home() {
   return (

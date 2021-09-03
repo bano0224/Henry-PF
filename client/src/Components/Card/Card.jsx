@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductCard() {
+export default function ProductCard(name, image, description, price) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -56,21 +56,20 @@ export default function ProductCard() {
             variant="h5"
             color="textSecondary"
           >
-            {"$ 129.50"}
+            {price}
           </Typography>
         }
-        title="Crema De Leche Liviana La Serenisima"
-        subheader="5 in stock "
+        name={name}
+        
       />
       <CardMedia
         className={classes.media}
-        image="https://jumboargentina.vteximg.com.br/arquivos/ids/639684-1000-1000/Crema-Ls-Uat-Liviana-Fort-C-vitam-Tetratop-20-1-869688.jpg?v=637552632837430000"
-        title="Crema de leche"
+        image={image}
+        name={name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Crema liviana UAT. Libre de gluten. No es para batir. Con un contenido
-          graso min. del 12%.
+          {description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

@@ -1,4 +1,4 @@
-import { POST_PRODUCT, GET_PRODUCTS, GET_PRODUCT_BY_ID, DELETE_PRODUCT } from "../Actions/Actions";
+import { CREATE_PRODUCT, GET_PRODUCTS, GET_PRODUCT_BY_ID, DELETE_PRODUCT } from "../actions";
 
 const initialState = {
   products: [],
@@ -8,7 +8,7 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case POST_PRODUCT:
+    case CREATE_PRODUCT:
       return {
         ...state,
       };

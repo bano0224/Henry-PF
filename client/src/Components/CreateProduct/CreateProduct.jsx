@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux';
 import s from "./CreateProduct.module.css";
 import NavBar from "../NavBar/NavBar";
 // import axios from "axios";
@@ -71,7 +72,7 @@ function FormCreate(props) {
     e.preventDefault();
     validate(form);
     let checkboxsErrors = [];
-    if (form.platforms.length < 1) checkboxsErrors.push("Category is required");
+    if (form.price.length < 1) checkboxsErrors.push("Category is required");
     if (Object.values(errors).length || checkboxsErrors.length) {
       return alert(Object.values(errors).concat(checkboxsErrors).join("\n"));
     }
@@ -168,4 +169,4 @@ function FormCreate(props) {
     </div>
   );
 }
-export default FormCreate;
+export default connect(null, {createProduct})(FormCreate);

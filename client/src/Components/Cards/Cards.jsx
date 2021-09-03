@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import getProducts from "../../actions/getProducts";
+import { Link } from 'react-router-dom';
 import Card from "../Card/Card";
+import style from './Cards.module.css'
 
-const allProducts = useSelector((state) => state.products);
-const dispatch = useDispatch();
+
 
 export default function Cards() {
+    const allProducts = useSelector((state) => state.products);
+const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getProducts);
   }, [dispatch]);
