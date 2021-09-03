@@ -6,11 +6,10 @@ import NavBar from "../NavBar/NavBar";
 export default function LandingPage() {
   return (
     <div className={style.s}>
-      <NavBar/>
+      <NavBar />
       <h2 className={style.text}>Welcome the Supermarket Henry</h2>
       <div className={style.setdirection}>
-        <Link to='/home'>
-          
+        <Link to="/home">
           <button className={style.button}>GO SHOPPING</button>
         </Link>
       </div>

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux';
 import s from "./CreateProduct.module.css";
 import NavBar from "../NavBar/NavBar";
-import axios from "axios";
+// import axios from "axios";
+import createProduct from "../../actions/createProduct";
+
 //--FUNCTION CREATE PRODUCT--//
-function CreateProduct() {
-  const [errors, setErrors] = useState({ form: "complete form" });
+function FormCreate(props) {
+  const [errors, setErrors] = useState({ description: "" });
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -14,7 +17,7 @@ function CreateProduct() {
     imageUrl: "",
   });
   const handleChange = (e) => {
-      if (e.target.parentNode.parentNode.id === "category") {
+    if (e.target.parentNode.parentNode.id === "category") {
       if (e.target.checked) {
         setForm((prevState) => ({
           ...prevState,
@@ -57,6 +60,11 @@ function CreateProduct() {
     } else if (!/^[1-1000]$/.test(form.price)) {
       errors.price = "Price must be between 1 and 1000";
     }
+    if (!form.imageUrl) {
+      errors.imageUrl = "URL is required";
+    } else if (!/^[1-10000]$/.test(form.imageUrl)) {
+      errors.imageUrl = "Enter a link of an image";
+    }
     return errors;
   };
 
@@ -64,12 +72,12 @@ function CreateProduct() {
     e.preventDefault();
     validate(form);
     let checkboxsErrors = [];
-    if (form.platforms.length < 1) checkboxsErrors.push("Category is required");
+    if (form.price.length < 1) checkboxsErrors.push("Category is required");
     if (Object.values(errors).length || checkboxsErrors.length) {
       return alert(Object.values(errors).concat(checkboxsErrors).join("\n"));
     }
-    await axios.post("", form);
-    alert(`${form.name}The product created`);
+    props.createProduct(form);
+    alert(`${form.name}Product created`);
   };
   return (
     <div className={s.createproduct}>
@@ -99,11 +107,22 @@ function CreateProduct() {
               rows="3"
             />
             <br />
+            <label htmlFor="imageUrl">Image Product: </label>
+            <br />
+            <input
+              name="imageUrl"
+              imgsrc=""
+              className={errors.imageUrl && s.error}
+              placeholder="URL image"
+              type="tel"
+              id="imageUrl"
+            />
+            <br />
             <label htmlFor="price">Price: </label>
             <br />
             <input
               name="price"
-              className={errors.rating && s.error}
+              className={errors.price && s.error}
               placeholder="Rate from 1 to 1000"
               type="tel"
               id="price"
@@ -126,24 +145,18 @@ function CreateProduct() {
               </div>
               <div className={s.divcategory}>
                 <label htmlFor="dairy products">Dairy products</label>
-                <input name="dairy products" type="checkbox" id="dairy products"
+                <input
+                  name="dairy products"
+                  type="checkbox"
+                  id="dairy products"
                 />
               </div>
               <div className={s.divcategory}>
                 <label htmlFor="cleaning">Cleaning</label>
                 <input name="cleaning" type="checkbox" id="cleaning" />
               </div>
+              <br />
 
-              <br />
-              <label htmlFor="date">Expiration</label>
-              <br />
-              <input
-                name="releaseDate"
-                className={errors.releaseDate && s.error}
-                type="date"
-                id="date"
-                required
-              />
               <br />
             </div>
             <br />
@@ -156,4 +169,4 @@ function CreateProduct() {
     </div>
   );
 }
-export default CreateProduct;
+export default connect(null, {createProduct})(FormCreate);
