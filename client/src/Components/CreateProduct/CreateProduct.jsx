@@ -57,6 +57,11 @@ function CreateProduct() {
     } else if (!/^[1-1000]$/.test(form.price)) {
       errors.price = "Price must be between 1 and 1000";
     }
+    if (!form.imageUrl) {
+      errors.imageUrl = "URL is required";
+    } else if (!/^[1-1000]$/.test(form.imageUrl)) {
+      errors.imageUrl = "Enter a link of an image";
+    }
     return errors;
   };
 
@@ -99,11 +104,22 @@ function CreateProduct() {
               rows="3"
             />
             <br />
+            <label htmlFor="imageUrl">Image Product: </label>
+            <br />
+            <input
+              name="imageUrl"
+              className={errors.imageUrl && s.error}
+              placeholder="URL image"
+              type="tel"
+              id="imageUrl"
+              maxLength=""
+            />
+            <br />
             <label htmlFor="price">Price: </label>
             <br />
             <input
               name="price"
-              className={errors.rating && s.error}
+              className={errors.price && s.error}
               placeholder="Rate from 1 to 1000"
               type="tel"
               id="price"
