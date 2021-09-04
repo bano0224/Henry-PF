@@ -5,20 +5,8 @@ import { Link } from "react-router-dom";
 import Card from "../Card/Card";
 import style from "./Cards.module.css";
 
-
-export default function Cards() {
-  const allProducts = useSelector((state) => state.products);
+export default function Cards({currentProducts}) {
   const dispatch = useDispatch();
-  
-  const [currentPage, setCurrentPage]= useState(1)
-  const [productsPerPage, setProductsPerPage]= useState(9)
-  const lastIndex= currentPage * productsPerPage
-  const firstIndex= lastIndex - productsPerPage
-
-  var currentProducts= allProducts.slice(firstIndex, lastIndex)
-  const paginate= (pageNumber)=>{
-    setCurrentPage(pageNumber)
-  }
 
   useEffect(() => {
     dispatch(getProducts());
@@ -34,7 +22,7 @@ export default function Cards() {
                 name={product.name}
                 image={product.imageUrl}
                 description={product.description}
-                price={product.price}
+                price= {product.price}
               />
             }
           </div>
