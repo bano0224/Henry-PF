@@ -21,6 +21,7 @@ app.use((err, req, res, next) => {
   res.status(status).send(message);
 });
 
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:5000'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');

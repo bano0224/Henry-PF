@@ -1,27 +1,23 @@
-import React, { useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import {connect} from 'react-redux';
+import React from "react";
 import NavBar from "../NavBar/NavBar";
 import s from "./Home.module.css";
 import Cards from "../Cards/Cards";
-import getProducts from "../../actions/getProducts";
-import Paginado from '../Pagination/Pagination';
-
-
+import Pagination from "../Pagination/Pagination";
+import Footer from '../Footer/Footer'
 
 export default function Home() {
   return (
     <div className={s.body3}>
-      
-      <NavBar />
-      <Cards />
-      <div>
-      
-        <h1> Hello Home InProgress</h1>
+      <div className={s.navBar}>
+        <NavBar />
       </div>
-      <p>Aca van los productos</p>
+      <div className={s.bodyCards}>
+        <Cards />
+      </div>
+      <div>
+        <Pagination />
+      </div>
+      <Footer/>
     </div>
   );
 }
-
-

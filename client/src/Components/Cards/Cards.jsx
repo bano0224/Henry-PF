@@ -1,20 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import getProducts from "../../actions/getProducts";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
 import style from "./Cards.module.css";
 
+
 export default function Cards() {
   const allProducts = useSelector((state) => state.products);
   const dispatch = useDispatch();
   
-  // const [currentPage, setCurrentPage]= useState(1)
-  // const [productsPerPage, setProductsPerPage]= useState(9)
-  // const lastIndex= currentPage * productsPerPage
-  // const firstIndex= lastIndex - productsPerPage
+  const [currentPage, setCurrentPage]= useState(1)
+  const [productsPerPage, setProductsPerPage]= useState(9)
+  const lastIndex= currentPage * productsPerPage
+  const firstIndex= lastIndex - productsPerPage
 
-  // var currentProducts= allProducts.slice(firstIndex, lastIndex)
+  var currentProducts= allProducts.slice(firstIndex, lastIndex)
+  const paginate= (pageNumber)=>{
+    setCurrentPage(pageNumber)
+  }
 
   useEffect(() => {
     dispatch(getProducts());
@@ -22,7 +26,7 @@ export default function Cards() {
 
   return (
     <div className={style.cardsContainer}>
-      {allProducts?.map((product, index) => (
+      {currentProducts?.map((product, index) => (
         <Link>
           <div key={index}>
             {

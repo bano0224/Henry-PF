@@ -1,11 +1,13 @@
-import { CREATE_PRODUCT, GET_PRODUCT_BY_ID, DELETE_PRODUCT } from "../actions";
+import { CREATE_PRODUCT, GET_PRODUCT_BY_ID, DELETE_PRODUCT, FILTER_BY_CATEGORY, CREATE_CATEGORY, GET_CATEGORIES } from "../actions";
 import { GET_PRODUCTS } from '../actions/getProducts'
 
 const initialState = {
   products: [],
   clearProducts: [],
-  productDetail: []
+  productDetail: [],
+  categories: []
 };
+
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -33,9 +35,37 @@ function rootReducer(state = initialState, action) {
             ...state,
             clearProducts: deleteProduct
         };
+        case FILTER_BY_CATEGORY: {
+          let array = [];
+          for (let i = 0; i < state.categories.length; i++) {
+            const category = state.categories[i];
+            for (let j = 0; j < state.products.category.length; j++) {
+              const id = state.products.category[j].id;
+              if (id === action.payload) {
+                array.push(category);
+              }
+            }
+          }
+          return {
+            ...state,
+            categpries: [...array],
+          };
+        }
+        case CREATE_CATEGORY:
+             return {
+                ...state,
+              };
+        case GET_CATEGORIES: {
+            let filter = action.payload.map((category) => {
+              return category.id;
+            });
+            return {
+              ...state,
+              categories: filter,
+            };
+          }
 
-    default:
-      return state;
+    default: return state; 
   }
 }
 

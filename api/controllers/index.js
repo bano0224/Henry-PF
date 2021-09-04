@@ -140,12 +140,12 @@ const getCategory = async (req, res) => {
 const createCategory = async (req, res) => {
   const { name } = req.body;
   try {
-    let categoryFind = await Category.findOne({ name });
+    let categoryFind = await Category.findOne({ name: `${name}` });
     if (categoryFind !== null) {
       res.status(200).json({ msg: "La categoría ya existe" });
     } else {
-      await Category.insertMany({ name: `${name}` }); //Agregar descripcion e imagen
-      res.status(200).json("Su categoría ha sido creada");
+      await Category.insertMany(req.body); //Agregar descripcion e imagen
+      res.status(200).send("Su categoría ha sido creada");
     }
   } catch (err) {
     return err;

@@ -3,8 +3,7 @@ import { URL_PRODUCT_CREATE } from "../utils/utils";
 import axios from "axios";
 
 export default function createProduct(payload) {
-  console.log(payload);
-  return async function (dispatch) {
+  return async function () {
     try {
       const post = await axios.post(URL_PRODUCT_CREATE, payload);
       return {
