@@ -20,7 +20,7 @@ function Search(props) {
         <div>
           <input
             type="text"
-            placeholder="Search game..."
+            placeholder="Search..."
             autoComplete="off"
             value={input.name}
             onChange={(e) => handleChange(e)}
