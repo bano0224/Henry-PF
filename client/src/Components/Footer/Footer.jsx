@@ -1,46 +1,29 @@
-/* import React from 'react'
-import styles from './Footer.module.css'
+import React from "react";
+import style from "./Footer.module.css";
 
-export default function Footer(){
-    return(
-        <div clasName={styles.border}>
 
-        </div>
-    )
-} */
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-});
-
-export default function CenteredTabs() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+export default function Footer() {
   return (
-    <Paper className={classes.root}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        indicatorColor="primary"
-        textColor="primary"
-        centered
-      >
-        <Tab label="Item One" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
-      </Tabs>
-    </Paper>
+    <>
+      <div className={style.menu}>
+        {/* <ul className={style.menu_items}>
+          <li className={style.active}>
+            <a href="#"></a>
+          </li>
+          <li>
+            <a href="#">Destacados</a>
+          </li>
+          <li>
+            <a href="#">Promociones</a>
+          </li>
+          <li>
+            <a href="#">Sobre Nosotros</a>
+          </li>
+        </ul>
+        <span className={style.btn_menu}>
+          <i className={style.faBars}></i>
+        </span> */}
+      </div>
+    </>
   );
 }

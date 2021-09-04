@@ -26,7 +26,10 @@ export default function Home() {
     <div className={s.body3}>
       <div className={s.navBar}>
         <NavBar />
-        <FilterByCategory/><ChangeOrder/>
+        <div className={s.filter}>
+        <FilterByCategory/>
+        <ChangeOrder/>
+        </div>
       </div>
       <div className={s.bodyCards}>
         <Cards currentProducts={currentProducts}/>

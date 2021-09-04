@@ -1,6 +1,10 @@
-.border{
-    height: 10%;
-    width: 100%;
-    border: 1px solid red;
-    border-radius: 5px
-}
+.menu {
+    background-color: #e9183b;
+    height:75px;
+    width:100vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #fff;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, .6);
+  }
