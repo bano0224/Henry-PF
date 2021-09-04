@@ -96,7 +96,7 @@ function rootReducer(state = initialState, action) {
   
 }
 function asc(a, b) {
-  if (a.name < b.title) {
+  if (a.name < b.name) {
     return -1;
   }
   if (a.name > b.name) {
