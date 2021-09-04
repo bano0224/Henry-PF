@@ -1,11 +1,13 @@
 import { CREATE_PRODUCT, GET_PRODUCT_BY_ID, DELETE_PRODUCT, FILTER_BY_CATEGORY, CREATE_CATEGORY, GET_CATEGORIES, CHANGE_ORDER } from "../actions";
 import { GET_PRODUCTS } from '../actions/getProducts'
+import {ADD_TO_CART, REMOVE_ONE_FROM_CART, REMOVE_ALL_FROM_CART, CLEAR_CART} from '../actions/shoppingCart';
 
 const initialState = {
   products: [],
   clearProducts: [],
   productDetail: [],
-  categories: []
+  categories: [],
+  cart: []
 };
 
 
@@ -20,7 +22,7 @@ function rootReducer(state = initialState, action) {
       console.log('REDUCERRRR')
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.sort(() => {return Math.random() - 0.3}),
         clearProducts: action.payload
       };
 
@@ -90,6 +92,34 @@ function rootReducer(state = initialState, action) {
             } else {
               return state;
             }
+          }
+          case ADD_TO_CART:{
+            let newItem = state.products.find(
+              (product) => product._id === action.payload
+            );
+
+            let itemInCart = state.cart.find(item => item._id === newItem._id)
+
+              return itemInCart ? {
+                ...state, cart:state.cart.map(
+                  (item) => item._id === newItem._id ? 
+                  {...item, quantity: item.quantity + 1} //vamos a nesecitar poner en la card del carrito el contador con quantity
+                  : item
+                ),
+              } 
+              : {
+                ...state, cart:[...state.cart, {...newItem, quantity: 1}]
+              }  
+
+          }
+          case REMOVE_ONE_FROM_CART:{
+              
+          }
+          case REMOVE_ALL_FROM_CART:{
+              
+          }
+          case CLEAR_CART:{
+              
           }
     default: return state; 
   }

@@ -5,9 +5,12 @@ import { Link } from "react-router-dom";
 import Card from "../Card/Card";
 import style from "./Cards.module.css";
 
+
+
 export default function Cards({currentProducts}) {
   const dispatch = useDispatch();
-
+  const lengthProd = currentProducts.length
+  
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
