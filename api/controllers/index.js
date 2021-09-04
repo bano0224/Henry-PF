@@ -7,7 +7,7 @@ const getProducts = async (req, res, next) => {
   try {
     if (name) {
       let productFind = await Product.find({
-        name: { $regex: name, $options: "i" },
+        'name': { $regex: name, $options: "i" },
       }).populate("category", { name: 1 });
       if (productFind.length) {
         res.status(200).json(productFind);
@@ -28,7 +28,7 @@ const getProducts = async (req, res, next) => {
 const createProduct = async (req, res) => {
   try {
     await Product.insertMany(req.body);
-    res.status(200).json("productos creados ok");
+    res.status(200).send("productos creados ok");
   } catch (err) {
     return err;
   }
