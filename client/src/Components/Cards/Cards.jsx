@@ -30,7 +30,7 @@ export default function Cards({currentProducts}) {
 
     <div className={style.cardsContainer}>
       {currentProducts?.map((product, index) => (
-         <Link to={`/detail/${product._id}`}>
+         <Link to={`/detail/${product._id}`} className={style.link}>
           <div key={index}>
             {/* <button onClick={handleDelete}>X</button> */}
             {

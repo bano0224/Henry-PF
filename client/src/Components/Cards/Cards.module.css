@@ -19,3 +19,7 @@ padding: 10px;
     flex-direction:row;
     align-items:center;
 }
+
+.link{
+    text-decoration: none;
+}

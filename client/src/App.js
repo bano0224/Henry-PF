@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LandingPage from "./Components/LandingPage/LandingPage";
-import Home from "./Components/Home/Home";
-import CreateProduct from "./Components/CreateProduct/CreateProduct";
-import DetailProduct from "./Components/DetailProduct/DetailProduct"
+import LandingPage from "./components/LandingPage/LandingPage";
+import Home from "./components/Home/Home";
+import CreateProduct from "./components/CreateProduct/CreateProduct";
+import DetailProduct from "./components/DetailProduct/DetailProduct"
 import AdminNav from "./components/AdminDashboard/AdminNav/AdminNav";
 import AdminProduct from "./components/AdminDashboard/AdminProduct/AdminProduct";
 import AdminUsers from "./components/AdminDashboard/AdminUsers/AdminUsers";
 import AdminCategories from "./components/AdminDashboard/AdminCategories/AdminCategories";
 import AdminAddProduct from "./components/AdminDashboard/AdminAddProduct/AdminAddProduct";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Cart from "./Components/ShoppingCart/ShoppingCart";
+import Cart from "./components/ShoppingCart/ShoppingCart";
 
 function App() {
   return (

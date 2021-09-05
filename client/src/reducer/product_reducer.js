@@ -24,7 +24,6 @@ export function rootReducer(state = initialState, action) {
       };
 
     case GET_PRODUCTS:
-      console.log('REDUCERRRR')
       return {
         ...state,
         products: action.payload.sort(() => {return Math.random() - 0.3}),

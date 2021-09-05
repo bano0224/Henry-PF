@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import AdminNav from '../AdminNav/AdminNav'
 import Container from '@material-ui/core/Container'
 import TableContainer from '@material-ui/core/TableContainer'
@@ -12,10 +14,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import FilterByCategory from '../AdminFilter/FilterByCategory';
 import AdminSearch from '../AdminSearch/AdminSearch'
-import { Box } from '@material-ui/core';
+import Box  from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
-import { Link } from 'react-router-dom';
+
+import getProducts from '../../../actions/getProducts';
+
 
 const columns = [
     { id: 'name', label: 'Name', minWidth: 170 },
@@ -43,15 +47,6 @@ const columns = [
     },
   ];
 
-  function createData(name, category, price, stock, featured) {
-    return { name, category, price, stock, featured };
-  }
-
-  const rows = [
-    createData('Leche', 'Lacteo', 30, 3287263, 'SI'),
-    createData('Arroz', 'nose', 32, 9596961, 'NO'),
-  ];
-
   
 
   const useStyles = makeStyles({
@@ -65,12 +60,36 @@ const columns = [
 
 export default function AdminProduct() {
     const classes = useStyles();
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [categories, setCategories] = React.useState([]);
+    const [rows, setRows] = useState([])
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [categories, setCategories] = useState([]);
 
     // const category = rows.map(c => c.category)
     // setCategories(category)
+    const dispatch = useDispatch()
+
+    
+    useEffect(() => {  // ESTE SE SACA PORQUE SE LLAMA EN HOME
+      console.log('effect')
+      dispatch(getProducts())
+    }, [])
+    
+    const products = useSelector( state => state.products)
+
+    useEffect(() => {
+      setRows(products.map(p => {
+        return {
+          name: p.name,
+          category: p.category.map(c => c.name).join(', '),
+          price: p.price,
+          stock: p.countInStock,
+          featured: p.featured ? 'true' : 'false'
+        }
+      }))
+    }, [products])
+    
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
