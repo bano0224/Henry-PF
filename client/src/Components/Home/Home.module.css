@@ -42,7 +42,6 @@
 s.navBar {
   width: 100%;
   height: auto;
-  border: solid 2px green;
 }
 
 @media screen and (min-width: 500px) {

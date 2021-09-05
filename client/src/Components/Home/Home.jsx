@@ -7,7 +7,7 @@ import Pagination from "../Pagination/Pagination";
 import Footer from '../Footer/Footer'
 import  FilterByCategory  from "../Filter/FilterByCategory/FilterByCategory";
 import  ChangeOrder  from "../ChangeOrder/changeorder";
-
+import Search from "../Search/Search";
 
 export default function Home() {
 
@@ -26,6 +26,7 @@ export default function Home() {
     <div className={s.body3}>
       <div className={s.navBar}>
         <NavBar />
+        <Search />
         <div className={s.filter}>
         <FilterByCategory/>
         <ChangeOrder/>

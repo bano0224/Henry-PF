@@ -1,35 +1,25 @@
-import { useReducer } from 'react';
-import {initialState, rootReducer} from '../reducer/product_reducer';
+import React from 'react'
+import { useSelector } from 'react-redux';
 import Cards from '../Cards/Cards';
 
+
 export default function ShoppingCart(){
-    const [state, dispatch] = useReducer(
-        rootReducer, 
-        initialState);
 
-    const {products, cart} = state;
-
-    const addToCart = (_id) => {
-        dispatch({type:TYPES.ADD_TO_CART, payload:_id});
-    };
-
-    const delFromCart = () => {};
-
-    const clearCart = () => {};
-
+    const cart = useSelector(state => state.cart)
     return (
         <div>
             <h2>Carrito de Compras</h2>
-            <h3>Productos</h3>
+{/*             <h3>Productos</h3> 
             <article className="box">
                { products.map((product) => <Cards key={product._id} data={product} addToCart={addToCart}/>)}
-            </article>
+            </article> */}
             <h3>Carrito</h3>
             <article className="box"></article>
-            <button onClick={clearCart}>Limpiar Carrito</button>
             {
-                cart.map((item, index) => <div><Cards key={index} data={item} delFromCart={delFromCart}/></div>)
+            (cart) ? cart?.map((item, index) => <div><Cards/></div>)
+            : alert(`No hay productos seleccionados`)
             }
+            <button onClick={clearCart}>Limpiar Carrito</button>
         </div>
     )
 }
