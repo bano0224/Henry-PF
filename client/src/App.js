@@ -10,7 +10,7 @@ import AdminUsers from "./components/AdminDashboard/AdminUsers/AdminUsers";
 import AdminCategories from "./components/AdminDashboard/AdminCategories/AdminCategories";
 import AdminAddProduct from "./components/AdminDashboard/AdminAddProduct/AdminAddProduct";
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import Cart from "./Components/ShoppingCart/ShoppingCart";
 
 function App() {
   return (
@@ -25,6 +25,8 @@ function App() {
         <Route exact path="/admin/products/add" component={AdminAddProduct} />
         <Route exact path="/admin/categories" component={AdminCategories} />
         <Route exact path="/admin/users" component={AdminUsers} />
+        <Route exact path="/detail/:id" render={({ match }) => <DetailProduct id={match.params.id} />}></Route>
+        <Route exact path="/cart" component={Cart}/>
       </Switch>
     </BrowserRouter>
   );

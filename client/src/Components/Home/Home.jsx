@@ -1,16 +1,15 @@
-import React, {useState} from "react";
-import { useSelector } from 'react-redux'
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import s from "./Home.module.css";
 import Cards from "../Cards/Cards";
 import Pagination from "../Pagination/Pagination";
-import Footer from '../Footer/Footer'
-import  FilterByCategory  from "../Filter/FilterByCategory/FilterByCategory";
-import  ChangeOrder  from "../ChangeOrder/changeorder";
-
+import Footer from "../Footer/Footer";
+import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
+import ChangeOrder from "../ChangeOrder/changeorder";
+import Search from "../Search/Search";
 
 export default function Home() {
-
   const allProducts = useSelector((state) => state.products);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(9);
@@ -26,20 +25,23 @@ export default function Home() {
     <div className={s.body3}>
       <div className={s.navBar}>
         <NavBar />
+        <Search />
         <div className={s.filter}>
-        <FilterByCategory/>
-        <ChangeOrder/>
+          <FilterByCategory />
+          <ChangeOrder />
         </div>
       </div>
       <div className={s.bodyCards}>
-        <Cards currentProducts={currentProducts}/>
+        <Cards currentProducts={currentProducts} />
       </div>
       <div className={s.paginationContainer}>
-        <Pagination products={allProducts.length}
+        <Pagination
+          products={allProducts.length}
           productsPerPage={productsPerPage}
-          paginate={paginate} />
+          paginate={paginate}
+        />
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

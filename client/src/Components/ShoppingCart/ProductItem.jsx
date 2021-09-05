@@ -6,4 +6,3 @@ export default function ProductItem({data,addToCart}) {
         <button onClick={() => addToCart(_id)}>Agregar</button>
     </div>;
 }
-

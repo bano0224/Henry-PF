@@ -13,12 +13,12 @@
   align-items: center;
 }
 
-.body3 h1 {
+/* .body3 h1 {
   display: flex;
   position: relative;
   flex-wrap: nowrap;
   align-content: center;
-}
+} */
 
 .bodyCards {
   height: 100%;
@@ -40,9 +40,9 @@
 }
 
 s.navBar {
-  width: 100%;
+  min-width: 100%;
   height: auto;
-  border: solid 2px green;
+  /* display:flex; */
 }
 
 @media screen and (min-width: 500px) {
