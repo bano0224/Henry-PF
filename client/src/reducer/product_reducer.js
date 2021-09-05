@@ -1,13 +1,13 @@
 import { CREATE_PRODUCT, GET_PRODUCT_BY_ID, DELETE_PRODUCT,
         FILTER_BY_CATEGORY, CREATE_CATEGORY, 
-        GET_CATEGORIES, CHANGE_ORDER, GET_PRODUCT_BY_QUERY } from "../actions";
+        GET_CATEGORIES, CHANGE_ORDER, GET_PRODUCT_BY_QUERY, GET_PRODUCT_DETAIL } from "../actions";
 
 import { GET_PRODUCTS } from '../actions/getProducts'
 import {ADD_TO_CART } from '../actions/shoppingCart';
 import { CLEAR_CART } from '../actions/clearCart';
 import { REMOVE_ONE_FROM_CART, REMOVE_ALL_FROM_CART} from '../actions/deleteFromShoppingCart'
 
-const initialState = {
+export const initialState = {
   products: [],
   clearProducts: [],
   productDetail: [],
@@ -16,7 +16,7 @@ const initialState = {
 };
 
 
-function rootReducer(state = initialState, action) {
+export function rootReducer(state = initialState, action) {
   switch (action.type) {
     case CREATE_PRODUCT:
       return {
@@ -33,14 +33,15 @@ function rootReducer(state = initialState, action) {
       case GET_PRODUCT_BY_QUERY:
         return {
           ...state,
-          products: action.playload,
+         products: action.payload
         };
-      case GET_PRODUCT_BY_ID:
+      case GET_PRODUCT_DETAIL:
         return {
             ...state,
             productDetail: action.payload,
           
         };
+        
       case DELETE_PRODUCT:
         const deleteProduct = state.products.filter(product => product.id === action.payload)
         return {
@@ -72,7 +73,7 @@ function rootReducer(state = initialState, action) {
             };
           }
           case CHANGE_ORDER: {
-            let array = [...state.clearProducts];
+            let array = [...state.products];
       
             if (action.payload === 'asc') {
               array.sort(asc);
@@ -172,4 +173,3 @@ function maxToMin(a, b) {
   return b.price - a.price;
 }
 
-export default rootReducer;

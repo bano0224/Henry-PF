@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { useDispatch } from 'react-redux'
 import getProductByQuery from "../../actions/getProductByQuery";
 
 
-function Search(props) {
-  const [input, setInput] = useState({ name: "" });
+export default function Search() {
+  const dispatch = useDispatch();
+  const [input, setInput] = useState('');
 
   function handleChange(e) {
-    setInput({ name: e.target.value });
+    setInput(e.target.value);
   }
   function handleSubmit(e) {
     e.preventDefault();
-    props.getProductByQuery(input.name);
-    setInput({ name: "" });
+    dispatch(getProductByQuery(input));
   }
+
   return (
     <div>
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -31,7 +33,7 @@ function Search(props) {
     </div>
   );
 }
-function mapStateToProps(state) {
+/* function mapStateToProps(state) {
   return {
     product: state.product,
   };
@@ -41,4 +43,4 @@ function mapDispatchToProps(dispatch) {
     getProductByQuery: (name) => dispatch(getProductByQuery(name)),
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search); */

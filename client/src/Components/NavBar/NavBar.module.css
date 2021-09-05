@@ -3,7 +3,9 @@
   height:75px;
   width:100%;
   display: flex;
-  justify-content: space-around;
+  margin: auto;
+  /* justify-content: space-around; */
+  flex-direction: row;
   align-items: center;
   border-bottom: 1px solid #fff;
   box-shadow: 5px 0 10px rgba(0, 0, 0, .6);
@@ -18,14 +20,18 @@
 
 .menu_items {
   display: flex;
+  justify-content: space-around;
   list-style:none;
   margin-right:30px;
-
+  
 }
 
 .menu_items li{
-  border-radius: 3px;
-  margin: 100px;
+  display:flex;
+  
+  margin: 10px;
+  /* border-radius: 3px; */
+  /* margin: 100px; */
 }
 
 .menu_items li a {
@@ -50,9 +56,9 @@
   display:none;
 }
 
-ul.show {
+/* ul.show {
   top: 65px;
-}
+} */
 /* @media screen and (max-width: 952px) {
   .logo {
       font-size: 30px;

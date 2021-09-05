@@ -14,7 +14,7 @@ function App() {
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/home" component={Home} />
         <Route exact path="/create" component={CreateProduct} />
-        <Route exact path="/detail" component={DetailProduct} />
+        <Route exact path="/detail/:id" render={({ match }) => <DetailProduct id={match.params.id} />}></Route>
         <Route exact path="/admin" component={AdminDashboard} />
         <Route exact path="/cart" component={Cart}/>
       </Switch>

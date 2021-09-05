@@ -9,7 +9,7 @@ function DetailProduct(props) {
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getProductDetail(id)); 
+    dispatch(getProductDetail(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -56,7 +56,7 @@ function DetailProduct(props) {
         ) : (
           <div>
             <img
-              src="https://cdn.dribbble.com/users/2046015/screenshots/5973727/06-loader_telega.gif"
+              src=""
               width="300"
               height="200"
               alt="LoadingGif"
@@ -84,3 +84,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DetailProduct);
+// https://cdn.dribbble.com/users/2046015/screenshots/5973727/06-loader_telega.gif
