@@ -13,7 +13,7 @@ export default function Pagination({
   
  useEffect(() =>{
 
-    window.scrollTo({top: 30, behavior: 'smooth'});
+    window.scrollTo({top: 500, behavior: 'smooth'});
     
     },[currentPage])
  

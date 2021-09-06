@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Cart from "./components/ShoppingCart/ShoppingCart";
 import AdminModifyProduct from "./components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
 import AdminAddCategory from "./components/AdminDashboard/AdminAddCategory/AdminAddCategory";
+import Reviews from "./components/Reviews/Reviews";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/admin/users" component={AdminUsers} />
         <Route exact path="/detail/:id" render={({ match }) => <DetailProduct id={match.params.id} />}></Route>
         <Route exact path="/cart" component={Cart}/>
+        <Route exact path="/reviews" component={Reviews}/>
       </Switch>
     </BrowserRouter>
   );

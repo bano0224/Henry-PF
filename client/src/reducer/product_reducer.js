@@ -7,6 +7,7 @@ import {ADD_TO_CART } from '../actions/shoppingCart';
 import { CLEAR_CART } from '../actions/clearCart';
 import { REMOVE_ONE_FROM_CART, REMOVE_ALL_FROM_CART} from '../actions/deleteFromShoppingCart'
 import { PRODUCT_RESET } from "../actions/productReset";
+import { SET_REVIEWS } from "../actions/setReviews";
 
 export const initialState = {
   products: [],
@@ -14,6 +15,7 @@ export const initialState = {
   productDetail: [],
   categories: [],
   cart: [],
+  reviews: []
 };
 
 export function rootReducer(state = initialState, action) {
@@ -39,6 +41,11 @@ export function rootReducer(state = initialState, action) {
         ...state,
         products: action.payload,
       };
+
+      case SET_REVIEWS:
+        return {
+          ...state,
+        }
 
       // case GET_PRODUCT_DETAIL:
       // return {

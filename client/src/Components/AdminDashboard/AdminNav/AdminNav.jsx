@@ -113,28 +113,29 @@ export default function AdminNav() {
                 [classes.appBarShift]: open,
             })}
         >
-            <Toolbar>
-                <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                className={clsx(classes.menuButton, open && classes.hide)}
-                >
-                <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap>
-                Admin Dashboard
-                </Typography>
-                <div className={classes.dashboard}>
-                {/* <Button variant="contained" color="secondary" component={Link} to='/home'>
-                <Typography variant="h6" noWrap>
-                Home
-                </Typography>
-                </Button> */}
-                <Button color="inherit" component={Link} to='/'>Home</Button>
-                </div>
-            </Toolbar>
+        <Toolbar>
+            <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+            >
+            <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+            Admin Dashboard
+            </Typography>
+            <div className={classes.dashboard}>
+            <Button variant="contained" color="secondary" component={Link} to='/'>
+            <Typography variant="h6" noWrap>
+            Home
+            </Typography>
+            </Button>
+            </div>
+        </Toolbar>
+        <Container>
+        </Container>
         </AppBar>
         <Drawer
             className={classes.drawer}
