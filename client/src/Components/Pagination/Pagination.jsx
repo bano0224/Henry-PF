@@ -1,21 +1,36 @@
-// import React, {useEffect, useState} from 'react';
-// import {Pagination} from '@material-ui/lab';
+import React, { useState, useEffect } from "react";
+/* import bootstrap from 'bootstrap' */
+import 'bootstrap/dist/css/bootstrap.min.css'
+import style from './Pagination.module.css'
 
-// export default function Pages({totalPages, paginate}){
-//     const[page, setPage]= useState(1)
 
-//     useEffect(()=>{
-//         setPage(1)
-//     }, [totalPages])
+export default function Pagination({
+  productsPerPage,
+  products,
+  paginate,
+  currentPage,
+}) {
+  
+ useEffect(() =>{
 
-//     const handleChange= (event, value)=>{
-//         setPage(value)
-//         paginate(value)
-//     }
-//     return(
-//         <>
-//             <Pagination count={totalPages} variant="outlined" page= {page} onChange={handleChange} />
-//         </>
-//     )
+    window.scrollTo({top: 500, behavior: 'smooth'});
+    
+    },[currentPage])
+ 
 
-// }
+  const pageNumber = [];
+  for (let i = 0; i < Math.ceil(products / productsPerPage); i++) {
+    pageNumber.push(i + 1);
+  }
+
+  return (
+      <div className={style.map}>
+        {pageNumber &&
+          pageNumber.map((nro) => (
+            <div className={style.buttonContainer}>
+              <button onClick={() => paginate(nro)} href='#search' id="myBtn" type="button" className="btn btn-outline-danger">{nro}</button>
+            </div>
+          ))}
+      </div>
+  );
+          }

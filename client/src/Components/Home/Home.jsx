@@ -1,30 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import s from "./Home.module.css";
-<<<<<<< HEAD
 import Cards from "../Cards/Cards";
-// import Pagination from '../pagination/Pagination';
+import Pagination from "../Pagination/Pagination";
+import Footer from "../Footer/Footer";
+import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
+import ChangeOrder from "../ChangeOrder/changeorder";
+import Search from "../Search/Search";
+import landing from '../../media/landing.mp4'
 
+export default function Home() {
+  const allProducts = useSelector((state) => state.products);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(9);
+  const lastIndex = currentPage * productsPerPage;
+  const firstIndex = lastIndex - productsPerPage;
 
+  const currentProducts = allProducts.slice(firstIndex, lastIndex);
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-=======
-import ProductCard from "../Card/Card";
->>>>>>> Dev
-function Home() {
   return (
-    <div className={s.body3}>
+    <div className={s.container}>
       <NavBar />
-<<<<<<< HEAD
-      <Cards />
-=======
-      <ProductCard />
->>>>>>> Dev
       <div>
-        <h1> Hello Home InProgress</h1>
+        <div className={s.videoContainer}>
+          <video muted autoPlay loop className={s.video}>
+            <source src={landing} type="video/mp4"/>
+          </video>
+          <div className={s.gray}></div>
+          <div className={s.h3Container}>
+            <h3 className={s.titleB}>Welcome to </h3>
+            <h3 className={s.title}>E-Market</h3>
+          </div>
+        </div>
       </div>
-      <p>Aca van los productos</p>
+      <div className={s.body3}>
+        <div className={s.navBar}>
+          <Search id='search' />
+          <div className={s.filter}>
+            <FilterByCategory />
+            <ChangeOrder />
+          </div>
+        </div>
+        <div className={s.bodyCards}>
+          <Cards currentProducts={currentProducts} />
+        </div>
+      </div>
+      <div className={s.paginationContainer}>
+        <Pagination
+          products={allProducts.length}
+          productsPerPage={productsPerPage}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+      </div>
+      <Footer />
     </div>
   );
 }
-
-export default Home;

@@ -1,13 +1,14 @@
 const Product = require("../models/Product.js");
 const User = require("../models/User.js");
 const Category = require("../models/Category.js");
+const Review = require("../models/Review.js")
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
   try {
     if (name) {
       let productFind = await Product.find({
-        name: { $regex: name, $options: "i" },
+        'name': { $regex: name, $options: "i" },
       }).populate("category", { name: 1 });
       if (productFind.length) {
         res.status(200).json(productFind);
@@ -26,9 +27,10 @@ const getProducts = async (req, res, next) => {
 };
 
 const createProduct = async (req, res) => {
+  console.log('QUE PASAAAAAA: ', req.body);
   try {
     await Product.insertMany(req.body);
-    res.status(200).json("productos creados ok");
+    res.status(200).send("productos creados ok");
   } catch (err) {
     return err;
   }
@@ -47,6 +49,7 @@ const createProduct = async (req, res) => {
 
 const getProductsById = async (req, res) => {
   const { id } = req.params;
+  console.log(id)
   try {
     const productId = await Product.findById(id);
     res.status(200).json(productId);
@@ -138,14 +141,14 @@ const getCategory = async (req, res) => {
 };
 
 const createCategory = async (req, res) => {
-  const { name } = req.body;
+  const { name, description, image } = req.body;
   try {
-    let categoryFind = await Category.findOne({ name });
+    let categoryFind = await Category.findOne({ name: `${name}` });
     if (categoryFind !== null) {
       res.status(200).json({ msg: "La categoría ya existe" });
     } else {
-      await Category.insertMany({ name: `${name}` }); //Agregar descripcion e imagen
-      res.status(200).json("Su categoría ha sido creada");
+      await Category.insertMany(req.body);
+      res.status(200).send("Su categoría ha sido creada");
     }
   } catch (err) {
     return err;
@@ -180,6 +183,17 @@ const updateCategory = async (req, res) => {
   }
 };
 
+const createReviews = async (req, res) => {
+  console.log('ESTE ES EL BODY', req.body)
+  /* const { name, comment } = req.body */
+  try {
+    let createReview = await Review.create( req.body/* name: `${name}`, comment: `${comment}` */)
+    res.status(200).send('Comentario agregado')
+  } catch(err) {
+    return err
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
@@ -191,7 +205,10 @@ module.exports = {
   deleteCategory,
   updateCategory,
   updateProduct,
+  createReviews
 };
+
+
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */
 /* const polka = require('polka');

@@ -12,17 +12,22 @@ import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AddShoppingCart } from "@material-ui/icons";
-
+import accounting from "accounting";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    maxHeight: 450
   },
+  
   action: {
     marginTop: "1rem",
+    textDecoration: "none",
   },
   media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    height: "100%",
+    width: "100%",
+    paddingTop: "90%", // 16:9
+    
   },
   expand: {
     transform: "rotate(0deg)",
@@ -39,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductCard(name, image, description, price) {
+export default function ProductCard({name, image, description, price}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -50,50 +55,33 @@ export default function ProductCard(name, image, description, price) {
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={
+        action={
           <Typography
             className={classes.action}
             variant="h5"
             color="textSecondary"
           >
-<<<<<<< HEAD
-            {price}
-=======
-            {"$ 129.50"}
->>>>>>> Dev
+            {accounting.formatMoney(price)}
           </Typography>
         }
-        name={name}
+        title={name}
         
       />
       <CardMedia
         className={classes.media}
         image={image}
-        name={name}
+        title={name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-<<<<<<< HEAD
           {description}
-=======
-          Crema liviana UAT. Libre de gluten. No es para batir. Con un contenido
-          graso min. del 12%.
->>>>>>> Dev
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to Card">
           <AddShoppingCart fontSize="large" />
         </IconButton>
-        {Array(4)
-          .fill()
-          .map((_, i) => (
-            <p>&#11088;</p>
-          ))}
-        <h4> Mas vendido</h4>
-        {/* <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
+
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,

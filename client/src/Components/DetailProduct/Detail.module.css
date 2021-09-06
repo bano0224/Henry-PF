@@ -1,63 +1,93 @@
 .body4 {
-    background-image: url('');
-    padding-left: 0;
-    padding-right: 0;
     height: 100%;
     width: 100%;
-    background-size:cover;
-    background-position:center center;
-    background-repeat: repeat;
-    position:absolute;
-    text-align:center;
-    font-weight: 50;
-    overflow: auto;
-    display: ruby-base;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../assets/wallpaperbetter.com_1920x1080.jpg');
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
-
-    .containerdetail {
-  margin: auto;
-  font-family: arial black;
-  border-radius: 4%;
-  box-shadow: 2% 0 1em 0 rgba(255, 1, 1, 0.25);
-   max-width: 400px;
-  padding: 1em;
-  position: absolute;
-  top: 10%;
-  left: 20%;
-  z-index: 4;
-  width: 80%;
-  height: 85vh;
-  display: table;
-}
-.containerdetail:before {
-  
-  background-size: cover;
-  content: "";
-  -webkit-filter: blur(10px);
-  filter: blur(10px);
-  height: 100vh;
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  z-index: -1;
-  transform: translate(-50%, -50%);
-  width: 90vw;
+.card {
+  height: 70%;
+    width: 30%;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(5, 5, 5, 0.45);
+    box-shadow: 10px 10px 150px rgba(253, 253, 253, 0.575);
 }
 
+.title {
+  display: flex;
+  justify-content: center;
+  color: white;
+  margin-bottom: 20px;
+}
 
-.containerdetail:after {
-  background: linear-gradient(100deg, #ffffff80 30%, #0429fd70 150%);
-  /* background: rgba(228, 245, 245, 0.4); */
-  content: "";
-  display: block;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
+.navbar {
+  display: flex;
+  align-items: flex-start;
+  bottom: 0px;
+}
+
+.valoration {
+  display: flex;
+  justify-content: center;
+}
+
+.footer {
+  display: flex;
+  align-items: flex-end;
+  /* position: fixed; */
+  bottom: 0px;
+  left: 0px;
+}
+
+.image {
+  height: 50%;
+  width: 60%;
+}
+
+.name {
+  color: white;
+}
+
+.raiting {
+  display:flex;
+  justify-content: center;
+}
+
+/* .navbar {
+  position:relative;
+} */
+
+.buttonLink {
+  text-decoration: none;
+}
+
+.info {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  color:white;
+  margin-top: 20px;
+}
+.containerdetail {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
-  border-radius: 1%;
+  height: 100%;
+  background: #fff;
+  box-shadow: 2% 0 1em 0 rgba(255, 1, 1, 0.25);
 }
 
 .image {
@@ -76,8 +106,7 @@
   font-size: 17px;
   cursor: pointer;
   background-color: var(list-style-type);
-  box-shadow: 10px 10px 23px 10px rgb(2, 253, 15);
 }
-.buttonback:hover{
-  color:rgb(255, 0, 0);
+.buttonback:hover {
+  color: rgb(255, 0, 0);
 }
