@@ -68,6 +68,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import CategoryIcon from '@material-ui/icons/Category';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import PeopleIcon from '@material-ui/icons/People';
+import Container from '@material-ui/core/Container'
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -166,6 +167,10 @@ export default function AdminNav() {
             Admin Dashboard
             </Typography>
         </Toolbar>
+        <Container>
+
+        <Link to='/home'>Home</Link>
+        </Container>
         </AppBar>
         <Drawer
         className={classes.drawer}

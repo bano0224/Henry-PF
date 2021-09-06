@@ -5,14 +5,15 @@ import s from "./Detail.module.css";
 import Navbar from "../NavBar/NavBar";
 import getProductById from '../../actions/getProductById'
 import productReset from '../../actions/productReset'
+import Footer from '../Footer/Footer';
 
 export default function DetailProduct(props) {
-  console.log(props)
+  
   const dispatch = useDispatch();
   const productId = useSelector(state => state.productDetail)
-  const product=productId[0];
 
   useEffect(() => {
+    console.log('EFFECT')
     dispatch(getProductById(props.id));
   }, []);
 
@@ -30,7 +31,7 @@ export default function DetailProduct(props) {
           <div>
             <img
               clasName={s.image}
-              src={product?.imageUrl}
+              src={productId.imageUrl}
               width="100%"
               height="100%"
               alt=""
@@ -38,23 +39,23 @@ export default function DetailProduct(props) {
             <div>
               <div>
                 <p>Name:</p>
-                <p>{product?.name}</p>
+                <p>{productId?.name}</p>
               </div>
               <div></div>
               <div>
                 <p>Price</p>
                 <p>
-                  {product?.price}
+                  {productId?.price}
                 </p>
               </div>
               <div>
                 <p>countInStock:</p>
-                <p>{product?.countInStock}</p>
+                <p>{productId?.countInStock}</p>
               </div>
               <p>Description:</p>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: product?.description,
+                  __html: productId?.description,
                 }}
               ></div>
             </div>
@@ -75,6 +76,9 @@ export default function DetailProduct(props) {
             <button className={s.buttonback}>Home</button>
           </Link>
         </div>
+      </div>
+      <div classNme={s.footer}>
+      <Footer />
       </div>
     </div>
   );

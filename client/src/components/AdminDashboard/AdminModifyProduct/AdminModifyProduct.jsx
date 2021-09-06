@@ -1,25 +1,26 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import createProduct from '../../../actions/createProduct';
-import AdminNav from '../AdminNav/AdminNav'
+import React, { useEffect, useState } from 'react'
 import Container from '@material-ui/core/Container'
+import AdminNav from '../AdminNav/AdminNav'
+import { useDispatch, useSelector } from 'react-redux'
+import getProductById from '../../../actions/getProductById'
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch'
 import { DropzoneArea } from 'material-ui-dropzone';
 
-export default function AdminAddProduct(props) {
-    const [product, setProduct] = useState({
-        name: '',
-        description: '',
-        price: 0,
-        countInStock: 0,
-        imageUrl: [],
-        category: [],
-        featured: true,
-        discount: '' || 0
-    })
+export default function AdminModifyProduct({ match }) {
+    const [product, setProduct] = useState('')
+    
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        dispatch(getProductById(match.params.id))
+    }, [])
 
-    const dispatch = useDispatch()
+    const detail = useSelector( state => state.productDetail)
+
+    setProduct({
+        name: detail.name
+    })
 
     const handleChange = ({ target: { name, value } }) => {
         if (name === 'imageUrl') {
@@ -51,7 +52,7 @@ export default function AdminAddProduct(props) {
 
     const handleSubmmit = (e) => {
         e.preventDefault()
-        dispatch(createProduct(product));
+        // dispatch(createProduct(product));
         alert(`${product.name} created`)
         setProduct({
             name: '',
@@ -65,20 +66,15 @@ export default function AdminAddProduct(props) {
         })
     }
 
-    console.log(product)
-
     return (
         <>
             <AdminNav/>
             <hr />
-            <Container>
-                <h1>Add product</h1>
-            </Container>
             <Container maxWidth='xs'>
                 <form onSubmit={(e) => (handleSubmmit(e))}>
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">Name</label>
-                        <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name'/>
+                        {/* <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name'/> */}
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Description</label>
@@ -133,7 +129,6 @@ export default function AdminAddProduct(props) {
                     </Container>
                 </form>
             </Container>
-            
         </>
     )
 }

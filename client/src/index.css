@@ -2,6 +2,9 @@
   height: 100%;
   width: 100%;
 } */
+a:hover{
+  color: white !important;
+}
 
 body {
   /* height: 100%;

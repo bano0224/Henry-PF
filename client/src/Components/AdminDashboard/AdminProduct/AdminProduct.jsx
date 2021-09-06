@@ -17,7 +17,6 @@ import AdminSearch from '../AdminSearch/AdminSearch'
 import Box  from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
-
 import getProducts from '../../../actions/getProducts';
 
 
@@ -56,6 +55,11 @@ const columns = [
     container: {
       maxHeight: 440,
     },
+    butto: {
+      hover: {
+        color:'red'
+      }
+    }
   });
 
 export default function AdminProduct() {
@@ -65,10 +69,11 @@ export default function AdminProduct() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [categories, setCategories] = useState([]);
 
+    
     // const category = rows.map(c => c.category)
     // setCategories(category)
     const dispatch = useDispatch()
-
+    console.log(rows)
     
     useEffect(() => {  // ESTE SE SACA PORQUE SE LLAMA EN HOME
       console.log('effect')
@@ -77,6 +82,7 @@ export default function AdminProduct() {
     
     const products = useSelector( state => state.products)
 
+    
     useEffect(() => {
       setRows(products.map(p => {
         return {
@@ -84,7 +90,8 @@ export default function AdminProduct() {
           category: p.category.map(c => c.name).join(', '),
           price: p.price,
           stock: p.countInStock,
-          featured: p.featured ? 'true' : 'false'
+          featured: p.featured ? 'true' : 'false',
+          id: p._id
         }
       }))
     }, [products])
@@ -123,7 +130,7 @@ export default function AdminProduct() {
         </Box>
             <Paper className={classes.root}>
             <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label="sticky table">
+              <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>
                     {columns.map((column) => (
@@ -140,7 +147,7 @@ export default function AdminProduct() {
                 <TableBody>
                     {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} component={Link} to={`/admin/product/${row.id}`}>
                         {columns.map((column) => {
                             const value = row[column.id];
                             return (
@@ -153,7 +160,7 @@ export default function AdminProduct() {
                     );
                     })}
                 </TableBody>
-                </Table>
+              </Table>
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}

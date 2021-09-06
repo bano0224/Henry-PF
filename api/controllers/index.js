@@ -26,6 +26,7 @@ const getProducts = async (req, res, next) => {
 };
 
 const createProduct = async (req, res) => {
+  console.log('QUE PASAAAAAA: ', req.body);
   try {
     await Product.insertMany(req.body);
     res.status(200).send("productos creados ok");
@@ -47,6 +48,7 @@ const createProduct = async (req, res) => {
 
 const getProductsById = async (req, res) => {
   const { id } = req.params;
+  console.log(id)
   try {
     const productId = await Product.findById(id);
     res.status(200).json(productId);
