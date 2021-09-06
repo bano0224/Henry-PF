@@ -1,3 +1,40 @@
+.video {
+  width: 100%;
+}
+.videoContainer{
+  overflow: hidden;
+  display: flex;
+  height: 500px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.gray{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.h3Container{
+  position: absolute;
+  color: white;
+}
+
+.title{
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 6em;
+  text-align: center;
+  font-weight: 100;
+}
+
+.titleB{
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 6em;
+  text-align: center;
+  font-weight: 800;
+}
+
 .filter {
   display:flex;
   justify-content:center;
@@ -39,10 +76,14 @@
   margin: 20px;
 }
 
-s.navBar {
+.navBar {
   min-width: 100%;
   height: auto;
-  /* display:flex; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin: 10px;
 }
 
 @media screen and (min-width: 500px) {

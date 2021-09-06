@@ -7,7 +7,7 @@ export default function NavBar() {
   return (
     <>
       <nav className={style.menu}>
-        <label className={style.logo}>Supermarket Henry</label>
+        <label className={style.logo}>E-Market</label>
         <ul className={style.menu_items}>
           <li className={style.active}>
             <a href="#"></a>
