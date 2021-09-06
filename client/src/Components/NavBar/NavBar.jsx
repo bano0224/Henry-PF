@@ -13,7 +13,7 @@ export default function NavBar() {
             <a href="#"></a>
           </li>
           <li>
-            <Link to='/admin'>
+            <Link to='/admin/products'>
             <a href="#">Administrador</a>     
             </Link>
           </li>

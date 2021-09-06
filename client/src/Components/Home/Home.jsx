@@ -39,7 +39,7 @@ export default function Home() {
       </div>
       <div className={s.body3}>
         <div className={s.navBar}>
-          <Search />
+          <Search id='search' />
           <div className={s.filter}>
             <FilterByCategory />
             <ChangeOrder />

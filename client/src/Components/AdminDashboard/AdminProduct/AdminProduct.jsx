@@ -19,6 +19,7 @@ import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
 import getProducts from '../../../actions/getProducts';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { getCategories } from '../../../actions/getCategories';
 
 
 
@@ -73,21 +74,16 @@ export default function AdminProduct() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [categories, setCategories] = useState([]);
-
-    
-    // const category = rows.map(c => c.category)
-    // setCategories(category)
     const dispatch = useDispatch()
-    console.log(rows)
     
-    useEffect(() => {  // ESTE SE SACA PORQUE SE LLAMA EN HOME
-      console.log('effect')
+    useEffect(() => {  
       dispatch(getProducts())
+      dispatch(getCategories())
     }, [])
     
     const products = useSelector( state => state.products)
+    const category = useSelector(state => state.categories)
 
-    
     useEffect(() => {
       setRows(products.map(p => {
         return {
@@ -99,7 +95,11 @@ export default function AdminProduct() {
           id: p._id
         }
       }))
-    }, [products])
+    })
+
+    useEffect(() => {
+      setCategories(category)
+    },[category])
     
 
     const handleChangePage = (event, newPage) => {
@@ -110,6 +110,7 @@ export default function AdminProduct() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
     
     return (
         <>
@@ -129,7 +130,7 @@ export default function AdminProduct() {
         
             <h1>Products</h1>
         <Box display="flex" justifyContent='space-around' alignItems='center'>
-            <FilterByCategory />
+            <FilterByCategory categories={categories}/>
             <AdminSearch />
             <Button
               variant="contained"
@@ -162,7 +163,7 @@ export default function AdminProduct() {
                 <TableBody>
                     {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} component={Link} to={`/admin/product/${row.id}`}>
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} component={Link} to={`/admin/products/modify/${row.id}`}>
                         {columns.map((column) => {
                             const value = row[column.id];
                             return (

@@ -50,9 +50,9 @@ export default function FilterByCategory({categories}) {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Lacteos</MenuItem>
-          <MenuItem value={20}>Bebidas</MenuItem>
-          <MenuItem value={30}>Limpieza</MenuItem>
+          {
+            categories?.map(c => <MenuItem vale={c.name}>{c.name}</MenuItem>)
+          }
         </Select>
       </FormControl>
     </div>
