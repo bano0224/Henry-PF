@@ -6,9 +6,12 @@ import getProductById from '../../../actions/getProductById'
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch'
 import { DropzoneArea } from 'material-ui-dropzone';
+import modifyProduct from '../../../actions/modifyProduct'
 
 export default function AdminModifyProduct({ match }) {
-    const [product, setProduct] = useState('')
+    const [product, setProduct] = useState({
+
+    })
     
     const dispatch = useDispatch();
     
@@ -17,10 +20,6 @@ export default function AdminModifyProduct({ match }) {
     }, [])
 
     const detail = useSelector( state => state.productDetail)
-
-    setProduct({
-        name: detail.name
-    })
 
     const handleChange = ({ target: { name, value } }) => {
         if (name === 'imageUrl') {
@@ -52,7 +51,7 @@ export default function AdminModifyProduct({ match }) {
 
     const handleSubmmit = (e) => {
         e.preventDefault()
-        // dispatch(createProduct(product));
+        dispatch(modifyProduct(product));
         alert(`${product.name} created`)
         setProduct({
             name: '',
@@ -74,19 +73,19 @@ export default function AdminModifyProduct({ match }) {
                 <form onSubmit={(e) => (handleSubmmit(e))}>
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">Name</label>
-                        {/* <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name'/> */}
+                        <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name' placeholder={detail.name}/>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                        <textarea required onChange={(e) => handleChange(e)} value={product.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea required onChange={(e) => handleChange(e)} value={product.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder={detail.description}></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
-                        <input required onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control" id="price"/>
+                        <input required onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control" id="price" placeholder={detail.price}/>
                         <label for="stock" class="form-label">Stock</label>
-                        <input required onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' type="number" class="form-control" id="stock"/>
+                        <input required onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' type="number" class="form-control" id="stock" placeholder={detail.countInStock}/>
                         <label for="exampleFormControlInput1" class="form-label">Discount</label>
-                        <input required onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1"/>
+                        <input required onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={detail.discount}/>
                     </div>   
                     <label for="exampleFormControlInput1" class="form-label">Featured</label> 
                     <Switch

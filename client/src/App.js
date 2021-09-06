@@ -23,7 +23,7 @@ function App() {
         <Route exact path="/admin" component={AdminNav} />
         <Route exact path="/admin/products" component={AdminProduct} />
         <Route exact path="/admin/products/add" component={AdminAddProduct} />
-        <Route exact path="/admin/products/:id" component={AdminModifyProduct} />
+        <Route exact path="/admin/products/modify/:id" component={AdminModifyProduct} />
         <Route exact path="/admin/categories" component={AdminCategories} />
         <Route exact path='/admin/categories/add' component={AdminAddCategory} />
         <Route exact path="/admin/users" component={AdminUsers} />

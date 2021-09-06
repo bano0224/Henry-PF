@@ -13,7 +13,7 @@ export default function Pagination({
   
  useEffect(() =>{
 
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({top: 30, behavior: 'smooth'});
     
     },[currentPage])
  
@@ -28,7 +28,7 @@ export default function Pagination({
         {pageNumber &&
           pageNumber.map((nro) => (
             <div className={style.buttonContainer}>
-              <button onClick={() => paginate(nro)} id="myBtn" type="button" className="btn btn-outline-danger">{nro}</button>
+              <button onClick={() => paginate(nro)} href='#search' id="myBtn" type="button" className="btn btn-outline-danger">{nro}</button>
             </div>
           ))}
       </div>
