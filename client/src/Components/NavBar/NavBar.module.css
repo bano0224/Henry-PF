@@ -13,9 +13,11 @@
 
 .logo {
   color: #fff;
-  font-size: 35px;
+  font-size: 2.2em;
+  font-weight: 800;
   padding: 0 80px;
   font-weight: bold;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
 }
 
 .menu_items {
