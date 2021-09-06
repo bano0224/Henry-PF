@@ -4,7 +4,7 @@ const server = Router();
 
 server.get('/', getProducts)
 server.post('/create', createProduct)
-server.post('/:id', getProductsById)
+server.get('/:id', getProductsById)
 server.delete('/delete/:id', removeProduct)
 server.put('/update', updateProduct)
 

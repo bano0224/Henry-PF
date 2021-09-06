@@ -1,54 +1,60 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import s from "./Detail.module.css";
 import Navbar from "../NavBar/NavBar";
-import getProductDetail from "../../actions/getProductDetail";
+import getProductById from '../../actions/getProductById'
+import productReset from '../../actions/productReset'
 
-function DetailProduct(props) {
-  const { id } = useParams();
+export default function DetailProduct(props) {
+  console.log(props)
   const dispatch = useDispatch();
+  const productId = useSelector(state => state.productDetail)
+  const product=productId[0];
+
   useEffect(() => {
-    dispatch(getProductDetail(id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(getProductById(props.id));
   }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(productReset())
+    }
+  },[])
+
   return (
     <div className={s.body4}>
       <Navbar />
       <div className={s.containerdetail}>
-        {props.productDetail.length !== 0 ? (
+        {productId.length !== 0 ? (
           <div>
             <img
               clasName={s.image}
-              src={props.productDetail.imageUrl}
-              width="480"
-              height="250"
+              src={product?.imageUrl}
+              width="100%"
+              height="100%"
               alt=""
             />
             <div>
               <div>
                 <p>Name:</p>
-                <p>{props.productDetail.name}</p>
+                <p>{product?.name}</p>
               </div>
               <div></div>
               <div>
                 <p>Price</p>
                 <p>
-                  {props.productDetail.price
-                    ? props.productDetail.price
-                    : props.productDetail.price
-                        .map((price) => price.name)
-                        .join(", ")}
+                  {product?.price}
                 </p>
               </div>
               <div>
                 <p>countInStock:</p>
-                <p>{props.productDetail.countInStock}</p>
+                <p>{product?.countInStock}</p>
               </div>
               <p>Description:</p>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: props.productDetail.description,
+                  __html: product?.description,
                 }}
               ></div>
             </div>
@@ -65,23 +71,11 @@ function DetailProduct(props) {
           </div>
         )}
         <div>
-          <Link to="home">
-            <button className={s.buttonback}>Buy market</button>
+          <Link to="/home">
+            <button className={s.buttonback}>Home</button>
           </Link>
         </div>
       </div>
     </div>
   );
 }
-function mapStateToProps(state) {
-  return {
-    productDetail: state.productDetail,
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    getProductDetail: (Details) => dispatch(getProductDetail(Details)),
-  };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(DetailProduct);
-// https://cdn.dribbble.com/users/2046015/screenshots/5973727/06-loader_telega.gif

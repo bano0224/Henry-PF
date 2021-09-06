@@ -17,6 +17,7 @@ import {
   REMOVE_ONE_FROM_CART,
   REMOVE_ALL_FROM_CART,
 } from "../actions/deleteFromShoppingCart";
+import { PRODUCT_RESET } from "../actions/productReset";
 
 export const initialState = {
   products: [],
@@ -81,6 +82,12 @@ export function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+
+    case PRODUCT_RESET:
+      return {
+        ...state,
+        productDetail: []
+      }
     case GET_CATEGORIES: {
       return {
         ...state,

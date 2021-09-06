@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./NavBar.module.css";
+import { Link } from 'react-router-dom'
 
 
 export default function NavBar() {
@@ -12,7 +13,9 @@ export default function NavBar() {
             <a href="#"></a>
           </li>
           <li>
-            <a href="#">Destacados</a>
+            <Link to='/admin'>
+            <a href="#">Administrador</a>     
+            </Link>
           </li>
           <li>
             <a href="#">Promociones</a>
