@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import setReviews from "../../actions/setReviews";
 import { Container, Button, styled } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
@@ -14,6 +15,7 @@ export default function Reviews() {
     name: "",
     comment: "",
   });
+  const history = useHistory()
 
   function handleChange(e) {
     setInput({
@@ -36,7 +38,10 @@ export default function Reviews() {
       name: "",
       comment: "",
     })
+    alert('¡Gracias por tu review!')
+    history.push('/')
   }
+
   return (
     <div className={style.container}>
       <div className={style.reviews}>
