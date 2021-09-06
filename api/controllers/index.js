@@ -1,6 +1,7 @@
 const Product = require("../models/Product.js");
 const User = require("../models/User.js");
 const Category = require("../models/Category.js");
+const Review = require("../models/Review.js")
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
@@ -182,6 +183,17 @@ const updateCategory = async (req, res) => {
   }
 };
 
+const createReviews = async (req, res) => {
+  console.log('ESTE ES EL BODY', req.body)
+  /* const { name, comment } = req.body */
+  try {
+    let createReview = await Review.create( req.body/* name: `${name}`, comment: `${comment}` */)
+    res.status(200).send('Comentario agregado')
+  } catch(err) {
+    return err
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
@@ -193,7 +205,10 @@ module.exports = {
   deleteCategory,
   updateCategory,
   updateProduct,
+  createReviews
 };
+
+
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */
 /* const polka = require('polka');
