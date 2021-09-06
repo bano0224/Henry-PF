@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch'
 import { DropzoneArea } from 'material-ui-dropzone';
 
+
 export default function AdminAddProduct(props) {
     const [product, setProduct] = useState({
         name: '',

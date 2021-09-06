@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import {useSelector} from 'react-redux';
 import AdminNav from '../AdminNav/AdminNav'
 import { Container } from 'react-bootstrap'
 import TableContainer from '@material-ui/core/TableContainer'
@@ -18,32 +19,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const columns = [
     { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'category', label: 'Category', minWidth: 100 },
-    {
-      id: 'price',
-      label: 'Price',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'stock',
-      label: 'Stock',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'featured',
-      label: 'Featured',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toFixed(2),
-    },
+    { id: 'description', label: 'Description', minWidth: 100 },
   ];
 
-  function createData(name, category, price, stock, featured) {
-    return { name, category, price, stock, featured };
+  function createData(name, description) {
+    return { name, description };
   }
 
   const rows = [
@@ -71,6 +51,16 @@ export default function AdminCategories() {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [rows, setRows] = React.useState([])
+
+    const categories = useSelector(state => state.categories)
+
+    useEffect(() => {
+      setRows(categories)
+    }, [categories])
+
+
+    console.log(rows)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
