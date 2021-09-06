@@ -19,7 +19,7 @@ export default function Pagination({
     window.scrollTo({top: 0, behavior: 'smooth'});
     
     }
-    
+
   return (
       <div className={style.map}>
         {pageNumber &&
