@@ -13,6 +13,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 const columns = [
@@ -61,6 +62,9 @@ const columns = [
     container: {
       maxHeight: 440,
     },
+    button: {
+      margin: 10,
+    }
   });
 
 export default function AdminCategories() {
@@ -81,6 +85,16 @@ export default function AdminCategories() {
         <>
         <AdminNav/>
         <hr />
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<ArrowBackIcon />}
+          component={Link} 
+          to='/admin'
+          style= {{textDecoration: 'none'}}
+        >
+        </Button>
         <Container>
         <h1>Categories</h1>
         <Container>

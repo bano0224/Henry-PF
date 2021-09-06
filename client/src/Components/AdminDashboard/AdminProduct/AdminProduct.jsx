@@ -18,6 +18,8 @@ import Box  from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
 import getProducts from '../../../actions/getProducts';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 
 
 const columns = [
@@ -54,6 +56,9 @@ const columns = [
     },
     container: {
       maxHeight: 440,
+    },
+    button: {
+    margin: 10,
     },
     butto: {
       hover: {
@@ -97,7 +102,6 @@ export default function AdminProduct() {
     }, [products])
     
 
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -111,7 +115,18 @@ export default function AdminProduct() {
         <>
         <AdminNav/>
         <hr />
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<ArrowBackIcon />}
+          component={Link} 
+          to='/admin'
+          style= {{textDecoration: 'none'}}
+        >
+        </Button>
         <Container>
+        
             <h1>Products</h1>
         <Box display="flex" justifyContent='space-around' alignItems='center'>
             <FilterByCategory />

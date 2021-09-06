@@ -69,6 +69,7 @@ import CategoryIcon from '@material-ui/icons/Category';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import PeopleIcon from '@material-ui/icons/People';
 import Container from '@material-ui/core/Container'
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -100,6 +101,15 @@ const useStyles = makeStyles((theme) => ({
     drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    },
+    link: {
+    textDecoration: 'none',
+    color: 'white'
+    },
+    dashboard: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
     },
     drawerPaper: {
     width: drawerWidth,
@@ -166,10 +176,15 @@ export default function AdminNav() {
             <Typography variant="h6" noWrap>
             Admin Dashboard
             </Typography>
+            <div className={classes.dashboard}>
+            <Button variant="contained" color="secondary" component={Link} to='/home'>
+            <Typography variant="h6" noWrap>
+            Home
+            </Typography>
+            </Button>
+            </div>
         </Toolbar>
         <Container>
-
-        <Link to='/home'>Home</Link>
         </Container>
         </AppBar>
         <Drawer

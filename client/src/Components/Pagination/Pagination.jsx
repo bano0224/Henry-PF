@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 /* import bootstrap from 'bootstrap' */
 import 'bootstrap/dist/css/bootstrap.min.css'
 import style from './Pagination.module.css'
@@ -8,26 +8,29 @@ export default function Pagination({
   productsPerPage,
   products,
   paginate,
+  currentPage,
 }) {
+  
+ useEffect(() =>{
+
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    
+    },[currentPage])
+ 
 
   const pageNumber = [];
   for (let i = 0; i < Math.ceil(products / productsPerPage); i++) {
     pageNumber.push(i + 1);
   }
-  function scrollToTop() {
-
-    window.scrollTo({top: 0, behavior: 'smooth'});
-    
-    }
 
   return (
       <div className={style.map}>
         {pageNumber &&
           pageNumber.map((nro) => (
             <div className={style.buttonContainer}>
-              <button onClick={() => paginate(nro)}type="button" className="btn btn-outline-danger">{nro}</button>
+              <button onClick={() => paginate(nro)} id="myBtn" type="button" className="btn btn-outline-danger">{nro}</button>
             </div>
           ))}
       </div>
   );
-}
+          }

@@ -39,6 +39,7 @@ export default function Home() {
           products={allProducts.length}
           productsPerPage={productsPerPage}
           paginate={paginate}
+          currentPage={currentPage}
         />
       </div>
       <Footer />
