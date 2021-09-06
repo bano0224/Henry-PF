@@ -1,24 +1,66 @@
 .body4 {
-  background-image: url("https://wallpaperaccess.com/full/1624843.jpg");
-  padding-left: 0;
-  padding-right: 0;
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../assets/wallpaperbetter.com_1920x1080.jpg');
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.card {
+  height: 60%;
+    width: 30%;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(5, 5, 5, 0.45);
+    box-shadow: 10px 10px 150px rgba(253, 253, 253, 0.575);
+}
+
+.title {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: repeat;
-  position: absolute;
-  text-align: center;
-  font-weight: 50;
-  overflow: auto;
-  
+}
+
+.navbar {
+  display: flex;
+  align-items: flex-start;
+}
+
+.footer {
+  display: flex;
+  align-items: flex-end;
+  /* position: fixed; */
+  bottom: 0px;
+  left: 0px;
+}
+
+.image {
+  height: 40%;
+  width: 60%;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 .containerdetail {
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  box-shadow: 2% 0 1em 0 rgba(255, 1, 1, 0.25);
+  /* margin: auto;
   font-family: arial black;
   border-radius: 4%;
   box-shadow: 2% 0 1em 0 rgba(255, 1, 1, 0.25);
@@ -30,9 +72,9 @@
   z-index: 4;
   width: 80%;
   height: 85vh;
-  display: table;
+  display: table; */
 }
-.containerdetail:before {
+/* .containerdetail:before {
   background-size: cover;
   content: "";
   -webkit-filter: blur(10px);
@@ -48,7 +90,7 @@
 
 .containerdetail:after {
   background: linear-gradient(100deg, #ffffff80 30%, #0429fd70 150%);
-  /* background: rgba(228, 245, 245, 0.4); */
+  background: rgba(228, 245, 245, 0.4);
   content: "";
   display: block;
   height: 100%;
@@ -58,7 +100,7 @@
   z-index: -1;
   width: 100%;
   border-radius: 1%;
-}
+} */
 
 .image {
   border-radius: 18px;

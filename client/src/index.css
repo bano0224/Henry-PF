@@ -1,14 +1,14 @@
-/* html {
+html {
   height: 100%;
   width: 100%;
-} */
-a:hover{
-  color: white !important;
 }
 
+#root {
+  height:100%;
+}
 body {
-  /* height: 100%;
-  width:100%; */
+  height: 100%;
+  width:100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

@@ -18,13 +18,14 @@ export const initialState = {
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
+
     case CREATE_PRODUCT:
       return {
         ...state,
         products: [...state.products, action.payload]
       };
-    case GET_PRODUCTS:
-      console.log("REDUCERRRR");
+
+      case GET_PRODUCTS:
       return {
         ...state,
         products: action.payload.sort(() => {
@@ -32,25 +33,19 @@ export function rootReducer(state = initialState, action) {
         }),
         clearProducts: action.payload,
       };
-    case GET_PRODUCT_BY_QUERY:
+
+      case GET_PRODUCT_BY_QUERY:
       return {
         ...state,
         products: action.payload,
       };
-    case GET_PRODUCT_DETAIL:
-      return {
-        ...state,
-        productDetail: action.payload,
-      };
 
-    case DELETE_PRODUCT:
-      const deleteProduct = state.products.filter(
-        (product) => product.id === action.payload
-      );
-      return {
-        ...state,
-        clearProducts: deleteProduct,
-      };
+      // case GET_PRODUCT_DETAIL:
+      // return {
+      //   ...state,
+      //   productDetail: action.payload,
+      // };
+
     case FILTER_BY_CATEGORY: {
       const allProducts = state.clearProducts;
       const mapeo = allProducts.map((e) => {
@@ -67,6 +62,7 @@ export function rootReducer(state = initialState, action) {
         products: filterProduct,
       };
     }
+
     case CREATE_CATEGORY:
       return {
         ...state,
@@ -77,18 +73,14 @@ export function rootReducer(state = initialState, action) {
         ...state,
         productDetail: []
       }
+
     case GET_CATEGORIES: 
       return {
         ...state,
         categories: action.payload,
       }
-    case GET_PRODUCT_BY_QUERY:
-      return {
-        ...state,
-        products: action.payload
-      };
+    
     case GET_PRODUCT_BY_ID:
-      console.log('REDUCER', action.payload)
       return {
           ...state,
           productDetail: action.payload,
@@ -100,7 +92,8 @@ export function rootReducer(state = initialState, action) {
           ...state,
           clearProducts: deleteProduct
       };
-    case FILTER_BY_CATEGORY: {
+      
+    /* case FILTER_BY_CATEGORY: {
       const allProducts = state.clearProducts;
       const mapeo = allProducts.map(e => {
         return {...e, category: e.category.map(n => n.name)}
@@ -122,13 +115,7 @@ export function rootReducer(state = initialState, action) {
           ...state,
           categories: action.payload,
         };
-      }
-
-    case PRODUCT_RESET:
-      return {
-        ...state,
-        productDetail: []
-      }
+      } */
 
     case CHANGE_ORDER: {
       let array = [...state.products];
