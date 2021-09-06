@@ -15,10 +15,10 @@ export default function AdminAddCategory(props) {
     const dispatch = useDispatch()    
 
     const handleChange = ({ target: { name, value } }) => {
-        if (name === 'imageUrl') {
+        if (name === 'image') {
             setCategory({
                 ...category,
-                imageUrl: [value],
+                image: [value],
             });
         } else {
             setCategory({
@@ -35,7 +35,7 @@ export default function AdminAddCategory(props) {
         setCategory({
             name: '',
             description: '',
-            imageUrl: []
+            image: []
         })
     }
 
@@ -62,11 +62,11 @@ export default function AdminAddCategory(props) {
                             acceptedFiles={['image/*']}
                             dropzoneText={"Drag and drop an image here or click"}
                             clearOnUnmount={true}
-                            onChange={image => handleChange({ target: { name: 'imageUrl', value: image[0] } })}
+                            onChange={image => handleChange({ target: { name: 'image', value: image[0] } })}
                             onDelete={deletedImage => {
                                 setCategory({
                                     ...category,
-                                    imageUrl: [],
+                                    image: [],
                                 });
                             }}
                         />

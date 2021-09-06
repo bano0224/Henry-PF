@@ -1,8 +1,7 @@
 import { CREATE_PRODUCT } from "./index";
 import { URL_PRODUCT_CREATE } from "../utils/utils";
 import axios from "axios";
-
-import firebase, { storage } from "../firebase";
+import { storage } from "../firebase";
 
 const uploadImage = async (img, name) => {
   let imageUrl = [];
