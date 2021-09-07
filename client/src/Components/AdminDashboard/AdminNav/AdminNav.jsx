@@ -19,6 +19,7 @@ import CategoryIcon from '@material-ui/icons/Category';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import PeopleIcon from '@material-ui/icons/People';
 import Container from '@material-ui/core/Container'
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
@@ -26,7 +27,7 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
-    display: 'flex',
+    display: 'flex'
     },
     appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -63,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
     width: drawerWidth,
+    },
+    container: {
+        justifyContent: 'space-between'
     },
     drawerHeader: {
         display: 'flex',
@@ -113,7 +117,7 @@ export default function AdminNav() {
                 [classes.appBarShift]: open,
             })}
         >
-        <Toolbar>
+        <Toolbar className={classes.container}>
             <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -127,11 +131,17 @@ export default function AdminNav() {
             Admin Dashboard
             </Typography>
             <div className={classes.dashboard}>
-            <Button variant="contained" color="secondary" component={Link} to='/'>
-            <Typography variant="h6" noWrap>
-            Home
-            </Typography>
-            </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    id='button'
+                    startIcon={<HomeRoundedIcon />}
+                    component={Link}
+                    to='/'
+                >
+                    Home
+                </Button>
             </div>
         </Toolbar>
         <Container>

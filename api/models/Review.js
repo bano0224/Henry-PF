@@ -20,7 +20,7 @@ const reviewSchema = new Schema({
   ],
   product: [
     {
-      type: schema.ObjectId,
+      type: Schema.ObjectId,
       ref: "Product",
     }
   ]

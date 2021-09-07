@@ -6,7 +6,8 @@
     "express": "^4.17.1",
     "mongoose": "^6.0.3",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",
