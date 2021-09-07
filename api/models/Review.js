@@ -9,6 +9,9 @@ const reviewSchema = new Schema({
     type: String,
     required: true,
   },
+  value: {
+    type: String
+  }
 });
 
 module.exports = model("Review", reviewSchema);
