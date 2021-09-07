@@ -9,6 +9,21 @@ const reviewSchema = new Schema({
     type: String,
     required: true,
   },
+  value: {
+    type: String
+  },
+  user: [
+    {
+      type: Schema.ObjectId,
+      ref: "User",
+    }
+  ],
+  product: [
+    {
+      type: schema.ObjectId,
+      ref: "Product",
+    }
+  ]
 });
 
 module.exports = model("Review", reviewSchema);

@@ -9,22 +9,16 @@ import Box from "@material-ui/core/Box";
 import style from "./Reviews.module.css";
 
 export default function Reviews() {
-  const [value, setValue] = useState(2);
+  
+  const history = useHistory();
   const dispatch = useDispatch();
+  const [value, setValue] = useState(2);
   const [input, setInput] = useState({
     name: "",
     comment: "",
   });
-  const history = useHistory()
-
+  
   function handleChange(e) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleChangeComments(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -33,11 +27,13 @@ export default function Reviews() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(setReviews(input));
+    
     setInput({
       name: "",
       comment: "",
     })
+    setValue(value)
+    dispatch(setReviews(input, value));
     alert('¡Gracias por tu review!')
     history.push('/')
   }
