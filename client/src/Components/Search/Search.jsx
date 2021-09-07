@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import getProductByQuery from "../../actions/getProductByQuery";
-import { Container, Button, styled } from "@material-ui/core";
+import { Container, Button, Grid } from "@material-ui/core";
 import style from "./Search.module.css";
 
 export default function Search() {
@@ -28,7 +28,7 @@ export default function Search() {
             value={input.name}
             onChange={(e) => handleChange(e)}
           /> */}
-      <Container maxWidth="xs">
+      <Grid container direction='row'>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div class="mb-2">
             <input
@@ -48,7 +48,7 @@ export default function Search() {
             </Button>
           </Container>
         </form>
-      </Container>
+      </Grid>
       {/* <button type="submit">Search</button> */}
       {/* </div>
       </form> */}

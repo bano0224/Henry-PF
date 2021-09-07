@@ -7,7 +7,7 @@ function ChangeOrder(props) {
   };
   return (
     <div id="filter">
-      {props.products.length ? <label></label> : null}
+      {/* {props.products.length ? <label></label> : null} */}
       {props.products.length ? (
         <div class="mb-2">
           <label for="exampleFormControlInput1" class="form-label">
