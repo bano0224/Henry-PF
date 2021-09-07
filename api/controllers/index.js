@@ -184,10 +184,9 @@ const updateCategory = async (req, res) => {
 };
 
 const createReviews = async (req, res) => {
-  console.log('ESTE ES EL BODY', req.body)
-  /* const { name, comment } = req.body */
+  console.log(req.body)
   try {
-    let createReview = await Review.create( req.body/* name: `${name}`, comment: `${comment}` */)
+    let createReview = await Review.create(req.body)
     res.status(200).send('Comentario agregado')
   } catch(err) {
     return err
