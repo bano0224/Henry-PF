@@ -39,10 +39,19 @@ export default function Home() {
       </div>
       <div className={s.body3}>
         <div className={s.navBar}>
-          <Search id='search' />
+          
           <div className={s.filter}>
-            <FilterByCategory />
+            <div className={s.search}>
+            <Search id='search' />
+            </div>
+          
+          <div className={s.filterByCategory}>
+          <FilterByCategory />
+          </div>
+            <div className={s.change}>
             <ChangeOrder />
+            </div>
+            
           </div>
         </div>
         <div className={s.bodyCards}>

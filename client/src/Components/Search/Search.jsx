@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from "react-redux";
 import getProductByQuery from "../../actions/getProductByQuery";
-
+import { Container, Button, styled } from "@material-ui/core";
+import style from "./Search.module.css";
 
 export default function Search() {
   const dispatch = useDispatch();
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
 
   function handleChange(e) {
     setInput(e.target.value);
@@ -18,7 +19,7 @@ export default function Search() {
 
   return (
     <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      {/* <form onSubmit={(e) => handleSubmit(e)}>
         <div>
           <input
             type="text"
@@ -26,10 +27,31 @@ export default function Search() {
             autoComplete="off"
             value={input.name}
             onChange={(e) => handleChange(e)}
-          />
-          <button type="submit">Search</button>
-        </div>
-      </form>
+          /> */}
+      <Container maxWidth="xs">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div class="mb-2">
+            <input
+              required
+              placeholder="Search product..."
+              onChange={(e) => handleChange(e)}
+              value={input.name}
+              type="text"
+              class="form-control"
+              id="exampleFormControlInput1"
+              name="name"
+            />
+          </div>
+          <Container>
+            <Button variant="contained" color="secondary" type="submit">
+              Search
+            </Button>
+          </Container>
+        </form>
+      </Container>
+      {/* <button type="submit">Search</button> */}
+      {/* </div>
+      </form> */}
     </div>
   );
 }
