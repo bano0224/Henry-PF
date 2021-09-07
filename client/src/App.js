@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./components/Home/Home";
-import CreateProduct from "./components/CreateProduct/CreateProduct";
-import DetailProduct from "./components/DetailProduct/DetailProduct"
-import AdminNav from "./components/AdminDashboard/AdminNav/AdminNav";
-import AdminProduct from "./components/AdminDashboard/AdminProduct/AdminProduct";
-import AdminUsers from "./components/AdminDashboard/AdminUsers/AdminUsers";
-import AdminCategories from "./components/AdminDashboard/AdminCategories/AdminCategories";
-import AdminAddProduct from "./components/AdminDashboard/AdminAddProduct/AdminAddProduct";
+import Home from "./Components/Home/Home";
+import CreateProduct from "./Components/CreateProduct/CreateProduct";
+import DetailProduct from "./Components/DetailProduct/DetailProduct"
+import AdminNav from "./Components/AdminDashboard/AdminNav/AdminNav";
+import AdminProduct from "./Components/AdminDashboard/AdminProduct/AdminProduct";
+import AdminUsers from "./Components/AdminDashboard/AdminUsers/AdminUsers";
+import AdminCategories from "./Components/AdminDashboard/AdminCategories/AdminCategories";
+import AdminAddProduct from "./Components/AdminDashboard/AdminAddProduct/AdminAddProduct";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Cart from "./components/ShoppingCart/ShoppingCart";
-import AdminModifyProduct from "./components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
-import AdminAddCategory from "./components/AdminDashboard/AdminAddCategory/AdminAddCategory";
-import Reviews from "./components/Reviews/Reviews";
+import Cart from "./Components/ShoppingCart/ShoppingCart";
+import AdminModifyProduct from "./Components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
+import AdminAddCategory from "./Components/AdminDashboard/AdminAddCategory/AdminAddCategory";
+import Reviews from "./Components/Reviews/Reviews";
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { useDispatch } from 'react-redux'
 import getProductByQuery from "../../actions/getProductByQuery";
 
@@ -14,7 +14,14 @@ export default function Search() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(getProductByQuery(input));
+    setInput({
+      
+      // if(name){
+      //   alert('Este producto no existe')
+     
+    }) 
   }
+
 
   return (
     <div>
@@ -23,7 +30,7 @@ export default function Search() {
           <input
             type="text"
             placeholder="Search product..."
-            autoComplete="off"
+            autoComplete="on"
             value={input.name}
             onChange={(e) => handleChange(e)}
           />
