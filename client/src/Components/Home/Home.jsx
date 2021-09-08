@@ -39,7 +39,6 @@ export default function Home() {
       </div>
       <div className={s.body3}>
         <div className={s.navBar}>
-          
           <div className={s.filter}>
             <div className={s.search}>
             <Search id='search' />

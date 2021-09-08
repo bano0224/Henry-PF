@@ -168,7 +168,7 @@ export default function AdminAddProduct(props) {
                                         </Grid>
                                         <Grid item xs={6}>
                                             <label for="exampleFormControlInput1" class="form-label">Discount</label>
-                                            <input required onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={0} />
+                                            <input onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={0} />
                                         </Grid>
                                         <Grid item md={6}>
                                             <label for="exampleFormControlInput1" class="form-label">Featured</label> 

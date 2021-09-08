@@ -19,7 +19,7 @@ export default function AdminModifyProduct({ match }) {
         featured: 0,
         discount: '' || 0
     })
-    console.log(product.category)
+    
     const dispatch = useDispatch();
     
     useEffect(() => {
@@ -27,14 +27,24 @@ export default function AdminModifyProduct({ match }) {
     }, [])
 
     const detail = useSelector( state => state.productDetail)
+    
     const categories = useSelector( state => state.categories)
 
-    useEffect(() =>{
-        setProduct({
-            ...product,
-            category: detail.category
-        })
-    }, [detail])
+    
+
+    // setTimeout(() => {
+    //     setProduct({
+    //         ...product,
+    //         category: detail.category[0]?.name
+    //     }) 
+    // }, 3000)
+
+    // useEffect(() =>{
+    //     console.log(detail?.category[0])
+    //     // console.log('ESTE ES EL DETaIL', detail)
+    //     // const cat = detail.category[0]?.name
+        
+    // }, [detail])
 
     const handleChange = ({ target: { name, value } }) => {
         if (name === 'imageUrl') {
@@ -49,14 +59,14 @@ export default function AdminModifyProduct({ match }) {
             })
         }
     }
-
+    
     const handleChangeFeatured = (e) => {
         setProduct({
             ...product,
             [e.target.name]: e.target.checked
         })
     }
-
+    
     const handleCategory = (e) => {
         setProduct({
             ...product,
@@ -74,7 +84,7 @@ export default function AdminModifyProduct({ match }) {
             price: 0,
             countInStock: 0,
             imageUrl: [],
-            category: detail.category,
+            category: '',
             featured: 0,
             discount: '' || 0
         })
@@ -113,12 +123,14 @@ export default function AdminModifyProduct({ match }) {
                         <label for="exampleFormControlInput1" class="form-label">Category</label> 
                         <select class="form-select" aria-label="Default select example" onChange={(e) => handleCategory(e)}>
                             {
-                                categories.map(el => <option value={el.id}>{el.name}</option>)
+                                categories?.map(el => <option value={el.id}>{el.name}</option>)
                             }
                         </select>
                             <ul>
                                 {
-                                    product.category?.map(el => <li>{el}</li>)
+                                    detail.category[0]?.name.length
+                                    ? detail.category[0]?.name.map(el => <li>{el}</li>)
+                                    : <li>{detail.category[0]?.name}</li>
                                 }
                             </ul>
                     </div>

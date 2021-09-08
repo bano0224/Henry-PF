@@ -11,6 +11,7 @@ export default function getProductByQuery(query){
                 type: GET_PRODUCT_BY_QUERY,
                 payload: response.data,
             })
+            console.log('ESTE ES EL RESPONSE', response)
         })
     }
 }
