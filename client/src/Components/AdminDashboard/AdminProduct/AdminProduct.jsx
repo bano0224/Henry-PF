@@ -19,7 +19,7 @@ import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
 import getProducts from '../../../actions/getProducts';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { getCategories } from '../../../actions/getCategories';
+import getCategories from '../../../actions/getCategories';
 
 
 
