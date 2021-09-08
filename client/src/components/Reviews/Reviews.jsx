@@ -12,10 +12,11 @@ export default function Reviews() {
   
   const history = useHistory();
   const dispatch = useDispatch();
-  const [value, setValue] = useState(2);
+  /* const [value, setValue] = useState(2); */
   const [input, setInput] = useState({
     name: "",
     comment: "",
+    rating:""
   });
   
   function handleChange(e) {
@@ -25,15 +26,18 @@ export default function Reviews() {
     });
   }
 
+
   function handleSubmit(e) {
     e.preventDefault();
     
     setInput({
       name: "",
       comment: "",
+      rating: ""
     })
-    setValue(value)
-    dispatch(setReviews(input, value));
+    /* setValue(value)
+    console.log('ESTE ES EL VALUE', value) */
+    dispatch(setReviews(input));
     alert('¡Gracias por tu review!')
     history.push('/')
   }
@@ -85,11 +89,9 @@ export default function Reviews() {
             </Typography>
             <div className={style.raiting}>
               <Rating
-                name="simple-controlled"
-                value={value}
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                }}
+                name="rating"
+                value={input.rating}
+                onChange={(e) => handleChange(e)}
               />
             </div>
           </Box>
