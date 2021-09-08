@@ -2,34 +2,57 @@ const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const userSchema = new Schema({
+  /* local: {
+    email: String,
+    password: String,
+  }, */
   email: {
     type: String,
     required: true,
+    /* unique: true, */
+  },
+  facebook: {
+    id: String,
+    token: String,
+    email: String,
+    password: String,
+  },
+  google: {
+    id: String,
+    token: String,
+    email: String,
+    password: String,
+  },
+  username: {
+    type: String,
     unique: true,
+    required: true,
   },
   password: {
     type: String,
+    required: true
   },
   first_name: {
     type: String,
-    require: true,
+    /* require: true, */
   },
   last_name: {
     type: String,
-    require: true,
+    /* require: true, */
   },
   phone: {
     type: Number,
-    required: true,
+    /* required: true, */
   },
   active: {
     type: Boolean,
     default: false,
   },
-  // user_role: {
-  //     enum: ['admin', 'user'],
-  //     required: true
-  // },
+  role: [{
+    ref: 'Role',
+    type: Schema.ObjectId,
+    required:true,
+  }],
   address_line1: {
     type: String,
   },
@@ -56,13 +79,13 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.method.encryptPass = async (password) => {
+userSchema.statics.encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(password, salt);
 };
 
-userSchema.method.matchPass = async function (password) {
-  return await bcrypt.compare(password, this.password);
+userSchema.statics.matchPassword = async (password, receivePassword) => {
+  return await bcrypt.compare(password, receivePassword);
 };
 
 module.exports = model("User", userSchema);

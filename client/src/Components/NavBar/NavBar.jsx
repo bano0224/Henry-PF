@@ -23,7 +23,13 @@ export default function NavBar() {
           <li>
             <a href="#">Sobre Nosotros</a>
           </li>
+          <li>
+            <Link to='/login'>
+            <a href="#">Login</a>     
+            </Link>
+          </li>
         </ul>
+        
         <span className={style.btn_menu}>
           <i className={style.faBars}></i>
         </span>
