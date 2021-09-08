@@ -3,6 +3,7 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js")
 
+
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
   try {
@@ -14,7 +15,8 @@ const getProducts = async (req, res, next) => {
         res.status(200).json(productFind);
       } else {
         res.status(400).send("No se encontró el producto solicitado");
-      }
+/*         res.status(200).json([{error:"No se encontró el producto solicitado"}]);
+ */      }
     } else {
       const productFind = await Product.find({}).populate("category", {
         name: 1,
@@ -184,14 +186,42 @@ const updateCategory = async (req, res) => {
 };
 
 const createReviews = async (req, res) => {
-  console.log(req.body)
+  console.log('ESTE ES EL BODY', req.body)
+  /* const { name, comment } = req.body */
   try {
-    let createReview = await Review.create(req.body)
+    let createReview = await Review.create( req.body/* name: `${name}`, comment: `${comment}` */)
     res.status(200).send('Comentario agregado')
   } catch(err) {
     return err
   }
 };
+
+const logUp = async (req, res) => {
+  const { username, email, password, roles } = req.body
+  try {
+    let createUser = await User.create({
+      username,
+      email,
+      roles,
+      password: User.encryptPassword(password)
+    })
+  } catch(err) {
+    return err
+  }
+  
+}
+const logIn = async (req, res) => {
+  res.json('Yo tmb estoy funcionando')
+}
+const getUser = async (req, res) => {
+
+}
+const updateUser = async (req, res) => {
+
+}
+const getUserById = async (req, res) => {
+
+}
 
 module.exports = {
   getProducts,
@@ -204,7 +234,12 @@ module.exports = {
   deleteCategory,
   updateCategory,
   updateProduct,
-  createReviews
+  createReviews,
+  logIn,
+  logUp,
+  getUser,
+  updateUser,
+  getUserById
 };
 
 

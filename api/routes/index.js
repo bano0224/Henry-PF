@@ -7,7 +7,9 @@ var bodyParser = require('body-parser');
 
 
 const router = Router();
+
 router.use(bodyParser.json());
+
 router.use('/product', product);
 router.use('/user', user)
 router.use('/category', category )

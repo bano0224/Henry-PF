@@ -10,9 +10,16 @@ import modifyProduct from '../../../actions/modifyProduct'
 
 export default function AdminModifyProduct({ match }) {
     const [product, setProduct] = useState({
-
+        name: '',
+        description: '',
+        price: 0,
+        countInStock: 0,
+        imageUrl: [],
+        category: [],
+        featured: 0,
+        discount: '' || 0
     })
-    
+    console.log(product.category)
     const dispatch = useDispatch();
     
     useEffect(() => {
@@ -20,6 +27,14 @@ export default function AdminModifyProduct({ match }) {
     }, [])
 
     const detail = useSelector( state => state.productDetail)
+    const categories = useSelector( state => state.categories)
+
+    useEffect(() =>{
+        setProduct({
+            ...product,
+            category: detail.category
+        })
+    }, [detail])
 
     const handleChange = ({ target: { name, value } }) => {
         if (name === 'imageUrl') {
@@ -59,7 +74,7 @@ export default function AdminModifyProduct({ match }) {
             price: 0,
             countInStock: 0,
             imageUrl: [],
-            category: [],
+            category: detail.category,
             featured: 0,
             discount: '' || 0
         })
@@ -73,19 +88,19 @@ export default function AdminModifyProduct({ match }) {
                 <form onSubmit={(e) => (handleSubmmit(e))}>
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">Name</label>
-                        <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name' placeholder={detail.name}/>
+                        <input onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name' placeholder={detail.name}/>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                        <textarea required onChange={(e) => handleChange(e)} value={product.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder={detail.description}></textarea>
+                        <textarea onChange={(e) => handleChange(e)} value={product.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder={detail.description}></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
-                        <input required onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control" id="price" placeholder={detail.price}/>
+                        <input onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control" id="price" placeholder={detail.price}/>
                         <label for="stock" class="form-label">Stock</label>
-                        <input required onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' type="number" class="form-control" id="stock" placeholder={detail.countInStock}/>
+                        <input onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' type="number" class="form-control" id="stock" placeholder={detail.countInStock}/>
                         <label for="exampleFormControlInput1" class="form-label">Discount</label>
-                        <input required onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={detail.discount}/>
+                        <input onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={detail.discount}/>
                     </div>   
                     <label for="exampleFormControlInput1" class="form-label">Featured</label> 
                     <Switch
@@ -96,15 +111,19 @@ export default function AdminModifyProduct({ match }) {
                     />
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">Category</label> 
-                        <select required class="form-select" aria-label="Default select example" onChange={(e) => handleCategory(e)}>
-                            <option selected>-</option>
-                            <option value="6131166772d513f4eb58c18d">Lacteos</option>
-                            <option value="Bebidas">Bebidas</option>
-                            <option value="Limpieza">Limpieza</option>
+                        <select class="form-select" aria-label="Default select example" onChange={(e) => handleCategory(e)}>
+                            {
+                                categories.map(el => <option value={el.id}>{el.name}</option>)
+                            }
                         </select>
+                            <ul>
+                                {
+                                    product.category?.map(el => <li>{el}</li>)
+                                }
+                            </ul>
                     </div>
                     <div class="mb-2">
-                        <label required for="exampleFormControlInput1" class="form-label">Image</label>
+                        <label for="exampleFormControlInput1" class="form-label">Image</label>
                         {/* <input type="file" accept="image/*" onChange={(e) => handleChange(e)} name='imageUrl' class="form-control" id="exampleFormControlInput1"/> */}
                         {/* <input type="file" accept='image/*' onChange={handleChange} />
                          */}

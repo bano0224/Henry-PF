@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { filterByCategory } from '../../../actions/filterByCategory';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -16,14 +18,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterByCategory({categories}) {
-  const classes = useStyles();
-  const [age, setAge] = React.useState('');
+export default function FilterByCategory() {
   const [open, setOpen] = React.useState(false);
+  const [category, setCategory] = React.useState('')
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  const allCategories = useSelector(state => state.categories)
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setCategory(event.target.value)
   };
+
+  useEffect(() => {
+    dispatch(filterByCategory(category));
+  }, [category])
+
+  console.log(category)
 
   const handleClose = () => {
     setOpen(false);
@@ -41,16 +52,16 @@ export default function FilterByCategory({categories}) {
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
           open={open}
+          value={category}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={age}
           onChange={handleChange}
         >
-          <MenuItem value="">
-            <em>None</em>
+          <MenuItem value="all">
+            <em>All</em>
           </MenuItem>
           {
-            categories?.map(c => <MenuItem vale={c.name}>{c.name}</MenuItem>)
+            allCategories?.map(c => <MenuItem value={c.name}>{c.name}</MenuItem>)
           }
         </Select>
       </FormControl>

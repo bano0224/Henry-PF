@@ -6,9 +6,18 @@ html {
   width: 100%;
 }
 
+#button:hover{
+  color: white
+}
+
+#side:hover{
+  color: #b2102f;
+}
+
 #root {
   height:100%;
 }
+
 body {
   height: 100%;
   width:100%;
