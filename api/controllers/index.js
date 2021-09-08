@@ -3,6 +3,7 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js")
 
+
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
   try {
@@ -14,7 +15,8 @@ const getProducts = async (req, res, next) => {
         res.status(200).json(productFind);
       } else {
         res.status(400).send("No se encontró el producto solicitado");
-      }
+/*         res.status(200).json([{error:"No se encontró el producto solicitado"}]);
+ */      }
     } else {
       const productFind = await Product.find({}).populate("category", {
         name: 1,
@@ -49,6 +51,7 @@ const createProduct = async (req, res) => {
 
 const getProductsById = async (req, res) => {
   const { id } = req.params;
+  console.log(id)
   try {
     const productId = await Product.findById(id);
     res.status(200).json(productId);
@@ -87,32 +90,9 @@ const removeProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const { id } = req.params
   try {
     if (id) {
-      // await Product.findByIdAndUpdate(id, {
-      //   name: req.body.name,
-      //   price: req.body.price,
-      //   description: req.body.description,
-      //   countInStock: req.body.countInStock,
-      //   imageUrl: req.body.imageUrl,
-      //   featured: req.body.featured,
-      //   discount: req.body.discount,
-      //   // category: [...category,req.body.category] || 'default',
-      //   category: req.body.category ? modifiedCategory(req.body.id, req.body.category) : ''
-      // });
-      console.log('REQ.BODY: ', req.body);
       const { name, price, description, countInStock, imageUrl, featured, discount, category } = req.body;
-      // await Product.findByIdAndUpdate(id, {
-      //   name,
-      //   price,
-      //   description,
-      //   countInStock,
-      //   imageUrl,
-      //   featured,
-      //   discount,
-      //   category,
-      // });
       const product = await Product.findById(id);
       product.name = name;
       product.price = price;
@@ -124,6 +104,7 @@ const updateProduct = async (req, res) => {
       product.category = category;
 
       await product.save();
+      
       res.status(200).send("El producto fue actualizado");
     } else {
       res.status(404).send("El producto no fue encontrado");
@@ -136,6 +117,8 @@ const updateProduct = async (req, res) => {
 const modifiedCategory = (idProducto, idCategory) => {
   const product = Product.findById({ idProducto }).stringify();
   const category = product.category;
+
+  console.log(product.name);
 
   category.includes(idCategory) ? category : category.push(idCategory);
 };
@@ -215,6 +198,33 @@ const createReviews = async (req, res) => {
   }
 };
 
+const logUp = async (req, res) => {
+  const { username, email, password, roles } = req.body
+  try {
+    let createUser = await User.create({
+      username,
+      email,
+      roles,
+      password: User.encryptPassword(password)
+    })
+  } catch(err) {
+    return err
+  }
+  
+}
+const logIn = async (req, res) => {
+  res.json('Yo tmb estoy funcionando')
+}
+const getUser = async (req, res) => {
+
+}
+const updateUser = async (req, res) => {
+
+}
+const getUserById = async (req, res) => {
+
+}
+
 module.exports = {
   getProducts,
   createProduct,
@@ -226,7 +236,12 @@ module.exports = {
   deleteCategory,
   updateCategory,
   updateProduct,
-  createReviews
+  createReviews,
+  logIn,
+  logUp,
+  getUser,
+  updateUser,
+  getUserById
 };
 
 
