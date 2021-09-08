@@ -4,8 +4,22 @@ import { Container, Button } from '@material-ui/core';
 import { DropzoneArea } from 'material-ui-dropzone';
 import createCategory from '../../../actions/createCategory';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+    },
+    formWrapper: {
+        marginTop: theme.spacing(5),
+        marginBottom: theme.spacing(8)
+    }
+}));
 
 export default function AdminAddCategory(props) {
+    const classes = useStyles();
     const [category, setCategory] = useState({
         name: '',
         description: '',
@@ -42,7 +56,19 @@ export default function AdminAddCategory(props) {
     return (
         <>
             <AdminNav /> 
-            <hr />
+            <br />
+            <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<ArrowBackIcon />}
+                    component={Link} 
+                    to='/admin/categories'
+                    style= {{textDecoration: 'none'}}
+                    id='button'
+                >
+                    Back
+                </Button>
             <Container>
                 <h1>Add Category</h1>
             </Container>

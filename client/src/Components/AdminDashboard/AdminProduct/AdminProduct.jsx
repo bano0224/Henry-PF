@@ -47,6 +47,20 @@ const columns = [
       align: 'right',
       format: (value) => value.toFixed(2),
     },
+    {
+      id: 'edit',
+      label: 'Edit',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toFixed(2),
+    },
+    {
+      id: 'delete',
+      label: 'Delete',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toFixed(2),
+    },
   ];
 
   const useStyles = makeStyles({
@@ -103,38 +117,27 @@ export default function AdminProduct() {
     return (
         <>
         <AdminNav/>
-        <hr />
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          startIcon={<ArrowBackIcon />}
-          component={Link} 
-          to='/admin'
-          style= {{textDecoration: 'none'}}
-          id='button'
-        >
-        </Button>
+        <br />
         <Container>
-        
-            <h1>Products</h1>
-        <Box display="flex" justifyContent='space-around' alignItems='center'>
-            <FilterByCategory />
-            <AdminSearch />
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-              startIcon={<AddIcon />}
-              component={Link} 
-              to='products/add'
-              style= {{textDecoration: 'none'}}
-              id='button'
-            >
-              Add Product
-            </Button>
-        </Box>
-            <Paper className={classes.root}>
+          <h1>Products</h1>
+          <Box display="flex" justifyContent='space-around' alignItems='center'>
+              <FilterByCategory />
+              <AdminSearch />
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                startIcon={<AddIcon />}
+                component={Link} 
+                to='products/add'
+                style= {{textDecoration: 'none'}}
+                id='button'
+              >
+                Add Product
+              </Button>
+          </Box>
+          <br />
+          <Paper className={classes.root}>
             <TableContainer className={classes.container}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -168,17 +171,17 @@ export default function AdminProduct() {
                 </TableBody>
               </Table>
             </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-            </Paper>
-            <br />
+          <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+          </Paper>
+          <br />
         </Container>
         </>
     )

@@ -14,6 +14,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
+import Box from '@material-ui/core/Box'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
@@ -74,33 +75,22 @@ export default function AdminCategories() {
     return (
         <>
         <AdminNav/>
-        <hr />
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          startIcon={<ArrowBackIcon />}
-          component={Link} 
-          to='/admin'
-          style= {{textDecoration: 'none'}}
-        >
-        </Button>
+        <br />
         <Container>
-        <h1>Categories</h1>
-        <Container>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-            startIcon={<AddIcon />}
-            component={Link} 
-            to='categories/add'
-            style= {{textDecoration: 'none'}}
-          >
-            Add Category
-          </Button>
-        </Container>
-        
+          <h1>Categories</h1>
+          <Box display="flex" justifyContent='flex-end' alignItems='center'>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                startIcon={<AddIcon />}
+                component={Link} 
+                to='categories/add'
+                style= {{textDecoration: 'none'}}
+              >
+                Add Category
+              </Button>
+          </Box>
           <Paper className={classes.root}>
           <TableContainer className={classes.container}>
               <Table stickyHeader aria-label="sticky table">
