@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+<<<<<<< HEAD
 import Home from "./Components/Home/Home";
 import CreateProduct from "./Components/CreateProduct/CreateProduct";
 import DetailProduct from "./Components/DetailProduct/DetailProduct"
@@ -14,6 +15,20 @@ import AdminModifyProduct from "./Components/AdminDashboard/AdminModifyProduct/A
 import AdminAddCategory from "./Components/AdminDashboard/AdminAddCategory/AdminAddCategory";
 import Reviews from "./Components/Reviews/Reviews";
 import Login from "./Components/Login/Login";
+=======
+import Home from "./components/Home/Home";
+import CreateProduct from "./components/CreateProduct/CreateProduct";
+import DetailProduct from "./components/DetailProduct/DetailProduct"
+import AdminNav from "./components/AdminDashboard/AdminNav/AdminNav";
+import AdminProduct from "./components/AdminDashboard/AdminProduct/AdminProduct";
+import AdminUsers from "./components/AdminDashboard/AdminUsers/AdminUsers";
+import AdminCategories from "./components/AdminDashboard/AdminCategories/AdminCategories";
+import AdminAddProduct from "./components/AdminDashboard/AdminAddProduct/AdminAddProduct";
+import Cart from "./components/ShoppingCart/ShoppingCart";
+import AdminModifyProduct from "./components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
+import AdminAddCategory from "./components/AdminDashboard/AdminAddCategory/AdminAddCategory";
+import Reviews from "./components/Reviews/Reviews";
+>>>>>>> 8c2870145ad18c417539b72d38c4952817146840
 
 function App() {
   return (

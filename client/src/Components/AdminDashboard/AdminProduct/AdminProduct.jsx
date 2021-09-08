@@ -47,9 +47,21 @@ const columns = [
       align: 'right',
       format: (value) => value.toFixed(2),
     },
+    {
+      id: 'edit',
+      label: 'Edit',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toFixed(2),
+    },
+    {
+      id: 'delete',
+      label: 'Delete',
+      minWidth: 170,
+      align: 'right',
+      format: (value) => value.toFixed(2),
+    },
   ];
-
-  
 
   const useStyles = makeStyles({
     root: {
@@ -59,12 +71,7 @@ const columns = [
       maxHeight: 440,
     },
     button: {
-    margin: 10,
-    },
-    butto: {
-      hover: {
-        color:'red'
-      }
+      margin: 10,
     }
   });
 
@@ -73,7 +80,7 @@ export default function AdminProduct() {
     const [rows, setRows] = useState([])
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [categories, setCategories] = useState([]);
+
     const dispatch = useDispatch()
     
     useEffect(() => {  
@@ -82,7 +89,6 @@ export default function AdminProduct() {
     }, [])
     
     const products = useSelector( state => state.products)
-    const category = useSelector(state => state.categories)
 
     useEffect(() => {
       setRows(products.map(p => {
@@ -95,11 +101,7 @@ export default function AdminProduct() {
           id: p._id
         }
       }))
-    })
-
-    useEffect(() => {
-      setCategories(category)
-    },[category])
+    }, [products])
     
 
     const handleChangePage = (event, newPage) => {
@@ -115,36 +117,27 @@ export default function AdminProduct() {
     return (
         <>
         <AdminNav/>
-        <hr />
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          startIcon={<ArrowBackIcon />}
-          component={Link} 
-          to='/admin'
-          style= {{textDecoration: 'none'}}
-        >
-        </Button>
+        <br />
         <Container>
-        
-            <h1>Products</h1>
-        <Box display="flex" justifyContent='space-around' alignItems='center'>
-            <FilterByCategory categories={categories}/>
-            <AdminSearch />
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-              startIcon={<AddIcon />}
-              component={Link} 
-              to='products/add'
-              style= {{textDecoration: 'none'}}
-            >
-              Add Product
-            </Button>
-        </Box>
-            <Paper className={classes.root}>
+          <h1>Products</h1>
+          <Box display="flex" justifyContent='space-around' alignItems='center'>
+              <FilterByCategory />
+              <AdminSearch />
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                startIcon={<AddIcon />}
+                component={Link} 
+                to='products/add'
+                style= {{textDecoration: 'none'}}
+                id='button'
+              >
+                Add Product
+              </Button>
+          </Box>
+          <br />
+          <Paper className={classes.root}>
             <TableContainer className={classes.container}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -163,7 +156,7 @@ export default function AdminProduct() {
                 <TableBody>
                     {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} component={Link} to={`/admin/products/modify/${row.id}`}>
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} component={Link} to={`/admin/products/modify/${row.id}`} style= {{textDecoration:'none'}}>
                         {columns.map((column) => {
                             const value = row[column.id];
                             return (
@@ -178,16 +171,17 @@ export default function AdminProduct() {
                 </TableBody>
               </Table>
             </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-            </Paper>
+          <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+          </Paper>
+          <br />
         </Container>
         </>
     )

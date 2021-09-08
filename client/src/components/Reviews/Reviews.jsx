@@ -9,14 +9,16 @@ import Box from "@material-ui/core/Box";
 import style from "./Reviews.module.css";
 
 export default function Reviews() {
-  const [value, setValue] = useState(2);
+  
+  const history = useHistory();
   const dispatch = useDispatch();
+  /* const [value, setValue] = useState(2); */
   const [input, setInput] = useState({
     name: "",
     comment: "",
+    rating:""
   });
-  const history = useHistory()
-
+  
   function handleChange(e) {
     setInput({
       ...input,
@@ -24,20 +26,18 @@ export default function Reviews() {
     });
   }
 
-  function handleChangeComments(e) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(setReviews(input));
+    
     setInput({
       name: "",
       comment: "",
+      rating: ""
     })
+    /* setValue(value)
+    console.log('ESTE ES EL VALUE', value) */
+    dispatch(setReviews(input));
     alert('¡Gracias por tu review!')
     history.push('/')
   }
@@ -89,11 +89,9 @@ export default function Reviews() {
             </Typography>
             <div className={style.raiting}>
               <Rating
-                name="simple-controlled"
-                value={value}
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                }}
+                name="rating"
+                value={input.rating}
+                onChange={(e) => handleChange(e)}
               />
             </div>
           </Box>

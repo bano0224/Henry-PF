@@ -16,7 +16,8 @@ import accounting from "accounting";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
-    maxHeight: 450
+    maxHeight: 450,
+
   },
   
   action: {
@@ -72,11 +73,11 @@ export default function ProductCard({name, image, description, price}) {
         image={image}
         title={name}
       />
-      <CardContent>
+      {/* <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {description}
         </Typography>
-      </CardContent>
+      </CardContent> */}
       <CardActions disableSpacing>
         <IconButton aria-label="add to Card">
           <AddShoppingCart fontSize="large" />

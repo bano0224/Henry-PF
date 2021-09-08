@@ -6,7 +6,7 @@ server.get('/', getProducts)
 server.post('/create', createProduct)
 server.get('/:id', getProductsById)
 server.delete('/delete/:id', removeProduct)
-server.put('/update', updateProduct)
+server.put('/update/:id', updateProduct)
 
 
 module.exports = server;

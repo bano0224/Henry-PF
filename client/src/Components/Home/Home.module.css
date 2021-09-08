@@ -36,10 +36,26 @@
 }
 
 .filter {
+  width: 100%;
+  margin: 15px;
+  margin-left: 15px;
   display:flex;
-  justify-content:center;
+  justify-content:space-evenly;
   flex-direction: row;
+  align-items: center;
   /* margin:10px; */
+}
+
+.filterByCategory {
+  margin: 10px;
+}
+
+.change {
+  margin: 10px;
+}
+
+.search {
+  margin: 10px;
 }
 
 .body3 {
@@ -78,12 +94,12 @@
 
 .navBar {
   min-width: 100%;
-  height: auto;
+  /* height: auto; */
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: row;
-  margin: 10px;
+  /* margin: 10px; */
 }
 
 @media screen and (min-width: 500px) {
