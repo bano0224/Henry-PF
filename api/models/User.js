@@ -46,12 +46,12 @@ const userSchema = new Schema({
   },
   active: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   role: [{
     ref: 'Role',
     type: Schema.ObjectId,
-    required:true,
+    /* required:true, */
   }],
   address_line1: {
     type: String,
@@ -77,13 +77,18 @@ const userSchema = new Schema({
   verifyCode: {
     type: Number,
   },
+  token: [{
+      type: String,
+      required:true
+    }]
+
 });
 
 userSchema.statics.encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(password, salt);
 };
-
+//recibier la password y comparar la passwod con la actual si quiere modificarla
 userSchema.statics.matchPassword = async (password, receivePassword) => {
   return await bcrypt.compare(password, receivePassword);
 };

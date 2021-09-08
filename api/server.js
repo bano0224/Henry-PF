@@ -4,9 +4,11 @@ const express = require("express");
 const morgan = require("morgan");
 const routes = require("./routes/index");
 const cors = require('cors')
+const categoryRoles = require('./libs/initialSetup')
 
 connectDB();
 const app = express();
+categoryRoles();
 
 
 app.use(express.json({ limit: "50mb" }));
