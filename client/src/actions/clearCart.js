@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import { rootReducer, initialState } from '../reducer/product_reducer'; 
-export const CLEAR_CART = "CLEAR_CART"
+import { CLEAR_CART } from '.';
 
 export default function ClearCart(){
     

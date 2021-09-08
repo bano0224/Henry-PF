@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { filterByCategory } from '../../../actions/filterByCategory';
+import filterByCategory from '../../../actions/filterByCategory';
 
 const useStyles = makeStyles((theme) => ({
   button: {

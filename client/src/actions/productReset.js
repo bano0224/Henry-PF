@@ -1,4 +1,4 @@
-export const PRODUCT_RESET = 'PRODUCT_RESET';
+import { PRODUCT_RESET } from "."
 
 export default function productReset () {
     return {

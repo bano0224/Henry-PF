@@ -2,7 +2,7 @@ import { GET_CATEGORIES } from "./index";
 import { URL_CATEGORIES } from "../utils/utils";
 
 
-export function getCategories() {
+export default function getCategories() {
     return function (dispatch) {
       return fetch(URL_CATEGORIES)
         .then((response) => response.json())

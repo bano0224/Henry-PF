@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { URL_CREATE_VIEWERS } from '../utils/utils';
-
-export const SET_REVIEWS = 'SET_REVIEWS'
+import { SET_REVIEWS } from '.';
 
 export default function setReviews (payload) {
     return async(dispatch) => {
