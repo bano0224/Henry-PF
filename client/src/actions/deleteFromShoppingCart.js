@@ -1,7 +1,6 @@
 import { useReducer } from 'react';
 import { rootReducer, initialState } from '../reducer/product_reducer'; 
-export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART"
-export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART"
+import { REMOVE_ALL_FROM_CART, REMOVE_ONE_FROM_CART } from '.';
 
 export default function DelFromCart(_id, all = false){
 
