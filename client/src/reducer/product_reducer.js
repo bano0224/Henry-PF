@@ -10,7 +10,7 @@ export const initialState = {
     reviews: []
 };
 
-export function rootReducer(state = initialState, action) {
+export default function productReducer(state = initialState, action) {
     switch (action.type) {
   
         case actionConst.CREATE_PRODUCT:

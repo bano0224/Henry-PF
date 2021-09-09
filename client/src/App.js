@@ -11,6 +11,7 @@ import AdminAddProduct from "./components/AdminDashboard/AdminAddProduct/AdminAd
 import AdminModifyProduct from "./components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
 import AdminAddCategory from "./components/AdminDashboard/AdminAddCategory/AdminAddCategory";
 import Reviews from "./components/Reviews/Reviews";
+import CartScreen from "./components/Cart/CartScreen";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route exact path="/admin/users" component={AdminUsers} />
         <Route exact path="/detail/:id" render={({ match }) => <DetailProduct id={match.params.id} />}></Route>
         <Route exact path="/reviews" component={Reviews}/>
+        <Route exact path="/cart" component={CartScreen}/>
+
       </Switch>
     </BrowserRouter>
   );

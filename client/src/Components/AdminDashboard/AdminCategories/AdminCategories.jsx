@@ -27,15 +27,6 @@ const columns = [
     return { name, description };
   }
 
-  const rows = [
-    createData('Lacteos', 'Lacteo', 30, 3287263, 'SI'),
-    createData('Bebidas', 'nose', 32, 9596961, 'NO'),
-    createData('Limpieza', 'nose', 32, 9596961, 'NO'),
-    createData('Bebidas', 'nose', 32, 9596961, 'NO'),
-    createData('Lacteos', 'nose', 32, 9596961, 'NO'),
-    
-  ];
-
   const useStyles = makeStyles({
     root: {
       width: '100%',
@@ -54,7 +45,8 @@ export default function AdminCategories() {
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setRows] = React.useState([])
 
-    const categories = useSelector(state => state.categories)
+    const productReducer = useSelector(state => state.productReducer)
+    const {categories} = productReducer
 
     useEffect(() => {
       setRows(categories)

@@ -88,7 +88,8 @@ export default function AdminProduct() {
       dispatch(getCategories())
     }, [])
     
-    const products = useSelector( state => state.products)
+    const productReducer = useSelector( state => state.productReducer)
+    const {products} = productReducer
 
     useEffect(() => {
       setRows(products.map(p => {
