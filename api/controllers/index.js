@@ -277,9 +277,9 @@ const updateUser = async (req, res) => {
         country: req.body.country,
         /* role: modifiedRole(req.body.id, req.body.role), */
       });
-      res.status(200).send("El producto fue actualizado");
+      res.status(200).send("El usuario fue actualizado");
     } else {
-      res.status(404).send("El producto no fue encontrado");
+      res.status(404).send("El usuario no fue encontrado");
     }
   } catch (err) {
     return err;
