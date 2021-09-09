@@ -7,7 +7,7 @@ const server = Router();
 
 server.post('/login', logIn)
 server.post('/logup', logUp)
-server.put('/update', updateUser)
+server.put('/update/:id', updateUser)
 
 
 module.exports = server;
