@@ -7,14 +7,15 @@ import getProductById from "../../actions/getProductById";
 import productReset from "../../actions/productReset";
 import Footer from "../Footer/Footer";
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 
 
 
 export default function DetailProduct(props) {
   
   const dispatch = useDispatch();
-  const productId = useSelector((state) => state.productDetail);
+  const productReducer = useSelector((state) => state.productReducer);
+  const {productDetail} = productReducer
+  
   const [input, setInput] = React.useState('Controlled');
 
   const handleChange = (event) => {
@@ -36,15 +37,15 @@ export default function DetailProduct(props) {
       <div className={s.navbar}>
       <Navbar />
       </div>
-      {productId.length !== 0 ? (
+      {productDetail.length !== 0 ? (
         <div className={s.card}>
           <div className={s.title}>
-          <h3>{productId?.name}</h3>
+          <h3>{productDetail?.name}</h3>
           </div>
-          <img className={s.image}src={productId.imageUrl} width="100%" height="100%" alt="" />
+          <img className={s.image}src={productDetail.imageUrl} width="100%" height="100%" alt="" />
           <div className={s.info}>
-            <h4>{'$' + productId?.price}</h4>
-            <h5>{productId?.description}</h5>
+            <h4>{'$' + productDetail?.price}</h4>
+            <h5>{productDetail?.description}</h5>
           </div>
           <div className={s.valoration}>
       <div>

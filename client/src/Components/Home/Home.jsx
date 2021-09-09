@@ -42,20 +42,14 @@ export default function Home() {
           
           <div className={s.filter}>
             <div className={s.search}>
-            <Search id='search' />
+              <Search id='search' />
             </div>
-          
-          <div className={s.filterByCategory}>
-          <FilterByCategory />
-          </div>
-            
+            <div className={s.filterByCategory}>
+              <FilterByCategory />
+            </div>
           </div>
         </div>
         <div className={s.bodyCards}>
-        {/* { allProducts[0]?.error ? (
-            <h4>{allProducts[0]?.error}</h4>
-          ) :
-          <Cards currentProducts={currentProducts} />} */}
           <Cards currentProducts={currentProducts} />
         </div>
       </div>

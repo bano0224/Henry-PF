@@ -10,7 +10,8 @@ export default function FilterByCategory() {
   }, []);
 
   const dispatch = useDispatch();
-  const allCategories = useSelector((state) => state.categories);
+  const productReducer = useSelector((state) => state.productReducer);
+  const {categories} = productReducer
 
   function handleCategories(e) {
     dispatch(filterByCategory(e.target.value));
@@ -28,7 +29,7 @@ export default function FilterByCategory() {
         onChange={(e) => handleCategories(e)}
       >
         <option value="all">Todos</option>
-        {allCategories?.map((category) => {
+        {categories?.map((category) => {
           return <option value={`${category.name}`}>{category.name}</option>;
         })}
       </select>
