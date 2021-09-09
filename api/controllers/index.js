@@ -201,6 +201,7 @@ const createReviews = async (req, res) => {
 };
 
 const logUp = async (req, res) => {
+
   const { username, email, password, roles } = req.body;
   try {
     const newUser = new User({
@@ -231,13 +232,14 @@ const logUp = async (req, res) => {
       }
     );
     res.status(200).json({ token });
-    console.log("ESTA ES EL TOKEN", token);
+    
   } catch (err) {
     return err;
   }
 };
 
 const logIn = async (req, res) => {
+  
   const userFound = await User.findOne({ email: req.body.email }).populate("role", { name: 1 });
 
   if (!userFound)
@@ -257,7 +259,7 @@ const logIn = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  console.log('este es el req', req)
+  
   try {
     console.log('ESTOY ENTRANDO')
     if (req.params.id) {

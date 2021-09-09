@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.3",
+    "react-hook-form": "^7.15.1",
     "redux-devtools-extension": "^2.13.9"
   },
   "devDependencies": {
