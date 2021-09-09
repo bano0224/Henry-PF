@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import GoogleLogin from 'react-google-login';
 
 function LoginGoogle() {
@@ -22,4 +22,4 @@ function LoginGoogle() {
   )
 }
 
-export default LoginGoogle;
+export default LoginGoogle; */

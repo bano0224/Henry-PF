@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 
 const FacebookLogin = ({ width = 24, height = 24, fill = "#000" }) => {
   return (
@@ -10,6 +10,6 @@ const FacebookLogin = ({ width = 24, height = 24, fill = "#000" }) => {
   );
 };
 
-export default FacebookLogin;
+export default FacebookLogin; */
 
 
