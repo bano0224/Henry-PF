@@ -22,7 +22,6 @@ export default function cartReducer(state = initialState, action){
     }
 } 
 
-// import {loadState, saveState} from 'nuestro/archivo/js'
 // store.subscribe( function () {
 //   saveState(store.getState())
 // })

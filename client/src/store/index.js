@@ -10,20 +10,20 @@ const rootReducer = combineReducers({
   productReducer
 })
 
-// const cartItemsInLocalStorage = localStorage.getItem("cart")
-//   ? JSON.parse(localStorage.getItem("cart"))
-//   : [];
 
-// const mainEnhancer = compose(persistState(cartReducer))
+const cartItemsInLocalStorage = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : [];
 
-// export const store = createStore(
-//   rootReducer,
-//   composeWithDevTools(applyMiddleware(thunk)),
-//   mainEnhancer
-// )
+const INITIAL_STATE = {
+  cartReducer: {
+    cartItems: cartItemsInLocalStorage,
+  },
+};
 
 export const store = createStore(
     rootReducer,
+    INITIAL_STATE,
     composeWithDevTools(applyMiddleware(thunk))
   )
 

@@ -20,6 +20,9 @@ export default function CartScreen() {
     }
     //🐱‍👤
     /* useEffect para localStorage ? */
+    // useEffect(() => {
+    //     localStorage.setItem("cart", JSON.stringify('carrito', cartItems))
+    // }, [cartItems])
     
     return (
         <div>
