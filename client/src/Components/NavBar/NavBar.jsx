@@ -14,7 +14,7 @@ export default function NavBar() {
           </li>
           <li>
             <Link to='/admin/products'>
-            <a href="#">Administrador</a>     
+              Administrador 
             </Link>
           </li>
           <li>

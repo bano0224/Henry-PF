@@ -6,7 +6,6 @@ import Cards from "../Cards/Cards";
 import Pagination from "../Pagination/Pagination";
 import Footer from "../Footer/Footer";
 import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
-import ChangeOrder from "../ChangeOrder/changeorder";
 import Search from "../Search/Search";
 import landing from '../../media/landing.mp4'
 
@@ -48,9 +47,6 @@ export default function Home() {
           <div className={s.filterByCategory}>
           <FilterByCategory />
           </div>
-            <div className={s.change}>
-            <ChangeOrder />
-            </div>
             
           </div>
         </div>

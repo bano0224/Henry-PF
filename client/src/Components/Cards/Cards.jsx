@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import getProducts from "../../actions/getProducts";
-import DelFromCart from '../../actions/deleteFromShoppingCart';
-import AddToCart from '../../actions/shoppingCart';
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
 import style from "./Cards.module.css";
