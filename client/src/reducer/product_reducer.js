@@ -115,27 +115,7 @@ export default function productReducer(state = initialState, action) {
             } else {
               return state;
             }
-        
-
-        case actionConst.ADD_TO_CART:
-            let newItem = state.products.find(
-              (product) => product._id === action.payload
-            );
-      
-            let itemInCart = state.cart.find(item => item._id === newItem._id)
-      
-            return itemInCart ? {
-            ...state, cart:state.cart.map(
-                (item) => item._id === newItem._id ? 
-                {...item, quantity: item.quantity + 1} //vamos a nesecitar poner en la card del carrito el contador con quantity
-                : item                                 //en la card => ${price}.00 x {quantity} = ${price * quantity}.00
-            ),
-            } 
-            : {
-            ...state, cart:[...state.cart, {...newItem, quantity: 1}]
-            }  
-        
-
+            
         case actionConst.REMOVE_ONE_FROM_CART:
             let itemToDelete = state.cart.find((item) => item.id === action.payload);
             return itemToDelete.quantity > 1 ? {

@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -13,6 +14,8 @@ import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AddShoppingCart } from "@material-ui/icons";
 import accounting from "accounting";
+import addToCart from "../../actions/cart/addToCart";
+import { useDispatch } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -45,13 +48,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductCard({name, image, description, price}) {
+export default function ProductCard({name, image, description, price, id}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const dispatch = useDispatch()
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleCart = () => {
+    dispatch(addToCart(id))
+  }
 
   return (
     <Card className={classes.root}>
@@ -66,13 +74,14 @@ export default function ProductCard({name, image, description, price}) {
           </Typography>
         }
         title={name}
-        
       />
       <CardMedia
         className={classes.media}
         image={image}
         title={name}
       />
+      <Link to={`/detail/${id}`} >detail</Link>
+      <button onClick={handleCart}>Add</button>
       {/* <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {description}

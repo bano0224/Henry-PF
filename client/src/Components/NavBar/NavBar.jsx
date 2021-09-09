@@ -28,6 +28,11 @@ export default function NavBar() {
             <a href="#">Login</a>     
             </Link>
           </li>
+          <li>
+            <Link to='/cart'>
+              CART 
+            </Link>
+          </li>
         </ul>
         
         <span className={style.btn_menu}>
