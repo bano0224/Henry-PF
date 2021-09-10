@@ -1,14 +1,22 @@
-import changeOrder from "../../../actions/changeorder";
-import { connect } from "react-redux";
+import changeOrder from "../../../actions/changeOrder";
+import { connect, useDispatch, useSelector } from "react-redux";
 
-function ChangeOrder(props) {
+export default function ChangeOrder(props) {
+  const productReducer = useSelector(state => state.productReducer)
+  const { products } = productReducer
+
+  const dispatch = useDispatch()
+
   const handleSelect = (e) => {
-    props.changeOrder(e.target.value);
+    dispatch(changeOrder(e.target.value));
   };
+  
+
+
   return (
     <div id="filter">
       {/* {props.products.length ? <label></label> : null} */}
-      {props.products.length ? (
+      {products.length ? (
         <div class="mb-2">
           <label for="exampleFormControlInput1" class="form-label">
             Orden
@@ -30,10 +38,3 @@ function ChangeOrder(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
-  return {
-    products: state.products,
-  };
-};
-
-export default connect(mapStateToProps, { changeOrder })(ChangeOrder);
