@@ -206,14 +206,14 @@ const createReviews = async (req, res) => {
 
 const logUp = async (req, res) => {
 
-  const { username, email, password, roles } = req.body;
+  const { firstName, lastName, email, password, roles } = req.body;
   try {
     const newUser = new User({
-      username,
+      firstName,
+      lastName,
       email,
       password: await User.encryptPassword(password),
     });
-    console.log(newUser);
 
     if (roles) {
       const findRoles = await Role.find({ name: `${roles}` });
@@ -223,10 +223,8 @@ const logUp = async (req, res) => {
       newUser.roles = [role._id];
       console.log("ESTE ES EL FIND ROLES", role);
     }
-    console.log("FIND ROLES", newUser.roles);
-    const saveUser = await newUser.save();
 
-    console.log("ESTE ES EL SAVE", saveUser);
+    const saveUser = await newUser.save();
 
     const token = jwt.sign(
       { id: saveUser._id },
