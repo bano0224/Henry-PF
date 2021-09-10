@@ -205,6 +205,7 @@ const createReviews = async (req, res) => {
 };
 
 const logUp = async (req, res) => {
+  console.log(req.body)
 
   const { firstName, lastName, email, password, roles } = req.body;
   try {
@@ -221,11 +222,11 @@ const logUp = async (req, res) => {
     } else {
       const role = await Role.findOne({ name: "user" }); // busco un solo usuario
       newUser.roles = [role._id];
-      console.log("ESTE ES EL FIND ROLES", role);
-    }
+      
 
     const saveUser = await newUser.save();
-
+    console.log("ESTE ES EL FIND ROLES", saveUser);
+  }
     const token = jwt.sign(
       { id: saveUser._id },
       `${process.env.JWT_SECRET_KEY}`,
@@ -234,7 +235,7 @@ const logUp = async (req, res) => {
       }
     );
     res.status(200).json({ token });
-    
+    console.log('ESTE ES EL TOKEN', token)
   } catch (err) {
     return err;
   }

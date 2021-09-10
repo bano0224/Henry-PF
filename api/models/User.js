@@ -8,7 +8,7 @@ const userSchema = new Schema({
   }, */
   email: {
     type: String,
-    /* required: true, */
+    required: true,
     /* unique: true, */
   },
   facebook: {
@@ -34,11 +34,11 @@ const userSchema = new Schema({
   },
   first_name: {
     type: String,
-    /* require: true, */
+    require: true,
   },
   last_name: {
     type: String,
-    /* require: true, */
+    require: true,
   },
   phone: {
     type: Number,
@@ -79,7 +79,7 @@ const userSchema = new Schema({
   },
   token: [{
       type: String,
-      required:true
+      /* required:true */
     }]
 
 });
