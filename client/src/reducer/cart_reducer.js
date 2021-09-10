@@ -6,10 +6,22 @@ const initialState={
 
 export default function cartReducer(state = initialState, action){
     switch (action.type) {
+
         case actionTypes.ADD_TO_CART:
-            return {
-                ...state,
-                cartItems: [...state.cartItems, action.payload]
+            const item = action.payload;
+            console.log(item._id)
+            const existItem = state.cartItems.find((x) => x._id === item._id);
+
+            if(existItem){
+                return {
+                    ...state,
+                    cartItems: state.cartItems.map(i => i._id === item._id ? item : i),
+                }
+            } else {
+                return {
+                    ...state,
+                    cartItems: [...state.cartItems, item],
+                }
             }
         
         case actionTypes.REMOVE_FROM_CART:
@@ -21,14 +33,3 @@ export default function cartReducer(state = initialState, action){
             return state
     }
 } 
-
-// store.subscribe( function () {
-//   saveState(store.getState())
-// })
-
-// localStorage.removeItem(key)
-
-// addItem = () => localStorage.setItem("name", this.state.name)
-
-// removeItem = () => localStorage.removeItem("name")
-

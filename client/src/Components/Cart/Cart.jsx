@@ -1,33 +1,67 @@
 import React from 'react'
-import s from './Cart.module.css'
+import './Cart.module.css'
+import { Grid, IconButton, MenuItem, Select, FormHelperText } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete'
 
-export default function Cart({key, item, handlerQty, handlerRemove}) {
+const useStyles = makeStyles((theme) => ({
+    margin: {
+      margin: theme.spacing(1),
+    },
+    extendedIcon: {
+      marginRight: theme.spacing(1),
+    },
+    container: {
+        fontFamily: 'Raleway'
+    }
+  }));
 
+export default function Cart({item, handlerQty, handlerRemove}) {
+    const classes = useStyles();
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     return (
-        <div className={s.container}>
-            <div>
-                <img src={item.imageUrl} alt={item.name} width='30px' height='30px'/>
-            </div>
-            <div>
-                <h4>{item.name}</h4>
-            </div> 
-            <div>
-                <span>${item.price}</span>
-            </div>
-            <select onChange={e=>handlerQty(item._id, e.target.value)} >
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>      
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-                <option value={6}>6</option>
-                <option value={7}>7</option>
-                <option value={8}>8</option>
-                <option value={9}>9</option>
-                <option value={10}>10</option>
-            </select>
-            <button onClick={()=>{handlerRemove(item._id)}}>X</button>
-        </div>
+        <>
+            <Grid container justifyContent='space-between' alignItems='center' className={classes.container}>
+                <Grid item>
+                    <Grid container direction='row' justifyContent='center' alignItems='center'>
+                        <Grid item>
+                            <img src={item.imageUrl} alt={item.name} width='30px' height='30px'/>
+                        </Grid>
+                        <Grid item>
+                            <h6>{item.name}</h6>
+                        </Grid>
+                    </Grid> 
+                </Grid>
+                
+                <Grid container xs={3} justifyContent='space-between' alignItems='center' direction='row'>
+                    <Grid item>
+                        <span>${item.price}</span>
+                    </Grid>
+                    <Grid item>
+                        <Grid container direction='row' justifyContent='space-between' alignItems='center' spacing={1}>
+                            <Grid item>
+                                <select onChange={e=>handlerQty(item._id, e.target.value)} class="form-select" aria-label="Default select example">
+                                {
+                                        numbers.map(n => {
+                                            if(n == item.qty){
+                                                return <option selected value={n}>{n}</option>
+                                            } else {
+                                                return <option value={n}>{n}</option>
+                                            }
+                                        })
+                                    }
+                                </select>
+                            </Grid>
+                            <Grid>
+                                <IconButton aria-label="delete" className={classes.margin} onClick={()=>{handlerRemove(item._id)}}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </>
     )
 }

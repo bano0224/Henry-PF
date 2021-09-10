@@ -9,4 +9,4 @@ export default function removeFromCart (id) {
         })
         localStorage.setItem("cart", JSON.stringify(getState().cartReducer.cartItems));
     }
-}
+} 

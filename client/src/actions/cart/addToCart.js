@@ -3,7 +3,7 @@ import axios from 'axios'
 import { URL_PRODUCTS_ID } from '../../utils/utils.js'
 
 
-export default function addToCart (id){
+export default function addToCart (id, qty){
     return async function(dispatch, getState){
         const {data} = await axios.get(`${URL_PRODUCTS_ID}${id}`)
 
@@ -14,7 +14,8 @@ export default function addToCart (id){
                 name: data.name,
                 imageUrl: data.imageUrl,
                 price: data.price,
-                countInStock: data.countInStock
+                countInStock: data.countInStock,
+                qty
             }
         })
 
