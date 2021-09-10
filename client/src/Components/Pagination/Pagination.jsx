@@ -11,13 +11,6 @@ export default function Pagination({
   currentPage,
 }) {
   
- useEffect(() =>{
-
-    window.scrollTo({top: 500, behavior: 'smooth'});
-    
-    },[currentPage])
- 
-
   const pageNumber = [];
   for (let i = 0; i < Math.ceil(products / productsPerPage); i++) {
     pageNumber.push(i + 1);

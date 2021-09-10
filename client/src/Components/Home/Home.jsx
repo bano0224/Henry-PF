@@ -19,8 +19,10 @@ export default function Home() {
   const firstIndex = lastIndex - productsPerPage;
 
   const currentProducts = products.slice(firstIndex, lastIndex);
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
+    window.scrollTo({top: 500, behavior: 'smooth'});
   };
 
   return (
