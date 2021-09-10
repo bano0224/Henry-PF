@@ -23,7 +23,7 @@ export default function Login() {
     try {
       const user = await login({ 
         email, password });
-        
+      
       dispatch(stateLogin);
       history.push("/");
 

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Style } from '@material-ui/icons';
 import PersonIcon from '@material-ui/icons/Person';
+import setLogup from '../../actions/setLogup';
 import style from './Logup.module.css'
 
 function Copyright() {
@@ -48,8 +51,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
+
 export default function Logup() {
-  const classes = useStyles();
+  
+    const classes = useStyles();
+    const history = useHistory()
+    const dispatch = useDispatch()
+    const [input, setInput] = useState({
+        ...input,
+      [e.target.name]: e.target.value,
+    })
+
+
+function handleChangeLogup () {
+
+}
+
+function handleSubmitLogup () {
+    e.preventDefault();
+    setInput({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      })
+    dispatch(setLogup(input));
+    alert('¡Su usuario ha sido creado!')
+    history.push('/login')
+
+}
 
   return (
       <div className={style.container}>
@@ -85,17 +118,6 @@ export default function Logup() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
               />
             </Grid>
             <Grid item xs={12}>
