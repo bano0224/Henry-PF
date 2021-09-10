@@ -8,6 +8,7 @@ import Footer from "../Footer/Footer";
 import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
 import Search from "../Search/Search";
 import landing from '../../media/landing.mp4'
+import ChangeOrder from '../Filter/ChangeOrder/ChangeOrder'
 
 export default function Home() {
   const productReducer = useSelector((state) => state.productReducer)
