@@ -1,8 +1,7 @@
 import { URL_PRODUCTS } from "../utils/utils";
 import axios from "axios";
+import {GET_PRODUCTS} from '.'
 
-
-export const GET_PRODUCTS = "GET_PRODUCTS"
 
   export default function getProducts(){
     try {

@@ -6,18 +6,18 @@ import Cards from "../Cards/Cards";
 import Pagination from "../Pagination/Pagination";
 import Footer from "../Footer/Footer";
 import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
-import ChangeOrder from "../ChangeOrder/changeorder";
 import Search from "../Search/Search";
 import landing from '../../media/landing.mp4'
 
 export default function Home() {
-  const allProducts = useSelector((state) => state.products);
+  const productReducer = useSelector((state) => state.productReducer)
+  const { products } = productReducer
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(9);
   const lastIndex = currentPage * productsPerPage;
   const firstIndex = lastIndex - productsPerPage;
 
-  const currentProducts = allProducts.slice(firstIndex, lastIndex);
+  const currentProducts = products.slice(firstIndex, lastIndex);
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -42,16 +42,11 @@ export default function Home() {
           
           <div className={s.filter}>
             <div className={s.search}>
-            <Search id='search' />
+              <Search id='search' />
             </div>
-          
-          <div className={s.filterByCategory}>
-          <FilterByCategory />
-          </div>
-            <div className={s.change}>
-            <ChangeOrder />
+            <div className={s.filterByCategory}>
+              <FilterByCategory />
             </div>
-            
           </div>
         </div>
         <div className={s.bodyCards}>
@@ -63,7 +58,7 @@ export default function Home() {
       </div>
       <div className={s.paginationContainer}>
         <Pagination
-          products={allProducts.length}
+          products={products.length}
           productsPerPage={productsPerPage}
           paginate={paginate}
           currentPage={currentPage}

@@ -13,6 +13,8 @@ const getProducts = async (req, res, next) => {
       let productFind = await Product.find({
         name: { $regex: name, $options: "i" },
       }).populate("category", { name: 1 });
+      //   'name': { $regex: name, $options: "i" },
+      // }).populate("category", { name: 1, _id: 1});
       if (productFind.length) {
         res.status(200).json(productFind);
       } else {
@@ -93,18 +95,20 @@ const removeProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    if (req.body.id) {
-      await Product.findByIdAndUpdate(req.body.id, {
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description,
-        countInStock: req.body.countInStock,
-        imageUrl: req.body.imageUrl,
-        featured: req.body.featured,
-        discount: req.body.discount,
-        // category: [...category,req.body.category]
-        category: modifiedCategory(req.body.id, req.body.category),
-      });
+    if (id) {
+      const { name, price, description, countInStock, imageUrl, featured, discount, category } = req.body;
+      const product = await Product.findById(id);
+      product.name = name;
+      product.price = price;
+      product.description = description;
+      product.countInStock = countInStock;
+      product.imageUrl = imageUrl;
+      product.featured = featured;
+      product.discount = discount;
+      product.category = category;
+
+      await product.save();
+      
       res.status(200).send("El producto fue actualizado");
     } else {
       res.status(404).send("El producto no fue encontrado");
@@ -292,7 +296,6 @@ module.exports = {
   getProducts,
   createProduct,
   getProductsById,
-  getUsers,
   removeProduct,
   getCategory,
   createCategory,

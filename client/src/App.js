@@ -32,7 +32,6 @@ function App() {
         <Route exact path='/admin/categories/add' component={AdminAddCategory} />
         <Route exact path="/admin/users" component={AdminUsers} />
         <Route exact path="/detail/:id" render={({ match }) => <DetailProduct id={match.params.id} />}></Route>
-        <Route exact path="/cart" component={Cart}/>
         <Route exact path="/reviews" component={Reviews}/>
         <Route exact path="/login" component={Login}/>
         <Route exact path='/logup' component={Logup} />

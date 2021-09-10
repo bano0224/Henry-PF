@@ -14,7 +14,7 @@ export default function NavBar() {
           </li>
           <li>
             <Link to='/admin/products'>
-            <a href="#">Administrador</a>     
+              Administrador 
             </Link>
           </li>
           <li>
@@ -26,6 +26,11 @@ export default function NavBar() {
           <li>
             <Link to='/login'>
             <a href="#">Login</a>     
+            </Link>
+          </li>
+          <li>
+            <Link to='/cart'>
+              CART 
             </Link>
           </li>
         </ul>

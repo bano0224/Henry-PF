@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import getProductById from '../../../actions/getProductById'
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch'
-import { DropzoneArea } from 'material-ui-dropzone';
+import { DropzoneArea } from 'material-ui-dropzone'
 import modifyProduct from '../../../actions/modifyProduct'
+import getCategories from '../../../actions/getCategories'
 
 export default function AdminModifyProduct({ match }) {
     const [product, setProduct] = useState({
@@ -15,26 +16,39 @@ export default function AdminModifyProduct({ match }) {
         price: 0,
         countInStock: 0,
         imageUrl: [],
-        category: [],
         featured: 0,
         discount: '' || 0
-    })
-    console.log(product.category)
+    });
+    const [categoriesToShow, setCategoriesToShow] = useState([]);
+
     const dispatch = useDispatch();
     
     useEffect(() => {
         dispatch(getProductById(match.params.id))
+        dispatch(getCategories());
     }, [])
 
     const detail = useSelector( state => state.productDetail)
     const categories = useSelector( state => state.categories)
 
-    useEffect(() =>{
+    useEffect(() => {
+        if (detail.category && categories) {
+            const categoriesInProduct = detail.category.reduce((acc, el) => {
+                acc[el] = true
+                return acc;
+            }, {});
+            setCategoriesToShow(categories.filter(category => categoriesInProduct[category._id]))
+        }
         setProduct({
-            ...product,
-            category: detail.category
-        })
-    }, [detail])
+            name: detail.name,
+            description: detail.description,
+            price: detail.price,
+            countInStock: detail.countInStock,
+            imageUrl: detail.imageUrl,
+            featured: detail.featured,
+            discount: detail.discount,
+        });
+    }, [detail, categories])
 
     const handleChange = ({ target: { name, value } }) => {
         if (name === 'imageUrl') {
@@ -57,16 +71,17 @@ export default function AdminModifyProduct({ match }) {
         })
     }
 
-    const handleCategory = (e) => {
-        setProduct({
-            ...product,
-            category: [...product.category, e.target.value]
-        })
+    const handleCategory = (e, toDo, id) => {
+        if (toDo === 'delete') {
+            setCategoriesToShow(categoriesToShow.filter(category => category._id !== id));
+        } else {
+            setCategoriesToShow([...categoriesToShow, JSON.parse(e.target.value)])
+        }
     }
 
     const handleSubmmit = (e) => {
         e.preventDefault()
-        dispatch(modifyProduct(product));
+        dispatch(modifyProduct({...product, category: categoriesToShow.map(cat => cat._id), _id: detail._id}));
         alert(`${product.name} created`)
         setProduct({
             name: '',
@@ -74,7 +89,6 @@ export default function AdminModifyProduct({ match }) {
             price: 0,
             countInStock: 0,
             imageUrl: [],
-            category: detail.category,
             featured: 0,
             discount: '' || 0
         })
@@ -112,13 +126,22 @@ export default function AdminModifyProduct({ match }) {
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">Category</label> 
                         <select class="form-select" aria-label="Default select example" onChange={(e) => handleCategory(e)}>
+                            <option value={''}>-</option>
                             {
-                                categories.map(el => <option value={el.id}>{el.name}</option>)
+                                categories.map(el => <option value={JSON.stringify(el)}>{el.name}</option>)
                             }
                         </select>
                             <ul>
                                 {
-                                    product.category?.map(el => <li>{el}</li>)
+                                    categoriesToShow?.map(el => (
+                                        <div>
+                                            
+                                            <li>
+                                                {el.name}
+                                                <button onClick={e => handleCategory(e, 'delete', el._id)} >X</button>
+                                            </li>
+                                        </div>
+                                    ))
                                 }
                             </ul>
                     </div>

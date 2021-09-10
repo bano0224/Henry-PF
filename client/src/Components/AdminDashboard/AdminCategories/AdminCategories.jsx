@@ -15,7 +15,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
 import Box from '@material-ui/core/Box'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 const columns = [
@@ -26,15 +25,6 @@ const columns = [
   function createData(name, description) {
     return { name, description };
   }
-
-  const rows = [
-    createData('Lacteos', 'Lacteo', 30, 3287263, 'SI'),
-    createData('Bebidas', 'nose', 32, 9596961, 'NO'),
-    createData('Limpieza', 'nose', 32, 9596961, 'NO'),
-    createData('Bebidas', 'nose', 32, 9596961, 'NO'),
-    createData('Lacteos', 'nose', 32, 9596961, 'NO'),
-    
-  ];
 
   const useStyles = makeStyles({
     root: {
@@ -54,7 +44,8 @@ export default function AdminCategories() {
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setRows] = React.useState([])
 
-    const categories = useSelector(state => state.categories)
+    const productReducer = useSelector(state => state.productReducer)
+    const {categories} = productReducer
 
     useEffect(() => {
       setRows(categories)

@@ -19,7 +19,7 @@ import Button from '@material-ui/core/Button/Button'
 import AddIcon from '@material-ui/icons/Add';
 import getProducts from '../../../actions/getProducts';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { getCategories } from '../../../actions/getCategories';
+import getCategories from '../../../actions/getCategories';
 
 
 
@@ -88,7 +88,8 @@ export default function AdminProduct() {
       dispatch(getCategories())
     }, [])
     
-    const products = useSelector( state => state.products)
+    const productReducer = useSelector( state => state.productReducer)
+    const {products} = productReducer
 
     useEffect(() => {
       setRows(products.map(p => {

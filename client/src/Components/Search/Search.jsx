@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// import { connect } from "react-redux";
 import { useDispatch } from 'react-redux'
 import getProductByQuery from "../../actions/getProductByQuery";
 import { Container, Button, Grid } from "@material-ui/core";
