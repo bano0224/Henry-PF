@@ -15,6 +15,7 @@ import Reviews from "./components/Reviews/Reviews";
 import Login from "./components/Login/Login";
 import Logup from './components/Login/Logup'
 import NotFound from "./components/404/NotFound";
+import ScreenCart from './components/Cart/CartScreen'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route exact path="/reviews" component={Reviews}/>
         <Route exact path="/login" component={Login}/>
         <Route exact path='/logup' component={Logup} />
+        <Route exact path='/cart' component={ScreenCart} />
         <Route path='*' component={NotFound} />
       </Switch>
     </BrowserRouter>
