@@ -9,7 +9,6 @@ import AdminUsers from "./components/AdminDashboard/AdminUsers/AdminUsers";
 import AdminCategories from "./components/AdminDashboard/AdminCategories/AdminCategories";
 import AdminAddProduct from "./components/AdminDashboard/AdminAddProduct/AdminAddProduct";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Cart from "./components/ShoppingCart/ShoppingCart";
 import AdminModifyProduct from "./components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
 import AdminAddCategory from "./components/AdminDashboard/AdminAddCategory/AdminAddCategory";
 import Reviews from "./components/Reviews/Reviews";
