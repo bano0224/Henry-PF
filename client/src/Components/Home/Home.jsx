@@ -47,6 +47,9 @@ export default function Home() {
             <div className={s.filterByCategory}>
               <FilterByCategory />
             </div>
+            <div className={s.change}>
+              <ChangeOrder />
+            </div>
           </div>
         </div>
         <div className={s.bodyCards}>
