@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -18,18 +17,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import style from './Logup.module.css'
 import sendLogup from "../../actions/setLogup";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,12 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
-
 export default function Logup() {
   
+    const { register, errors, handleSubmit } = useForm();
     const classes = useStyles();
     const history = useHistory()
     const dispatch = useDispatch()
@@ -75,7 +59,8 @@ function handleChange (e) {
 })
 }
 
-function handleSubmitLogup (e) {
+function onSubmit (data, e) {
+  console.log(data)
     e.preventDefault();
     dispatch(sendLogup(logup));
     alert('¡Su usuario ha sido creado!')
@@ -94,14 +79,16 @@ function handleSubmitLogup (e) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} onSubmit={(e) => handleSubmitLogup(e)} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
-                required
+                {...register('email', { required: true })}
+                error={errors.email}
+                helperText={errors.email && 'email required'}
                 fullWidth
                 onChange={(e) => handleChange(e)}
                 value={logup.firstName}
@@ -109,6 +96,9 @@ function handleSubmitLogup (e) {
                 label="First Name"
                 autoFocus
               />
+              <span className="text-danger text-small d-block mb-2">
+              {errors?.firstName && errors?.firstName.message}
+              </span>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -150,12 +140,6 @@ function handleSubmitLogup (e) {
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -176,7 +160,7 @@ function handleSubmitLogup (e) {
         </form>
       </div>
       <Box mt={5}>
-        <Copyright />
+        
       </Box>
     </Container>
     </div>
