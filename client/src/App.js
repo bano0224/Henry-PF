@@ -14,6 +14,7 @@ import AdminModifyProduct from "./components/AdminDashboard/AdminModifyProduct/A
 import AdminAddCategory from "./components/AdminDashboard/AdminAddCategory/AdminAddCategory";
 import Reviews from "./components/Reviews/Reviews";
 import Login from "./components/Login/Login";
+import Logup from './components/Login/Logup'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/cart" component={Cart}/>
         <Route exact path="/reviews" component={Reviews}/>
         <Route exact path="/login" component={Login}/>
+        <Route exact path='/logup' component={Logup} />
       </Switch>
     </BrowserRouter>
   );

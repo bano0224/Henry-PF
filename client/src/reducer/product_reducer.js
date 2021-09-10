@@ -8,6 +8,7 @@ import { CLEAR_CART } from '../actions/clearCart';
 import { REMOVE_ONE_FROM_CART, REMOVE_ALL_FROM_CART} from '../actions/deleteFromShoppingCart'
 import { PRODUCT_RESET } from "../actions/productReset";
 import { SET_REVIEWS } from "../actions/setReviews";
+import { STATE_LOGIN } from '../actions/stateLogin'
 
 export const initialState = {
   products: [],
@@ -15,7 +16,8 @@ export const initialState = {
   productDetail: [],
   categories: [],
   cart: [],
-  reviews: []
+  reviews: [],
+  login: false,
 };
 
 export function rootReducer(state = initialState, action) {
@@ -99,6 +101,13 @@ export function rootReducer(state = initialState, action) {
           ...state,
           clearProducts: deleteProduct
       };
+
+    case STATE_LOGIN:
+      return{
+        ...state,
+          login: true
+      }
+      
 
     case CHANGE_ORDER: {
       let array = [...state.products];
