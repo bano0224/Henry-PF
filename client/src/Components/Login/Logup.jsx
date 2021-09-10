@@ -15,8 +15,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Style } from '@material-ui/icons';
 import PersonIcon from '@material-ui/icons/Person';
-import setLogup from '../../actions/setLogup';
 import style from './Logup.module.css'
+import sendLogup from "../../actions/setLogup";
 
 function Copyright() {
   return (
@@ -60,25 +60,24 @@ export default function Logup() {
     const classes = useStyles();
     const history = useHistory()
     const dispatch = useDispatch()
-    const [input, setInput] = useState({
-        ...input,
-      [e.target.name]: e.target.value,
+    const [logup, setLogup] = useState({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
     })
 
 
-function handleChangeLogup () {
-
+function handleChange (e) {
+  setLogup({
+    ...logup,
+    [e.target.name]: e.target.value
+})
 }
 
-function handleSubmitLogup () {
+function handleSubmitLogup (e) {
     e.preventDefault();
-    setInput({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-      })
-    dispatch(setLogup(input));
+    dispatch(sendLogup(logup));
     alert('¡Su usuario ha sido creado!')
     history.push('/login')
 
@@ -95,7 +94,7 @@ function handleSubmitLogup () {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={(e) => handleSubmitLogup(e)} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -104,6 +103,8 @@ function handleSubmitLogup () {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
+                value={logup.firstName}
                 id="firstName"
                 label="First Name"
                 autoFocus
@@ -114,6 +115,8 @@ function handleSubmitLogup () {
                 variant="outlined"
                 required
                 fullWidth
+                value={logup.lastName}
+                onChange={(e) => handleChange(e)}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
@@ -125,6 +128,8 @@ function handleSubmitLogup () {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={(e) => handleChange(e)}
+                value={logup.email}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -136,6 +141,8 @@ function handleSubmitLogup () {
                 variant="outlined"
                 required
                 fullWidth
+                value={logup.password}
+                onChange={(e) => handleChange(e)}
                 name="password"
                 label="Password"
                 type="password"
