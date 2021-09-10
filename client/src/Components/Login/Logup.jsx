@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Logup() {
   
-    const { register, errors, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const classes = useStyles();
     const history = useHistory()
     const dispatch = useDispatch()
@@ -86,9 +86,9 @@ function onSubmit (data, e) {
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
-                {...register('email', { required: true })}
-                error={errors.email}
-                helperText={errors.email && 'email required'}
+                {...register("firstName", { required: true, minLength: {
+                  value: 8,
+                } })}
                 fullWidth
                 onChange={(e) => handleChange(e)}
                 value={logup.firstName}
@@ -97,13 +97,16 @@ function onSubmit (data, e) {
                 autoFocus
               />
               <span className="text-danger text-small d-block mb-2">
-              {errors?.firstName && errors?.firstName.message}
+              {errors.firstName?.type === 'required' && "First name is required"}
+              </span>
+              <span className="text-danger text-small d-block mb-2">
+              {errors.firstName?.type === 'minLength' && "First name is required"}
               </span>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
-                required
+                {...register("lastname", { required: true })}
                 fullWidth
                 value={logup.lastName}
                 onChange={(e) => handleChange(e)}
@@ -112,11 +115,14 @@ function onSubmit (data, e) {
                 name="lastName"
                 autoComplete="lname"
               />
+              <span className="text-danger text-small d-block mb-2">
+              {errors.lastName?.type === 'required' && "Last name is required"}
+              </span>
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+                {...register("email", { required: true })}
                 fullWidth
                 onChange={(e) => handleChange(e)}
                 value={logup.email}
@@ -125,11 +131,14 @@ function onSubmit (data, e) {
                 name="email"
                 autoComplete="email"
               />
+              <span className="text-danger text-small d-block mb-2">
+              {errors.email?.type === 'required' && "Email is required"}
+              </span>
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+                {...register("password", { required: true })}
                 fullWidth
                 value={logup.password}
                 onChange={(e) => handleChange(e)}
@@ -139,6 +148,9 @@ function onSubmit (data, e) {
                 id="password"
                 autoComplete="current-password"
               />
+              <span className="text-danger text-small d-block mb-2">
+              {errors.password?.type === 'required' && "Password is required"}
+              </span>
             </Grid>
           </Grid>
           <Button
