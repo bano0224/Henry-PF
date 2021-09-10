@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-<<<<<<< HEAD
 // import { connect } from "react-redux";
 import { useDispatch } from 'react-redux'
-=======
-import { connect } from "react-redux";
-import { useDispatch } from "react-redux";
->>>>>>> 8c2870145ad18c417539b72d38c4952817146840
 import getProductByQuery from "../../actions/getProductByQuery";
 import { Container, Button, Grid } from "@material-ui/core";
 import style from "./Search.module.css";
@@ -67,14 +62,3 @@ export default function Search() {
     </div>
   );
 }
-/* function mapStateToProps(state) {
-  return {
-    product: state.product,
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    getProductByQuery: (name) => dispatch(getProductByQuery(name)),
-  };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Search); */

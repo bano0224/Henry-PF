@@ -212,24 +212,12 @@ const logUp = async (req, res) => {
   }
   
 }
-const logIn = async (req, res) => {
-  res.json('Yo tmb estoy funcionando')
-}
-const getUser = async (req, res) => {
 
-}
-const updateUser = async (req, res) => {
-
-}
-const getUserById = async (req, res) => {
-
-}
 
 module.exports = {
   getProducts,
   createProduct,
   getProductsById,
-  getUsers,
   removeProduct,
   getCategory,
   createCategory,
@@ -237,11 +225,7 @@ module.exports = {
   updateCategory,
   updateProduct,
   createReviews,
-  logIn,
-  logUp,
-  getUser,
-  updateUser,
-  getUserById
+  logUp
 };
 
 
