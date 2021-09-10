@@ -24,7 +24,7 @@ export default function Cart({item, handlerQty, handlerRemove}) {
         <>
             <Grid container justifyContent='space-between' alignItems='center' className={classes.container}>
                 <Grid item>
-                    <Grid container direction='row' justifyContent='center' alignItems='center'>
+                    <Grid container direction='row' justifyContent='center' alignItems='flex-end' spacing={1}>
                         <Grid item>
                             <img src={item.imageUrl} alt={item.name} width='30px' height='30px'/>
                         </Grid>
@@ -33,7 +33,6 @@ export default function Cart({item, handlerQty, handlerRemove}) {
                         </Grid>
                     </Grid> 
                 </Grid>
-                
                 <Grid container xs={3} justifyContent='space-between' alignItems='center' direction='row'>
                     <Grid item>
                         <span>${item.price}</span>

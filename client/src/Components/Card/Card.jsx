@@ -58,7 +58,7 @@ export default function ProductCard({name, image, description, price, id}) {
   };
 
   const handleCart = () => {
-    dispatch(addToCart(id))
+    dispatch(addToCart(id, 1))
   }
 
   return (

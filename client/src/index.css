@@ -16,6 +16,10 @@ html {
   color: #b2102f;
 }
 
+#bread{
+  color: firebrick;
+}
+
 #root {
   height:100%;
 }
