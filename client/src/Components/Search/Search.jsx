@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from 'react-redux'
 import getProductByQuery from "../../actions/getProductByQuery";
 import { Container, Button, Grid } from "@material-ui/core";
-import style from "./Search.module.css";
+// import style from "./Search.module.css";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -17,8 +17,6 @@ export default function Search() {
     dispatch(getProductByQuery(input));
     setInput({
       
-      // if(name){
-      //   alert('Este producto no existe')
      
     }) 
   }
@@ -26,15 +24,6 @@ export default function Search() {
 
   return (
     <div>
-      {/* <form onSubmit={(e) => handleSubmit(e)}>
-        <div>
-          <input
-            type="text"
-            placeholder="Search product..."
-            autoComplete="on"
-            value={input.name}
-            onChange={(e) => handleChange(e)}
-          /> */}
       <Grid container direction='row'>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div class="mb-2">
@@ -56,9 +45,6 @@ export default function Search() {
           </Container>
         </form>
       </Grid>
-      {/* <button type="submit">Search</button> */}
-      {/* </div>
-      </form> */}
     </div>
   );
 }

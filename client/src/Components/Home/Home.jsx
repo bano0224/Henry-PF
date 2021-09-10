@@ -50,7 +50,10 @@ export default function Home() {
           </div>
         </div>
         <div className={s.bodyCards}>
-          <Cards currentProducts={currentProducts} />
+        { allProducts[0]?.error ? (
+            <h4>{allProducts[0]?.error}</h4>
+          ) :
+          <Cards currentProducts={currentProducts} />}
         </div>
       </div>
       <div className={s.paginationContainer}>

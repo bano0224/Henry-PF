@@ -9,6 +9,8 @@ const connectDB = async () => {
     await mongoose.connect("mongodb://127.0.0.1:27017/supermarketdb", {
       useUnifiedTopology: true,
       useNewUrlParser: true,
+      /* useFindAndModify: true,
+      useCreateIndex: true */
     });
     mongoose.set("debug", true);
     console.log("MongoDB connection SUCCESS!");

@@ -1,6 +1,6 @@
-import { Schema, model } from 'moongose';
+const { Schema, model } = require('mongoose');
 
-const rolSchema = new Schema({
+const roleSchema = new Schema({
 name: {
     type: String
 },

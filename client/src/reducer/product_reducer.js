@@ -7,7 +7,8 @@ export const initialState = {
     productDetail: [],
     categories: [],
     cart: [],
-    reviews: []
+    reviews: [],
+    login: false,
 };
 
 export default function productReducer(state = initialState, action) {
