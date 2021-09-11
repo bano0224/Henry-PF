@@ -55,11 +55,16 @@ export default function productReducer(state = initialState, action) {
             }
 
         case actionConst.STATE_LOGIN:
-          console.log('ESTOY EN EL REDUCER')
           return {
             ...state,
             login: true
           }
+
+        case actionConst.STATE_LOGOUT:
+          return {
+            ...state,
+            login: false
+            }
 
         case actionConst.FILTER_BY_CATEGORY: 
             const allProducts = state.clearProducts;

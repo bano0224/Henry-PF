@@ -8,9 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import clsx from 'clsx';
+import Menu from '@material-ui/core/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import {Grid} from '@material-ui/core'
+import stateLogout from '../../actions/stateLogout'
 
 
 
@@ -87,6 +91,14 @@ export default function NavBar() {
   const productReducer = useSelector(state => state.productReducer)
   const {login} = productReducer
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    stateLogout();
+  };
 
   return (
     <Grid container xs={12}>
@@ -151,16 +163,33 @@ export default function NavBar() {
               >
                   <ShoppingCartOutlinedIcon/>
               </Button>
-              <Button
-                    color="inherit"
-                    aria-label="open drawer"
-                    className={classes.button}
-                    id='button'
-                    component={Link}
-                    to='/login'
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
               >
                 <AccountCircle />
-              </Button>
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem component={Link} to='/login'>Perfil</MenuItem>
+                <MenuItem component={Link} to='/login'>Cerrar sesion</MenuItem>
+              </Menu>
               </div>
 :
               <div>

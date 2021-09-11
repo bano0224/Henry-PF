@@ -13,9 +13,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import FilterByCategory from '../AdminFilter/FilterByCategory';
-import AdminSearch from '../AdminSearch/AdminSearch'
+import AdminSearch from '../AdminSearch/AdminSearch';
 import Box  from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button/Button'
+import Button from '@material-ui/core/Button/Button';
 import AddIcon from '@material-ui/icons/Add';
 import getProducts from '../../../actions/getProducts';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
