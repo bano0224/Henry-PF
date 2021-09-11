@@ -8,7 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import clsx from 'clsx';
 import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,7 +15,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import {Grid, Badge} from '@material-ui/core'
-import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import stateLogout from '../../actions/stateLogout'
 import swal from 'sweetalert';
@@ -175,7 +173,7 @@ export default function NavBar() {
   
            
           <div className={classes.dashboard}>
-            {login ?
+            {(login || !undefined) ?
             <div>
               <Button
                   color="inherit"
