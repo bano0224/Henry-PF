@@ -88,7 +88,16 @@ const getUsers = async (req, res) => {
     return err;
   }
 };
-  
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const userId = await User.findById(id);
+    res.status(200).json(userId);
+  } catch (err) {
+    return err;
+  }
+};
   /* const { email } = req.query;
   try {
       let userFind = await User.find({ email: `${email}` });
@@ -338,7 +347,8 @@ module.exports = {
   logIn,
   logUp,
   updateUser,
-  getUsers
+  getUsers,
+  getUserById
   
 };
 
