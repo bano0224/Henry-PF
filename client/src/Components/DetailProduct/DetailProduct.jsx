@@ -34,8 +34,8 @@ export default function DetailProduct(props) {
  
   return (
     <div className={s.body4}>
-      <div className={s.navbar}>
       <Navbar />
+      <div className={s.navbar}>
       </div>
       {productDetail.length !== 0 ? (
         <div className={s.card}>
@@ -49,6 +49,18 @@ export default function DetailProduct(props) {
           </div>
           <div className={s.valoration}>
       <div>
+      <div>
+                  <Link to="/">
+                  <Button variant="contained" color="secondary" style= {{textDecoration: 'none'}} component={Link} to='/'>
+                  Home
+                </Button>
+                  </Link>
+                  <Link to="/reviews">
+                  <Button variant="contained" color="secondary" style= {{textDecoration: 'none'}} component={Link} to='/reviews'>
+                  Review
+                </Button>
+                </Link>
+          </div>
       </div>
       </div>
         </div>
@@ -61,20 +73,21 @@ export default function DetailProduct(props) {
             alt="LoadingGif"
             className="loadingGif"
           />
+          <div>
+                  <Link to="/">
+                  <Button variant="contained" color="secondary" style= {{textDecoration: 'none'}} component={Link} to='/'>
+                  Home
+                </Button>
+                  </Link>
+                  <Link to="/reviews">
+                  <Button variant="contained" color="secondary" style= {{textDecoration: 'none'}} component={Link} to='/reviews'>
+                  Review
+                </Button>
+                </Link>
+          </div>
         </div>
       )}
-      <div>
-        <Link to="/">
-        <Button variant="contained" color="primary" style= {{textDecoration: 'none'}} component={Link} to='/'>
-        Home
-      </Button>
-        </Link>
-        <Link to="/reviews">
-        <Button variant="contained" color="primary" style= {{textDecoration: 'none'}} component={Link} to='/reviews'>
-        Review
-      </Button>
-      </Link>
-      </div>
+
       <div className={s.footer}>
         <Footer />
       </div>

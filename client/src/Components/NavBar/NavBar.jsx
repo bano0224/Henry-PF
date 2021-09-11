@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppBar } from '@material-ui/core';
@@ -15,6 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import {Grid} from '@material-ui/core'
 import stateLogout from '../../actions/stateLogout'
+import swal from 'sweetalert';
 
 
 
@@ -84,6 +86,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NavBar() {
+
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -97,8 +101,17 @@ export default function NavBar() {
 
   const handleClose = () => {
     setAnchorEl(null);
-    stateLogout();
   };
+
+  const handleLogout = () => {
+    dispatch(stateLogout())
+    swal({
+      title: "Cerraste sesión!",
+      text: "Te esperamos!!",
+      buttons: false,
+      timer: 2000
+    });
+  }
 
   return (
     <Grid container xs={12}>
@@ -106,9 +119,6 @@ export default function NavBar() {
         <AppBar
             color="secondary"
             position="relative"
-            className={clsx(classes.appBar, {
-                [classes.appBarShift]: open,
-            })}
         >
         <Toolbar className={classes.container}>
           <Button
@@ -188,7 +198,7 @@ export default function NavBar() {
                 onClose={handleClose}
               >
                 <MenuItem component={Link} to='/login'>Perfil</MenuItem>
-                <MenuItem component={Link} to='/login'>Cerrar sesion</MenuItem>
+                <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
               </div>
 :
