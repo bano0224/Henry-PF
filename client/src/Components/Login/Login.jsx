@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
+import NavBar from "../NavBar/NavBar";
 import login from "../../actions/setLogin";
 import stateLogin from "../../actions/stateLogin";
 import style from './Login.module.css'
@@ -27,13 +28,14 @@ export default function Login() {
       
       dispatch(stateLogin());
 
-      setTimeout(() => {
         swal({
           title: "Bienvenida/o",
-          text: "Chupate esa mandarina!",
+          text: "Disfrutá de las mejores ofertas!",
           icon: "success",
+          buttons: false,
+          timer: 2000
         });
-      }, 2000)
+    
       
 
       setTimeout(() => {
@@ -57,6 +59,7 @@ export default function Login() {
 
   return (
     <div className={style.body}>
+      <NavBar />
       <div className={style.container}>
       <label for="exampleFormControlInput1" className={style.label} class="form-label">
       Por favor, ingresá tu email y contraseña
