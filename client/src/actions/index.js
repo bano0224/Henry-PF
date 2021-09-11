@@ -17,4 +17,5 @@ export const PRODUCT_RESET = 'PRODUCT_RESET';
 export const SET_REVIEWS = 'SET_REVIEWS';
 export const STATE_LOGIN = 'STATE_LOGIN'
 export const GET_USERS = 'GET_USERS';
-export const STATE_LOGOUT = 'STATE_LOGOUT'
+export const STATE_LOGOUT = 'STATE_LOGOUT';
+export const DELETE_CATEGORY = 'DELETE_CATEGORY';
