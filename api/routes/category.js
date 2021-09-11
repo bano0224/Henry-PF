@@ -4,7 +4,7 @@ const server = Router();
 
 server.get('/', getCategory)
 server.post('/create', createCategory)
-server.delete('/delete', deleteCategory)
+server.delete('/delete/:id', deleteCategory)
 server.put('/update', updateCategory)
 
 module.exports = server; 

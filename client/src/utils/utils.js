@@ -13,7 +13,7 @@ export const URL_SET_LOGIN = 'http://localhost:5000/user/login'
 //CATEGORY
 export const URL_CATEGORIES  = 'http://localhost:5000/category';
 export const URL_CATEGORY_CREATE = 'http://localhost:5000/category/create';
-export const URL_DELETE_CATEGORY = 'http://localhost:5000/delete/';
+export const URL_DELETE_CATEGORY = 'http://localhost:5000/category/delete/';
 
 
 

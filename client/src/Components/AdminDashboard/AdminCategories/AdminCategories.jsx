@@ -51,7 +51,7 @@ export default function AdminCategories() {
 
     useEffect(() => {
       dispatch(getCategories())
-    }, [])
+    }, [page])
 
     useEffect(() => {
       setRows(categories)
@@ -59,18 +59,17 @@ export default function AdminCategories() {
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-    };
+    }
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
-    };
-
-    const handleDelete = (e) => {
-      dispatch(deleteCategory())
     }
 
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaa', rows)
+    const handleDelete = (e) => {
+      dispatch(deleteCategory(e.currentTarget.value))
+    }
+
     
     return (
         <>
@@ -117,9 +116,9 @@ export default function AdminCategories() {
                           if(column.id === 'delete'){
                             return(
                               <TableCell align='center'>
-                                <IconButton value={row.id} onClick={(e) => {handleDelete(e)}}>
-                                  <DeleteIcon/>
-                                </IconButton>
+                                <Button value={row._id} onClick={(e) => {handleDelete(e)}}>
+                                  <DeleteIcon />
+                                </Button>
                               </TableCell>
                             )
                           } else if (column.id === 'edit'){

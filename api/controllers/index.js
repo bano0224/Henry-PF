@@ -184,12 +184,12 @@ const deleteCategory = async (req, res) => {
   const { id } = req.params;
   try {
     if (id) {
-      await Category.findByIdAndDelete({ id });
+      await Category.findByIdAndDelete(id);
       res.status(200).send("La categoría ha sido eliminada");
     } else {
       res.send("La categoría ingresada no existe");
     }
-  } catch (err) {
+  } catch (err) { 
     return err;
   }
 };

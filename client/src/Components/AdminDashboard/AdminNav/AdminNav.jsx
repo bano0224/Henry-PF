@@ -156,27 +156,27 @@ export default function AdminNav() {
                 paper: classes.drawerPaper,
             }}
         >
-        <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-        </div>
-        <Divider />
-        <List>
-            <ListItem button key='Products' component={Link} id='side' to="/admin/products">
-                <ListItemIcon>{<FastfoodIcon />}</ListItemIcon>
-                <ListItemText primary='Products' />
-            </ListItem>
-            <ListItem button key='Categories' component={Link} id='side' to="/admin/categories">
-                <ListItemIcon>{<CategoryIcon />}</ListItemIcon>
-                <ListItemText primary='Categories' />
-            </ListItem>
-            <ListItem button key='Users' component={Link} id='side' to="/admin/users">
-                <ListItemIcon>{<PeopleIcon />}</ListItemIcon>
-                <ListItemText primary='Users' />
-            </ListItem>
-        </List>
-        <Divider />
+            <div className={classes.drawerHeader}>
+                <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                </IconButton>
+            </div>
+            <Divider />
+                <List>
+                    <ListItem button key='Products' component={Link} id='side' to="/admin/products">
+                        <ListItemIcon>{<FastfoodIcon />}</ListItemIcon>
+                        <ListItemText primary='Products' />
+                    </ListItem>
+                    <ListItem button key='Categories' component={Link} id='side' to="/admin/categories">
+                        <ListItemIcon>{<CategoryIcon />}</ListItemIcon>
+                        <ListItemText primary='Categories' />
+                    </ListItem>
+                    <ListItem button key='Users' component={Link} id='side' to="/admin/users">
+                        <ListItemIcon>{<PeopleIcon />}</ListItemIcon>
+                        <ListItemText primary='Users' />
+                    </ListItem>
+                </List>
+            <Divider />
         </Drawer>
         <main
         className={clsx(classes.content, {

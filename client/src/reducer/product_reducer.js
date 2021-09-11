@@ -84,7 +84,8 @@ export default function productReducer(state = initialState, action) {
 
         case actionConst.CREATE_CATEGORY:
             return {
-                ...state,
+              ...state,
+              categories: action.payload
             }
 
         case actionConst.PRODUCT_RESET:
