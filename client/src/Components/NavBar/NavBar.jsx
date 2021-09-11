@@ -173,7 +173,7 @@ export default function NavBar() {
   
            
           <div className={classes.dashboard}>
-            {(login || !undefined) ?
+            {login ?
             <div>
               <Button
                   color="inherit"
