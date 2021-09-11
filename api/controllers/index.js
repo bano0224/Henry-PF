@@ -43,17 +43,6 @@ const createProduct = async (req, res) => {
   }
 };
 
-//PRUEBA JOIN
-// const createProduct = async (req, res) => {
-//     try {
-//       console.log('entre')
-//         await Product.create(req.body)
-//         res.status(200).json("productos creados ok");
-//     } catch (err) {
-//         return err
-//     }
-//   };
-
 const getProductsById = async (req, res) => {
   const { id } = req.params;
   console.log(id);
