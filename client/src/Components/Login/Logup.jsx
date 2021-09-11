@@ -64,7 +64,7 @@ function onSubmit (data, e) {
     e.preventDefault();
     dispatch(setLogup(input))
     alert('¡Su usuario ha sido creado!')
-    history.push('/login')
+    /* history.push('/login') */
 
 }
 

@@ -5,6 +5,7 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
+const services = require('../services/services')
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
@@ -205,8 +206,6 @@ const createReviews = async (req, res) => {
 };
 
 const logUp = async (req, res) => {
-  console.log(req.body)
-
   const { firstName, lastName, email, password, roles } = req.body;
   try {
     const newUser = new User({
@@ -219,23 +218,32 @@ const logUp = async (req, res) => {
     if (roles) {
       const findRoles = await Role.find({ name: `${roles}` });
       newUser.roles = findRoles.map((role) => role._id);
+      console.log('estoy entrando al if')
     } else {
       const role = await Role.findOne({ name: "user" }); // busco un solo usuario
       newUser.roles = [role._id];
       
-
     const saveUser = await newUser.save();
     console.log("ESTE ES EL FIND ROLES", saveUser);
   }
-    const token = jwt.sign(
+
+    newUser.save((err) => {
+      if(err) return res.status(500).send({message: `Error al crear el usuario: ${err}`})
+
+      return res.status(200).send({token: services.createToken(user)})
+    })
+    
+    /* const token = jwt.sign(
       { id: saveUser._id },
-      `${process.env.JWT_SECRET_KEY}`,
+      `${process.env.JWT_SECRET_KEY}` 'secret',
       {
         expiresIn: 3600, //una hora expira el token
       }
     );
-    res.status(200).json({ token });
-    console.log('ESTE ES EL TOKEN', token)
+    console.log('ESTE ES EL TOKEN DEL USUARIO', token)
+    res.status(200).json({ token }); */
+     
+    
   } catch (err) {
     return err;
   }
