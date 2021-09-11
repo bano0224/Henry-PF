@@ -21,7 +21,21 @@ export default function Login() {
   const [erroMessage, setErrorMessage] = useState("");
 
   function responseGoogle (respuesta) {
-    console.log('ESTA ES LA RESPUESTA DE GOOGLE',respuesta.profileObj)
+    if(respuesta.profileObj) {
+      dispatch(dispatch(stateLogin()))
+
+      swal({
+        title: "Bienvenida/o",
+        text: "Disfrutá de las mejores ofertas!",
+        icon: "success",
+        buttons: false,
+        timer: 2000,
+      });
+
+      setTimeout(() => {
+        history.push("/");
+      }, 2500);
+    }
   }
 
   async function handleLogin(e) {
