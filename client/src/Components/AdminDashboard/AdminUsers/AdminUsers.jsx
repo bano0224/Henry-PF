@@ -14,8 +14,8 @@ import TableRow from '@material-ui/core/TableRow';
 import getUsers from '../../../actions/getUsers'
 
 const columns = [
-    { id: 'first_name', label: 'Nombre', minWidth: 170 },
-    { id: 'last_name', label: 'Apellido', minWidth: 100 },
+    { id: 'firstName', label: 'Nombre', minWidth: 170 },
+    { id: 'lastName', label: 'Apellido', minWidth: 100 },
     {
       id: 'email',
       label: 'Email',
@@ -73,10 +73,10 @@ export default function AdminUsers() {
     useEffect(() => {
       setRows(users?.map(p => {
         return {
-          firtName: p.firstName,
+          firstName: p.firstName,
           lastName: p.lastName,
           email: p.email,
-          role: p.role,
+          role: p.role[0] || 'Sin rol',
         }
       }))
     }, [users])
