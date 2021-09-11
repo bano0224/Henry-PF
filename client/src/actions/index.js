@@ -15,3 +15,5 @@ export const REMOVE_ONE_FROM_CART = 'REMOVE_ONE_FROM_CART';
 export const REMOVE_ALL_FROM_CART = 'REMOVE_ALL_FROM_CART';
 export const PRODUCT_RESET = 'PRODUCT_RESET';
 export const SET_REVIEWS = 'SET_REVIEWS';
+export const STATE_LOGIN = 'STATE_LOGIN'
+export const GET_USERS = 'GET_USERS';

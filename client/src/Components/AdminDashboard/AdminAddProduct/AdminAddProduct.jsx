@@ -138,7 +138,7 @@ export default function AdminAddProduct(props) {
                 </Button>
                     <Container maxWidth='md'>
                         <div className={classes.formWrapper} >
-                            <h1>Create new product</h1>
+                            <h1>Crear nuevo producto</h1>
                             <br />
                             <Formik 
                                 initialValues={{
@@ -150,28 +150,28 @@ export default function AdminAddProduct(props) {
                                 <Form>
                                     <Grid container spacing={3}>
                                         <Grid item xs={12}>
-                                            <label for="exampleFormControlInput1" class="form-label">Name*</label>
+                                            <label for="exampleFormControlInput1" class="form-label">Nombre *</label>
                                             <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name'/>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <label for="form_message">Description *</label> 
+                                            <label for="form_message">Descripción *</label> 
                                             <textarea id="form_message" name="description" class="form-control" rows="4">
                                             </textarea>
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <label for="price" class="form-label">Price*</label>
+                                            <label for="price" class="form-label">Precio *</label>
                                             <input required onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control" id="price" placeholder={0} />
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <label for="stock" class="form-label">Stock*</label>
+                                            <label for="stock" class="form-label">Stock *</label>
                                             <input required onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' type="number" class="form-control" id="stock" placeholder={0} />
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <label for="exampleFormControlInput1" class="form-label">Discount</label>
+                                            <label for="exampleFormControlInput1" class="form-label">Descuento</label>
                                             <input required onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={0} />
                                         </Grid>
                                         <Grid item md={6}>
-                                            <label for="exampleFormControlInput1" class="form-label">Featured</label> 
+                                            <label for="exampleFormControlInput1" class="form-label">Destacado</label> 
                                             <Switch
                                                 checked={product.featured}
                                                 onChange={handleChangeFeatured}
@@ -180,7 +180,7 @@ export default function AdminAddProduct(props) {
                                             />
                                         </Grid>
                                         <Grid item md={6}>
-                                            <label for="exampleFormControlInput1" class="form-label">Category*</label> 
+                                            <label for="exampleFormControlInput1" class="form-label">Categoría *</label> 
                                             <select required class="form-select" aria-label="Default select example" onChange={(e) => handleCategory(e)}>
                                             <option selected>-</option>
                                             <option value={'6132cd9084e09f6626fcae25'} name='Almacén'>Almacén</option>
@@ -206,7 +206,7 @@ export default function AdminAddProduct(props) {
                                         </ul>
                                         </Grid>
                                         <Grid item md={6}>
-                                            <label required for="exampleFormControlInput1" class="form-label">Image*</label>
+                                            <label required for="exampleFormControlInput1" class="form-label">Imagen *</label>
                                             <DropzoneArea
                                                 acceptedFiles={['image/*']}
                                                 dropzoneText={"Drag and drop an image here or click"}
@@ -230,7 +230,7 @@ export default function AdminAddProduct(props) {
                                         alignItems="center" 
                                     >
                                         <Button variant="contained" color="secondary" type='submit'>
-                                            Create new product
+                                            Crear nuevo producto
                                         </Button>
                                     </Grid>
                                 </Form>

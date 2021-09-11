@@ -66,24 +66,42 @@ const getProductsById = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const { name } = req.query;
+  const {email } = req.query;
   try {
-    if (name) {
-      let userFind = await User.find({ name: `${name}` });
+    if (email) {
+      let userFind = await User.find({
+        email: { $regex: email, $options: "i" },
+      }).populate("role", { name: 1 });
       if (userFind.length) {
         res.status(200).json(userFind);
       } else {
-        res.status(400).send("No se encontró el producto solicitado");
+        res.status(200).json([{error:"No se encontró el usuario solicitado"}]);
+        
       }
     } else {
-      let userFind = await User.find();
+      const userFind = await User.find({}).populate("role", {
+        name: 1,
+      });
       res.status(200).json(userFind);
     }
   } catch (err) {
     return err;
   }
 };
-
+  
+  /* const { email } = req.query;
+  try {
+      let userFind = await User.find({ email: `${email}` });
+      if (userFind.length) {
+        res.status(200).json(userFind);
+      } else {
+        res.status(400).send("No se encontró el producto solicitado")
+  } 
+  } catch (err) {
+    return err;
+  }
+};
+ */
 const removeProduct = async (req, res) => {
   const { id } = req.params;
   try {
@@ -193,11 +211,10 @@ const updateCategory = async (req, res) => {
 };
 
 const createReviews = async (req, res) => {
-  console.log("ESTE ES EL BODY", req.body);
-  /* const { name, comment } = req.body */
+  
   try {
     let createReview = await Review.create(
-      req.body /* name: `${name}`, comment: `${comment}` */
+      req.body 
     );
     res.status(200).send("Comentario agregado");
   } catch (err) {
@@ -227,23 +244,31 @@ const logUp = async (req, res) => {
     console.log("ESTE ES EL FIND ROLES", saveUser);
   }
 
-    newUser.save((err) => {
+    /* newUser.save((err) => {
       if(err) return res.status(500).send({message: `Error al crear el usuario: ${err}`})
 
       return res.status(200).send({token: services.createToken(user)})
-    })
-    
+    }) */
+    const token = jwt.sign({
+      name: newUser.name,
+      id: saveUser._id
+    }, 'secret')
+
+    res.header('auth-token', token).json({
+      error: null,
+      data: { token },
+      message: 'Bienvenido'
+  })
+
     /* const token = jwt.sign(
       { id: saveUser._id },
       `${process.env.JWT_SECRET_KEY}` 'secret',
       {
         expiresIn: 3600, //una hora expira el token
       }
-    );
-    console.log('ESTE ES EL TOKEN DEL USUARIO', token)
-    res.status(200).json({ token }); */
-     
-    
+    ); */
+    console.log('ESTE ES EL TOKEN DEL USUARIO')
+    res.status(200).json(token);
   } catch (err) {
     return err;
   }
@@ -262,7 +287,7 @@ const logIn = async (req, res) => {
   );
   if (!matchPassword)
     return res.status(401).json({ token: null, message: "Invalid password" });
-  const token = jwt.sign({ id: userFound._id },`${process.env.JWT_SECRET_KEY}`, {
+    const token = jwt.sign({ id: userFound._id },`${process.env.JWT_SECRET_KEY}`, {
     expiresIn: 3600,
   });
   
@@ -313,6 +338,7 @@ module.exports = {
   logIn,
   logUp,
   updateUser,
+  getUsers
   
 };
 

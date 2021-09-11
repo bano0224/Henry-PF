@@ -24,11 +24,11 @@ import getCategories from '../../../actions/getCategories';
 
 
 const columns = [
-    { id: 'name', label: 'Name', minWidth: 170 },
+    { id: 'name', label: 'Nombre', minWidth: 170 },
     { id: 'category', label: 'Category', minWidth: 100 },
     {
       id: 'price',
-      label: 'Price',
+      label: 'Precio',
       minWidth: 170,
       align: 'right',
       format: (value) => value.toLocaleString('en-US'),
@@ -42,7 +42,7 @@ const columns = [
     },
     {
       id: 'featured',
-      label: 'Featured',
+      label: 'Destacado',
       minWidth: 170,
       align: 'right',
       format: (value) => value.toFixed(2),
@@ -120,7 +120,7 @@ export default function AdminProduct() {
         <AdminNav/>
         <br />
         <Container>
-          <h1>Products</h1>
+          <h1>Productos</h1>
           <Box display="flex" justifyContent='space-around' alignItems='center'>
               <FilterByCategory />
               <AdminSearch />
@@ -134,7 +134,7 @@ export default function AdminProduct() {
                 style= {{textDecoration: 'none'}}
                 id='button'
               >
-                Add Product
+                Agregar Productos
               </Button>
           </Box>
           <br />

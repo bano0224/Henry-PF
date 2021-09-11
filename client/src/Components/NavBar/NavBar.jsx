@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { AppBar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -84,6 +84,8 @@ export default function NavBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const productReducer = useSelector(state => state.productReducer)
+  const {login} = productReducer
 
 
   return (
@@ -134,7 +136,11 @@ export default function NavBar() {
                   Promociones
               </Button>
           </div>
+  
+           
           <div className={classes.dashboard}>
+            {login ?
+            <div>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -155,6 +161,31 @@ export default function NavBar() {
               >
                 <AccountCircle />
               </Button>
+              </div>
+:
+              <div>
+              <Button
+                  color="inherit"
+                  aria-label="open drawer"
+                  className={classes.button}
+                  id='button'
+                  component={Link}
+                  to='/cart'
+              >
+                  <ShoppingCartOutlinedIcon/>
+              </Button>
+              <Button
+                  color="inherit"
+                  aria-label="open drawer"
+                  className={classes.button}
+                  id='button'
+                  component={Link}
+                  to='/login'
+              >
+                  Ingresar
+              </Button>
+            </div>
+            }
             </div>
         </Toolbar>
       </AppBar>

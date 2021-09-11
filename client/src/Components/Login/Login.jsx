@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import login from "../../actions/setLogin";
 import stateLogin from "../../actions/stateLogin";
 import style from './Login.module.css'
+import swal from 'sweetalert';
 
 
 export default function Login() {
@@ -24,8 +25,21 @@ export default function Login() {
       const user = await login({ 
         email, password });
       
-      dispatch(stateLogin);
-      history.push("/");
+      dispatch(stateLogin());
+
+      setTimeout(() => {
+        swal({
+          title: "Bienvenida/o",
+          text: "Chupate esa mandarina!",
+          icon: "success",
+        });
+      }, 2000)
+      
+
+      setTimeout(() => {
+        history.push("/");
+      }, 2500);
+      
 
       console.log(user);
       setUser(user);

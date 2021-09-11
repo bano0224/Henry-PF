@@ -8,6 +8,7 @@ export const initialState = {
     categories: [],
     cart: [],
     reviews: [],
+    users: [],
     login: false,
 };
 
@@ -52,6 +53,13 @@ export default function productReducer(state = initialState, action) {
             return {
                 ...state,
             }
+
+        case actionConst.STATE_LOGIN:
+          console.log('ESTOY EN EL REDUCER')
+          return {
+            ...state,
+            login: true
+          }
 
         case actionConst.FILTER_BY_CATEGORY: 
             const allProducts = state.clearProducts;
@@ -138,6 +146,14 @@ export default function productReducer(state = initialState, action) {
 
         case actionConst.CLEAR_CART:
             return state;
+
+        case actionConst.GET_USERS:
+          console.log('REDUCER')
+            return {
+              ...state,
+              users: action.payload
+            }
+
 
         default: 
             return state

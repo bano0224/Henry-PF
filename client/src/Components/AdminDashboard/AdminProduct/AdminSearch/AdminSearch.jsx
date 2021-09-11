@@ -46,7 +46,7 @@ export default function Search() {
                     className={classes.button}
                     style= {{textDecoration: 'none'}}
                     >
-                        Find
+                        Buscar
                 </Button>
             </form>
         </>

@@ -18,8 +18,8 @@ import Box from '@material-ui/core/Box'
 
 
 const columns = [
-    { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'description', label: 'Description', minWidth: 100 },
+    { id: 'name', label: 'Nombre', minWidth: 170 },
+    { id: 'description', label: 'Descripción', minWidth: 100 },
   ];
 
   function createData(name, description) {
@@ -51,9 +51,6 @@ export default function AdminCategories() {
       setRows(categories)
     }, [categories])
 
-
-    console.log(rows)
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -68,7 +65,7 @@ export default function AdminCategories() {
         <AdminNav/>
         <br />
         <Container>
-          <h1>Categories</h1>
+          <h1>Categorías</h1>
           <Box display="flex" justifyContent='flex-end' alignItems='center'>
               <Button
                 variant="contained"
@@ -79,7 +76,7 @@ export default function AdminCategories() {
                 to='categories/add'
                 style= {{textDecoration: 'none'}}
               >
-                Add Category
+                Agregar Categoría
               </Button>
           </Box>
           <Paper className={classes.root}>

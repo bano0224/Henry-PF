@@ -47,7 +47,7 @@ export default function FilterByCategory() {
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">Filter</InputLabel>
+        <InputLabel id="demo-controlled-open-select-label">Filtro</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
