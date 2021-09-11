@@ -38,9 +38,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function Logup() {
   
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm({});
     const classes = useStyles();
     const history = useHistory()
     const dispatch = useDispatch()
@@ -86,7 +87,7 @@ function onSubmit (data, e) {
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
-                {...register("firstName", { required: true}, )}
+                {...register("firstName", {required: true})}
                 fullWidth
                 onChange={(e) => handleChange(e)}
                 value={input.firstName}
@@ -128,6 +129,7 @@ function onSubmit (data, e) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                type="email"
               />
               <span className="text-danger text-small d-block mb-2">
               {errors.email?.type === 'required' && "Email is required"}
@@ -145,6 +147,7 @@ function onSubmit (data, e) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                pattern="^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$"
               />
               <span className="text-danger text-small d-block mb-2">
               {errors.password?.type === 'required' && "Password is required"}

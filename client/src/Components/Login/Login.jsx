@@ -7,6 +7,7 @@ import login from "../../actions/setLogin";
 import stateLogin from "../../actions/stateLogin";
 import style from "./Login.module.css";
 import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 import swal from "sweetalert";
 
 export default function Login() {
@@ -20,9 +21,28 @@ export default function Login() {
   const [user, setUser] = useState(null);
   const [erroMessage, setErrorMessage] = useState("");
 
-  function responseGoogle (respuesta) {
-    if(respuesta.profileObj) {
-      dispatch(dispatch(stateLogin()))
+  function responseGoogle(respuesta) {
+    if (respuesta.profileObj) {
+      dispatch(dispatch(stateLogin()));
+
+      swal({
+        title: "Bienvenida/o",
+        text: "Disfrutá de las mejores ofertas!",
+        icon: "success",
+        buttons: false,
+        timer: 2000,
+      });
+
+      setTimeout(() => {
+        history.push("/");
+      }, 2500);
+    }
+  }
+
+  function responseFacebook(respuesta) {
+    console.log('ESTA ES LA RESPUESTA',respuesta)
+    if (respuesta.accesToken) {
+      dispatch(dispatch(stateLogin()));
 
       swal({
         title: "Bienvenida/o",
@@ -129,14 +149,28 @@ export default function Login() {
               Login
             </Button>
             <div>
-              <br/><br/>
-            <GoogleLogin
-              clientId="167695785983-a0bj8k1t6bi2c3pqlb18g68834srcng0.apps.googleusercontent.com"
-              buttonText="Iniciar sesión"
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              cookiePolicy={"single_host_origin"}
-            />
+              <br />
+              <br />
+              <GoogleLogin
+                clientId="167695785983-a0bj8k1t6bi2c3pqlb18g68834srcng0.apps.googleusercontent.com"
+                buttonText="Iniciar sesión"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+              />
+            </div>
+            <div className={style.containerFB}>
+              <br />
+              <br />
+              <FacebookLogin
+                appId="906354623292808"
+                autoLoad={false}
+                fields="name,email,picture"
+                callback={responseFacebook}
+                textButton='Iniciar sesión'
+                icon="fa-facebook"
+                className={style.FBbutton}
+              />
             </div>
           </Container>
         </form>
