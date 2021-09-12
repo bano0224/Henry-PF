@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import login from "../../actions/setLogin";
 import stateLogin from "../../actions/stateLogin";
 import style from './Login.module.css'
+import NavBar from "../NavBar/NavBar";
 
 
 export default function Login() {
@@ -43,6 +44,7 @@ export default function Login() {
 
   return (
     <div className={style.body}>
+      <NavBar />
       <div className={style.container}>
       <label for="exampleFormControlInput1" className={style.label} class="form-label">
       Por favor, ingresá tu email y contraseña

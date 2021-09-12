@@ -7,6 +7,7 @@ import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import style from "./Reviews.module.css";
+import NavBar from "../NavBar/NavBar";
 
 export default function Reviews() {
   
@@ -43,7 +44,10 @@ export default function Reviews() {
   }
 
   return (
+    <div>
+         <NavBar/>
     <div className={style.container}>
+ 
       <div className={style.reviews}>
         <Container maxWidth="xs">
           <form onSubmit={(e) => handleSubmit(e)}>
@@ -97,6 +101,7 @@ export default function Reviews() {
           </Box>
         </div>
       </div>
+    </div>
     </div>
   );
 }

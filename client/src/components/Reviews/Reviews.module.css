@@ -1,40 +1,40 @@
 .container {
-    background-image: url('https://c0.wallpaperflare.com/preview/734/143/601/spain-barcelona-mercado-de-la-boqueria-orange.jpg');
-    background-repeat:no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-image: url("https://c0.wallpaperflare.com/preview/734/143/601/spain-barcelona-mercado-de-la-boqueria-orange.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .reviews {
-    height: 60%;
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background: rgba(5, 5, 5, 0.719);
-    box-shadow: 10px 10px 150px rgba(253, 253, 253, 0.575);
-    border-radius: 30px;
+  height: 60%;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: rgb(255, 255, 255);
+  /* box-shadow: 10px 10px 150px rgba(253, 253, 253, 0.575); */
+  border-radius: 8px;
 }
 
 .raiting {
-    display:flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
 .title {
-    display:flex;
-    justify-content: center;
-    margin-top: 20px;
-    color: white;
-  }
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  color: rgb(51, 51, 51);
+}
 
 .label {
-    color:white;
+  color: rgb(51, 51, 51);
 }

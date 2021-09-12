@@ -1,15 +1,15 @@
-.menu {
+/* .menu {
   background-color: #e9183b;
-  height:75px;
-  width:100%;
+  height: 75px;
+  width: 100%;
   display: flex;
   margin: auto;
-  /* justify-content: space-around; */
+  justify-content: space-around;
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid #fff;
-  box-shadow: 5px 0 10px rgba(0, 0, 0, .6);
-}  
+  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.6);
+}
 
 .logo {
   color: #fff;
@@ -17,26 +17,26 @@
   font-weight: 800;
   padding: 0 80px;
   font-weight: bold;
-  font-family: 'Kalam', sans-serif;
+  font-family: "Kalam", sans-serif;
 }
 
 .menu_items {
   display: flex;
   justify-content: space-around;
-  list-style:none;
-  margin-right:30px;
-  font-family: 'Raleway', sans-serif;
-}
+  list-style: none;
+  margin-right: 30px;
+  font-family: "Raleway", sans-serif;
+} */
 
-.menu_items li{
-  display:flex;
-  
+/* .menu_items li {
+  display: flex;
+
   margin: 10px;
-  /* border-radius: 3px; */
-  /* margin: 100px; */
-}
+  border-radius: 3px;
+  margin: 100px;
+} */
 
-.menu_items li a {
+/*.menu_items li a {
   padding: 7px 13 px;
   text-decoration: none;
   font-size: 18px;
@@ -45,9 +45,10 @@
   color: #fff;
 }
 
-.menu_items li:hover, li.active {
-  background-color: rgba(0, 0, 0, .3);
-  transition: .4s
+ .menu_items li:hover,
+li.active {
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: 0.4s;
 }
 
 .btn_menu {
@@ -55,9 +56,23 @@
   font-size: 24px;
   color: #fff;
   cursor: pointer;
-  display:none;
+  display: none;
+} -------------------------------*/
+/* @media (max-width: 960px) {
+  .navbar__links {
+    display: none;
+  }
+
+  .hamburger__menu {
+    display: flex;
+  }
 }
 
+@media (max-width: 500px) {
+  .navbar__logo h2 {
+    font-size: 1rem;
+  }
+} */
 /* ul.show {
   top: 65px;
 } */
