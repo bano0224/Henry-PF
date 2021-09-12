@@ -11,11 +11,14 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
+import { blueGrey } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AddShoppingCart } from "@material-ui/icons";
 import accounting from "accounting";
 import addToCart from "../../actions/cart/addToCart";
 import { useDispatch } from "react-redux";
+import InfoIcon from '@material-ui/icons/Info';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -27,11 +30,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1rem",
     textDecoration: "none",
   },
+  title:{
+    width:"100%",
+    height:"20px",
+    overflow:"hidden",
+    textOverflow: "ellipsis",
+  },
   media: {
     height: "100%",
     width: "100%",
     paddingTop: "90%", // 16:9
-    
   },
   expand: {
     transform: "rotate(0deg)",
@@ -59,6 +67,7 @@ export default function ProductCard({name, image, description, price, id}) {
 
   const handleCart = () => {
     dispatch(addToCart(id, 1))
+    alert("El producto a sido agregado al carrito");
   }
 
   return (
@@ -73,25 +82,47 @@ export default function ProductCard({name, image, description, price, id}) {
             {accounting.formatMoney(price)}
           </Typography>
         }
-        title={name}
+        title={
+          <Typography
+          className={classes.title}
+          >
+            {name}
+          </Typography>
+        }
       />
       <CardMedia
         className={classes.media}
         image={image}
         title={name}
+        component={Link}
+          to={`/detail/${id}`}
       />
-      <Link to={`/detail/${id}`} >detail</Link>
-      <button onClick={handleCart}>Add</button>
-      {/* <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {description}
-        </Typography>
-      </CardContent> */}
       <CardActions disableSpacing>
-        <IconButton aria-label="add to Card">
-          <AddShoppingCart fontSize="large" />
-        </IconButton>
+      <IconButton
+                  title="AÃ±adir al carrito"
+                  style={{ color: blueGrey[900] }}
+                  aria-label="open drawer"
+                  className={classes.button}
+                  id='button'
+                  onClick={handleCart}
+                  
+              >
+                  <AddShoppingCart/>
+      </IconButton>
+      <IconButton
+          title="Detalles"
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          style={{ color: blueGrey[900] }}
+          aria-label="show more"
+          className={classes.button}
+          component={Link}
+          to={`/detail/${id}`}
 
+        >
+          <InfoIcon/>
+        </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -106,8 +137,7 @@ export default function ProductCard({name, image, description, price, id}) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>
-            "Crema liviana UAT. Libre de gluten. No es para batir. Contenido:
-            200 ml"
+            {description}
           </Typography>
         </CardContent>
       </Collapse>

@@ -6,3 +6,10 @@
     align-items: center;
     justify-content: center;
 }
+.warnings {
+    width: 200px;
+    text-align: center;
+    margin: auto;
+    color: rgb(15, 15, 15);
+    padding-top: 20px;
+}
