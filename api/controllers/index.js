@@ -233,26 +233,27 @@ const createReviews = async (req, res) => {
 };
 
 const logUp = async (req, res) => {
-  const { firstName, lastName, email, password, roles } = req.body;
+  const { firstName, lastName, email, password, } = req.body;
   try {
     const newUser = new User({
       firstName,
       lastName,
       email,
       password: await User.encryptPassword(password),
+      role:[{_id:"613981193e40a78ef29c793b"}]
     });
 
-    if (roles) {
+/*     if (roles) {
       const findRoles = await Role.find({ name: `${roles}` });
       newUser.roles = findRoles.map((role) => role._id);
       console.log('estoy entrando al if')
     } else {
       const role = await Role.findOne({ name: "user" }); // busco un solo usuario
-      newUser.roles = [role._id];
+      newUser.roles = [role._id]; */
       
     const saveUser = await newUser.save();
     console.log("ESTE ES EL FIND ROLES", saveUser);
-  }
+  /* } */
 
     /* newUser.save((err) => {
       if(err) return res.status(500).send({message: `Error al crear el usuario: ${err}`})
