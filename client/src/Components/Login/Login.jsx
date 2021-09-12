@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { Container, Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
@@ -144,14 +145,27 @@ export default function Login() {
               rows="3"
             ></input>
           </div>
-          <Container>
+          <Container className={style.buttonLogup}>
             <Button variant="contained" color="secondary" type="submit">
               Login
             </Button>
-            <div>
+            <div className={style.link}>
+            <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            /* className={classes.submit} */
+            component={Link}
+                    to='/logup'
+          >
+            Si no posees una cuenta hacé click aquí
+          </Button>
+            </div>
+            <div className={style.google}>
               <br />
               <br />
-              <GoogleLogin
+              <GoogleLogin className={style.googleButton}
                 clientId="167695785983-a0bj8k1t6bi2c3pqlb18g68834srcng0.apps.googleusercontent.com"
                 buttonText="Iniciar sesión"
                 onSuccess={responseGoogle}
@@ -162,7 +176,7 @@ export default function Login() {
             <div className={style.containerFB}>
               <br />
               <br />
-              <FacebookLogin
+              {/* <FacebookLogin className={style.facebookButton}
                 appId="906354623292808"
                 autoLoad={false}
                 fields="name,email,picture"
@@ -170,7 +184,7 @@ export default function Login() {
                 textButton='Iniciar sesión'
                 icon="fa-facebook"
                 className={style.FBbutton}
-              />
+              /> */}
             </div>
           </Container>
         </form>

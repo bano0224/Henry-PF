@@ -16,6 +16,7 @@ import { Style } from '@material-ui/icons';
 import PersonIcon from '@material-ui/icons/Person';
 import style from './Logup.module.css';
 import setLogup from '../../actions/setLogup';
+import AdminLogin from './AdminLogin/AdminLogin';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +46,7 @@ export default function Logup() {
     const classes = useStyles();
     const history = useHistory()
     const dispatch = useDispatch()
+    /* const [errors, setErrors] = useState({ form: "Completar el formulario"}); */
     const [input, setInput] = useState({
       firstName: "",
       lastName: "",
@@ -52,12 +54,38 @@ export default function Logup() {
       password: "",
     })
 
-
 function handleChange (e) {
   setInput({
     ...input,
     [e.target.name]: e.target.value
 })
+/* setErrors(
+  validate({
+    ...form,
+  })
+) */
+const validate = (form) => {
+  let errors = {};
+
+  if(!form.name) {
+    errors.name = "Nombre requerido";
+  } else if (form.name.length < 4){
+    errors.name = "Se requiere un nombre con mas de 4 caracteres";
+  }
+  if(input.password.length === 0 || !input.password){
+    errors.password = "La constraseña es incorrecta";
+  }
+  if(input.firstName || !input.lastName || !input.email){
+    errors.lastName.firstName.email = "Todos los campos son obligatorios";
+  }
+  if(input.password.length < 8 ){
+    errors.password = "La contraseña deberia debe tener al menos 8 caracteres";
+  }
+  if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])/(input.password)){
+    errors.password = "La contraseña debe contener almenos una letra mayúscula, una minúscula y un número";
+  }
+  
+}
 }
 
 function onSubmit (data, e) {
@@ -71,6 +99,7 @@ function onSubmit (data, e) {
 
   return (
       <div className={style.container}>
+        <AdminLogin/>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -130,6 +159,7 @@ function onSubmit (data, e) {
                 name="email"
                 autoComplete="email"
                 type="email"
+                
               />
               <span className="text-danger text-small d-block mb-2">
               {errors.email?.type === 'required' && "Email is required"}
@@ -150,7 +180,7 @@ function onSubmit (data, e) {
                 pattern="^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$"
               />
               <span className="text-danger text-small d-block mb-2">
-              {errors.password?.type === 'required' && "Password is required"}
+              {errors.password?.type === 'required' && "La contraseña debe tener al menos 8 dígitos"}
               </span>
             </Grid>
           </Grid>
@@ -158,23 +188,35 @@ function onSubmit (data, e) {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color="secondary"
             className={classes.submit}
           >
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Ya tenés una cuenta? Login...
-              </Link>
+            
             </Grid>
           </Grid>
         </form>
       </div>
+      
       <Box mt={5}>
         
       </Box>
+      <div>
+      <Button
+            id='button'
+            fullWidth
+            variant="contained"
+            color="secondary"
+            className={classes.button}
+            component={Link}
+                    to='/login'
+          >
+            Ya tenés una cuenta? Login...
+          </Button>
+          </div>
     </Container>
     </div>
   );

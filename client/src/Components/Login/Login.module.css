@@ -11,14 +11,40 @@
   }
 
 .FBbutton {
-  width: 50px;
-  height: 5px;
-  border-radius: 20px;
+  color:steelblue;
+}
+  .link {
+    margin-top: 20px;
+  }
+
+.google {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.googleButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.facebookButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5px;
+}
+
+.buttonLogup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .containerFB{
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   margin-top: 20px;
 }
   
