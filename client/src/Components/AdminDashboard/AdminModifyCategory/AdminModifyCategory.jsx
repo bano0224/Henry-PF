@@ -1,12 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import AdminNav from '../AdminNav/AdminNav'
-import { Grid, Container, Button } from '@material-ui/core'
+import { Grid, Container, Button, Breadcrumbs, Typography} from '@material-ui/core'
 import { DropzoneArea } from 'material-ui-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import getCategoryById from '../../../actions/categories/getCategoryById'
 import modifyCategory from '../../../actions/categories/modifyCategory';
+import HomeIcon from '@material-ui/icons/Home'
+import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+
+//Style
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+    },
+    heading: {
+      fontSize: '1.3em',
+      fontWeight: '500',
+      fontFamily: 'Raleway',
+    },
+    h1: {
+      fontFamily: 'Raleway'
+    },
+    icon: {
+      color: 'firebrick'
+    },
+    total: {
+        padding: '5px',
+        minHeight: '300px'
+    },
+    topay: {
+        fontWeight: '700'
+    }
+}));
 
 export default function AdminModifyCategory({match}) {
+    const classes = useStyles();
     const [category, setCategory] = useState({
         name: '',
         description: '',
@@ -54,42 +83,52 @@ export default function AdminModifyCategory({match}) {
                     <AdminNav />
                 </Grid>
                 <Grid item xs={12}>
-                    <Grid item xs={12}>
+                    <Container>
                         <br />
-                        <h1>Modificación de categoría</h1>
-                    </Grid>
-                    <Grid container>
-                        <form onSubmit={(e) => (handleSubmmit(e))}>
-                            <div class="mb-2">
-                                <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                                <input required onChange={(e) => handleChange(e)} value={category.name} type="text" class="form-control" id="exampleFormControlInput1" name='name'/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
-                                <textarea required onChange={(e) => handleChange(e)} value={category.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                            <div class="mb-2">
-                                <label required for="exampleFormControlInput1" class="form-label">Imagen</label>
-                                <DropzoneArea
-                                    acceptedFiles={['image/*']}
-                                    dropzoneText={"Drag and drop an image here or click"}
-                                    clearOnUnmount={true}
-                                    onChange={image => handleChange({ target: { name: 'image', value: image[0] } })}
-                                    onDelete={deletedImage => {
-                                        setCategory({
-                                            ...category,
-                                            image: [],
-                                        });
-                                    }}
-                                />
-                            </div>
-                            <Container>
-                                <Button variant="contained" color="secondary" type='submit'>
-                                    Modificar categoría
-                                </Button>
-                            </Container>
-                        </form>
-                    </Grid>
+                        <Breadcrumbs aria-label="breadcrumb">
+                            <Link color="secondary" to="/admin/categories" id='bread'>
+                            <HomeIcon className={classes.icon} />
+                                Categories
+                            </Link>
+                            <Typography color="textPrimary">Modify Category</Typography>
+                        </Breadcrumbs>
+                        <Grid item xs={12}>
+                            <br />
+                            <h1>Modificación de categoría</h1>
+                        </Grid>
+                        <Grid container justifyContent='center' direction='column' alignItems='center'>
+                            <form onSubmit={(e) => (handleSubmmit(e))}>
+                                <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+                                    <input required onChange={(e) => handleChange(e)} value={category.name} type="text" class="form-control" id="exampleFormControlInput1" name='name'/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
+                                    <textarea required onChange={(e) => handleChange(e)} value={category.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="mb-2">
+                                    <label required for="exampleFormControlInput1" class="form-label">Imagen</label>
+                                    <DropzoneArea
+                                        acceptedFiles={['image/*']}
+                                        dropzoneText={"Drag and drop an image here or click"}
+                                        clearOnUnmount={true}
+                                        onChange={image => handleChange({ target: { name: 'image', value: image[0] } })}
+                                        onDelete={deletedImage => {
+                                            setCategory({
+                                                ...category,
+                                                image: [],
+                                            });
+                                        }}
+                                    />
+                                </div>
+                                <Container>
+                                    <Button variant="contained" color="secondary" type='submit'>
+                                        Modificar categoría
+                                    </Button>
+                                </Container>
+                            </form>
+                        </Grid>
+                    </Container>
                 </Grid>
             </Grid>
         </>

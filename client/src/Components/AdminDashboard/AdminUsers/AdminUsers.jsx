@@ -64,6 +64,7 @@ export default function AdminUsers() {
 
     const productReducer = useSelector(state => state.productReducer)
     const { users } = productReducer
+    console.log(users)
 
 
     useEffect(() => {
@@ -76,7 +77,7 @@ export default function AdminUsers() {
           firstName: p.firstName,
           lastName: p.lastName,
           email: p.email,
-          role: p.role[0] || 'Sin rol',
+          role: p.role[0]?.name || 'Sin rol',
         }
       }))
     }, [users])
@@ -119,6 +120,7 @@ export default function AdminUsers() {
                         {columns.map((column) => {
                             const value = row[column.id];
                             return (
+                            
                             <TableCell key={column.id} align={column.align}>
                                 {column.format && typeof value === 'number' ? column.format(value) : value}
                             </TableCell>
