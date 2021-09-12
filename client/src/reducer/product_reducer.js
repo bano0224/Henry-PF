@@ -10,6 +10,7 @@ export const initialState = {
     cart: [],
     reviews: [],
     users: [],
+    roles: [],
     login: false,
 };
 
@@ -162,12 +163,22 @@ export default function productReducer(state = initialState, action) {
             return state;
 
         case actionConst.GET_USERS:
-          console.log('REDUCER')
             return {
               ...state,
               users: action.payload
             }
 
+        case actionConst.DELETE_USER:
+          return {
+            ...state,
+            users: action.payload
+          }
+
+        case actionConst.GET_ROLES:
+          return {
+            ...state,
+            roles: action.payload
+          }
 
         default: 
             return state

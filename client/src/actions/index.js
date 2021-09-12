@@ -20,3 +20,5 @@ export const GET_USERS = 'GET_USERS';
 export const STATE_LOGOUT = 'STATE_LOGOUT';
 export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const GET_CATEGORY_BY_ID = 'GET_CATEGORY_BY_ID';
+export const DELETE_USER = 'DELETE_USER';
+export const GET_ROLES = 'GET_ROLES';

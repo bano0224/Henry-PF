@@ -14,24 +14,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
     },
-    heading: {
-      fontSize: '1.3em',
-      fontWeight: '500',
-      fontFamily: 'Raleway',
-    },
     h1: {
       fontFamily: 'Raleway'
     },
     icon: {
       color: 'firebrick'
     },
-    total: {
-        padding: '5px',
-        minHeight: '300px'
-    },
-    topay: {
-        fontWeight: '700'
-    }
 }));
 
 export default function AdminModifyCategory({match}) {

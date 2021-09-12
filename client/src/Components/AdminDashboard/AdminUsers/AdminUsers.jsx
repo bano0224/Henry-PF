@@ -4,7 +4,7 @@ import AdminNav from '../AdminNav/AdminNav'
 import { Container } from 'react-bootstrap'
 import TableContainer from '@material-ui/core/TableContainer'
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import { Paper, IconButton } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,6 +12,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import getUsers from '../../../actions/getUsers'
+import { Link } from 'react-router-dom'
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import deleteUser from '../../../actions/users/deleteUser'
 
 const columns = [
     { id: 'firstName', label: 'Nombre', minWidth: 170 },
@@ -30,6 +34,8 @@ const columns = [
       align: 'center',
       format: (value) => value.toLocaleString('en-US'),
     },
+    { id: 'edit', label: 'Editar', minWidth: 100, align: 'center' },
+    { id: 'delete', label: 'Eliminar', minWidth: 100, align: 'center' },
     // {
     //   id: 'phone',
     //   label: 'Teléfono',
@@ -64,8 +70,8 @@ export default function AdminUsers() {
 
     const productReducer = useSelector(state => state.productReducer)
     const { users } = productReducer
-    console.log(users)
 
+    console.log(users);
 
     useEffect(() => {
       dispatch(getUsers())
@@ -74,6 +80,7 @@ export default function AdminUsers() {
     useEffect(() => {
       setRows(users?.map(p => {
         return {
+          _id: p._id,
           firstName: p.firstName,
           lastName: p.lastName,
           email: p.email,
@@ -91,6 +98,10 @@ export default function AdminUsers() {
         setPage(0);
     };
     
+    const handleDelete = (e) => {
+      dispatch(deleteUser(e.currentTarget.value))
+    }
+
     return (
         <>
         <AdminNav/>
@@ -119,12 +130,30 @@ export default function AdminUsers() {
                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
                         {columns.map((column) => {
                             const value = row[column.id];
-                            return (
-                            
-                            <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === 'number' ? column.format(value) : value}
-                            </TableCell>
-                            );
+                            if(column.id === 'delete'){
+                              return(
+                                <TableCell align='center'>
+                                  <IconButton value={row._id} onClick={(e) => {handleDelete(e)}}>
+                                    <DeleteIcon />
+                                  </IconButton>
+                                </TableCell>
+                              )
+                            } else if (column.id === 'edit'){
+                              return (
+                                <TableCell align='center'>
+                                  <IconButton component={Link} to={`users/${row._id}`}>
+                                    <EditIcon/>
+                                  </IconButton>
+                                </TableCell>
+                              )
+                            } else {
+                              return (
+                              
+                              <TableCell key={column.id} align={column.align}>
+                                  {column.format && typeof value === 'number' ? column.format(value) : value}
+                              </TableCell>
+                              );
+                            }
                         })}
                         </TableRow>
                     );

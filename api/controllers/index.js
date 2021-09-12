@@ -89,7 +89,29 @@ const getUserById = async (req, res) => {
 };
   /* const { email } = req.query;
   try {
-      let userFind = await User.find({ email: `${email}` });
+      let userFind = await User.find({ onst getUsers = async (req, res) => {
+  const {email } = req.query;
+  try {
+    if (email) {
+      let userFind = await User.find({
+        email: { $regex: email, $options: "i" },
+      }).populate("role", { name: 1 });
+      if (userFind.length) {
+        res.status(200).json(userFind);
+      } else {
+        res.status(200).json([{error:"No se encontró el usuario solicitado"}]);
+        
+      }
+    } else {
+      const userFind = await User.find({}).populate("role", {
+        name: 1,
+      });
+      res.status(200).json(userFind);
+    }
+  } catch (err) {
+    return err;
+  }
+};});
       if (userFind.length) {
         res.status(200).json(userFind);
       } else {
@@ -260,7 +282,7 @@ const logUp = async (req, res) => {
 
       return res.status(200).send({token: services.createToken(user)})
     }) */
-    const token = jwt.sign({
+   /*  const token = jwt.sign({
       name: newUser.name,
       id: saveUser._id
     }, 'secret')
@@ -270,14 +292,14 @@ const logUp = async (req, res) => {
       data: { token },
       message: 'Bienvenido'
   })
-
-    /* const token = jwt.sign(
+ */
+    const token = jwt.sign(
       { id: saveUser._id },
-      `${process.env.JWT_SECRET_KEY}` 'secret',
+      `${process.env.JWT_SECRET_KEY}` /* 'secret' */,
       {
         expiresIn: 3600, //una hora expira el token
       }
-    ); */
+    );
     console.log('ESTE ES EL TOKEN DEL USUARIO')
     res.status(200).json(token);
   } catch (err) {
@@ -311,8 +333,8 @@ const updateUser = async (req, res) => {
     console.log('ESTOY ENTRANDO')
     if (req.params.id) {
       await User.findByIdAndUpdate(req.params.id, {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
@@ -324,12 +346,40 @@ const updateUser = async (req, res) => {
         state: req.body.state,
         postal_code: req.body.postal_code,
         country: req.body.country,
-        /* role: modifiedRole(req.body.id, req.body.role), */
+        role: [{_id: req.body.role}],
       });
       res.status(200).send("El usuario fue actualizado");
     } else {
       res.status(404).send("El usuario no fue encontrado");
     }
+  } catch (err) {
+    return err;
+  }
+};
+
+const removeUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await User.findByIdAndDelete(id);
+    res.send("Usuario eliminado");
+  } catch (error) {
+    console.log(error);
+  }
+};
+const getRoles = async (req, res) => {
+  /* const {name} = req.query; */
+  try {
+    if (req.query.name) {
+      let roleFind = await Role.find( {name: req.query.name} )
+      if (roleFind.length) {
+        res.status(200).json(roleFind);
+      } else {
+        res.status(200).json([{error:"No se encontró el rol solicitado"}]);
+      }
+    } else {
+      const roleFind = await Role.find({})
+      res.status(200).json(roleFind);
+     } 
   } catch (err) {
     return err;
   }
@@ -351,7 +401,9 @@ module.exports = {
   logUp,
   updateUser,
   getUsers,
-  getUserById
+  getUserById,
+  removeUser,
+  getRoles
   
 };
 
