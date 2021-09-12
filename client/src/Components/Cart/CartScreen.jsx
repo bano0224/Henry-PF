@@ -9,7 +9,14 @@ import { Link } from 'react-router-dom';
 import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, Divider, Typography, Breadcrumbs } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HomeIcon from '@material-ui/icons/Home'
-
+import Checkout from './Checkout';
+import PaymentForm from './PaymentForm'
+import Button from '@material-ui/core/Button';
+import accounting from "accounting";
+// Chechout import
+import useStyles1 from './styles1';
+import { useState } from "react";
+// Chechout
 
 //Style
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CartScreen() {
+
+
     const classes = useStyles();
     const dispatch= useDispatch()
     const cartReducer = useSelector(state => state.cartReducer)
@@ -86,7 +95,7 @@ export default function CartScreen() {
                                 aria-controls="panel1a-content"
                                 id="cart"
                                 >
-                                    <Typography className={classes.heading}>1. Cart</Typography>
+                                    <Typography className={classes.heading} id="cart">1. Cart</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <Grid container direction='column' spacing={2}>
@@ -125,8 +134,8 @@ export default function CartScreen() {
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <Typography>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                                        sit amet blandit leo lobortis eget.
+                                       
+
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
@@ -136,7 +145,8 @@ export default function CartScreen() {
                                     aria-controls="panel3a-content"
                                     id="panel3a-header"
                                     >
-                                    <Typography className={classes.heading}>3. Payment</Typography>
+                                    <Typography className={classes.heading}>3. </Typography>
+                                    
                                 </AccordionSummary>
                             </Accordion>
                         </Grid>
@@ -148,15 +158,23 @@ export default function CartScreen() {
                                     </Grid>
                                     <Grid item>
                                         <Divider />
-                                        <span className={classes.topay}> TO PAY: </span><span>${getSubtotal()}</span>
+                                        <span className={classes.topay}> TO PAY: </span><span>{accounting.formatMoney(getSubtotal())}</span>
+
                                     </Grid>
+                                    <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
+                                        <Button type="submit" variant="contained" color="primary" component={Link} to="/cart/checkout">Let's to buy!</Button>
+                                       
+                                    </div>
                                 </Grid>
                             </Paper>
                         </Grid>
                     </Grid>
                 </Container>
             </Grid>
+
+
         </Grid>
+
     )
 }
 

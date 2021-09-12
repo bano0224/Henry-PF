@@ -5,6 +5,9 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
+const stripe = require("stripe")("sk_test_51JYn4nDpSNCyvuRizsfvAUMBg1KU0WYv6Qihrip7VekY3nrHGOpnDATg5h4VhDLkgGvuhHT5pEEr7ZBkCYRoGv2d00QRjqu6Sb");
+// Private key
+
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
@@ -292,6 +295,28 @@ const updateUser = async (req, res) => {
   }
 };
 
+const checkout = async (req, res) =>{
+  const { id, amount } = req.body;
+
+  
+  // res.send("Recibido Stripe");
+  try{
+    const payment = await stripe.paymentIntents.create({
+      amount: amount,
+      currency:"usd",
+      description: "ecommerce henry products",
+      payment_method:id,
+      confirm:true,
+    })
+    // res.send("Pago procesado");
+    console.log(payment);
+    res.status(200).json({message:"Succesful Payment YEAHHH!"})
+  }catch(error){
+    return res.json({message: "Error en su tarjeta 2"});
+    console.log(error)
+  }
+  
+}
 module.exports = {
   getProducts,
   createProduct,
@@ -306,6 +331,7 @@ module.exports = {
   logIn,
   logUp,
   updateUser,
+  checkout,
   
 };
 
