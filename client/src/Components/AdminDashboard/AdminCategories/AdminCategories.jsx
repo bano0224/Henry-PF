@@ -70,6 +70,11 @@ export default function AdminCategories() {
       dispatch(deleteCategory(e.currentTarget.value))
     }
 
+    const handleModify = (e) => {
+      // dispatch()
+      console.log(e.currentTarget.value)
+    }
+
     
     return (
         <>
@@ -116,15 +121,15 @@ export default function AdminCategories() {
                           if(column.id === 'delete'){
                             return(
                               <TableCell align='center'>
-                                <Button value={row._id} onClick={(e) => {handleDelete(e)}}>
+                                <IconButton value={row._id} onClick={(e) => {handleDelete(e)}}>
                                   <DeleteIcon />
-                                </Button>
+                                </IconButton>
                               </TableCell>
                             )
                           } else if (column.id === 'edit'){
                             return (
                               <TableCell align='center'>
-                                <IconButton>
+                                <IconButton component={Link} to={`categories/${row._id}`}>
                                   <EditIcon/>
                                 </IconButton>
                               </TableCell>

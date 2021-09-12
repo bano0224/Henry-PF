@@ -16,6 +16,7 @@ import Login from "./components/Login/Login";
 import Logup from './components/Login/Logup'
 import NotFound from "./components/404/NotFound";
 import ScreenCart from './components/Cart/CartScreen'
+import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory/AdminModifyCategory";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route exact path="/login" component={Login}/>
         <Route exact path='/logup' component={Logup} />
         <Route exact path='/cart' component={ScreenCart} />
+        <Route exact path='/admin/categories/:id' component={AdminModifyCategory} />
         <Route path='*' component={NotFound} />
       </Switch>
     </BrowserRouter>

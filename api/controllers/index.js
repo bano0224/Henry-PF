@@ -165,6 +165,12 @@ const getCategory = async (req, res) => {
   }
 };
 
+const getCategoryById = async (req, res) => {
+  const {id} = req.params
+  const findd = await Category.findById(id)
+  res.json(findd)
+}
+
 const createCategory = async (req, res) => {
   const { name, description, image } = req.body;
   try {
@@ -195,10 +201,16 @@ const deleteCategory = async (req, res) => {
 };
 
 const updateCategory = async (req, res) => {
-  const { id } = req.params;
+  const { _id, name, description, image } = req.body;
   try {
-    if (id) {
-      await Category.updateOne({ id });
+    if (_id) {
+      const catego = await Category.findById(_id );
+      catego.name = name;
+      catego.description = description;
+      catego.image = image;
+
+      await catego.save();
+
       res.status(200).send("La categoría ha sido actualizada");
     } else {
       res.status(404).send("La categoría ingresada no existe");
@@ -328,6 +340,7 @@ module.exports = {
   getProductsById,
   removeProduct,
   getCategory,
+  getCategoryById,
   createCategory,
   deleteCategory,
   updateCategory,

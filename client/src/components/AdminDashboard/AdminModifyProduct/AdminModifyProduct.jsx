@@ -28,27 +28,27 @@ export default function AdminModifyProduct({ match }) {
         dispatch(getCategories());
     }, [])
 
-    const detail = useSelector( state => state.productDetail)
-    const categories = useSelector( state => state.categories)
+    const detail = useSelector( state => state.productReducer)
+    const {productDetail, categories} = detail
 
     useEffect(() => {
-        if (detail.category && categories) {
-            const categoriesInProduct = detail.category.reduce((acc, el) => {
+        if (productDetail.category && categories) {
+            const categoriesInProduct = productDetail.category.reduce((acc, el) => {
                 acc[el] = true
                 return acc;
             }, {});
             setCategoriesToShow(categories.filter(category => categoriesInProduct[category._id]))
         }
         setProduct({
-            name: detail.name,
-            description: detail.description,
-            price: detail.price,
-            countInStock: detail.countInStock,
-            imageUrl: detail.imageUrl,
-            featured: detail.featured,
-            discount: detail.discount,
+            name: productDetail.name,
+            description: productDetail.description,
+            price: productDetail.price,
+            countInStock: productDetail.countInStock,
+            imageUrl: productDetail.imageUrl,
+            featured: productDetail.featured,
+            discount: productDetail.discount,
         });
-    }, [detail, categories])
+    }, [productDetail, categories])
 
     const handleChange = ({ target: { name, value } }) => {
         if (name === 'imageUrl') {
@@ -81,8 +81,8 @@ export default function AdminModifyProduct({ match }) {
 
     const handleSubmmit = (e) => {
         e.preventDefault()
-        dispatch(modifyProduct({...product, category: categoriesToShow.map(cat => cat._id), _id: detail._id}));
-        alert(`${product.name} created`)
+        dispatch(modifyProduct({...product, category: categoriesToShow.map(cat => cat._id), _id: productDetail._id}));
+        alert(`${product.name} modified`)
         setProduct({
             name: '',
             description: '',
@@ -165,7 +165,7 @@ export default function AdminModifyProduct({ match }) {
                     </div>
                     <Container>
                         <Button variant="contained" color="secondary" type='submit'>
-                            Crear nuevo producto
+                            Modificar producto
                         </Button>
                     </Container>
                 </form>

@@ -6,6 +6,7 @@ export const initialState = {
     clearProducts: [],
     productDetail: [],
     categories: [],
+    categoryDetail: [],
     cart: [],
     reviews: [],
     users: [],
@@ -98,6 +99,13 @@ export default function productReducer(state = initialState, action) {
           return {
               ...state,
               categories: action.payload,
+          }
+
+        case actionConst.GET_CATEGORY_BY_ID:
+          // console.log('reducer', action)
+          return {
+              ...state,
+              categoryDetail: action.payload
           }
 
         case actionConst.CHANGE_ORDER:
