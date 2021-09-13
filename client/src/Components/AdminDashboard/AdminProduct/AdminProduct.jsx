@@ -94,18 +94,16 @@ export default function AdminProduct() {
     const {products} = productReducer
 
     useEffect(() => {
-      
-        setRows(products.map(p => {
-          return {
-            name: p.name,
-            category: p.category?.map(c => c.name).join(', '),
-            price: p.price,
-            stock: p.countInStock,
-            featured: p.featured ? 'true' : 'false',
-            id: p._id
-          }
-        }))
-      
+      setRows(products.map(p => {
+        return {
+          name: p.name,
+          category: p.category.map(c => c.name).join(', '),
+          price: p.price,
+          stock: p.countInStock,
+          featured: p.featured ? 'true' : 'false',
+          id: p._id
+        }
+      }))
     }, [products])
     
 
@@ -161,44 +159,40 @@ export default function AdminProduct() {
                     ))}
                     </TableRow>
                 </TableHead>
-                {
-                  rows[0].name
-                  ? <TableBody>
-                      {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                      return (
-                          <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                          {columns.map((column) => {
-                              const value = row[column.id];
-                              if(column.id === 'delete'){
-                                return(
-                                  <TableCell align='center'>
-                                    <IconButton value={row.id} onClick={(e) => {handleDelete(e)}}>
-                                      <DeleteIcon />
-                                    </IconButton>
-                                  </TableCell>
-                                )
-                              } else if (column.id === 'edit'){
-                                return (
-                                  <TableCell align='center'>
-                                    <IconButton component={Link} to={`/admin/products/modify/${row.id}` } >
-                                      <EditIcon/>
-                                    </IconButton>
-                                  </TableCell>
-                                )
-                              } else {
-                                return (
-                                <TableCell key={column.id} align={column.align}>
-                                    {column.format && typeof value === 'number' ? column.format(value) : value}
+                <TableBody>
+                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                        {columns.map((column) => {
+                            const value = row[column.id];
+                            if(column.id === 'delete'){
+                              return(
+                                <TableCell align='center'>
+                                  <IconButton value={row.id} onClick={(e) => {handleDelete(e)}}>
+                                    <DeleteIcon />
+                                  </IconButton>
                                 </TableCell>
-                                );
-                              }
-                          })}
-                          </TableRow>
-                      );
-                      })}
-                  </TableBody>
-                  : <TableBody><Container><span>No se encontraron productos</span></Container></TableBody>
-                }
+                              )
+                            } else if (column.id === 'edit'){
+                              return (
+                                <TableCell align='center'>
+                                  <IconButton component={Link} to={`/admin/products/modify/${row.id}` } >
+                                    <EditIcon/>
+                                  </IconButton>
+                                </TableCell>
+                              )
+                            } else {
+                              return (
+                              <TableCell key={column.id} align={column.align}>
+                                  {column.format && typeof value === 'number' ? column.format(value) : value}
+                              </TableCell>
+                              );
+                            }
+                        })}
+                        </TableRow>
+                    );
+                    })}
+                </TableBody>
               </Table>
             </TableContainer>
           <TablePagination
