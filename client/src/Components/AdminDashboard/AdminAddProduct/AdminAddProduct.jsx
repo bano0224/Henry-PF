@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import createProduct from '../../../actions/createProduct';
 import AdminNav from '../AdminNav/AdminNav'
-import { Container, Grid, Button, Switch, Typography, TextField}from '@material-ui/core'
-import { makeStyles, mergeClasses } from '@material-ui/styles';
+import { Container, Grid, Button, Switch}from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles';
 import { DropzoneArea } from 'material-ui-dropzone';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {Formik, Form} from 'formik'
-import * as Yup from 'yup'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +28,7 @@ export default function AdminAddProduct(props) {
         imageUrl: [],
         category: [],
         featured: true,
-        discount: '' || ''
+        discount: 0 
     })
     const [categories, setCategories] = useState([])
     const classes = useStyles();
@@ -64,7 +62,7 @@ export default function AdminAddProduct(props) {
             category: [...product.category, e.target.value]
         })
 
-        switch(e.target.value){
+        switch(e.target.value){//CAMBIAR ESTO
             case '6132cd9084e09f6626fcae25':
                 return setCategories([...categories, 'Almacén'])
             case '6132cef8a6fafa3682b978f9':
@@ -90,8 +88,9 @@ export default function AdminAddProduct(props) {
             case '6132d0b1a6fafa3682b97917':
                 return setCategories([...categories, 'Mascotas'])
         }
-        
     }
+
+    console.log(product)
 
     const handleSubmmit = (e) => {
         e.preventDefault()
@@ -105,16 +104,9 @@ export default function AdminAddProduct(props) {
             imageUrl: [],
             category: [],
             featured: 0,
-            discount: '' || 0
+            discount: 0
         })
     }
-
-    //Formik
-    const INITIAL_FORM_STATE = {}
-
-    const FORM_VALIDATION = Yup.object().shape({
-
-    })
 
     return (
         <>
@@ -140,101 +132,95 @@ export default function AdminAddProduct(props) {
                         <div className={classes.formWrapper} >
                             <h1>Crear nuevo producto</h1>
                             <br />
-                            <Formik 
-                                initialValues={{
-                                ...INITIAL_FORM_STATE
-                                }}
-                                validationSchema={FORM_VALIDATION}
-                                onSubmit={values => { console.log(values)}}
-                            >
-                                <Form>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={12}>
-                                            <label for="exampleFormControlInput1" class="form-label">Nombre *</label>
-                                            <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name'/>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <label for="form_message">Descripción *</label> 
-                                            <textarea id="form_message" name="description" class="form-control" rows="4">
-                                            </textarea>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <label for="price" class="form-label">Precio *</label>
-                                            <input required onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control" id="price" placeholder={0} />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <label for="stock" class="form-label">Stock *</label>
-                                            <input required onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' type="number" class="form-control" id="stock" placeholder={0} />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <label for="exampleFormControlInput1" class="form-label">Descuento</label>
-                                            <input required onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={0} />
-                                        </Grid>
-                                        <Grid item md={6}>
-                                            <label for="exampleFormControlInput1" class="form-label">Destacado</label> 
-                                            <Switch
-                                                checked={product.featured}
-                                                onChange={handleChangeFeatured}
-                                                name="featured"
-                                                inputProps={{ 'aria-label': 'secondary checkbox' }}
-                                            />
-                                        </Grid>
-                                        <Grid item md={6}>
-                                            <label for="exampleFormControlInput1" class="form-label">Categoría *</label> 
-                                            <select required class="form-select" aria-label="Default select example" onChange={(e) => handleCategory(e)}>
-                                            <option selected>-</option>
-                                            <option value={'6132cd9084e09f6626fcae25'} name='Almacén'>Almacén</option>
-                                            <option value={'6132cef8a6fafa3682b978f9'} name='Bebidas'>Bebidas</option>
-                                            <option value={'6132cf51a6fafa3682b978fc'} name='Carnes'>Carnes</option>
-                                            <option value={'6132cf71a6fafa3682b978ff'} name='Frutas  y verduras'>Frutas y verduras</option>
-                                            <option value={'6132cf90a6fafa3682b97902'} name='Lácteos'>Lácteos</option>
-                                            <option value={'6132cfa8a6fafa3682b97905'} name='Perfumería'>Perfumería</option>
-                                            <option value={'6132cfc1a6fafa3682b97908'} name='Limpieza'>Limpieza</option>
-                                            <option value={'6132cfd9a6fafa3682b9790b'} name='Quesos y fiambres'>Quesos y fiambres</option>
-                                            <option value={'6132cff3a6fafa3682b9790e'} name='Congelados'>Congelados</option>
-                                            <option value={'6132d07ca6fafa3682b97911'} name='Panadería y repostería'>Panadería y repostería</option>
-                                            <option value={'6132d08ba6fafa3682b97914'} name='Comida preparada'>Comidas preparadas</option>
-                                            <option value={'6132d0b1a6fafa3682b97917'} name='Mascotas'>Mascotas</option>
-                                            </select>
-                                            <br />
-                                            <ul>
-                                            {
-                                                categories.length !== 0
-                                                ? categories.map(c => <li>{c}</li>)
-                                                : <li>No categories yet</li>
-                                            }
-                                        </ul>
-                                        </Grid>
-                                        <Grid item md={6}>
-                                            <label required for="exampleFormControlInput1" class="form-label">Imagen *</label>
-                                            <DropzoneArea
-                                                acceptedFiles={['image/*']}
-                                                dropzoneText={"Drag and drop an image here or click"}
-                                                clearOnUnmount={true}
-                                                onChange={image => handleChange({ target: { name: 'imageUrl', value: image[0] } })}
-                                                onDelete={deletedImage => {
-                                                    setProduct({
-                                                        ...product,
-                                                        imageUrl: [],
-                                                    });
-                                                }}
-                                            />
-                                        </Grid>
+                            <form class="row g-3 needs-validation" novalidate onSubmit={(e) => {handleSubmmit(e)}}>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <label for="name" class="form-label">Nombre *</label>
+                                        <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="name" name='name'/>
                                     </Grid>
-                                    <br />
-                                    <br />
-                                    <Grid 
-                                        container md={12}
-                                        direction="row"
-                                        justifyContent="center"
-                                        alignItems="center" 
-                                    >
-                                        <Button variant="contained" color="secondary" type='submit'>
-                                            Crear nuevo producto
-                                        </Button>
+                                    <Grid item xs={12}>
+                                        <label for="description">Descripción *</label> 
+                                        <textarea required onChange={(e) => handleChange(e)} id="description" name="description" id="description" value={product.description} class="form-control" rows="4">
+                                        </textarea>
                                     </Grid>
-                                </Form>
-                            </Formik>
+                                    <Grid item xs={6}>
+                                        <label for="price" class="form-label">Precio *</label>
+                                        <input required onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" id='price' min={0} class="form-control" id="price" placeholder={0} />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <label for="stock" class="form-label">Stock *</label>
+                                        <input required onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' min={0} type="number" class="form-control" id="stock" placeholder={0} />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <label for="discount" class="form-label">Descuento</label>
+                                        <input onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="discount" placeholder={0} />
+                                    </Grid>
+                                    <Grid item md={6}>
+                                        <label for="featured" class="form-label">Destacado</label> 
+                                        <Switch
+                                            checked={product.featured}
+                                            onChange={handleChangeFeatured}
+                                            name="featured"
+                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                            id='featured'
+                                        />
+                                    </Grid>
+                                    <Grid item md={6}>
+                                        <label for="category" class="form-label">Categoría *</label> 
+                                        <select required class="form-select" aria-label="Default select example" onChange={(e) => handleCategory(e)} id='category'>
+                                        <option selected>-</option>
+                                        <option value={'6132cd9084e09f6626fcae25'} name='Almacén'>Almacén</option>
+                                        <option value={'6132cef8a6fafa3682b978f9'} name='Bebidas'>Bebidas</option>
+                                        <option value={'6132cf51a6fafa3682b978fc'} name='Carnes'>Carnes</option>
+                                        <option value={'6132cf71a6fafa3682b978ff'} name='Frutas  y verduras'>Frutas y verduras</option>
+                                        <option value={'6132cf90a6fafa3682b97902'} name='Lácteos'>Lácteos</option>
+                                        <option value={'6132cfa8a6fafa3682b97905'} name='Perfumería'>Perfumería</option>
+                                        <option value={'6132cfc1a6fafa3682b97908'} name='Limpieza'>Limpieza</option>
+                                        <option value={'6132cfd9a6fafa3682b9790b'} name='Quesos y fiambres'>Quesos y fiambres</option>
+                                        <option value={'6132cff3a6fafa3682b9790e'} name='Congelados'>Congelados</option>
+                                        <option value={'6132d07ca6fafa3682b97911'} name='Panadería y repostería'>Panadería y repostería</option>
+                                        <option value={'6132d08ba6fafa3682b97914'} name='Comida preparada'>Comidas preparadas</option>
+                                        <option value={'6132d0b1a6fafa3682b97917'} name='Mascotas'>Mascotas</option>
+                                        </select>
+                                        <br />
+                                        <ul>
+                                        {
+                                            categories.length !== 0
+                                            ? categories.map(c => <li>{c}</li>)
+                                            : <li>No categories yet</li>
+                                        }
+                                    </ul>
+                                    </Grid>
+                                    <Grid item md={6}>
+                                        <label required for="imageUrl" class="form-label">Imagen *</label>
+                                        <DropzoneArea
+                                            id='imageUrl'
+                                            acceptedFiles={['image/*']}
+                                            dropzoneText={"Drag and drop an image here or click"}
+                                            clearOnUnmount={true}
+                                            onChange={image => handleChange({ target: { name: 'imageUrl', value: image[0] } })}
+                                            onDelete={deletedImage => {
+                                                setProduct({
+                                                    ...product,
+                                                    imageUrl: [],
+                                                });
+                                            }}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <br />
+                                <br />
+                                <Grid 
+                                    container md={12}
+                                    direction="row"
+                                    justifyContent="center"
+                                    alignItems="center" 
+                                >
+                                    <Button variant="contained" color="secondary" type='submit'>
+                                        Crear nuevo producto
+                                    </Button>
+                                </Grid>
+                            </form>
                         </div>
                     </Container>
                 </Grid>
