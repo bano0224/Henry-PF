@@ -13,7 +13,7 @@ import Confirmation from "./Confirmation"
  const Checkout = () => {
     // Inicializamos hook
     const classes = useStyles();
-    const steps = ['Shipping address', 'Payment details', 'Confirmation'];
+    const steps = ['Dirección de envío', 'Detalles de pago', 'Confirmación'];
     const [activeStep, setActiveStep] = useState(0);
 
     const nextStep = () => setActiveStep((prevActivestep)=> prevActivestep + 1);
@@ -30,7 +30,7 @@ import Confirmation from "./Confirmation"
               </Typography>
               <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
-              <Step key={label}>
+              <Step key={label} >
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}

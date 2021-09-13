@@ -21,7 +21,7 @@ const dispatch = useDispatch()
       
     <>
         <Typography variant="h6" gutterBottom>
-            Shipping address
+            Dirección de envío
         </Typography>
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(data=>{
@@ -31,16 +31,16 @@ const dispatch = useDispatch()
                         })}>
                 <Grid container spacing={3}> 
                     
-                    <AddressInput required   name="firstName" label="First Name"/>
-                    <AddressInput required   name="lastName" label="Last Name"/>
-                    <AddressInput required   name="address1" label="Address"/>
-                    <AddressInput required   name="email" label="Email"/>
-                    <AddressInput required   name="city" label="City"/>
-                    <AddressInput required   name="postCode" label="Post Code"/>
+                    <AddressInput required type='text' name="firstName" label="Nombre"/>
+                    <AddressInput required type='text' name="lastName" label="Apellido"/>
+                    <AddressInput required type='text' name="address1" label="Direccion"/>
+                    <AddressInput required type='email' name="email" label="Email"/>
+                    <AddressInput required type='text' name="city" label="Ciudad"/>
+                    <AddressInput required type='text' name="postCode" label="Código postal"/>
                 </Grid>   
                 <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
-                    <Button type="submit" variant="contained" color="primary" component={Link} to="/checkout-page">Back</Button>
-                    <Button type="submit" variant="contained" color="primary">Next</Button>
+                    <Button id='button' type="submit" variant="contained" color="secondary" component={Link} to="/cart">Atras</Button>
+                    <Button id='button' type="submit" variant="contained" color="secondary">Siguiente</Button>
                 </div>
             </form>
         </FormProvider>

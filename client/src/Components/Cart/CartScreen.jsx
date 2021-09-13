@@ -135,12 +135,6 @@ export default function CartScreen() {
                                     <Typography className={classes.heading}>2. Detalles de envío</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-<<<<<<< HEAD
-                                    <Typography>
-                                       
-
-                                    </Typography>
-=======
                                     {
                                         login
                                         ? <p>Estas logueado bro</p>
@@ -150,7 +144,6 @@ export default function CartScreen() {
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                                         sit amet blandit leo lobortis eget.
                                     </Typography> */}
->>>>>>> Dev
                                 </AccordionDetails>
                             </Accordion>
                             <Accordion >
@@ -159,12 +152,7 @@ export default function CartScreen() {
                                     aria-controls="panel3a-content"
                                     id="panel3a-header"
                                     >
-<<<<<<< HEAD
-                                    <Typography className={classes.heading}>3. </Typography>
-                                    
-=======
                                     <Typography className={classes.heading}>3. Detalles de pago</Typography>
->>>>>>> Dev
                                 </AccordionSummary>
                             </Accordion>
                         </Grid>
@@ -180,7 +168,7 @@ export default function CartScreen() {
 
                                     </Grid>
                                     <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
-                                        <Button type="submit" variant="contained" color="primary" component={Link} to="/cart/checkout">Let's to buy!</Button>
+                                        <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout">Let's to buy!</Button>
                                        
                                     </div>
                                 </Grid>

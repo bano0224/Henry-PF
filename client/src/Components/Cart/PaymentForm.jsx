@@ -94,7 +94,7 @@ const CheckoutForm =({backStep, nextStep})=>{
             <CardElement options={CARD_ELEMENTS_OPTIONS}/>
             <div style={{display: "flex", justifyContent:"space-between", marginTop:"1rem"}}>
             <Button variant='outlined' onClick={backStep}>Back</Button>
-            <Button disabled={false} variant='contained' color='primary' type='submit'>`Pay ${accounting.formatMoney(getSubtotal())}`</Button>
+            <Button disabled={false} variant='contained' color='secondary' type='submit'>`Pay ${accounting.formatMoney(getSubtotal())}`</Button>
             </div>
 
         </form>
@@ -108,7 +108,7 @@ export default function PaymentForm({backStep, nextStep}) {
       <Review/>
       <Divider/> 
       <Typography variant="h6"style={{margin:"20px 0"}} gutterBottom>
-        Payment method      
+        Método de pago      
       </Typography> 
       <Elements stripe={stripePromise}>
         <CheckoutForm nextStep={nextStep} backStep={backStep}/>
