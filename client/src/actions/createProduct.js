@@ -32,7 +32,6 @@ const uploadImage = async (img, name) => {
 };
 
 export default function createProduct(product) {
-  console.log(product)
   return async function (dispatch) {
     try {
       const imageUrl = await uploadImage(product.imageUrl, product.name);

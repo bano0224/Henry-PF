@@ -93,8 +93,6 @@ export default function AdminAddProduct(props) {
         }
     }
 
-    console.log(product)
-
     const handleSubmmit = (e) => {
         e.preventDefault()
         dispatch(createProduct(product));

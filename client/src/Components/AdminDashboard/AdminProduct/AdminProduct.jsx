@@ -1,27 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import AdminNav from "../AdminNav/AdminNav";
-import Container from "@material-ui/core/Container";
-import TableContainer from "@material-ui/core/TableContainer";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import FilterByCategory from "../AdminFilter/FilterByCategory";
-import AdminSearch from "../AdminSearch/AdminSearch";
-import { Box, IconButton } from "@material-ui/core";
-import Button from "@material-ui/core/Button/Button";
-import AddIcon from "@material-ui/icons/Add";
-import getProducts from "../../../actions/getProducts";
-import getCategories from "../../../actions/getCategories";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import deleteProduct from "../../../actions/deleteProduct";
+
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import AdminNav from '../AdminNav/AdminNav'
+import Container from '@material-ui/core/Container'
+import TableContainer from '@material-ui/core/TableContainer'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import FilterByCategory from '../AdminFilter/FilterByCategory';
+import AdminSearch from '../AdminSearch/AdminSearch';
+import { Box, IconButton }  from '@material-ui/core';
+import Button from '@material-ui/core/Button/Button';
+import AddIcon from '@material-ui/icons/Add';
+import getProducts from '../../../actions/getProducts';
+import getCategories from '../../../actions/getCategories';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import deleteProduct from '../../../actions/deleteProduct';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 const columns = [
   { id: "name", label: "Nombre", minWidth: 170 },
@@ -75,11 +82,18 @@ const useStyles = makeStyles({
   },
 });
 
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
 export default function AdminProduct() {
-  const classes = useStyles();
-  const [rows, setRows] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const classes = useStyles();
+    const [rows, setRows] = useState([])
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [open, setOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState('')
 
   const dispatch = useDispatch();
 
@@ -88,6 +102,7 @@ export default function AdminProduct() {
     dispatch(getCategories());
   }, []);
 
+
   const productReducer = useSelector((state) => state.productReducer);
   const { products } = productReducer;
 
@@ -95,19 +110,18 @@ export default function AdminProduct() {
     ? "Este producto no se encuentra en stock"
     :  */
     useEffect(() => {
-        setRows(
-          products.map((p) => {
-            return {
-              name: p.name,
-              category: p.category.map((c) => c.name).join(", "),
-              price: p.price,
-              stock: p.countInStock,
-              featured: p.featured ? "true" : "false",
-              id: p._id,
-            };
-          })
-        );
-      }, [products]);
+      
+      setRows(products.map(p => {
+        return {
+          name: p.name,
+          category: p.category.map(c => c.name).join(', '),
+          price: p.price,
+          stock: p.countInStock,
+          featured: p.featured ? 'true' : 'false',
+          id: p._id
+        }
+      }))
+    }, [products])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -117,6 +131,18 @@ export default function AdminProduct() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+    const handleClickOpen = (e) => {
+      setOpen(true);
+      setDeleteId(e.currentTarget.value)
+    }
+
+    const handleClose = (e) => {
+      if(e.currentTarget.value === 'delete'){
+        dispatch(deleteProduct(deleteId))
+      }
+      setOpen(false);
+    }
 
   const handleDelete = (e) => {
     dispatch(deleteProduct(e.currentTarget.value));
@@ -145,26 +171,44 @@ export default function AdminProduct() {
           </Button>
         </Box>
         <br />
-        <Paper className={classes.root}>
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+
+        <Container>
+          <h1>Productos</h1>
+          <Box display="flex" justifyContent='space-around' alignItems='center'>
+              <FilterByCategory />
+              <AdminSearch />
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                startIcon={<AddIcon />}
+                component={Link} 
+                to='/admin/products/add'
+                style= {{textDecoration: 'none'}}
+                id='button'
+              >
+                Agregar Productos
+              </Button>
+          </Box>
+          <br />
+          <Paper className={classes.root}>
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                    <TableRow>
+                    {columns.map((column) => (
+                        <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                        >
+                        {column.label}
+                        </TableCell>
+                    ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     return (
                       <TableRow
                         hover
@@ -173,33 +217,26 @@ export default function AdminProduct() {
                         key={row.code}
                       >
                         {columns.map((column) => {
-                          const value = row[column.id];
-                          if (column.id === "delete") {
-                            return (
-                              <TableCell align="center">
-                                <IconButton
-                                  value={row.id}
-                                  onClick={(e) => {
-                                    handleDelete(e);
-                                  }}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </TableCell>
-                            );
-                          } else if (column.id === "edit") {
-                            return (
-                              <TableCell align="center">
-                                <IconButton
-                                  component={Link}
-                                  to={`/admin/products/modify/${row.id}`}
-                                >
-                                  <EditIcon />
-                                </IconButton>
-                              </TableCell>
-                            );
-                          } else {
-                            return (
+
+                            const value = row[column.id];
+                            if(column.id === 'delete'){
+                              return(
+                                <TableCell align='center'>
+                                  <IconButton value={row.id} onClick={(e) => {handleClickOpen(e)}}>
+                                    <DeleteIcon />
+                                  </IconButton>
+                                </TableCell>
+                              )
+                            } else if (column.id === 'edit'){
+                              return (
+                                <TableCell align='center'>
+                                  <IconButton component={Link} to={`/admin/products/modify/${row.id}` } >
+                                    <EditIcon/>
+                                  </IconButton>
+                                </TableCell>
+                              )
+                            } else {
+                              return (
                               <TableCell key={column.id} align={column.align}>
                                 {column.format && typeof value === "number"
                                   ? column.format(value)
@@ -223,9 +260,37 @@ export default function AdminProduct() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </Paper>
-        <br />
-      </Container>
-    </>
-  );
+
+          </Paper>
+          <br />
+          <div>
+          <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle id="alert-dialog-slide-title">{"Esta seguro que quiere eliminar este producto?"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                Esta acción no se puede deshacer
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button value='cancell' onClick={(e) => {handleClose(e)}} color="primary">
+                Cancelar
+              </Button>
+              <Button value='delete' onClick={(e) => {handleClose(e)}} color="primary">
+                Eliminar
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+  
+        </Container>
+        </>
+    )
+
 }

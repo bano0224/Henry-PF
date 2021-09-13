@@ -32,6 +32,7 @@ const StyledBadge = withStyles((theme) => ({
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+    offset: theme.mixins.toolbar,
     root: {
     display: 'flex'
     },
@@ -105,12 +106,10 @@ export default function NavBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  /* const productReducer = useSelector(state => state.productReducer)
-  const {login} = productReducer */
 
-  
-   const login = localStorage.getItem('login')
 
+  const login = localStorage.getItem('login')
+ 
 
   const a = useSelector(state => state.cartReducer)
   const { cartItems } = a
@@ -135,10 +134,10 @@ export default function NavBar() {
 
   return (
     <Grid container xs={12}>
-        <CssBaseline />
         <AppBar
-            color="secondary"
-            position="relative"
+          className={classes.positionFixed}
+          color="secondary"
+          position="fixed"
         >
         <Toolbar className={classes.container}>
           <Button
@@ -149,11 +148,10 @@ export default function NavBar() {
                 component={Link}
                 to='/'
           >
-          <Typography variant="h6" className={classes.title}>
-          E-Market
-          </Typography>                
-            </Button>
-
+            <Typography variant="h6" className={classes.title}>
+            E-Market
+            </Typography>                
+          </Button>
           <div className={classes.dashboard}>
               <Button
                   color="inherit"
@@ -178,8 +176,6 @@ export default function NavBar() {
                   Promociones
               </Button>
           </div>
-  
-           
           <div className={classes.dashboard}>
             {(login === 'true') ?
             <div>
@@ -252,6 +248,7 @@ export default function NavBar() {
             </div>
         </Toolbar>
       </AppBar>
+      <div className={classes.offset}></div>
     </Grid>
   );
 }
