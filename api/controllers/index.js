@@ -428,8 +428,11 @@ const checkout = async (req, res) =>{
       confirm:true,
     })
     // res.send("Pago procesado");
-    console.log(payment);
-    res.status(200).json({message:"Succesful Payment YEAHHH!"})
+    if(payment.cancellation_reason == null){
+      res.status(200).json(payment.status)
+    } else {
+      res.status(200).json({rejected})
+    }
   }catch(error){
     return res.json({message: "Error en su tarjeta 2"});
     console.log(error)
