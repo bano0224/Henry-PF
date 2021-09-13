@@ -15,32 +15,6 @@ import style from "./Logup.module.css";
 import setLogup from "../../actions/setLogup";
 import AdminLogin from "./AdminLogin/AdminLogin";
 
-
-function validate(input) {
-	let errors = {};
-  if (!input.firstName) {
-    errors.firstName = "Se require un nombre";
-  } else if (input.firstName.length < 3) {
-    errors.firstName = "El nombre debe tener al menos 3 letras";
-  }
-  if (!input.lastName) {
-    errors.lastName = "LastName is required";
-  } else if (input.lastName.length < 3) {
-    errors.lastName = "El apellido debe tener al menos 3 letras";
-  }
-	if (!input.email) {
-		errors.email = "Se require Email";
-	} else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/(input.email)) {
-		errors.email = "Invalid Email";
-	}
-	if (!input.password) {
-		errors.password = "Se require Password";
-	} else if (
-		!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/(input.password)) {
-		errors.password = "La contraseña debe contener almenos una letra mayúscula, una minúscula y un número";
-	}
-	return errors;
-}
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -62,85 +36,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Logup() {
-   const [input, setInput] = useState({
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({});
+  
+  const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  /* const [errors, setErrors] = useState({ form: "Completar el formulario"}); */
+  const [input, setInput] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-   });
+  });
 
-  const { register,formState: { errors }} = useForm({});
-  // const { register, handleSubmit, errors } = useForm(); // initialize the hook
-  const classes = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch();
-  //const [errors, setErrors] = useState({});
-  
-  //    return (
-  //     <form onSubmit={handleSubmit(onSubmit)}>
-  //       <input name="firstname" ref={register} /> {/* register an input */}
-  //       <input name="lastname" ref={register({ required: true })} />
-  //       {errors.lastname && 'Last name is required.'}
-  //       <input name="age" ref={register({ pattern: /\d+/ })} />
-  //       {errors.age && 'Please enter number for age.'}
-  //       <input type="submit" />
-  //     </form>
-  //   );
-  // }
-
-
-const handleChange=(e)=>{
+  function handleChange(e) {
     setInput({
-			...input,
-			[e.target.name]: e.target.value,
-		});
-		//  setErrors(
-		// 	validate({
-		// 		...input,
-		// 		[e.target.value]: e.target.value,
-		// 	})
-		// ); 
+      ...input,
+      [e.target.name]: e.target.value,
+    });
    }
+   const nombre = document.getElementById("name")
 
+    const validate = (form) => {
+      let errors = {};
 
-
-const handlerSubmit=(e)=>{
-  e.preventDefault();
-  validate(input)
-  if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-  (input.email));
-
-  if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-  (input.password));
-  
-  } 
-  //   const validate = (form) => {
-  //     let errors = {};
-
-  //     if (!form.name) {
-  //       errors.name = "Nombre requerido";
-  //     } else if (form.name.length < 4) {
-  //       errors.name = "Se requiere un nombre con mas de 4 caracteres";
-  //     }
-  //     if (input.password.length === 0 || !input.password) {
-  //       errors.password = "La constraseña es incorrecta";
-  //     }
-  //     if (input.firstName || !input.lastName || !input.email) {
-  //       errors.lastName.firstName.email = "Todos los campos son obligatorios";
-  //     }
-  //     if (input.password.length < 8) {
-  //       errors.password =
-  //         "La contraseña deberia debe tener al menos 8 caracteres";
-  //     }
-  //     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])/(input.password)) {
-  //       errors.password =
-  //         "La contraseña debe contener almenos una letra mayúscula, una minúscula y un número";
-  //     }
-  //   };
+      if (!form.name) {
+        errors.name = "Nombre requerido";
+      } else if (form.name.length < 4) {
+        errors.name = "Se requiere un nombre con mas de 4 caracteres";
+      }
+      if (input.password.length === 0 || !input.password) {
+        errors.password = "La constraseña es incorrecta";
+      }
+      if (input.firstName || !input.lastName || !input.email) {
+        errors.lastName.firstName.email = "Todos los campos son obligatorios";
+      }
+      if (input.password.length < 8) {
+        errors.password =
+          "La contraseña deberia debe tener al menos 8 caracteres";
+      }
+      if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])/(input.password)) {
+        errors.password =
+          "La contraseña debe contener almenos una letra mayúscula, una minúscula y un número";
+      }
+    };
    
 
-const onSubmit=(data, e)=> {
-    console.log(data);
+  function onSubmit(data, e) {
+    console.log(data,'Dataaaa');
     e.preventDefault();
     dispatch(setLogup(input));
     alert("¡Su usuario ha sido creado!");
@@ -159,7 +106,8 @@ const onSubmit=(data, e)=> {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} onSubmit={(e) =>handlerSubmit(e)}>
+          
+          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -214,7 +162,7 @@ const onSubmit=(data, e)=> {
                   type="email"
                 />
                 <span className="text-danger text-small d-block mb-2">
-                  {errors.email?.type === " " && "Email is required"}
+                  {errors.email?.type === "required" && "Email is required"}
                 </span>
               </Grid>
               <Grid item xs={12}>
@@ -229,8 +177,7 @@ const onSubmit=(data, e)=> {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  pattern="required"
-                  required="required"
+                  pattern="^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$"
                 />
                 <span className="text-danger text-small d-block mb-2">
                   {errors.password?.type === " " &&
@@ -245,7 +192,7 @@ const onSubmit=(data, e)=> {
               color="secondary"
               className={classes.submit}
             >
-              Inscribirse
+              Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item></Grid>
@@ -262,6 +209,7 @@ const onSubmit=(data, e)=> {
         >
           Ya tenés una cuenta? Login...
         </Button>
+        <p class="warnings" id="warnings"></p>
       </Container>
     </div>
   );
