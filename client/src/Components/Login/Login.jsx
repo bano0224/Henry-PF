@@ -24,7 +24,7 @@ export default function Login() {
 
   function responseGoogle(respuesta) {
     if (respuesta.profileObj) {
-      dispatch(dispatch(stateLogin()));
+      dispatch(stateLogin());
 
       swal({
         title: "Bienvenida/o",

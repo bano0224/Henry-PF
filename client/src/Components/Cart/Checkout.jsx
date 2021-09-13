@@ -8,7 +8,10 @@ import StepLabel from '@material-ui/core/StepLabel';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import { useState } from "react";
-import Confirmation from "./Confirmation"
+import {Grid} from '@material-ui/core';
+import NavBar from '../NavBar/NavBar';
+import './Checkout.css'
+
 
  const Checkout = () => {
     // Inicializamos hook
@@ -22,7 +25,11 @@ import Confirmation from "./Confirmation"
     const Form = () => activeStep === 0 ? <AddressForm nextStep={nextStep}/> : <PaymentForm nextStep={nextStep} backStep={backStep}/>
 
     return (
-        <>
+      
+        <Grid container xs={12}>
+          <Grid item xs={12}>
+          <NavBar/>
+      </Grid>
           <main className={classes.layout}>
               <Paper className={classes.paper}>
               <Typography component='h1' variant='h4' aling='center'>
@@ -35,14 +42,12 @@ import Confirmation from "./Confirmation"
               </Step>
             ))}
           </Stepper>
-          {/* {
-            activeStep === 2 ? (<Confirmation/>) : (<Form />)
-          } */}
             <Form/>
               </Paper>
               
           </main>  
-        </>
+        </Grid>
+        
     )
 }
 export default Checkout
