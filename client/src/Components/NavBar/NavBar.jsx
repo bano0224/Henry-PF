@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -101,8 +101,15 @@ export default function NavBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const productReducer = useSelector(state => state.productReducer)
-  const {login} = productReducer
+  /* const productReducer = useSelector(state => state.productReducer)
+  const {login} = productReducer */
+
+  
+   const login = localStorage.getItem('login')
+
+
+  console.log('ESTE ES EL LOGIN', typeof login)
+  
 
   const a = useSelector(state => state.cartReducer)
   const { cartItems } = a
@@ -173,7 +180,7 @@ export default function NavBar() {
   
            
           <div className={classes.dashboard}>
-            {login ?
+            {(login === 'true') ?
             <div>
               <Button
                   color="inherit"

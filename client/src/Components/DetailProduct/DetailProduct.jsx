@@ -73,8 +73,9 @@ export default function DetailProduct({name, image, description, price, id}) {
                                       {
                                       productReviews.filter(e => e.product[0]?._id === id).map(r => (
                                       <div>
-                                        <p>{r.name}</p>
+                                        <b>{r.name}</b>
                                         <p>{r.comment}</p>
+                                        <p>{`${r.rating} estrellas`}</p>
                                         </div> )) }
                                     </span>
                                     } 

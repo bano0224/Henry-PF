@@ -1,8 +1,8 @@
 import { STATE_LOGOUT } from "./index";
 
 const stateLogout = () => {
-    return {
-        type: STATE_LOGOUT
+    return async function() {
+        localStorage.setItem('login', false)
     }
 }
 

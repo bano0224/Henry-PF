@@ -36,16 +36,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Logup() {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({});
-  
+  const { register,formState: { errors },handleSubmit,} = useForm({});
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  /* const [errors, setErrors] = useState({ form: "Completar el formulario"}); */
+  // const [errors, setErrors] = useState({});
+  
   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
@@ -59,35 +55,9 @@ export default function Logup() {
       [e.target.name]: e.target.value,
     });
    }
-   const nombre = document.getElementById("name")
-
-    const validate = (form) => {
-      let errors = {};
-
-      if (!form.name) {
-        errors.name = "Nombre requerido";
-      } else if (form.name.length < 4) {
-        errors.name = "Se requiere un nombre con mas de 4 caracteres";
-      }
-      if (input.password.length === 0 || !input.password) {
-        errors.password = "La constraseña es incorrecta";
-      }
-      if (input.firstName || !input.lastName || !input.email) {
-        errors.lastName.firstName.email = "Todos los campos son obligatorios";
-      }
-      if (input.password.length < 8) {
-        errors.password =
-          "La contraseña deberia debe tener al menos 8 caracteres";
-      }
-      if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])/(input.password)) {
-        errors.password =
-          "La contraseña debe contener almenos una letra mayúscula, una minúscula y un número";
-      }
-    };
-   
 
   function onSubmit(data, e) {
-    console.log(data,'Dataaaa');
+    console.log(data);
     e.preventDefault();
     dispatch(setLogup(input));
     alert("¡Su usuario ha sido creado!");
@@ -104,9 +74,8 @@ export default function Logup() {
             <PersonIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Crear cuenta
           </Typography>
-          
           <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -119,17 +88,17 @@ export default function Logup() {
                   onChange={(e) => handleChange(e)}
                   value={input.firstName}
                   id="firstName"
-                  label="First Name"
+                  label="Nombre"
                   autoFocus
                 />
                 <span className="text-danger text-small d-block mb-2">
-                  {errors.firstName?.type === " " &&
-                    "First name is required"}
+                  {errors.firstName?.type === "required" &&
+                    "Se requiere un nombre"}
                 </span>
-                <span className="text-danger text-small d-block mb-2">
+                {/* <span className="text-danger text-small d-block mb-2">
                   {errors.firstName?.type === "minLength" &&
-                    "First name is required"}
-                </span>
+                    "Se requiere un nombre"}
+                </span> */}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -139,13 +108,13 @@ export default function Logup() {
                   value={input.lastName}
                   onChange={(e) => handleChange(e)}
                   id="lastName"
-                  label="Last Name"
+                  label="Apellido"
                   name="lastName"
                   autoComplete="lname"
                 />
                 <span className="text-danger text-small d-block mb-2">
-                  {errors.lastName?.type === " " &&
-                    "Last name is required"}
+                  {errors.lastName?.type === "required" &&
+                    "Se requiere un apellido"}
                 </span>
               </Grid>
               <Grid item xs={12}>
@@ -156,13 +125,13 @@ export default function Logup() {
                   onChange={(e) => handleChange(e)}
                   value={input.email}
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                   type="email"
                 />
                 <span className="text-danger text-small d-block mb-2">
-                  {errors.email?.type === "required" && "Email is required"}
+                  {errors.email?.type === "required" && "Se requiere un email"}
                 </span>
               </Grid>
               <Grid item xs={12}>
@@ -173,14 +142,14 @@ export default function Logup() {
                   value={input.password}
                   onChange={(e) => handleChange(e)}
                   name="password"
-                  label="Password"
+                  label="contraseña"
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  pattern="^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$"
+                  pattern="required"
                 />
                 <span className="text-danger text-small d-block mb-2">
-                  {errors.password?.type === " " &&
+                  {errors.password?.type === "required" &&
                     "La contraseña debe tener al menos 8 dígitos"}
                 </span>
               </Grid>
@@ -192,7 +161,7 @@ export default function Logup() {
               color="secondary"
               className={classes.submit}
             >
-              Sign Up
+              Ingresar
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item></Grid>
@@ -214,3 +183,4 @@ export default function Logup() {
     </div>
   );
 }
+
