@@ -5,12 +5,15 @@ const morgan = require("morgan");
 const routes = require("./routes/index");
 const cors = require('cors')
 const categoryRoles = require('./libs/initialSetup')
+// const stripe = require("stripe")
+// const stripe = new Stripe("sk_test_51JYn4nDpSNCyvuRizsfvAUMBg1KU0WYv6Qihrip7VekY3nrHGOpnDATg5h4VhDLkgGvuhHT5pEEr7ZBkCYRoGv2d00QRjqu6Sb");
 
 connectDB();
 const app = express();
 categoryRoles();
-
-
+// Stripe
+app.use(express.static("public"));
+// Stripe
 app.use(express.json({ limit: "50mb" }));
 app.use(morgan("dev"));
 app.use(cors());
@@ -24,6 +27,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/", routes);
+
+
 
 app.use((err, req, res, next) => {
   // eslint-disable-line no-unused-vars

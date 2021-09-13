@@ -19,7 +19,8 @@
     "mongoose": "^6.0.3",
     "react-facebook-login": "^4.1.1",
     "react-hook-form": "^7.15.1",
-    "redux-devtools-extension": "^2.13.9"
+    "redux-devtools-extension": "^2.13.9",
+    "stripe": "^8.174.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0"

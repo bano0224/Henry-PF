@@ -3,6 +3,8 @@ import './Cart.module.css'
 import { Grid, IconButton, MenuItem, Select, FormHelperText } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete'
+import accounting from "accounting";
+
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -18,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Cart({item, handlerQty, handlerRemove}) {
     const classes = useStyles();
-    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+
 
     return (
         <>
@@ -35,7 +39,11 @@ export default function Cart({item, handlerQty, handlerRemove}) {
                 </Grid>
                 <Grid container xs={3} justifyContent='space-between' alignItems='center' direction='row'>
                     <Grid item>
+<<<<<<< HEAD
+                        <span>{accounting.formatMoney(item.price)}</span>
+=======
                         <span>${parseInt(item.price) * item.qty}</span>
+>>>>>>> Dev
                     </Grid>
                     <Grid item>
                         <Grid container direction='row' justifyContent='space-between' alignItems='center' spacing={1}>
