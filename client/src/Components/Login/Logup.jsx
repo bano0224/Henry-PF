@@ -14,6 +14,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import style from "./Logup.module.css";
 import setLogup from "../../actions/setLogup";
 import AdminLogin from "./AdminLogin/AdminLogin";
+import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -60,8 +61,17 @@ export default function Logup() {
     console.log(data);
     e.preventDefault();
     dispatch(setLogup(input));
-    alert("¡Su usuario ha sido creado!");
-    /* history.push('/login') */
+
+    swal({
+      title: "Tu cuenta fue creada con éxito",
+      icon: "success",
+      buttons: false,
+      timer: 2000,
+    });
+
+    setTimeout(() => {
+      history.push("/login");
+    }, 2500);
   }
 
   return (

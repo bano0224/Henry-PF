@@ -112,9 +112,6 @@ export default function NavBar() {
    const login = localStorage.getItem('login')
 
 
-  console.log('ESTE ES EL LOGIN', typeof login)
-  
-
   const a = useSelector(state => state.cartReducer)
   const { cartItems } = a
 
@@ -222,7 +219,7 @@ export default function NavBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to='/login'>Perfil</MenuItem>
+                <MenuItem component={Link} to='/'>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
               </div>
