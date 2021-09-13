@@ -22,7 +22,12 @@ import getCategories from '../../../actions/getCategories';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import deleteProduct from '../../../actions/deleteProduct';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 
 const columns = [
@@ -77,11 +82,17 @@ const columns = [
     }
   });
 
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
 export default function AdminProduct() {
     const classes = useStyles();
     const [rows, setRows] = useState([])
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [open, setOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState('')
 
     const dispatch = useDispatch()
     
@@ -116,8 +127,16 @@ export default function AdminProduct() {
         setPage(0);
     };
 
-    const handleDelete = (e) => {
-      dispatch(deleteProduct(e.currentTarget.value))
+    const handleClickOpen = (e) => {
+      setOpen(true);
+      setDeleteId(e.currentTarget.value)
+    }
+
+    const handleClose = (e) => {
+      if(e.currentTarget.value === 'delete'){
+        dispatch(deleteProduct(deleteId))
+      }
+      setOpen(false);
     }
 
     return (
@@ -168,7 +187,7 @@ export default function AdminProduct() {
                             if(column.id === 'delete'){
                               return(
                                 <TableCell align='center'>
-                                  <IconButton value={row.id} onClick={(e) => {handleDelete(e)}}>
+                                  <IconButton value={row.id} onClick={(e) => {handleClickOpen(e)}}>
                                     <DeleteIcon />
                                   </IconButton>
                                 </TableCell>
@@ -206,6 +225,32 @@ export default function AdminProduct() {
           />
           </Paper>
           <br />
+          <div>
+          <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle id="alert-dialog-slide-title">{"Esta seguro que quiere eliminar este producto?"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                Esta acción no se puede deshacer
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button value='cancell' onClick={(e) => {handleClose(e)}} color="primary">
+                Cancelar
+              </Button>
+              <Button value='delete' onClick={(e) => {handleClose(e)}} color="primary">
+                Eliminar
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+  
         </Container>
         </>
     )
