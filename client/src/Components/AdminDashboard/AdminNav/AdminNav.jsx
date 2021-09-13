@@ -165,15 +165,15 @@ export default function AdminNav() {
                 <List>
                     <ListItem button key='Products' component={Link} id='side' to="/admin/products">
                         <ListItemIcon>{<FastfoodIcon />}</ListItemIcon>
-                        <ListItemText primary='Products' />
+                        <ListItemText primary='Productos' />
                     </ListItem>
                     <ListItem button key='Categories' component={Link} id='side' to="/admin/categories">
                         <ListItemIcon>{<CategoryIcon />}</ListItemIcon>
-                        <ListItemText primary='Categories' />
+                        <ListItemText primary='Categorías' />
                     </ListItem>
                     <ListItem button key='Users' component={Link} id='side' to="/admin/users">
                         <ListItemIcon>{<PeopleIcon />}</ListItemIcon>
-                        <ListItemText primary='Users' />
+                        <ListItemText primary='Usuarios' />
                     </ListItem>
                 </List>
             <Divider />

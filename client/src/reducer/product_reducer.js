@@ -10,8 +10,9 @@ export const initialState = {
     cart: [],
     reviews: [],
     users: [],
+    userDetail: [],
     roles: [],
-    login: false,
+    login: false
 };
 
 export default function productReducer(state = initialState, action) {
@@ -103,7 +104,6 @@ export default function productReducer(state = initialState, action) {
           }
 
         case actionConst.GET_CATEGORY_BY_ID:
-          // console.log('reducer', action)
           return {
               ...state,
               categoryDetail: action.payload
@@ -167,6 +167,13 @@ export default function productReducer(state = initialState, action) {
               ...state,
               users: action.payload
             }
+
+        case actionConst.GET_USER_BY_ID:
+          return {
+            ...state,
+            userDetail: action.payload,
+            loading: false
+          }
 
         case actionConst.DELETE_USER:
           return {

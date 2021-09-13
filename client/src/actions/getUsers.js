@@ -5,7 +5,6 @@ import axios from 'axios'
 export default function getUsers(){
     return async function(dispatch){
         const response = await axios.get(`http://localhost:5000/user`)
-        console.log('SIIIIIIIII',response.data)
         dispatch({
             type: GET_USERS,
             payload: response.data

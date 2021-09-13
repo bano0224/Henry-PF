@@ -58,6 +58,7 @@ const getUsers = async (req, res) => {
   const {email } = req.query;
   try {
     if (email) {
+      console.log(req.query);
       let userFind = await User.find({
         email: { $regex: email, $options: "i" },
       }).populate("role", { name: 1 });
@@ -81,7 +82,9 @@ const getUserById = async (req, res) => {
   const { id } = req.params;
   console.log(id);
   try {
-    const userId = await User.findById(id);
+    const userId = await User.findById(id).populate("role", {
+      name: 1,
+    });
     res.status(200).json(userId);
   } catch (err) {
     return err;
@@ -328,9 +331,6 @@ const logIn = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  
-  try {
-    console.log('ESTOY ENTRANDO')
     if (req.params.id) {
       await User.findByIdAndUpdate(req.params.id, {
         firstName: req.body.firstName,
@@ -352,9 +352,6 @@ const updateUser = async (req, res) => {
     } else {
       res.status(404).send("El usuario no fue encontrado");
     }
-  } catch (err) {
-    return err;
-  }
 };
 
 const removeUser = async (req, res) => {
@@ -367,11 +364,11 @@ const removeUser = async (req, res) => {
   }
 };
 const getRoles = async (req, res) => {
-  /* const {name} = req.query; */
+  const {name} = req.query;
   try {
-    if (req.query.name) {
-      let roleFind = await Role.find( {name: req.query.name} )
-      if (roleFind.length) {
+    if (name) {
+      let roleFind = await Role.findOne({name : { $regex: name, $options: "i" }})
+      if (roleFind) {
         res.status(200).json(roleFind);
       } else {
         res.status(200).json([{error:"No se encontró el rol solicitado"}]);

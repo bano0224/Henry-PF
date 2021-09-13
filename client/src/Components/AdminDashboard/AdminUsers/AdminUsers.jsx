@@ -71,9 +71,8 @@ export default function AdminUsers() {
     const productReducer = useSelector(state => state.productReducer)
     const { users } = productReducer
 
-    console.log(users);
-
     useEffect(() => {
+      console.log('ENTRE ACTION');
       dispatch(getUsers())
     }, [])
 
@@ -105,8 +104,9 @@ export default function AdminUsers() {
     return (
         <>
         <AdminNav/>
-        <hr />
+        <br />
         <Container>
+        <br />
         <h1>Usuarios</h1>
             <Paper className={classes.root}>
             <TableContainer className={classes.container} style={{ maxHeight: 500 }}>
@@ -141,7 +141,7 @@ export default function AdminUsers() {
                             } else if (column.id === 'edit'){
                               return (
                                 <TableCell align='center'>
-                                  <IconButton component={Link} to={`users/${row._id}`}>
+                                  <IconButton component={Link} to={`/admin/users/${row._id}` } >
                                     <EditIcon/>
                                   </IconButton>
                                 </TableCell>

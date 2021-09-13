@@ -22,3 +22,5 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const GET_CATEGORY_BY_ID = 'GET_CATEGORY_BY_ID';
 export const DELETE_USER = 'DELETE_USER';
 export const GET_ROLES = 'GET_ROLES';
+export const GET_USER_BY_ID = 'GET_USER_BY_ID';
+export const SET_LOADING = 'SET_LOADING';

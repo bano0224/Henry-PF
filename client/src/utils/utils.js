@@ -9,10 +9,12 @@ export const URL_MODIFY_PRODUCT = 'http://localhost:5000/product/update/'
 //USERS
 export const URL_GET_USERS = 'http://localhost:5000/user'
 export const URL_SET_LOGIN = 'http://localhost:5000/user/login'
+export const URL_UPDATE_USER = 'http://localhost:5000/user/update/'
 export const URL_DELETE_USER = 'http://localhost:5000/user/delete/'
+export const URL_GET_USER_ID = 'http://localhost:5000/user/'
 
 //ROLES
-export const URL_GET_ROLES = 'http://localhost:5000/roles'
+export const URL_GET_ROLES = 'http://localhost:5000/role'
 
 //CATEGORY
 export const URL_CATEGORIES  = 'http://localhost:5000/category';
