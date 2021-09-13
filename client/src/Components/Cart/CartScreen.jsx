@@ -9,14 +9,8 @@ import { Link } from 'react-router-dom';
 import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, Divider, Typography, Breadcrumbs } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HomeIcon from '@material-ui/icons/Home'
-import Checkout from './Checkout';
-import PaymentForm from './PaymentForm'
 import Button from '@material-ui/core/Button';
 import accounting from "accounting";
-// Chechout import
-import useStyles1 from './styles1';
-import { useState } from "react";
-// Chechout
 
 //Style
 const useStyles = makeStyles((theme) => ({
@@ -44,8 +38,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CartScreen() {
-
-
     const classes = useStyles();
     const dispatch= useDispatch()
     const cartReducer = useSelector(state => state.cartReducer)
@@ -66,7 +58,7 @@ export default function CartScreen() {
     }
 
     return (
-        <Grid container>
+        <Grid container xs={12}>
             <Grid item xs={12}>
                 <NavBar />
             </Grid>
@@ -97,7 +89,7 @@ export default function CartScreen() {
                                 aria-controls="panel1a-content"
                                 id="cart"
                                 >
-                                    <Typography className={classes.heading} id="cart">1. Cart</Typography>
+                                    <Typography className={classes.heading} id="cart">Carrito</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <Grid container direction='column' spacing={2}>
@@ -126,7 +118,7 @@ export default function CartScreen() {
                                     </Grid>
                                 </AccordionDetails>
                             </Accordion>
-                            <Accordion>
+                            {/* <Accordion>
                                 <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel2a-content"
@@ -140,10 +132,6 @@ export default function CartScreen() {
                                         ? <p>Estas logueado bro</p>
                                         : <p> No estas logueado bro </p>
                                     }
-                                    {/* <Typography>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                                        sit amet blandit leo lobortis eget.
-                                    </Typography> */}
                                 </AccordionDetails>
                             </Accordion>
                             <Accordion >
@@ -154,21 +142,21 @@ export default function CartScreen() {
                                     >
                                     <Typography className={classes.heading}>3. Detalles de pago</Typography>
                                 </AccordionSummary>
-                            </Accordion>
+                            </Accordion> */}
                         </Grid>
                         <Grid item xs={4}>
                             <Paper className={classes.total}>
                                 <Grid container direction='column' justifyContent='space-between' alignItems='flex-start' className={classes.total}>
                                     <Grid item>
-                                        <h6>Bill Detail</h6>
+                                        <h6>Detalle de compra</h6>
                                     </Grid>
                                     <Grid item>
                                         <Divider />
-                                        <span className={classes.topay}> TO PAY: </span><span>{accounting.formatMoney(getSubtotal())}</span>
+                                        <span className={classes.topay}> TOTAL A PAGAR: </span><span>{accounting.formatMoney(getSubtotal())}</span>
 
                                     </Grid>
                                     <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
-                                        <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout">Let's to buy!</Button>
+                                        <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
                                        
                                     </div>
                                 </Grid>

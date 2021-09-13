@@ -3,13 +3,41 @@ import Container from '@material-ui/core/Container'
 import AdminNav from '../AdminNav/AdminNav'
 import { useDispatch, useSelector } from 'react-redux'
 import getProductById from '../../../actions/getProductById'
-import Button from '@material-ui/core/Button'
+import {Button, Breadcrumbs, Typography} from '@material-ui/core'
 import Switch from '@material-ui/core/Switch'
 import { DropzoneArea } from 'material-ui-dropzone'
+import { Link } from 'react-router-dom'
 import modifyProduct from '../../../actions/modifyProduct'
 import getCategories from '../../../actions/getCategories'
+import { makeStyles } from '@material-ui/core/styles';
+import CategoryIcon from '@material-ui/icons/Category'
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+    },
+    heading: {
+      fontSize: '1.3em',
+      fontWeight: '500',
+      fontFamily: 'Raleway',
+    },
+    h1: {
+      fontFamily: 'Raleway'
+    },
+    icon: {
+      color: 'firebrick'
+    },
+    total: {
+        padding: '5px',
+        minHeight: '300px'
+    },
+    topay: {
+        fontWeight: '700'
+    }
+}));
 
 export default function AdminModifyProduct({ match }) {
+    const classes = useStyles();
     const [product, setProduct] = useState({
         name: '',
         description: '',
@@ -97,8 +125,16 @@ export default function AdminModifyProduct({ match }) {
     return (
         <>
             <AdminNav/>
-            <hr />
-            <Container maxWidth='xs'>
+            <br />
+            <Container maxWidth='md'>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="secondary" to="/admin/categories" id='bread'>
+                    <CategoryIcon className={classes.icon} />
+                        Categorías
+                    </Link>
+                    <Typography color="textPrimary">Crear nuevo producto</Typography>
+                </Breadcrumbs>
+                <br />
                 <form onSubmit={(e) => (handleSubmmit(e))}>
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">Nombre</label>

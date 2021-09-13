@@ -76,9 +76,9 @@ export default function AdminModifyCategory({match}) {
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link color="secondary" to="/admin/categories" id='bread'>
                             <HomeIcon className={classes.icon} />
-                                Categories
+                                Categorías
                             </Link>
-                            <Typography color="textPrimary">Modify Category</Typography>
+                            <Typography color="textPrimary">Modificar categoría</Typography>
                         </Breadcrumbs>
                         <Grid item xs={12}>
                             <br />

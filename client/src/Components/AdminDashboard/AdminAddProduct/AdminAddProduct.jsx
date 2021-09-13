@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import createProduct from '../../../actions/createProduct';
 import AdminNav from '../AdminNav/AdminNav'
-import { Container, Grid, Button, Switch}from '@material-ui/core'
+import { Container, Grid, Button, Switch, Breadcrumbs, Typography}from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles';
 import { DropzoneArea } from 'material-ui-dropzone';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import FastfoodIcon from '@material-ui/icons/Fastfood'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     formWrapper: {
         marginTop: theme.spacing(5),
         marginBottom: theme.spacing(8)
+    },
+    icon: {
+        marginRight: '3px'
     }
   }));
 
@@ -116,19 +119,15 @@ export default function AdminAddProduct(props) {
                 </Grid>
                 <Grid item xs={12}>  
                 <br />
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    className={classes.button}
-                    startIcon={<ArrowBackIcon />}
-                    component={Link} 
-                    to='/admin/products'
-                    style= {{textDecoration: 'none'}}
-                    id='button'
-                >
-                    Back
-                </Button>
                     <Container maxWidth='md'>
+                        <br />
+                        <Breadcrumbs aria-label="breadcrumb">
+                            <Link color="secondary" to="/admin/products" id='bread'>
+                            <FastfoodIcon className={classes.icon} />
+                                Productos
+                            </Link>
+                            <Typography color="textPrimary">Crear nuevo producto</Typography>
+                        </Breadcrumbs>
                         <div className={classes.formWrapper} >
                             <h1>Crear nuevo producto</h1>
                             <br />
@@ -136,24 +135,24 @@ export default function AdminAddProduct(props) {
                                 <Grid container spacing={3}>
                                     <Grid item xs={12}>
                                         <label for="name" class="form-label">Nombre *</label>
-                                        <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="name" name='name'/>
+                                        <input required onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control inputFrom" id="name" name='name'/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <label for="description">Descripción *</label> 
-                                        <textarea required onChange={(e) => handleChange(e)} id="description" name="description" id="description" value={product.description} class="form-control" rows="4">
+                                        <textarea required onChange={(e) => handleChange(e)} id="description" name="description" id="description" value={product.description} class="form-control textareaForm" rows="4">
                                         </textarea>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <label for="price" class="form-label">Precio *</label>
-                                        <input required onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" id='price' min={0} class="form-control" id="price" placeholder={0} />
+                                        <input required onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" id='price' min={0} class="form-control inputFrom" id="price" placeholder={0} />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <label for="stock" class="form-label">Stock *</label>
-                                        <input required onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' min={0} type="number" class="form-control" id="stock" placeholder={0} />
+                                        <input required onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' min={0} type="number" class="form-control inputFrom" id="stock" placeholder={0} />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <label for="discount" class="form-label">Descuento</label>
-                                        <input onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="discount" placeholder={0} />
+                                        <input onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control inputFrom" id="discount" placeholder={0} />
                                     </Grid>
                                     <Grid item md={6}>
                                         <label for="featured" class="form-label">Destacado</label> 

@@ -13,12 +13,12 @@ select:focus{
   border-color: #b2102f !important;
 }
 
-input:focus{
+.inputFrom:focus{
   box-shadow: 0 0 0 0.25rem rgb(253 13 13 / 25%) !important;
   border-color: #b2102f !important;
 }
 
-textarea:focus{
+.textareaForm:focus{
   box-shadow: 0 0 0 0.25rem rgb(253 13 13 / 25%) !important;
   border-color: #b2102f !important;
 }
@@ -41,6 +41,7 @@ textarea:focus{
 
 #root {
   height:100%;
+  width: 100%;
 }
 
 body {
