@@ -105,6 +105,7 @@ export default function AdminProduct() {
     const {products} = productReducer
 
     useEffect(() => {
+      
       setRows(products.map(p => {
         return {
           name: p.name,
@@ -154,7 +155,7 @@ export default function AdminProduct() {
                 className={classes.button}
                 startIcon={<AddIcon />}
                 component={Link} 
-                to='products/add'
+                to='/admin/products/add'
                 style= {{textDecoration: 'none'}}
                 id='button'
               >
