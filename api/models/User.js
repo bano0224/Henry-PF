@@ -4,29 +4,18 @@ const bcrypt = require("bcrypt");
 const userSchema = new Schema({
   email: {
     type: String,
-    required: true,
+    required: [true, 'Nombre requerido'],
     unique: true,
-  },
-  facebook: {
-    id: String,
-    token: String,
-    email: String,
-    password: String,
-  },
-  google: {
-    id: String,
-    token: String,
-    email: String,
-    password: String,
+    match: [/.+\@.+\..+/, 'Por favor ingrese un correo válido']
   },
   userName: {
     type: String,
     unique: true,
-    /* required: true, */
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength:[8,'La contraseña debe tener 8 caracteres como mínimo'],
   },
   firstName: {
     type: String,
@@ -75,7 +64,6 @@ const userSchema = new Schema({
   },
   token: [{
       type: String,
-      /* required:true */
     }]
 
 });

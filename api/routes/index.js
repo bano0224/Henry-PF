@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const product = require('./product')
 const category = require('./category')
-const reviews = require('./reviews')
+const review = require('./review')
 const user = require('./user')
+const role = require('./role')
 var bodyParser = require('body-parser');
 
 
@@ -12,7 +13,8 @@ router.use(bodyParser.json());
 
 router.use('/product', product);
 router.use('/category', category )
-router.use('/reviews', reviews)
+router.use('/review', review)
+router.use('/role', role)
 router.use('/user', user)
 
 

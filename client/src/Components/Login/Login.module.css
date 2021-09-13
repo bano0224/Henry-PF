@@ -1,31 +1,79 @@
 .body {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    background-image: url('../../assets/pexels-erik-scheel-95425.jpg');
-    background-repeat:no-repeat;
+    /*display: flex;
+    align-items: center; /
+    background-image: url("../../assets/pexels-erik-scheel-95425.jpg");
+    /   background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
-    background-size: cover;
+    background-size: cover; */
+  }
 
+.FBbutton {
+  color:steelblue;
+}
+  .link {
+    margin-top: 20px;
+  }
+
+.google {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.container {
+.googleButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.facebookButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5px;
+}
+
+.buttonLogup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.containerFB{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+  
+  .container {
     width: 40%;
     height: 60%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: auto;
-    background:rgba(5, 5, 5, 0.719);
+    margin-top: 60px;
+    background: rgb(255, 255, 255);
     box-shadow: 10px 10px 150px rgba(253, 253, 253, 0.575);
-    border-radius: 30px;
-}
-
-.label {
+    border-radius: 8px;
+  }
+  
+  .label {
     color: #fff;
-}
+  }
+  
+  @media screen and (min-width: 500px) {
+    .wrapper-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media screen and (min-width: 760px) {
+    .wrapper-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  } ;

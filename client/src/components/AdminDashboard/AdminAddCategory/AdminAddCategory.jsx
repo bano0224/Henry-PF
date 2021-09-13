@@ -67,23 +67,23 @@ export default function AdminAddCategory(props) {
                     style= {{textDecoration: 'none'}}
                     id='button'
                 >
-                    Back
+                    Volver
                 </Button>
             <Container>
-                <h1>Add Category</h1>
+                <h1>Agregar Categoría</h1>
             </Container>
             <Container maxWidth='xs'>
                 <form onSubmit={(e) => (handleSubmmit(e))}>
                     <div class="mb-2">
-                        <label for="exampleFormControlInput1" class="form-label">Name</label>
+                        <label for="exampleFormControlInput1" class="form-label">Nombre</label>
                         <input required onChange={(e) => handleChange(e)} value={category.name} type="text" class="form-control" id="exampleFormControlInput1" name='name'/>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                        <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
                         <textarea required onChange={(e) => handleChange(e)} value={category.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                     <div class="mb-2">
-                        <label required for="exampleFormControlInput1" class="form-label">Image</label>
+                        <label required for="exampleFormControlInput1" class="form-label">Imagen</label>
                         <DropzoneArea
                             acceptedFiles={['image/*']}
                             dropzoneText={"Drag and drop an image here or click"}
@@ -99,7 +99,7 @@ export default function AdminAddCategory(props) {
                     </div>
                     <Container>
                         <Button variant="contained" color="secondary" type='submit'>
-                            Create new product
+                            Crar nueva categoría
                         </Button>
                     </Container>
                 </form>

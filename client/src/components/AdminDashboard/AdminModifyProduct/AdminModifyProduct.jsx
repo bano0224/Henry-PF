@@ -28,27 +28,27 @@ export default function AdminModifyProduct({ match }) {
         dispatch(getCategories());
     }, [])
 
-    const detail = useSelector( state => state.productDetail)
-    const categories = useSelector( state => state.categories)
+    const detail = useSelector( state => state.productReducer)
+    const {productDetail, categories} = detail
 
     useEffect(() => {
-        if (detail.category && categories) {
-            const categoriesInProduct = detail.category.reduce((acc, el) => {
+        if (productDetail.category && categories) {
+            const categoriesInProduct = productDetail.category.reduce((acc, el) => {
                 acc[el] = true
                 return acc;
             }, {});
             setCategoriesToShow(categories.filter(category => categoriesInProduct[category._id]))
         }
         setProduct({
-            name: detail.name,
-            description: detail.description,
-            price: detail.price,
-            countInStock: detail.countInStock,
-            imageUrl: detail.imageUrl,
-            featured: detail.featured,
-            discount: detail.discount,
+            name: productDetail.name,
+            description: productDetail.description,
+            price: productDetail.price,
+            countInStock: productDetail.countInStock,
+            imageUrl: productDetail.imageUrl,
+            featured: productDetail.featured,
+            discount: productDetail.discount,
         });
-    }, [detail, categories])
+    }, [productDetail, categories])
 
     const handleChange = ({ target: { name, value } }) => {
         if (name === 'imageUrl') {
@@ -81,8 +81,8 @@ export default function AdminModifyProduct({ match }) {
 
     const handleSubmmit = (e) => {
         e.preventDefault()
-        dispatch(modifyProduct({...product, category: categoriesToShow.map(cat => cat._id), _id: detail._id}));
-        alert(`${product.name} created`)
+        dispatch(modifyProduct({...product, category: categoriesToShow.map(cat => cat._id), _id: productDetail._id}));
+        alert(`${product.name} modified`)
         setProduct({
             name: '',
             description: '',
@@ -101,22 +101,22 @@ export default function AdminModifyProduct({ match }) {
             <Container maxWidth='xs'>
                 <form onSubmit={(e) => (handleSubmmit(e))}>
                     <div class="mb-2">
-                        <label for="exampleFormControlInput1" class="form-label">Name</label>
+                        <label for="exampleFormControlInput1" class="form-label">Nombre</label>
                         <input onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name' placeholder={detail.name}/>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                        <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
                         <textarea onChange={(e) => handleChange(e)} value={product.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder={detail.description}></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
+                        <label for="price" class="form-label">Precio</label>
                         <input onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control" id="price" placeholder={detail.price}/>
                         <label for="stock" class="form-label">Stock</label>
                         <input onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' type="number" class="form-control" id="stock" placeholder={detail.countInStock}/>
-                        <label for="exampleFormControlInput1" class="form-label">Discount</label>
+                        <label for="exampleFormControlInput1" class="form-label">Descuento</label>
                         <input onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={detail.discount}/>
                     </div>   
-                    <label for="exampleFormControlInput1" class="form-label">Featured</label> 
+                    <label for="exampleFormControlInput1" class="form-label">Destacado</label> 
                     <Switch
                         checked={product.featured}
                         onChange={handleChangeFeatured}
@@ -124,7 +124,7 @@ export default function AdminModifyProduct({ match }) {
                         inputProps={{ 'aria-label': 'secondary checkbox' }}
                     />
                     <div class="mb-2">
-                        <label for="exampleFormControlInput1" class="form-label">Category</label> 
+                        <label for="exampleFormControlInput1" class="form-label">Categoría</label> 
                         <select class="form-select" aria-label="Default select example" onChange={(e) => handleCategory(e)}>
                             <option value={''}>-</option>
                             {
@@ -146,7 +146,7 @@ export default function AdminModifyProduct({ match }) {
                             </ul>
                     </div>
                     <div class="mb-2">
-                        <label for="exampleFormControlInput1" class="form-label">Image</label>
+                        <label for="exampleFormControlInput1" class="form-label">Imagen</label>
                         {/* <input type="file" accept="image/*" onChange={(e) => handleChange(e)} name='imageUrl' class="form-control" id="exampleFormControlInput1"/> */}
                         {/* <input type="file" accept='image/*' onChange={handleChange} />
                          */}
@@ -165,7 +165,7 @@ export default function AdminModifyProduct({ match }) {
                     </div>
                     <Container>
                         <Button variant="contained" color="secondary" type='submit'>
-                            Create new product
+                            Modificar producto
                         </Button>
                     </Container>
                 </form>

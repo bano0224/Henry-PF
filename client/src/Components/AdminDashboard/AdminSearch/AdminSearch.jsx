@@ -42,11 +42,11 @@ export default function Search() {
                 <Button
                     variant="contained"
                     color="secondary"
-                    startIcon={<SearchIcon />}
                     className={classes.button}
                     style= {{textDecoration: 'none'}}
+                    type='submit'
                     >
-                        Find
+                        <SearchIcon/>
                 </Button>
             </form>
         </>

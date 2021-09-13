@@ -5,10 +5,15 @@ export const initialState = {
     products: [],
     clearProducts: [],
     productDetail: [],
+    productReviews: [],
     categories: [],
+    categoryDetail: [],
     cart: [],
     reviews: [],
-    login: false,
+    users: [],
+    userDetail: [],
+    roles: [],
+    login: false
 };
 
 export default function productReducer(state = initialState, action) {
@@ -53,6 +58,18 @@ export default function productReducer(state = initialState, action) {
                 ...state,
             }
 
+        case actionConst.STATE_LOGIN:
+          return {
+            ...state,
+            login: true
+          }
+
+        case actionConst.STATE_LOGOUT:
+          return {
+            ...state,
+            login: false
+            }
+
         case actionConst.FILTER_BY_CATEGORY: 
             const allProducts = state.clearProducts;
             const mapeo = allProducts.map((e) => {
@@ -71,7 +88,8 @@ export default function productReducer(state = initialState, action) {
 
         case actionConst.CREATE_CATEGORY:
             return {
-                ...state,
+              ...state,
+              categories: action.payload
             }
 
         case actionConst.PRODUCT_RESET:
@@ -84,6 +102,18 @@ export default function productReducer(state = initialState, action) {
           return {
               ...state,
               categories: action.payload,
+          }
+
+        case actionConst.GET_CATEGORY_BY_ID:
+          return {
+              ...state,
+              categoryDetail: action.payload
+          }
+
+        case actionConst.GET_REVIEWS:
+          return {
+            ...state,
+            productReviews: action.payload
           }
 
         case actionConst.CHANGE_ORDER:
@@ -138,6 +168,31 @@ export default function productReducer(state = initialState, action) {
 
         case actionConst.CLEAR_CART:
             return state;
+
+        case actionConst.GET_USERS:
+            return {
+              ...state,
+              users: action.payload
+            }
+
+        case actionConst.GET_USER_BY_ID:
+          return {
+            ...state,
+            userDetail: action.payload,
+            loading: false
+          }
+
+        case actionConst.DELETE_USER:
+          return {
+            ...state,
+            users: action.payload
+          }
+
+        case actionConst.GET_ROLES:
+          return {
+            ...state,
+            roles: action.payload
+          }
 
         default: 
             return state

@@ -9,6 +9,8 @@ import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
 import Search from "../Search/Search";
 import landing from '../../media/landing.mp4'
 import ChangeOrder from '../Filter/ChangeOrder/ChangeOrder'
+import Container from '@material-ui/core/Container';
+import clsx from 'clsx';
 
 export default function Home() {
   const productReducer = useSelector((state) => state.productReducer)
@@ -27,8 +29,10 @@ export default function Home() {
 
   return (
     <div className={s.container}>
+      {/* <Container maxWidth="sm"> */}
+
       <NavBar />
-      <div>
+      <div >
         <div className={s.videoContainer}>
           <video muted autoPlay loop className={s.video}>
             <source src={landing} type="video/mp4"/>
@@ -71,6 +75,8 @@ export default function Home() {
         />
       </div>
       <Footer />
+     {/* <Container /> */}
+
     </div>
   );
 }

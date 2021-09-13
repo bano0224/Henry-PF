@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-// import { connect } from "react-redux";
 import { useDispatch } from 'react-redux'
 import getProductByQuery from "../../actions/getProductByQuery";
-import { Container, Button, Grid } from "@material-ui/core";
-// import style from "./Search.module.css";
+import { Button, Grid } from "@material-ui/core";
+import SearchIcon from '@material-ui/icons/Search';
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -12,39 +11,39 @@ export default function Search() {
   function handleChange(e) {
     setInput(e.target.value);
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(getProductByQuery(input));
     setInput({
-      
-     
     }) 
   }
 
 
   return (
-    <div>
-      <Grid container direction='row'>
+    <>
+      <Grid container xs={12} direction='row'>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div class="mb-2">
-            <input
-              required
-              placeholder="Search product..."
-              onChange={(e) => handleChange(e)}
-              value={input.name}
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-              name="name"
-            />
-          </div>
-          <Container>
-            <Button variant="contained" color="secondary" type="submit">
-              Search
-            </Button>
-          </Container>
+          <Grid container>
+            <Grid item>
+              <input
+                placeholder="Buscar producto..."
+                onChange={(e) => handleChange(e)}
+                value={input.name}
+                type="text"
+                class="form-control"
+                id="exampleFormControlInput1"
+                name="name"
+              />
+            </Grid>
+            <Grid item style={{marginLeft: '5px'}}>
+              <Button variant="contained" color="secondary" type="submit">
+                <SearchIcon/>
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </Grid>
-    </div>
+    </>
   );
 }

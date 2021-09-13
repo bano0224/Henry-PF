@@ -1,9 +1,10 @@
-export const STATE_LOGIN = 'STATE_LOGIN'
+import { STATE_LOGIN } from "./index";
 
 const stateLogin = () => {
-    return {
-        type: STATE_LOGIN
+    return async function() {
+        localStorage.setItem('login', true)
     }
+
 }
 
 export default stateLogin;
