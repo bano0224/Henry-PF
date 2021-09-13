@@ -23,13 +23,13 @@ export default function Search() {
 
 
   return (
-    <div>
-      <Grid container direction='row'>
+    <>
+      <Grid container xs={12} direction='row'>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div class="mb-2">
+          <Grid container>
+            <Grid item>
             <input
-              required
-              placeholder="Search product..."
+              placeholder="Buscar producto..."
               onChange={(e) => handleChange(e)}
               value={input.name}
               type="text"
@@ -37,14 +37,16 @@ export default function Search() {
               id="exampleFormControlInput1"
               name="name"
             />
-          </div>
-          <Container>
+          </Grid>
+          <Grid item>
             <Button variant="contained" color="secondary" type="submit">
-              Search
+              Buscar
             </Button>
-          </Container>
+          </Grid>
+          </Grid>
+          
         </form>
       </Grid>
-    </div>
+    </>
   );
 }
