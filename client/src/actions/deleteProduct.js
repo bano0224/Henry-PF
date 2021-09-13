@@ -1,18 +1,15 @@
 import { DELETE_PRODUCT } from "./index";
-import { URL_PRODUCTS_ID } from "../utils/utils";
+import { URL_DELETE_PRODUCT, URL_PRODUCTS } from "../utils/utils";
 import axios from "axios";
 
 export default function deleteProduct(id) {
   return async function (dispatch) {
-    try {
-      await axios.get(URL_PRODUCTS_ID + id).then((res) => {
-        return dispatch({
+      await axios.delete(`${URL_DELETE_PRODUCT}${id}`)
+      const response = await axios.get(`${URL_PRODUCTS}`)
+        dispatch({
           type: DELETE_PRODUCT,
-          payload: res.data,
+          payload: response.data
         });
-      });
-    } catch (error) {
-      console.log("Error al eliminar el producto");
-    }
   };
-}
+};
+

@@ -47,10 +47,9 @@ export default function productReducer(state = initialState, action) {
             }
 
         case actionConst.DELETE_PRODUCT:
-            const deleteProduct = state.products.filter(product => product.id === action.payload)
             return {
                 ...state,
-                clearProducts: deleteProduct
+                products: action.payload
             }
 
         case actionConst.SET_REVIEWS:

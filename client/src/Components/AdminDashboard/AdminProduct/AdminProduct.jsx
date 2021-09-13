@@ -21,6 +21,7 @@ import getProducts from '../../../actions/getProducts';
 import getCategories from '../../../actions/getCategories';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import deleteProduct from '../../../actions/deleteProduct';
 
 
 
@@ -116,7 +117,7 @@ export default function AdminProduct() {
     };
 
     const handleDelete = (e) => {
-      // dispatch(deleteUser(e.currentTarget.value))
+      dispatch(deleteProduct(e.currentTarget.value))
     }
 
     return (
@@ -161,13 +162,13 @@ export default function AdminProduct() {
                 <TableBody>
                     {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} component={Link} to={`/admin/products/modify/${row.id}`} style= {{textDecoration:'none'}}>
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                         {columns.map((column) => {
                             const value = row[column.id];
                             if(column.id === 'delete'){
                               return(
                                 <TableCell align='center'>
-                                  <IconButton value={row._id} onClick={(e) => {handleDelete(e)}}>
+                                  <IconButton value={row.id} onClick={(e) => {handleDelete(e)}}>
                                     <DeleteIcon />
                                   </IconButton>
                                 </TableCell>
@@ -175,7 +176,7 @@ export default function AdminProduct() {
                             } else if (column.id === 'edit'){
                               return (
                                 <TableCell align='center'>
-                                  <IconButton component={Link} to={`/admin/users/${row._id}` } >
+                                  <IconButton component={Link} to={`/admin/products/modify/${row.id}` } >
                                     <EditIcon/>
                                   </IconButton>
                                 </TableCell>
