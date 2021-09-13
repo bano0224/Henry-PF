@@ -44,9 +44,12 @@ export default function DetailProduct({name, image, description, price, id}) {
   }
  
   return (
-    <div>
-    <Navbar />
-    <div className="productscreen">
+      <Grid container xs={12}>
+        <Grid item xs={12}>
+          <Navbar />
+        </Grid>
+        <Grid item xs={12}>
+        <div className="productscreen">
       
       {productDetail.length !== 0 ? (
                 <>
@@ -146,6 +149,10 @@ export default function DetailProduct({name, image, description, price, id}) {
         <Footer />
       </div> */}
     </div>
-    </div>
+        </Grid>
+      </Grid>
+   
+    
+    
   );
 }
