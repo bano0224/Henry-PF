@@ -120,7 +120,7 @@ export default function Login() {
               placeholder="email"
               value={email}
               type="text"
-              class="form-control"
+              class="form-control inputFrom"
               onChange={({ target }) => setEmail(target.value)}
               id="exampleFormControlInput1"
               name="email"
@@ -141,7 +141,7 @@ export default function Login() {
               value={password}
               name="password"
               onChange={({ target }) => setPassword(target.value)}
-              class="form-control"
+              class="form-control inputFrom"
               id="exampleFormControlTextarea1"
               rows="3"
             ></input>
@@ -152,6 +152,7 @@ export default function Login() {
             </Button>
             <div className={style.link}>
             <Button
+            id='button'
             type="submit"
             fullWidth
             variant="contained"
