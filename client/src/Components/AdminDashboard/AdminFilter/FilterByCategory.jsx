@@ -24,7 +24,9 @@ export default function FilterByCategory() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const allCategories = useSelector(state => state.categories)
+  const allCategories = useSelector(state => state.productReducer)
+  const { categories } = allCategories
+
 
   const handleChange = (event) => {
     setCategory(event.target.value)
@@ -47,7 +49,7 @@ export default function FilterByCategory() {
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">Filter</InputLabel>
+        <InputLabel id="demo-controlled-open-select-label">Filtro</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
@@ -61,7 +63,7 @@ export default function FilterByCategory() {
             <em>All</em>
           </MenuItem>
           {
-            allCategories?.map(c => <MenuItem value={c.name}>{c.name}</MenuItem>)
+            categories?.map(c => <MenuItem value={c.name}>{c.name}</MenuItem>)
           }
         </Select>
       </FormControl>

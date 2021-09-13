@@ -1,5 +1,5 @@
-import { CREATE_CATEGORY } from "./index";
-import { URL_CATEGORY_CREATE } from "../utils/utils";
+import { CREATE_CATEGORY, GET_CATEGORIES } from "./index";
+import { URL_CATEGORIES, URL_CATEGORY_CREATE } from "../utils/utils";
 import axios from "axios";
 import { storage } from "../firebase";
 
@@ -36,10 +36,11 @@ export default function createCategory(payload) {
   return async function () {
     try {
       const image = await uploadImage(payload.image, payload.name)
-      const post = await axios.post(URL_CATEGORY_CREATE, {...payload, image});
+      await axios.post(URL_CATEGORY_CREATE, {...payload, image});
+      const response = await axios.get(`${URL_CATEGORIES}`)
       return {
-      type: CREATE_CATEGORY,
-      post,
+      type: GET_CATEGORIES,
+      payload: response.data
     }
     } catch(err) {
       console.log('En este momento no se puede crear la categoria', err)

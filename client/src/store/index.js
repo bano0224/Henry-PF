@@ -10,6 +10,11 @@ const rootReducer = combineReducers({
   productReducer
 })
 
+/* const loginInLocalStorage = localStorage.getItem("login")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : false;
+ */
+  
 
 const cartItemsInLocalStorage = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))

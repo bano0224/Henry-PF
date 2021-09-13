@@ -39,7 +39,11 @@ export default function Cart({item, handlerQty, handlerRemove}) {
                 </Grid>
                 <Grid container xs={3} justifyContent='space-between' alignItems='center' direction='row'>
                     <Grid item>
+<<<<<<< HEAD
                         <span>{accounting.formatMoney(item.price)}</span>
+=======
+                        <span>${parseInt(item.price) * item.qty}</span>
+>>>>>>> Dev
                     </Grid>
                     <Grid item>
                         <Grid container direction='row' justifyContent='space-between' alignItems='center' spacing={1}>

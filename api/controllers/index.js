@@ -46,17 +46,6 @@ const createProduct = async (req, res) => {
   }
 };
 
-//PRUEBA JOIN
-// const createProduct = async (req, res) => {
-//     try {
-//       console.log('entre')
-//         await Product.create(req.body)
-//         res.status(200).json("productos creados ok");
-//     } catch (err) {
-//         return err
-//     }
-//   };
-
 const getProductsById = async (req, res) => {
   const { id } = req.params;
   console.log(id);
@@ -69,24 +58,76 @@ const getProductsById = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const { name } = req.query;
+  const {email } = req.query;
   try {
-    if (name) {
-      let userFind = await User.find({ name: `${name}` });
+    if (email) {
+      console.log(req.query);
+      let userFind = await User.find({
+        email: { $regex: email, $options: "i" },
+      }).populate("role", { name: 1 });
       if (userFind.length) {
         res.status(200).json(userFind);
       } else {
-        res.status(400).send("No se encontró el producto solicitado");
+        res.status(200).json([{error:"No se encontró el usuario solicitado"}]);
+        
       }
     } else {
-      let userFind = await User.find();
+      const userFind = await User.find({}).populate("role", {
+        name: 1,
+      });
       res.status(200).json(userFind);
     }
   } catch (err) {
     return err;
   }
 };
-
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const userId = await User.findById(id).populate("role", {
+      name: 1,
+    });
+    res.status(200).json(userId);
+  } catch (err) {
+    return err;
+  }
+};
+  /* const { email } = req.query;
+  try {
+      let userFind = await User.find({ onst getUsers = async (req, res) => {
+  const {email } = req.query;
+  try {
+    if (email) {
+      let userFind = await User.find({
+        email: { $regex: email, $options: "i" },
+      }).populate("role", { name: 1 });
+      if (userFind.length) {
+        res.status(200).json(userFind);
+      } else {
+        res.status(200).json([{error:"No se encontró el usuario solicitado"}]);
+        
+      }
+    } else {
+      const userFind = await User.find({}).populate("role", {
+        name: 1,
+      });
+      res.status(200).json(userFind);
+    }
+  } catch (err) {
+    return err;
+  }
+};});
+      if (userFind.length) {
+        res.status(200).json(userFind);
+      } else {
+        res.status(400).send("No se encontró el producto solicitado")
+  } 
+  } catch (err) {
+    return err;
+  }
+};
+ */
 const removeProduct = async (req, res) => {
   const { id } = req.params;
   try {
@@ -152,6 +193,12 @@ const getCategory = async (req, res) => {
   }
 };
 
+const getCategoryById = async (req, res) => {
+  const {id} = req.params
+  const findd = await Category.findById(id)
+  res.json(findd)
+}
+
 const createCategory = async (req, res) => {
   const { name, description, image } = req.body;
   try {
@@ -171,21 +218,27 @@ const deleteCategory = async (req, res) => {
   const { id } = req.params;
   try {
     if (id) {
-      await Category.findByIdAndDelete({ id });
+      await Category.findByIdAndDelete(id);
       res.status(200).send("La categoría ha sido eliminada");
     } else {
       res.send("La categoría ingresada no existe");
     }
-  } catch (err) {
+  } catch (err) { 
     return err;
   }
 };
 
 const updateCategory = async (req, res) => {
-  const { id } = req.params;
+  const { _id, name, description, image } = req.body;
   try {
-    if (id) {
-      await Category.updateOne({ id });
+    if (_id) {
+      const catego = await Category.findById(_id );
+      catego.name = name;
+      catego.description = description;
+      catego.image = image;
+
+      await catego.save();
+
       res.status(200).send("La categoría ha sido actualizada");
     } else {
       res.status(404).send("La categoría ingresada no existe");
@@ -196,57 +249,94 @@ const updateCategory = async (req, res) => {
 };
 
 const createReviews = async (req, res) => {
-  console.log("ESTE ES EL BODY", req.body);
-  /* const { name, comment } = req.body */
+  
   try {
     let createReview = await Review.create(
-      req.body /* name: `${name}`, comment: `${comment}` */
+      req.body
     );
     res.status(200).send("Comentario agregado");
   } catch (err) {
     return err;
   }
 };
+const getReviews = async (req, res) => {
+  const {name} = req.query;
+  try {
+    if (name) {
+      let reviewFind = await Review.find({name: req.query.user},
+      ).populate("product", {
+        name: 1,
+      });;
+      if (reviewFind) {
+        res.status(200).json(reviewFind);
+      } else {
+        res.status(404).send("Review no encontrada");
+      }
+    } else {
+      let reviewFind = await Review.find().populate("product", {
+        name: 1,
+      });;
+      res.status(200).json(reviewFind);
+    }
+  } catch (err) {
+    return err;
+  }
+};
+
+const getReviewById = async (req, res) => {
+  const {id} = req.params
+  const findd = await Review.findById(id)
+  res.json(findd)
+}
 
 const logUp = async (req, res) => {
-  const { firstName, lastName, email, password, roles } = req.body;
+  const { firstName, lastName, email, password, } = req.body;
   try {
     const newUser = new User({
       firstName,
       lastName,
       email,
       password: await User.encryptPassword(password),
+      role:[{_id:"613b80dc8317c3f59f461b67"}]
     });
 
-    if (roles) {
+/*     if (roles) {
       const findRoles = await Role.find({ name: `${roles}` });
       newUser.roles = findRoles.map((role) => role._id);
       console.log('estoy entrando al if')
     } else {
       const role = await Role.findOne({ name: "user" }); // busco un solo usuario
-      newUser.roles = [role._id];
+      newUser.roles = [role._id]; */
       
     const saveUser = await newUser.save();
     console.log("ESTE ES EL FIND ROLES", saveUser);
-  }
+  /* } */
 
-    newUser.save((err) => {
+    /* newUser.save((err) => {
       if(err) return res.status(500).send({message: `Error al crear el usuario: ${err}`})
 
       return res.status(200).send({token: services.createToken(user)})
-    })
-    
-    /* const token = jwt.sign(
+    }) */
+   /*  const token = jwt.sign({
+      name: newUser.name,
+      id: saveUser._id
+    }, 'secret')
+
+    res.header('auth-token', token).json({
+      error: null,
+      data: { token },
+      message: 'Bienvenido'
+  })
+ */
+    const token = jwt.sign(
       { id: saveUser._id },
-      `${process.env.JWT_SECRET_KEY}` 'secret',
+      `${process.env.JWT_SECRET_KEY}` /* 'secret' */,
       {
         expiresIn: 3600, //una hora expira el token
       }
     );
-    console.log('ESTE ES EL TOKEN DEL USUARIO', token)
-    res.status(200).json({ token }); */
-     
-    
+    console.log('ESTE ES EL TOKEN DEL USUARIO')
+    res.status(200).json(token);
   } catch (err) {
     return err;
   }
@@ -265,7 +355,7 @@ const logIn = async (req, res) => {
   );
   if (!matchPassword)
     return res.status(401).json({ token: null, message: "Invalid password" });
-  const token = jwt.sign({ id: userFound._id },`${process.env.JWT_SECRET_KEY}`, {
+    const token = jwt.sign({ id: userFound._id },`${process.env.JWT_SECRET_KEY}`, {
     expiresIn: 3600,
   });
   
@@ -273,13 +363,10 @@ const logIn = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  
-  try {
-    console.log('ESTOY ENTRANDO')
     if (req.params.id) {
       await User.findByIdAndUpdate(req.params.id, {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
@@ -291,12 +378,37 @@ const updateUser = async (req, res) => {
         state: req.body.state,
         postal_code: req.body.postal_code,
         country: req.body.country,
-        /* role: modifiedRole(req.body.id, req.body.role), */
+        role: [{_id: req.body.role}],
       });
       res.status(200).send("El usuario fue actualizado");
     } else {
       res.status(404).send("El usuario no fue encontrado");
     }
+};
+
+const removeUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await User.findByIdAndDelete(id);
+    res.send("Usuario eliminado");
+  } catch (error) {
+    console.log(error);
+  }
+};
+const getRoles = async (req, res) => {
+  const {name} = req.query;
+  try {
+    if (req.query.name) {
+      let roleFind = await Role.find( {name: req.query.name} )
+      if (roleFind) {
+        res.status(200).json(roleFind);
+      } else {
+        res.status(200).json([{error:"No se encontró el rol solicitado"}]);
+      }
+    } else {
+      const roleFind = await Role.find({})
+      res.status(200).json(roleFind);
+     } 
   } catch (err) {
     return err;
   }
@@ -330,6 +442,7 @@ module.exports = {
   getProductsById,
   removeProduct,
   getCategory,
+  getCategoryById,
   createCategory,
   deleteCategory,
   updateCategory,
@@ -339,6 +452,12 @@ module.exports = {
   logUp,
   updateUser,
   checkout,
+  getUsers,
+  getUserById,
+  removeUser,
+  getRoles,
+  getReviews,
+  getReviewById
   
 };
 

@@ -50,6 +50,8 @@ export default function CartScreen() {
     const dispatch= useDispatch()
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
+    const productReducer = useSelector(state => state.productReducer)
+    const { login } = productReducer
     
     const handlerQty= (id, qty)=>{
         dispatch(addToCart(id,qty))
@@ -76,10 +78,10 @@ export default function CartScreen() {
                         <HomeIcon className={classes.icon} />
                             Home
                         </Link>
-                        <Typography color="textPrimary">Cart</Typography>
+                        <Typography color="textPrimary">Carrito</Typography>
                     </Breadcrumbs>
                     <br />
-                    <Typography variant="h3" className={classes.h1}>Shopping Cart</Typography>
+                    <Typography variant="h3" className={classes.h1}>Detalles del carrito</Typography>
                     <br />
                     <Grid
                         container
@@ -130,13 +132,25 @@ export default function CartScreen() {
                                 aria-controls="panel2a-content"
                                 id="panel2a-header"
                                 >
-                                    <Typography className={classes.heading}>2. Order Address</Typography>
+                                    <Typography className={classes.heading}>2. Detalles de envío</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
+<<<<<<< HEAD
                                     <Typography>
                                        
 
                                     </Typography>
+=======
+                                    {
+                                        login
+                                        ? <p>Estas logueado bro</p>
+                                        : <p> No estas logueado bro </p>
+                                    }
+                                    {/* <Typography>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                                        sit amet blandit leo lobortis eget.
+                                    </Typography> */}
+>>>>>>> Dev
                                 </AccordionDetails>
                             </Accordion>
                             <Accordion >
@@ -145,8 +159,12 @@ export default function CartScreen() {
                                     aria-controls="panel3a-content"
                                     id="panel3a-header"
                                     >
+<<<<<<< HEAD
                                     <Typography className={classes.heading}>3. </Typography>
                                     
+=======
+                                    <Typography className={classes.heading}>3. Detalles de pago</Typography>
+>>>>>>> Dev
                                 </AccordionSummary>
                             </Accordion>
                         </Grid>
