@@ -14,8 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Style } from '@material-ui/icons';
 import PersonIcon from '@material-ui/icons/Person';
-import style from './Logup.module.css'
-import sendLogup from "../../actions/setLogup";
+import style from './Logup.module.css';
+import setLogup from '../../actions/setLogup';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +44,7 @@ export default function Logup() {
     const classes = useStyles();
     const history = useHistory()
     const dispatch = useDispatch()
-    const [logup, setLogup] = useState({
+    const [input, setInput] = useState({
       firstName: "",
       lastName: "",
       email: "",
@@ -53,8 +53,8 @@ export default function Logup() {
 
 
 function handleChange (e) {
-  setLogup({
-    ...logup,
+  setInput({
+    ...input,
     [e.target.name]: e.target.value
 })
 }
@@ -62,9 +62,9 @@ function handleChange (e) {
 function onSubmit (data, e) {
   console.log(data)
     e.preventDefault();
-    dispatch(sendLogup(logup));
+    dispatch(setLogup(input))
     alert('¡Su usuario ha sido creado!')
-    history.push('/login')
+    /* history.push('/login') */
 
 }
 
@@ -86,12 +86,10 @@ function onSubmit (data, e) {
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
-                {...register("firstName", { required: true, minLength: {
-                  value: 8,
-                } })}
+                {...register("firstName", { required: true}, )}
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                value={logup.firstName}
+                value={input.firstName}
                 id="firstName"
                 label="First Name"
                 autoFocus
@@ -106,9 +104,9 @@ function onSubmit (data, e) {
             <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
-                {...register("lastname", { required: true })}
+                {...register("lastName", { required: true })}
                 fullWidth
-                value={logup.lastName}
+                value={input.lastName}
                 onChange={(e) => handleChange(e)}
                 id="lastName"
                 label="Last Name"
@@ -125,7 +123,7 @@ function onSubmit (data, e) {
                 {...register("email", { required: true })}
                 fullWidth
                 onChange={(e) => handleChange(e)}
-                value={logup.email}
+                value={input.email}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -140,7 +138,7 @@ function onSubmit (data, e) {
                 variant="outlined"
                 {...register("password", { required: true })}
                 fullWidth
-                value={logup.password}
+                value={input.password}
                 onChange={(e) => handleChange(e)}
                 name="password"
                 label="Password"

@@ -8,6 +8,7 @@ const Role = require("../models/Role");
 const stripe = require("stripe")("sk_test_51JYn4nDpSNCyvuRizsfvAUMBg1KU0WYv6Qihrip7VekY3nrHGOpnDATg5h4VhDLkgGvuhHT5pEEr7ZBkCYRoGv2d00QRjqu6Sb");
 // Private key
 
+const services = require('../services/services')
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
@@ -208,37 +209,43 @@ const createReviews = async (req, res) => {
 };
 
 const logUp = async (req, res) => {
-
-  const { username, email, password, roles } = req.body;
+  const { firstName, lastName, email, password, roles } = req.body;
   try {
     const newUser = new User({
-      username,
+      firstName,
+      lastName,
       email,
       password: await User.encryptPassword(password),
     });
-    console.log(newUser);
 
     if (roles) {
       const findRoles = await Role.find({ name: `${roles}` });
       newUser.roles = findRoles.map((role) => role._id);
+      console.log('estoy entrando al if')
     } else {
       const role = await Role.findOne({ name: "user" }); // busco un solo usuario
       newUser.roles = [role._id];
-      console.log("ESTE ES EL FIND ROLES", role);
-    }
-    console.log("FIND ROLES", newUser.roles);
+      
     const saveUser = await newUser.save();
+    console.log("ESTE ES EL FIND ROLES", saveUser);
+  }
 
-    console.log("ESTE ES EL SAVE", saveUser);
+    newUser.save((err) => {
+      if(err) return res.status(500).send({message: `Error al crear el usuario: ${err}`})
 
-    const token = jwt.sign(
+      return res.status(200).send({token: services.createToken(user)})
+    })
+    
+    /* const token = jwt.sign(
       { id: saveUser._id },
-      `${process.env.JWT_SECRET_KEY}`,
+      `${process.env.JWT_SECRET_KEY}` 'secret',
       {
         expiresIn: 3600, //una hora expira el token
       }
     );
-    res.status(200).json({ token });
+    console.log('ESTE ES EL TOKEN DEL USUARIO', token)
+    res.status(200).json({ token }); */
+     
     
   } catch (err) {
     return err;
