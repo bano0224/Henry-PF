@@ -60,7 +60,7 @@ export default function FilterByCategory() {
           onChange={handleChange}
         >
           <MenuItem value="all">
-            <em>All</em>
+            <em>Todas</em>
           </MenuItem>
           {
             categories?.map(c => <MenuItem value={c.name}>{c.name}</MenuItem>)

@@ -14,51 +14,52 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import FilterByCategory from '../AdminFilter/FilterByCategory';
 import AdminSearch from '../AdminSearch/AdminSearch';
-import Box  from '@material-ui/core/Box';
+import { Box, IconButton }  from '@material-ui/core';
 import Button from '@material-ui/core/Button/Button';
 import AddIcon from '@material-ui/icons/Add';
 import getProducts from '../../../actions/getProducts';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import getCategories from '../../../actions/getCategories';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 
 const columns = [
     { id: 'name', label: 'Nombre', minWidth: 170 },
-    { id: 'category', label: 'Category', minWidth: 100 },
+    { id: 'category', label: 'Categoría', minWidth: 170, align: 'center' },
     {
       id: 'price',
       label: 'Precio',
-      minWidth: 170,
-      align: 'right',
+      minWidth: 100,
+      align: 'center',
       format: (value) => value.toLocaleString('en-US'),
     },
     {
       id: 'stock',
       label: 'Stock',
       minWidth: 170,
-      align: 'right',
+      align: 'center',
       format: (value) => value.toLocaleString('en-US'),
     },
     {
       id: 'featured',
       label: 'Destacado',
       minWidth: 170,
-      align: 'right',
+      align: 'center',
       format: (value) => value.toFixed(2),
     },
     {
       id: 'edit',
-      label: 'Edit',
+      label: 'Editar',
       minWidth: 170,
-      align: 'right',
+      align: 'center',
       format: (value) => value.toFixed(2),
     },
     {
       id: 'delete',
-      label: 'Delete',
+      label: 'Eliminar',
       minWidth: 170,
-      align: 'right',
+      align: 'center',
       format: (value) => value.toFixed(2),
     },
   ];
@@ -114,7 +115,10 @@ export default function AdminProduct() {
         setPage(0);
     };
 
-    
+    const handleDelete = (e) => {
+      // dispatch(deleteUser(e.currentTarget.value))
+    }
+
     return (
         <>
         <AdminNav/>
@@ -160,11 +164,29 @@ export default function AdminProduct() {
                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code} component={Link} to={`/admin/products/modify/${row.id}`} style= {{textDecoration:'none'}}>
                         {columns.map((column) => {
                             const value = row[column.id];
-                            return (
-                            <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === 'number' ? column.format(value) : value}
-                            </TableCell>
-                            );
+                            if(column.id === 'delete'){
+                              return(
+                                <TableCell align='center'>
+                                  <IconButton value={row._id} onClick={(e) => {handleDelete(e)}}>
+                                    <DeleteIcon />
+                                  </IconButton>
+                                </TableCell>
+                              )
+                            } else if (column.id === 'edit'){
+                              return (
+                                <TableCell align='center'>
+                                  <IconButton component={Link} to={`/admin/users/${row._id}` } >
+                                    <EditIcon/>
+                                  </IconButton>
+                                </TableCell>
+                              )
+                            } else {
+                              return (
+                              <TableCell key={column.id} align={column.align}>
+                                  {column.format && typeof value === 'number' ? column.format(value) : value}
+                              </TableCell>
+                              );
+                            }
                         })}
                         </TableRow>
                     );

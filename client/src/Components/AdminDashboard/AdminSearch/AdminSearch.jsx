@@ -38,6 +38,7 @@ export default function Search() {
                     floatingLabelFixed
                     value={state}
                     onChange={(e) => {handleChange(e)}}
+                    placeholder='Busque un producto...'
                 />
                 <Button
                     variant="contained"

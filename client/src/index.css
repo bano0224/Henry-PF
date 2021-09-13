@@ -8,6 +8,24 @@ html {
   width: 100%;
 }
 
+select:focus{
+  box-shadow: 0 0 0 0.25rem rgb(253 13 13 / 25%) !important;
+  border-color: #b2102f !important;
+}
+
+input:focus{
+  box-shadow: 0 0 0 0.25rem rgb(253 13 13 / 25%) !important;
+  border-color: #b2102f !important;
+}
+
+textarea:focus{
+  box-shadow: 0 0 0 0.25rem rgb(253 13 13 / 25%) !important;
+  border-color: #b2102f !important;
+}
+
+#edit:hover{
+  color: #757575;
+}
 
 #button:hover{
   color: white
