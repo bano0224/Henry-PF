@@ -10,7 +10,7 @@ export default function getReviews() {
           payload: json.data,
         });
       } catch (error) {
-        console.log("Reviews no encontrad");
+        console.log("error");
       }
     };
   }

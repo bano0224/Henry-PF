@@ -395,13 +395,8 @@ const removeUser = async (req, res) => {
 const getRoles = async (req, res) => {
   const {name} = req.query;
   try {
-<<<<<<< Updated upstream
-    if (name) {
-      let roleFind = await Role.findOne({name : { $regex: name, $options: "i" }})
-=======
     if (req.query.name) {
       let roleFind = await Role.find( {name: req.query.name} )
->>>>>>> Stashed changes
       if (roleFind) {
         res.status(200).json(roleFind);
       } else {
