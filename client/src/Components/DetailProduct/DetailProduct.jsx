@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "./Detail.css";
 import Navbar from "../NavBar/NavBar";
@@ -7,25 +7,29 @@ import getProductById from "../../actions/getProductById";
 import productReset from "../../actions/productReset";
 import addToCart from "../../actions/cart/addToCart";
 import StarIcon from '@material-ui/icons/Star';
-import HomeIcon from '@material-ui/icons/Home';
 import { yellow } from "@material-ui/core/colors";
 import { blueGrey } from "@material-ui/core/colors";
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, Divider, Typography, Breadcrumbs } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import HomeIcon from '@material-ui/icons/Home'
+import getReviews from "../../actions/getReviews";
 
 export default function DetailProduct({name, image, description, price, id}) {
   
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const productReducer = useSelector((state) => state.productReducer);
-  const {productDetail} = productReducer
+  const {productDetail, productReviews} = productReducer
   
   const [input, setInput] = React.useState('Controlled');
-
   const handleChange = (event) => {
     setInput(event.target.value);
   };
 
   useEffect(() => {
     dispatch(getProductById(id));
+    dispatch(getReviews())
   }, []);
 
   useEffect(() => {
@@ -54,6 +58,29 @@ export default function DetailProduct({name, image, description, price, id}) {
                     <p className="left__name">{productDetail.name}</p>
                     <p>Precio: ${productDetail.price}</p>
                     <p>Descripcion: {productDetail.description}</p>
+                    <Accordion defaultExpanded>
+                                <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="cart"
+                                >
+                                    <Typography /* className={classes.heading} */>Ver reseñas</Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Grid container direction='column' spacing={2}>
+                                    { 
+                                      <span>
+                                      {
+                                      productReviews.filter(e => e.product[0]?._id === id).map(r => (
+                                      <div>
+                                        <p>{r.name}</p>
+                                        <p>{r.comment}</p>
+                                        </div> )) }
+                                    </span>
+                                    } 
+                                    </Grid>
+                                </AccordionDetails>
+                            </Accordion>
                   </div>
                 </div>
                 <div className="productscreen__right">
@@ -84,7 +111,7 @@ export default function DetailProduct({name, image, description, price, id}) {
                       </button>
                     </p>
                     <p>
-                      <Link to={`/reviews`} className="info__button">
+                      <Link to={`/reviews/${id}`} className="info__button">
                         Reseña <StarIcon style={{ color: yellow[500]}} />
                       </Link>
                     <br></br>
@@ -98,9 +125,9 @@ export default function DetailProduct({name, image, description, price, id}) {
       ) : ( 
         <div>
           <img
-            src=""
-            width="300"
-            height="200"
+            src="https://www.dlcc.com.pe/images/loading.gif"
+            width="550"
+            height="350"
             alt="LoadingGif"
             className="loadingGif"
           />

@@ -15,6 +15,32 @@ import style from "./Logup.module.css";
 import setLogup from "../../actions/setLogup";
 import AdminLogin from "./AdminLogin/AdminLogin";
 
+
+function validate(input) {
+	let errors = {};
+  if (!input.firstName) {
+    errors.firstName = "Se require un nombre";
+  } else if (input.firstName.length < 3) {
+    errors.firstName = "El nombre debe tener al menos 3 letras";
+  }
+  if (!input.lastName) {
+    errors.lastName = "LastName is required";
+  } else if (input.lastName.length < 3) {
+    errors.lastName = "El apellido debe tener al menos 3 letras";
+  }
+	if (!input.email) {
+		errors.email = "Se require Email";
+	} else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/(input.email)) {
+		errors.email = "Invalid Email";
+	}
+	if (!input.password) {
+		errors.password = "Se require Password";
+	} else if (
+		!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/(input.password)) {
+		errors.password = "La contraseña debe contener almenos una letra mayúscula, una minúscula y un número";
+	}
+	return errors;
+}
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -36,30 +62,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Logup() {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({});
-  const classes = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch();
-  /* const [errors, setErrors] = useState({ form: "Completar el formulario"}); */
-  const [input, setInput] = useState({
+   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-  });
+   });
 
-  function handleChange(e) {
+  const { register,formState: { errors }} = useForm({});
+  // const { register, handleSubmit, errors } = useForm(); // initialize the hook
+  const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  //const [errors, setErrors] = useState({});
+  
+  //    return (
+  //     <form onSubmit={handleSubmit(onSubmit)}>
+  //       <input name="firstname" ref={register} /> {/* register an input */}
+  //       <input name="lastname" ref={register({ required: true })} />
+  //       {errors.lastname && 'Last name is required.'}
+  //       <input name="age" ref={register({ pattern: /\d+/ })} />
+  //       {errors.age && 'Please enter number for age.'}
+  //       <input type="submit" />
+  //     </form>
+  //   );
+  // }
+
+
+const handleChange=(e)=>{
     setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+			...input,
+			[e.target.name]: e.target.value,
+		});
+		//  setErrors(
+		// 	validate({
+		// 		...input,
+		// 		[e.target.value]: e.target.value,
+		// 	})
+		// ); 
    }
-   const nombre = document.getElementById("name")
 
+
+
+const handlerSubmit=(e)=>{
+  e.preventDefault();
+  validate(input)
+  if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  (input.email));
+
+  if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+  (input.password));
+  
+  } 
   //   const validate = (form) => {
   //     let errors = {};
 
@@ -85,7 +139,7 @@ export default function Logup() {
   //   };
    
 
-  function onSubmit(data, e) {
+const onSubmit=(data, e)=> {
     console.log(data);
     e.preventDefault();
     dispatch(setLogup(input));
@@ -105,7 +159,7 @@ export default function Logup() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+          <form className={classes.form} onSubmit={(e) =>handlerSubmit(e)}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -160,7 +214,7 @@ export default function Logup() {
                   type="email"
                 />
                 <span className="text-danger text-small d-block mb-2">
-                  {errors.email?.type === "required" && "Email is required"}
+                  {errors.email?.type === " " && "Email is required"}
                 </span>
               </Grid>
               <Grid item xs={12}>
@@ -175,7 +229,8 @@ export default function Logup() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  pattern="^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$"
+                  pattern="required"
+                  required="required"
                 />
                 <span className="text-danger text-small d-block mb-2">
                   {errors.password?.type === " " &&
@@ -190,7 +245,7 @@ export default function Logup() {
               color="secondary"
               className={classes.submit}
             >
-              Sign Up
+              Inscribirse
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item></Grid>
@@ -207,7 +262,6 @@ export default function Logup() {
         >
           Ya tenés una cuenta? Login...
         </Button>
-        <p class="warnings" id="warnings"></p>
       </Container>
     </div>
   );

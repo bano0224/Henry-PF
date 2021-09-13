@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useParams } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom'
 import setReviews from "../../actions/setReviews";
@@ -9,15 +9,17 @@ import Box from "@material-ui/core/Box";
 import style from "./Reviews.module.css";
 import NavBar from "../NavBar/NavBar";
 
-export default function Reviews() {
-  
+export default function Reviews({id}) {
+  console.log('ESTE ES EL ID', id)
   const history = useHistory();
+
   const dispatch = useDispatch();
   /* const [value, setValue] = useState(2); */
   const [input, setInput] = useState({
     name: "",
     comment: "",
-    rating:""
+    rating:"",
+    product: id
   });
   
   function handleChange(e) {
@@ -34,7 +36,8 @@ export default function Reviews() {
     setInput({
       name: "",
       comment: "",
-      rating: ""
+      rating: "",
+      product: id
     })
     /* setValue(value)
     console.log('ESTE ES EL VALUE', value) */
