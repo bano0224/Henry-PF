@@ -7,6 +7,7 @@ import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import style from "./Reviews.module.css";
+import NavBar from "../NavBar/NavBar";
 
 export default function Reviews() {
   
@@ -43,58 +44,63 @@ export default function Reviews() {
   }
 
   return (
-    <div className={style.container}>
-      <div className={style.reviews}>
-        <Container maxWidth="xs">
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <div class="mb-2">
-              <label className={style.label} for="exampleFormControlInput1" /* class="form-label" */>
-                Name
-              </label>
-              <input
-                required
-                onChange={(e) => handleChange(e)}
-                value={input.name}
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                name="name"
-              />
-            </div>
-            <div class="mb-3">
-              <label className={style.label} for="exampleFormControlTextarea1" /* class="form-label" */>
-                Comentarios
-              </label>
-              <textarea
-                required
-                onChange={(e) => handleChange(e)}
-                value={input.comment}
-                name="comment"
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-              ></textarea>
-            </div>
-            <Container>
-              <Button variant="contained" color="secondary" type="submit">
-                Enviar comentarios
-              </Button>
-            </Container>
-          </form>
-        </Container>
+    <div>
+      <NavBar/>
+      <div className={style.container}>
         <div>
-          <Box component="fieldset" mb={3} borderColor="transparent">
-            <Typography className={style.title} component="legend">
-              Queremos saber tu opinión...
-            </Typography>
-            <div className={style.raiting}>
-              <Rating
-                name="rating"
-                value={input.rating}
-                onChange={(e) => handleChange(e)}
-              />
-            </div>
-          </Box>
+        <div className={style.reviews}>
+          <Container maxWidth="xs">
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <div class="mb-2">
+                <label className={style.label} for="exampleFormControlInput1" /* class="form-label" */>
+                  Name
+                </label>
+                <input
+                  required
+                  onChange={(e) => handleChange(e)}
+                  value={input.name}
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  name="name"
+                />
+              </div>
+              <div class="mb-3">
+                <label className={style.label} for="exampleFormControlTextarea1" /* class="form-label" */>
+                  Comentarios
+                </label>
+                <textarea
+                  required
+                  onChange={(e) => handleChange(e)}
+                  value={input.comment}
+                  name="comment"
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                ></textarea>
+              </div>
+            <Box component="fieldset" mb={3} borderColor="transparent">
+              <Typography className={style.title} component="legend">
+                Queremos saber tu opinión...
+              </Typography>
+              <div className={style.raiting}>
+                <Rating
+                  name="rating"
+                  value={input.rating}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+            </Box>
+            </form>
+          </Container>
+          <div>
+            <Container>
+                <Button variant="contained" color="secondary" type="submit" onClick={(e) => handleSubmit(e)}>
+                  Enviar comentarios
+                </Button>
+            </Container>
+          </div>
+        </div>
         </div>
       </div>
     </div>

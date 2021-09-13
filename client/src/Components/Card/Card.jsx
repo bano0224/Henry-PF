@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
   },
   title:{
-    width:"100%",
+    width:"90%",
     height:"20px",
     overflow:"hidden",
     textOverflow: "ellipsis",
@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
+  content: {
+    padding: "10px",
+  }
 }));
 
 export default function ProductCard({name, image, description, price, id}) {
@@ -135,7 +135,7 @@ export default function ProductCard({name, image, description, price, id}) {
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+        <CardContent className={classes.content} >
           <Typography paragraph>
             {description}
           </Typography>

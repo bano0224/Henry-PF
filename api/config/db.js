@@ -6,7 +6,7 @@ const { MONGO_URI } = process.env;
 
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/supermarketdb", {
+    await mongoose.connect("mongodb+srv://user-123:user-123@cluster0.y5jkc.mongodb.net/Cluster0?retryWrites=true&w=majority", {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       /* useFindAndModify: true,

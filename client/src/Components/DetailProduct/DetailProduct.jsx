@@ -5,12 +5,9 @@ import "./Detail.css";
 import Navbar from "../NavBar/NavBar";
 import getProductById from "../../actions/getProductById";
 import productReset from "../../actions/productReset";
-import Footer from "../Footer/Footer";
-import Button from '@material-ui/core/Button';
 import addToCart from "../../actions/cart/addToCart";
 import StarIcon from '@material-ui/icons/Star';
 import HomeIcon from '@material-ui/icons/Home';
-import { AddShoppingCart } from "@material-ui/icons";
 import { yellow } from "@material-ui/core/colors";
 import { blueGrey } from "@material-ui/core/colors";
 
@@ -61,10 +58,6 @@ export default function DetailProduct({name, image, description, price, id}) {
                 </div>
                 <div className="productscreen__right">
                   <div className="right__info">
-{/*                     <p>
-                      Precio:
-                      <span>${productDetail.price}</span>
-                    </p> */}
                     <p>
                       Estado:
                       <span>
@@ -87,7 +80,7 @@ export default function DetailProduct({name, image, description, price, id}) {
                     </p>
                     <p>
                       <button type="button" onClick={handleCart}>
-                        Añadir al Carrito {/* <AddShoppingCart/> */}
+                        Añadir al Carrito 
                       </button>
                     </p>
                     <p>
