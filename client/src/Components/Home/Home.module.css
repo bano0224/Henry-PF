@@ -85,7 +85,7 @@
 }
 
 .paginationContainer {
-  width: 100%;
+  width: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

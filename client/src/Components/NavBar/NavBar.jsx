@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
         duration: theme.transitions.duration.enteringScreen,
     }),
     },
+    title: {
+      fontFamily: 'Kalam',
+      fontSize: '2.5em'
+    },
     menuButton: {
       marginRigth: theme.spacing(2),
       [theme.breakpoints.up('sm')]:{
