@@ -5,7 +5,7 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
-const stripe = require("stripe")("sk_test_51JYn4nDpSNCyvuRizsfvAUMBg1KU0WYv6Qihrip7VekY3nrHGOpnDATg5h4VhDLkgGvuhHT5pEEr7ZBkCYRoGv2d00QRjqu6Sb");
+const stripe = require("stripe")("sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65");
 // Private key
 
 const services = require('../services/services')
