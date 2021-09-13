@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -13,7 +13,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import accounting from "accounting";
 import axios from 'axios';
 
-const stripePromise =loadStripe("pk_test_51JYn4nDpSNCyvuRiS1bLRUqB7fT8XFxMovwZoNYQM1xVN9jyp3slDkoNGXhcupYkbr3Ph3oPNZHqHK4CaiR8tO4k00o7uKPlg7");
+const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
 const CARD_ELEMENTS_OPTIONS={
     iconStyle: "solid",
     hidePostalCode: true,
@@ -94,7 +94,7 @@ const CheckoutForm =({backStep, nextStep})=>{
             <CardElement options={CARD_ELEMENTS_OPTIONS}/>
             <div style={{display: "flex", justifyContent:"space-between", marginTop:"1rem"}}>
             <Button variant='outlined' onClick={backStep}>Back</Button>
-            <Button disabled={false} variant='contained' color='secondary' type='submit'>`Pay ${accounting.formatMoney(getSubtotal())}`</Button>
+            <Button component={Link} to="/cart/confirmation" disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
             </div>
 
         </form>

@@ -18,6 +18,7 @@ import NotFound from "./components/404/NotFound";
 import ScreenCart from './components/Cart/CartScreen'
 import AddressForm from './components/Cart/AddressForm'
 import Checkout from './components/Cart/Checkout'
+import Confirmation from "./components/Cart/Confirmation";
 import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory/AdminModifyCategory";
 import AdminModifyUser from "./components/AdminDashboard/AdminModifyUser/AdminModifyUser";
 
@@ -42,6 +43,7 @@ function App() {
         <Route exact path='/cart' component={ScreenCart} />
         <Route exact path='/cart/addressform' component={AddressForm} />
         <Route exact path='/cart/checkout' component={Checkout} />
+        <Route exact path='/cart/confirmation' component={Confirmation} /> 
         <Route exact path='/admin/categories/:id' component={AdminModifyCategory} />
         <Route exact path='/admin/users/:id' component={AdminModifyUser} />
         <Route path='*' component={NotFound} />
