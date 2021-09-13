@@ -249,13 +249,42 @@ const createReviews = async (req, res) => {
   
   try {
     let createReview = await Review.create(
-      req.body 
+      req.body
     );
     res.status(200).send("Comentario agregado");
   } catch (err) {
     return err;
   }
 };
+const getReviews = async (req, res) => {
+  const {name} = req.query;
+  try {
+    if (name) {
+      let reviewFind = await Review.find({name: req.query.user},
+      ).populate("product", {
+        name: 1,
+      });;
+      if (reviewFind) {
+        res.status(200).json(reviewFind);
+      } else {
+        res.status(404).send("Review no encontrada");
+      }
+    } else {
+      let reviewFind = await Review.find().populate("product", {
+        name: 1,
+      });;
+      res.status(200).json(reviewFind);
+    }
+  } catch (err) {
+    return err;
+  }
+};
+
+const getReviewById = async (req, res) => {
+  const {id} = req.params
+  const findd = await Review.findById(id)
+  res.json(findd)
+}
 
 const logUp = async (req, res) => {
   const { firstName, lastName, email, password, } = req.body;
@@ -366,8 +395,13 @@ const removeUser = async (req, res) => {
 const getRoles = async (req, res) => {
   const {name} = req.query;
   try {
+<<<<<<< Updated upstream
     if (name) {
       let roleFind = await Role.findOne({name : { $regex: name, $options: "i" }})
+=======
+    if (req.query.name) {
+      let roleFind = await Role.find( {name: req.query.name} )
+>>>>>>> Stashed changes
       if (roleFind) {
         res.status(200).json(roleFind);
       } else {
@@ -400,7 +434,9 @@ module.exports = {
   getUsers,
   getUserById,
   removeUser,
-  getRoles
+  getRoles,
+  getReviews,
+  getReviewById
   
 };
 

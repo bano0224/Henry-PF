@@ -5,6 +5,7 @@ export const initialState = {
     products: [],
     clearProducts: [],
     productDetail: [],
+    productReviews: [],
     categories: [],
     categoryDetail: [],
     cart: [],
@@ -107,6 +108,12 @@ export default function productReducer(state = initialState, action) {
           return {
               ...state,
               categoryDetail: action.payload
+          }
+
+        case actionConst.GET_REVIEWS:
+          return {
+            ...state,
+            productReviews: action.payload
           }
 
         case actionConst.CHANGE_ORDER:
