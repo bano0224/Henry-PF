@@ -20,7 +20,6 @@ export default function productReducer(state = initialState, action) {
     switch (action.type) {
   
         case actionConst.CREATE_PRODUCT:
-          console.log('REDUCER')
             return {
                 ...state,
                 // products: [...state.products, action.post]
@@ -36,10 +35,12 @@ export default function productReducer(state = initialState, action) {
             }
 
         case actionConst.GET_PRODUCT_BY_QUERY:
+          console.log('REDUCER!!!',action.payload);
+          
             return {
                 ...state,
                 products: action.payload,
-            }
+            } 
 
         case actionConst.GET_PRODUCT_BY_ID:
             return {

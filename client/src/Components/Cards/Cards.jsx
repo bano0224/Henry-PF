@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import getProducts from "../../actions/getProducts";
+import React from "react";
 
 import Card from "../Card/Card";
 import style from "./Cards.module.css";
@@ -9,20 +7,8 @@ import style from "./Cards.module.css";
 
 
 export default function Cards({currentProducts}) {
-  const dispatch = useDispatch();
-  
   const lengthProd = currentProducts.length
   
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
-
-  /* function handleDelete () {
-    dispatch(DelFromCart())
-  } */
-/*   function handleUp () {
-    dispatch(AddToCart())
-  } */
 
   return (
 
