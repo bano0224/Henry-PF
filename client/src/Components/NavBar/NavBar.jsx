@@ -107,9 +107,9 @@ export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  
+
   const login = localStorage.getItem('login')
-  
+ 
 
   const a = useSelector(state => state.cartReducer)
   const { cartItems } = a
@@ -215,7 +215,7 @@ export default function NavBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to='/login'>Perfil</MenuItem>
+                <MenuItem component={Link} to='/'>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
               </div>

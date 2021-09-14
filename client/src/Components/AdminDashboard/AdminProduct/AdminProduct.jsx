@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,64 +14,64 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import deleteProduct from '../../../actions/deleteProduct';
 
-
 const columns = [
-    { id: 'name', label: 'Nombre', minWidth: 170 },
-    { id: 'category', label: 'Categoría', minWidth: 170, align: 'center' },
-    {
-      id: 'price',
-      label: 'Precio',
-      minWidth: 100,
-      align: 'center',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'stock',
-      label: 'Stock',
-      minWidth: 170,
-      align: 'center',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'featured',
-      label: 'Destacado',
-      minWidth: 170,
-      align: 'center',
-      format: (value) => value.toFixed(2),
-    },
-    {
-      id: 'edit',
-      label: 'Editar',
-      minWidth: 170,
-      align: 'center',
-      format: (value) => value.toFixed(2),
-    },
-    {
-      id: 'delete',
-      label: 'Eliminar',
-      minWidth: 170,
-      align: 'center',
-      format: (value) => value.toFixed(2),
-    },
-  ];
+  { id: "name", label: "Nombre", minWidth: 170 },
+  { id: "category", label: "Categoría", minWidth: 170, align: "center" },
+  {
+    id: "price",
+    label: "Precio",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "stock",
+    label: "Stock",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "featured",
+    label: "Destacado",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toFixed(2),
+  },
+  {
+    id: "edit",
+    label: "Editar",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toFixed(2),
+  },
+  {
+    id: "delete",
+    label: "Eliminar",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toFixed(2),
+  },
+];
 
-  const useStyles = makeStyles({
-    root: {
-      width: '100%',
-    },
-    container: {
-      maxHeight: 440,
-    },
-    button: {
-      margin: 10,
-    }
-  });
+const useStyles = makeStyles({
+  root: {
+    width: "100%",
+  },
+  container: {
+    maxHeight: 440,
+  },
+  button: {
+    margin: 10,
+  },
+});
 
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
 export default function AdminProduct() {
+
     const classes = useStyles();
     const [rows, setRows] = useState([])
     const [page, setPage] = useState(0);
@@ -78,16 +79,20 @@ export default function AdminProduct() {
     const [open, setOpen] = useState(false);
     const [deleteId, setDeleteId] = useState('')
 
-    const dispatch = useDispatch()
-    
-    useEffect(() => {  
-      dispatch(getProducts())
-      dispatch(getCategories())
-    }, [])
-    
-    const productReducer = useSelector( state => state.productReducer)
-    const {products} = productReducer
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getProducts());
+    dispatch(getCategories());
+  }, []);
+
+
+  const productReducer = useSelector((state) => state.productReducer);
+  const { products } = productReducer;
+
+ /*  products.length === 0
+    ? "Este producto no se encuentra en stock"
+    :  */
     useEffect(() => {
       setRows(products.map(p => {
           return {
@@ -100,16 +105,15 @@ export default function AdminProduct() {
           }
       }))
     }, [products])
-    
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
     const handleClickOpen = (e) => {
       setOpen(true);
@@ -123,10 +127,34 @@ export default function AdminProduct() {
       setOpen(false);
     }
 
-    return (
-        <>
-        <AdminNav/>
+  const handleDelete = (e) => {
+    dispatch(deleteProduct(e.currentTarget.value));
+  };
+
+  return (
+    <>
+      <AdminNav />
+      <br />
+      <Container>
+        <h1>Productos</h1>
+        <Box display="flex" justifyContent="space-around" alignItems="center">
+          <FilterByCategory />
+          <AdminSearch />
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.button}
+            startIcon={<AddIcon />}
+            component={Link}
+            to="products/add"
+            style={{ textDecoration: "none" }}
+            id="button"
+          >
+            Agregar Productos
+          </Button>
+        </Box>
         <br />
+
         <Container>
           <h1>Productos</h1>
           <Box display="flex" justifyContent='space-around' alignItems='center'>
@@ -204,43 +232,45 @@ export default function AdminProduct() {
               </Table>
             </TableContainer>
           <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
           />
+
           </Paper>
           <br />
           <div>
-          <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle id="alert-dialog-slide-title">{"Esta seguro que quiere eliminar este producto?"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
-                Esta acción no se puede deshacer
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button value='cancell' onClick={(e) => {handleClose(e)}} color="primary">
-                Cancelar
-              </Button>
-              <Button value='delete' onClick={(e) => {handleClose(e)}} color="primary">
-                Eliminar
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-  
+            <Dialog
+              open={open}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-slide-title"
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle id="alert-dialog-slide-title">{"Esta seguro que quiere eliminar este producto?"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  Esta acción no se puede deshacer
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button value='cancell' onClick={(e) => {handleClose(e)}} color="primary">
+                  Cancelar
+                </Button>
+                <Button value='delete' onClick={(e) => {handleClose(e)}} color="primary">
+                  Eliminar
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
         </Container>
-        </>
-    )
+      </Container>
+    </>
+  )
+
 }
