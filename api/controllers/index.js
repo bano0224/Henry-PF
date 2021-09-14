@@ -22,7 +22,7 @@ const getProducts = async (req, res, next) => {
       if (productFind.length) {
         res.status(200).json(productFind);
       } else {
-        res.status(200).json([{error:"No se encontró el producto solicitado"}]);
+        res.status(200).json([]);
         
       }
     } else {
@@ -37,7 +37,6 @@ const getProducts = async (req, res, next) => {
 };
 
 const createProduct = async (req, res) => {
-  console.log("QUE PASAAAAAA: ", req.body);
   try {
     await Product.insertMany(req.body);
     res.status(200).send("productos creados ok");
@@ -48,7 +47,6 @@ const createProduct = async (req, res) => {
 
 const getProductsById = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const productId = await Product.findById(id);
     res.status(200).json(productId);
@@ -58,10 +56,9 @@ const getProductsById = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const {email } = req.query;
+  const { email } = req.query;
   try {
     if (email) {
-      console.log(req.query);
       let userFind = await User.find({
         email: { $regex: email, $options: "i" },
       }).populate("role", { name: 1 });
@@ -83,7 +80,6 @@ const getUsers = async (req, res) => {
 };
 const getUserById = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const userId = await User.findById(id).populate("role", {
       name: 1,
@@ -167,7 +163,6 @@ const modifiedCategory = (idProducto, idCategory) => {
   const product = Product.findById({ idProducto }).stringify();
   const category = product.category;
 
-  console.log(product.name);
 
   category.includes(idCategory) ? category : category.push(idCategory);
 };
@@ -309,7 +304,6 @@ const logUp = async (req, res) => {
       newUser.roles = [role._id]; */
       
     const saveUser = await newUser.save();
-    console.log("ESTE ES EL FIND ROLES", saveUser);
   /* } */
 
     /* newUser.save((err) => {

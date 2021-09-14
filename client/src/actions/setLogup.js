@@ -4,7 +4,6 @@ import axios from 'axios';
 export const SET_REVIEWS = 'SET_REVIEWS'
 
 export default function setLogup (payload) {
-    console.log('ESTE ES EL PAYLOAD', payload)
     return async(dispatch) => {
         try {
             const json = await axios.post('http://localhost:5000/user/logup', payload)

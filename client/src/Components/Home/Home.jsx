@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import s from "./Home.module.css";
@@ -9,8 +9,7 @@ import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
 import Search from "../Search/Search";
 import landing from '../../media/landing.mp4'
 import ChangeOrder from '../Filter/ChangeOrder/ChangeOrder'
-import Container from '@material-ui/core/Container';
-import clsx from 'clsx';
+import getProducts from "../../actions/getProducts";
 
 export default function Home() {
   const productReducer = useSelector((state) => state.productReducer)
@@ -19,8 +18,12 @@ export default function Home() {
   const [productsPerPage, setProductsPerPage] = useState(9);
   const lastIndex = currentPage * productsPerPage;
   const firstIndex = lastIndex - productsPerPage;
-
   const currentProducts = products.slice(firstIndex, lastIndex);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -60,10 +63,11 @@ export default function Home() {
           </div>
         </div>
         <div className={s.bodyCards}>
-        { products[0]?.error ? (
-            <h4>{products[0]?.error}</h4>
-          ) :
-          <Cards currentProducts={currentProducts} />}
+        { 
+          products.length === 0
+          ? <h4>No se encontraron productos</h4>
+          : <Cards currentProducts={currentProducts} />
+        }
         </div>
       </div>
       <div className={s.paginationContainer}>
@@ -75,8 +79,6 @@ export default function Home() {
         />
       </div>
       <Footer />
-     {/* <Container /> */}
-
     </div>
   );
 }

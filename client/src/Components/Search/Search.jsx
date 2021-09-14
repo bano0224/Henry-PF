@@ -31,8 +31,7 @@ export default function Search() {
                 onChange={(e) => handleChange(e)}
                 value={input.name}
                 type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
+                class="form-control inputFrom"
                 name="name"
               />
             </Grid>
