@@ -46,9 +46,9 @@ export default function Cart({item, handlerQty, handlerRemove}) {
                                 {
                                         numbers.map(n => {
                                             if(n == item.qty){
-                                                return <option selected value={n}>{n}</option>
+                                                return <option disabled selected value={n}>{n}</option>
                                             } else {
-                                                return <option value={n}>{n}</option>
+                                                return <option disabled value={n}>{n}</option>
                                             }
                                         })
                                     }

@@ -13,6 +13,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import accounting from "accounting";
 import axios from 'axios';
 import swal from "sweetalert";
+import productStock from '../../actions/productStock';
 
 const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
 const CARD_ELEMENTS_OPTIONS={
@@ -35,13 +36,15 @@ const CARD_ELEMENTS_OPTIONS={
         },
     },
 };
-const CheckoutForm =({backStep, nextStep})=>{
+    const CheckoutForm =({backStep, nextStep})=>{
     const history = useHistory();
+    const dispatch = useDispatch();
     const [processing, setProcessing] = useState('');
     const [error, setError] = useState(null);
     const [succeeded, setSucceeded] = useState(false);
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
+    console.log('ESTE ES EL CARRITO', cartItems)
     const getSubtotal=()=>{
         return  cartItems
                 .reduce((price,item)=> price + item.price * parseInt(item.qty), 0)
@@ -49,12 +52,15 @@ const CheckoutForm =({backStep, nextStep})=>{
     const stripe = useStripe(); 
     const elements = useElements();    
     
-    // let axiosConfig = {
-    //     headers: {
-    //         'Content-Type': 'application/json;charset=UTF-8',
-    //         "Access-Control-Allow-Origin": "*",
-    //     }
-    //   };
+    /* const filterIdQty = [] */
+    
+    const filterIdQty = cartItems.map(p => ({
+            productId:p._id,
+            productQty: p.qty
+        })
+    )
+
+    console.log('A VER SI FUNCIONA',filterIdQty)
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -63,7 +69,7 @@ const CheckoutForm =({backStep, nextStep})=>{
         const {error, paymentMethod}= await stripe.createPaymentMethod({
             type:"card",
             card: elements.getElement(CardElement)  
-        } )
+        })
     
             if(error){
                 setError(`Payment failed ${error.message}`);
@@ -74,13 +80,12 @@ const CheckoutForm =({backStep, nextStep})=>{
                 try{
                 const { data } = await axios.post("http://localhost:5000/checkout/create",
                     {  id: id, amount: getSubtotal(),  } );
-                    console.log(data)
                 
                 setError(null);
                 setProcessing(false);
                 setSucceeded(true);
-                
-                if(data == 'succeeded') {
+                dispatch(productStock(filterIdQty))
+                /* if(data == 'succeeded') {
                 swal({
                     title: "Tu pago fue realizado con éxito",
                     icon: "success",
@@ -99,7 +104,7 @@ const CheckoutForm =({backStep, nextStep})=>{
                         buttons: false,
                         timer: 3000,
                       });
-                }
+                } */
                 // elements.getElement(CardElement).clear();
                 // nextStep();   
                 
@@ -109,7 +114,11 @@ const CheckoutForm =({backStep, nextStep})=>{
               }
     }    
 
-    
+    /* const handleStock = (e) => {
+        console.log('ESTE ES EL EVENTO',e)
+        e.preventDefault()
+        dispatch(productStock(e))
+    } */
         
       
 
@@ -119,7 +128,7 @@ const CheckoutForm =({backStep, nextStep})=>{
             <CardElement options={CARD_ELEMENTS_OPTIONS}/>
             <div style={{display: "flex", justifyContent:"space-between", marginTop:"1rem"}}>
             <Button variant='outlined' onClick={backStep}>Back</Button>
-            <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
+            <Button /* onClick={(e) => handleStock(e)} */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
             </div>
 
         </form>

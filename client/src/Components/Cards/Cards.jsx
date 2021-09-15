@@ -10,6 +10,7 @@ import style from "./Cards.module.css";
 
 export default function Cards({currentProducts}) {
   const dispatch = useDispatch();
+  console.log('CURRENT', currentProducts)
   
   const lengthProd = currentProducts.length
   
@@ -37,7 +38,7 @@ export default function Cards({currentProducts}) {
                 description={product.description}
                 price= {product.price}
               />
-            }       
+            }   
           </div>
                 
       ))}

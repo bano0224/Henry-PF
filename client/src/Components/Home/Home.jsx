@@ -19,8 +19,8 @@ export default function Home() {
   const [productsPerPage, setProductsPerPage] = useState(9);
   const lastIndex = currentPage * productsPerPage;
   const firstIndex = lastIndex - productsPerPage;
-
-  const currentProducts = products.slice(firstIndex, lastIndex);
+  
+  const currentProducts = products.filter(product => product.countInStock > 1).slice(firstIndex, lastIndex);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);

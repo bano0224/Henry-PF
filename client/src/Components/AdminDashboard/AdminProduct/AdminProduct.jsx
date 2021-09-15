@@ -171,26 +171,6 @@ export default function AdminProduct() {
           </Button>
         </Box>
         <br />
-
-        <Container>
-          <h1>Productos</h1>
-          <Box display="flex" justifyContent='space-around' alignItems='center'>
-              <FilterByCategory />
-              <AdminSearch />
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                startIcon={<AddIcon />}
-                component={Link} 
-                to='/admin/products/add'
-                style= {{textDecoration: 'none'}}
-                id='button'
-              >
-                Agregar Productos
-              </Button>
-          </Box>
-          <br />
           <Paper className={classes.root}>
             <TableContainer className={classes.container}>
               <Table stickyHeader aria-label="sticky table">
@@ -288,7 +268,7 @@ export default function AdminProduct() {
             </DialogActions>
           </Dialog>
         </div>
-  
+        
         </Container>
         </>
     )

@@ -1,6 +1,7 @@
 //PRODUCT
 export const URL_PRODUCTS = 'http://localhost:5000/product';
 export const URL_PRODUCTS_ID = 'http://localhost:5000/product/';
+export const URL_STOCK_ID = 'http://localhost:5000/product/inStock/'
 export const URL_PRODUCTS_QUERY = 'http://localhost:5000/product?name='
 export const URL_PRODUCTS_DETAIL = 'http://localhost:5000/product/?id='
 export const URL_PRODUCT_CREATE = 'http://localhost:5000/product/create';
