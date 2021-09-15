@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Home from "./components/Home/Home";
 import CreateProduct from "./components/CreateProduct/CreateProduct";
 import DetailProduct from "./components/DetailProduct/DetailProduct"
@@ -8,7 +9,6 @@ import AdminProduct from "./components/AdminDashboard/AdminProduct/AdminProduct"
 import AdminUsers from "./components/AdminDashboard/AdminUsers/AdminUsers";
 import AdminCategories from "./components/AdminDashboard/AdminCategories/AdminCategories";
 import AdminAddProduct from "./components/AdminDashboard/AdminAddProduct/AdminAddProduct";
-import 'bootstrap/dist/css/bootstrap.min.css'
 import AdminModifyProduct from "./components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
 import AdminAddCategory from "./components/AdminDashboard/AdminAddCategory/AdminAddCategory";
 import Reviews from "./components/Reviews/Reviews";
@@ -36,6 +36,8 @@ function App() {
         <Route exact path="/admin/categories" component={AdminCategories} />
         <Route exact path='/admin/categories/add' component={AdminAddCategory} />
         <Route exact path="/admin/users" component={AdminUsers} />
+        <Route exact path='/admin/categories/:id' component={AdminModifyCategory} />
+        <Route exact path='/admin/users/:id' component={AdminModifyUser} />
         <Route exact path="/detail/:id" render={({ match }) => <DetailProduct id={match.params.id} />}></Route>
         <Route exact path="/reviews/:id" render={({ match }) => <Reviews id={match.params.id}/>}></Route>
         <Route exact path="/login" component={Login}/>
@@ -44,8 +46,6 @@ function App() {
         <Route exact path='/cart/addressform' component={AddressForm} />
         <Route exact path='/cart/checkout' component={Checkout} />
         <Route exact path='/cart/confirmation' component={Confirmation} /> 
-        <Route exact path='/admin/categories/:id' component={AdminModifyCategory} />
-        <Route exact path='/admin/users/:id' component={AdminModifyUser} />
         <Route path='*' component={NotFound} />
       </Switch>
     </BrowserRouter>

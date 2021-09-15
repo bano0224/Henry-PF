@@ -38,24 +38,6 @@ const userSchema = new Schema({
     type: Schema.ObjectId,
     /* required:true, */
   }],
-  address_line1: {
-    type: String,
-  },
-  address_line2: {
-    type: String,
-  },
-  city: {
-    type: String,
-  },
-  state: {
-    type: String,
-  },
-  postal_code: {
-    type: Number,
-  },
-  country: {
-    type: String,
-  },
   email_notification: {
     type: Boolean,
   },

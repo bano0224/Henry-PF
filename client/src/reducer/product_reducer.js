@@ -13,7 +13,8 @@ export const initialState = {
     users: [],
     userDetail: [],
     roles: [],
-    login: false
+    login: false,
+    error: []
 };
 
 export default function productReducer(state = initialState, action) {
@@ -192,6 +193,18 @@ export default function productReducer(state = initialState, action) {
           return {
             ...state,
             roles: action.payload
+          }
+
+        case actionConst.LOGIN_ERROR:
+          return {
+            ...state,
+            error: action.payload
+          }
+
+        case actionConst.RESET_ERROR:
+          return {
+            ...state,
+            error: []
           }
 
         default: 

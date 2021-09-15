@@ -153,26 +153,6 @@ export default function AdminProduct() {
       <AdminNav />
       <br />
       <Container>
-        <h1>Productos</h1>
-        <Box display="flex" justifyContent="space-around" alignItems="center">
-          <FilterByCategory />
-          <AdminSearch />
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-            startIcon={<AddIcon />}
-            component={Link}
-            to="products/add"
-            style={{ textDecoration: "none" }}
-            id="button"
-          >
-            Agregar Productos
-          </Button>
-        </Box>
-        <br />
-
-        <Container>
           <h1>Productos</h1>
           <Box display="flex" justifyContent='space-around' alignItems='center'>
               <FilterByCategory />
@@ -288,6 +268,7 @@ export default function AdminProduct() {
             </DialogActions>
           </Dialog>
         </div>
+        
   
         </Container>
         </>
