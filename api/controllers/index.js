@@ -325,7 +325,7 @@ const logIn = async (req, res) => {
   
   if (!matchPassword) return res.status(401).json({ message: "El usuario o la contraseña son inválidos" });
     
-  const token = jwt.sign({ id: userFound._id },`${process.env.JWT_SECRET_KEY}`, {expiresIn: 3600});
+  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 3600});
   
   res.json({ token });
 };

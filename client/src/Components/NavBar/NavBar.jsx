@@ -8,16 +8,19 @@ import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import clsx from 'clsx';
 import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import {Grid, Badge} from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import stateLogout from '../../actions/stateLogout'
 import swal from 'sweetalert';
+import jwt from 'jsonwebtoken'
+const dotenv = require("dotenv");
+dotenv.config();
+
+const { JWT_SECRET_KEY } = process.env;
 
 
 const StyledBadge = withStyles((theme) => ({
@@ -92,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       alignItems: 'center',
       padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
       ...theme.mixins.toolbar,
       justifyContent: 'flex-end',
   },
@@ -109,6 +111,16 @@ export default function NavBar() {
 
 
   const login = localStorage.getItem('login')
+
+  //------------------------------
+const numero = JSON.parse(sessionStorage.getItem("token")).token
+const decoded = jwt.verify(numero, 'secret')
+
+console.log(decoded)
+
+
+
+//-------------------------
  
 
   const a = useSelector(state => state.cartReducer)
