@@ -443,7 +443,6 @@ const checkout = async (req, res) =>{
 const mercadopagoController = async (req, res, next) => {
   try {
     const { cart } = req.body;
-
     const items = cart.map(({ name, price, quantity }) => ({
       title: name,
       unit_price: Number(price),

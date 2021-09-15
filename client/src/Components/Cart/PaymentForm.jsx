@@ -38,8 +38,6 @@ const CARD_ELEMENTS_OPTIONS={
 };
 const CheckoutForm =({backStep, nextStep})=>{
     const history = useHistory();
-    const dispatch = useDispatch();
-    const { paymentLink } = useSelector(state => state.cart);
     const [processing, setProcessing] = useState('');
     const [error, setError] = useState(null);
     const [succeeded, setSucceeded] = useState(false);
@@ -51,8 +49,6 @@ const CheckoutForm =({backStep, nextStep})=>{
         }
     const stripe = useStripe(); 
     const elements = useElements();
-
-    useEffect(() => history.push(paymentLink), [paymentLink]);
     
     // let axiosConfig = {
     //     headers: {
@@ -114,7 +110,6 @@ const CheckoutForm =({backStep, nextStep})=>{
               }
     }
 
-    const handleClickMP = () => dispatch(mercadopagoPayment());
 
     
         
@@ -126,7 +121,6 @@ const CheckoutForm =({backStep, nextStep})=>{
             <CardElement options={CARD_ELEMENTS_OPTIONS}/>
             <div style={{display: "flex", justifyContent:"space-between", marginTop:"1rem"}}>
             <Button variant='outlined' onClick={backStep}>Back</Button>
-            <Button onClick={handleClickMP} variant='contained' color='primary'>Mercadopago</Button>
             <Button disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
             </div>
 

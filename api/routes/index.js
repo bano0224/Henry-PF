@@ -6,6 +6,7 @@ const user = require('./user')
 const role = require('./role')
 var bodyParser = require('body-parser');
 const checkout = require('./checkout')
+const mercadopago = require('./mercadopago');
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.use('/checkout', checkout);
 router.use('/review', review)
 router.use('/role', role)
 router.use('/user', user)
+router.use('/mercadopago', mercadopago);
 
 
 

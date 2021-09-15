@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const mercadopagoController = require('../controllers/mercadopago');
+const { mercadopagoController } = require('../controllers');
 
 router.post('/', mercadopagoController);
 

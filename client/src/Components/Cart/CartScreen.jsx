@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Cart from './Cart';
 import { makeStyles } from '@material-ui/core/styles';
 import NavBar from '../NavBar/NavBar';
@@ -10,6 +11,7 @@ import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HomeIcon from '@material-ui/icons/Home'
 import Button from '@material-ui/core/Button';
+import mercadopagoPayment from '../../actions/cart/mercadopagoPayment';
 import accounting from "accounting";
 
 //Style
@@ -39,11 +41,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CartScreen() {
     const classes = useStyles();
+    const history = useHistory();
     const dispatch= useDispatch()
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
+    const { paymentLink } = useSelector(state => state.cartReducer);
     const productReducer = useSelector(state => state.productReducer)
     const { login } = productReducer
+
+    useEffect(() => history.push(paymentLink), [paymentLink]);
     
     const handlerQty= (id, qty)=>{
         dispatch(addToCart(id,qty))
@@ -56,6 +62,8 @@ export default function CartScreen() {
     return  cartItems
             .reduce((price,item)=> price + item.price * parseInt(item.qty), 0)
     }
+
+    const handleClickMP = () => dispatch(mercadopagoPayment(cartItems));
 
     return (
         <Grid container xs={12}>
@@ -157,7 +165,7 @@ export default function CartScreen() {
                                     </Grid>
                                     <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
                                         <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
-                                       
+                                        <Button onClick={handleClickMP} variant='contained' color='primary'>Mercadopago</Button>
                                     </div>
                                 </Grid>
                             </Paper>

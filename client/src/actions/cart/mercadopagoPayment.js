@@ -2,7 +2,7 @@ import axios from 'axios';
 import { MERCADOPAGO_URL } from '../../utils/utils';
 import { MERCADOPAGO_PAYMENT } from './const';
 
-export default mercadopagoPayment = async cart => {
+const mercadopagoPayment =  cart => async dispatch => {
     try {
         const { data } = await axios.post(`${MERCADOPAGO_URL}`, { cart });
         dispatch({ type: MERCADOPAGO_PAYMENT, payload: data.init_point });
@@ -10,3 +10,5 @@ export default mercadopagoPayment = async cart => {
         console.log(error);
     }
 };
+
+export default mercadopagoPayment;
