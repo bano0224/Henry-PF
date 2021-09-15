@@ -8,7 +8,7 @@ import login from "../../actions/setLogin";
 import stateLogin from "../../actions/stateLogin";
 import style from "./Login.module.css";
 import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login";
+// import FacebookLogin from "react-facebook-login";
 import swal from "sweetalert";
 
 export default function Login() {
@@ -148,7 +148,7 @@ export default function Login() {
           </div>
           <Container className={style.buttonLogup}>
             <Button variant="contained" color="secondary" type="submit">
-              Login
+              Ingresar
             </Button>
             <div className={style.link}>
             <Button
@@ -157,15 +157,26 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="secondary"
-            /* className={classes.submit} */
             component={Link}
                     to='/logup'
           >
             Si no posees una cuenta hacé click aquí
           </Button>
             </div>
+            <div className={style.link}>
+            <Button
+            id='button'
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            component={Link}
+                    to='/login/reset'
+          >
+            Restablecer constraseña
+          </Button>
+            </div>
             <div className={style.google}>
-              <br />
               <br />
               <GoogleLogin className={style.googleButton}
                 clientId="167695785983-a0bj8k1t6bi2c3pqlb18g68834srcng0.apps.googleusercontent.com"
