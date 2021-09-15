@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-simple": "^0.5.6",
+    "mercadopago": "^1.5.8",
     "moment": "^2.29.1",
     "mongoose": "^6.0.3",
     "react-facebook-login": "^4.1.1",

@@ -14,6 +14,9 @@ export const URL_UPDATE_USER = 'http://localhost:5000/user/update/'
 export const URL_DELETE_USER = 'http://localhost:5000/user/delete/'
 export const URL_GET_USER_ID = 'http://localhost:5000/user/'
 
+// MERCADOPAGO
+export const MERCADOPAGO_URL = 'http://localhost:5000/mercadopago';
+
 //ROLES
 export const URL_GET_ROLES = 'http://localhost:5000/role'
 

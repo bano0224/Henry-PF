@@ -6,9 +6,15 @@ const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
 const stripe = require("stripe")("sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65");
+const mercadopago = require("mercadopago");
 // Private key
 
 const services = require('../services/services')
+
+// mercadopago configuration
+mercadopago.configure({
+  access_token: 'TEST-7303199554218809-091514-1683cdb45476c671f50eac5f0e88ddef-190598525',
+});
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
@@ -433,6 +439,34 @@ const checkout = async (req, res) =>{
   }
   
 }
+
+const mercadopagoController = async (req, res, next) => {
+  try {
+    const { cart } = req.body;
+
+    const items = cart.map(({ name, price, quantity }) => ({
+      title: name,
+      unit_price: Number(price),
+      quantity: Number(qty),
+    }));
+
+    const preference = {
+      items,
+      back_urls: {
+        success: 'http://localhost:3000',
+        failure: 'http://localhost:3000',
+        pending: 'http://localhost:3000',
+      },
+      auto_return: 'approved',
+    };
+
+    const { body } = mercadopago.preferences.create(preference);
+    res.status(200).json(body);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
@@ -454,8 +488,9 @@ module.exports = {
   removeUser,
   getRoles,
   getReviews,
-  getReviewById
-  
+  getReviewById,
+  mercadopagoController,
+
 };
 
 
