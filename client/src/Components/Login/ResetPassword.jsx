@@ -65,13 +65,28 @@ export default function ResetPassword(){
         validationSchema: validationShema,
         onSubmit: (values) => {
             axios
+            // crear nueva ruta
             .post(`/login/reset?token=${values.token}`, {password : values.newPassword})
             .then((res) => {
-                swal.fire('Felicidades', `Se ah restablecido la contraseña<br>`);
+                
+                swal({
+                    title: "Felicidades",
+                    text: "Se ah restablecido la contraseña",
+                    icon: "success",
+                    buttons: false,
+                    timer: 4000,
+                  });
                 history.push("/login")
             })
             .catch((error) => {
-                swal.fire('Upss....',`El Token no es correcto<br>`, error);
+                
+                swal({
+                    title: "Upss...",
+                    text: "El Token no es correcto",
+                    icon: "warning",
+                    buttons: false,
+                    timer: 4000,
+                  });
             });
         },
     });
