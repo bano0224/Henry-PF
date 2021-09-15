@@ -8,6 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
+import Avatar from '@material-ui/core/Avatar';
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
@@ -18,6 +19,8 @@ import accounting from "accounting";
 import addToCart from "../../actions/cart/addToCart";
 import { useDispatch } from "react-redux";
 import InfoIcon from '@material-ui/icons/Info';
+import StoreIcon from '@material-ui/icons/Store';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: "100%",
     width: "100%",
-    paddingTop: "90%", // 16:9
+    paddingTop: "75%", // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
@@ -53,7 +56,11 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     padding: "10px",
-  }
+  },
+  avatar: {
+    fontFamily:'Kalam',
+    backgroundColor: red[900],
+  },
 }));
 
 export default function ProductCard({name, image, description, price, id}) {
@@ -73,14 +80,15 @@ export default function ProductCard({name, image, description, price, id}) {
   return (
     <Card className={classes.root}>
       <CardHeader
+      avatar={
+        <Avatar aria-label="recipe" className={classes.avatar}>
+          <StoreIcon/>
+        </Avatar>
+      }
         action={
-          <Typography
-            className={classes.action}
-            variant="h5"
-            color="textSecondary"
-          >
-            {accounting.formatMoney(price)}
-          </Typography>
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
         }
         title={
           <Typography
@@ -89,6 +97,7 @@ export default function ProductCard({name, image, description, price, id}) {
             {name}
           </Typography>
         }
+        subheader={accounting.formatMoney(price)}
       />
       <CardMedia
         className={classes.media}
@@ -135,7 +144,7 @@ export default function ProductCard({name, image, description, price, id}) {
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent className={classes.content} >
+        <CardContent /*  className={classes.content}  */>
           <Typography paragraph>
             {description}
           </Typography>

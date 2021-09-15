@@ -288,7 +288,7 @@ export default function AdminProduct() {
             </DialogActions>
           </Dialog>
         </div>
-  
+        </Container>
         </Container>
         </>
     )

@@ -4,7 +4,7 @@
 .videoContainer {
   overflow: hidden;
   display: flex;
-  height: 500px;
+  height: 50%;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -31,13 +31,40 @@
 
 .titleB {
   font-family: "Raleway", sans-serif;
-  font-size: 6em;
+  font-size: 250%;
   text-align: center;
   font-weight: 800;
 }
-
+.titleC {
+  font-family: "Kalam", sans-serif;
+  font-size: 350%;
+  text-align: center;
+  font-weight: 100;
+}
+.titleF1 {
+  font-family: "Kalam", sans-serif;
+  font-size: 300%;
+  text-align: center;
+  font-weight: 100;
+  margin-top: -10px;
+}
+.titleF2 {
+  font-family: "Kalam", sans-serif;
+  font-size: 200%;
+  text-align: center;
+  font-weight: 100;
+  margin-top: -30px;
+}
+.titleF3 {
+  font-family: "Kalam", sans-serif;
+  font-size: 200%;
+  text-align: center;
+  font-weight: 100;
+  margin-top: -30px;
+  margin-bottom: -30px;
+}
 .filter {
-  width: 100%;
+  width: 90%;
   margin: 15px;
   margin-left: 15px;
   display: flex;
@@ -94,7 +121,7 @@
 }
 
 .navBar {
-  min-width: 100%;
+  min-width: 80%;
 
   display: flex;
   justify-content: center;
