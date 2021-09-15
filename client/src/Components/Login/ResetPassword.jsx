@@ -9,7 +9,7 @@ import swal from 'sweetalert';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import NavBar from '../NavBar/NavBar';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import { Formik } from 'formik';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,15 +57,11 @@ export default function ResetPassword(){
     const classes = useStyles();
     let history = useHistory();
     const formik = useFormik({
-        initialValues: {
-            email: "",
-            token: "",
-            newPassword: "",
-        },
+        initialValues: { email: "", token: "", newPassword: "" },
         validationSchema: validationShema,
         onSubmit: (values) => {
             axios
-            // crear nueva ruta
+            // crear POST  en el back
             .post(`/login/reset?token=${values.token}`, {password : values.newPassword})
             .then((res) => {
                 
@@ -106,6 +102,7 @@ export default function ResetPassword(){
                     <TextField color="secondary"
                 variant="outlined"
                 margin="normal"
+                type="email"
                 required
                 fullWidth
                 name="email"
@@ -130,7 +127,7 @@ export default function ResetPassword(){
                 type="password"
                 value={formik.values.newPassword}
                 onChange={formik.handleChange}
-                label="New Password">New Password</TextField>
+                label="New Password">Nueva contraseña</TextField>
             <Button variant="contained" fullWidth className={classes.submit} color="primary" type='submit' >
                     Enviar
             </Button>

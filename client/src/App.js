@@ -48,7 +48,6 @@ function App() {
         <Route exact path='/cart/confirmation' component={Confirmation} /> 
         <Route exact path='/admin/categories/:id' component={AdminModifyCategory} />
         <Route exact path='/admin/users/:id' component={AdminModifyUser} />
-
         <Route path='*' component={NotFound} />
       </Switch>
     </BrowserRouter>
