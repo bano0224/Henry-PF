@@ -151,17 +151,7 @@ export default function Login() {
               Ingresar
             </Button>
             <div className={style.link}>
-            <Button
-            id='button'
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="secondary"
-            component={Link}
-                    to='/logup'
-          >
-            Si no posees una cuenta hacé click aquí
-          </Button>
+            <Link to="/login/reset">¿Olvidaste tu contraseña?</Link>
             </div>
             <div className={style.link}>
             <Button
@@ -171,9 +161,9 @@ export default function Login() {
             variant="contained"
             color="secondary"
             component={Link}
-                    to='/login/reset'
+                    to='/logup'
           >
-            Restablecer constraseña
+            Crear cuenta nueva
           </Button>
             </div>
             <div className={style.google}>
