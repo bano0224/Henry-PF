@@ -21,7 +21,7 @@ import Checkout from './components/Cart/Checkout'
 import Confirmation from "./components/Cart/Confirmation";
 import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory/AdminModifyCategory";
 import AdminModifyUser from "./components/AdminDashboard/AdminModifyUser/AdminModifyUser";
-
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 function App() {
   return (
     <BrowserRouter>
@@ -29,15 +29,15 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/create" component={CreateProduct} />
         <Route exact path="/detail" component={DetailProduct} />
-        <Route exact path="/admin" component={AdminNav} />
-        <Route exact path="/admin/products" component={AdminProduct} />
-        <Route exact path="/admin/products/add" component={AdminAddProduct} />
-        <Route exact path="/admin/products/modify/:id" component={AdminModifyProduct} />
-        <Route exact path="/admin/categories" component={AdminCategories} />
-        <Route exact path='/admin/categories/add' component={AdminAddCategory} />
-        <Route exact path="/admin/users" component={AdminUsers} />
-        <Route exact path='/admin/categories/:id' component={AdminModifyCategory} />
-        <Route exact path='/admin/users/:id' component={AdminModifyUser} />
+{/*         <Route exact path="/admin" component={AdminNav} />
+ */}       {/*  <Route exact path="/admin/products" component={AdminProduct} /> */}
+        {/* <Route exact path="/admin/products/add" component={AdminAddProduct} /> */}
+{/*         <Route exact path="/admin/products/modify/:id" component={AdminModifyProduct} />
+ */}        {/* <Route exact path="/admin/categories" component={AdminCategories} /> */}
+        {/* <Route exact path='/admin/categories/add' component={AdminAddCategory} /> */}
+        {/* <Route exact path="/admin/users" component={AdminUsers} /> */}
+        {/* <Route exact path='/admin/categories/:id' component={AdminModifyCategory} /> */}
+        {/* <Route exact path='/admin/users/:id' component={AdminModifyUser} /> */}
         <Route exact path="/detail/:id" render={({ match }) => <DetailProduct id={match.params.id} />}></Route>
         <Route exact path="/reviews/:id" render={({ match }) => <Reviews id={match.params.id}/>}></Route>
         <Route exact path="/login" component={Login}/>
@@ -46,6 +46,16 @@ function App() {
         <Route exact path='/cart/addressform' component={AddressForm} />
         <Route exact path='/cart/checkout' component={Checkout} />
         <Route exact path='/cart/confirmation' component={Confirmation} /> 
+        <PrivateRoute exact path="/admin" component={AdminNav} />
+        <PrivateRoute exact path="/admin/products" component={AdminProduct} />
+        <PrivateRoute exact path="/admin/products/add" component={AdminAddProduct} />
+        <PrivateRoute exact path="/admin/products/modify/:id" component={AdminModifyProduct} />
+        <PrivateRoute exact path="/admin/categories" component={AdminCategories} />
+        <PrivateRoute exact path="/admin/categories/add" component={AdminAddCategory} />
+        <PrivateRoute exact path="/admin/users" component={AdminUsers} />
+        <PrivateRoute exact path="/admin/categories/:id" component={AdminModifyCategory} />
+        <PrivateRoute exact path="/admin/users/:id" component={AdminModifyUser}/>
+
         <Route path='*' component={NotFound} />
       </Switch>
     </BrowserRouter>
