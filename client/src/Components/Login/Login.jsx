@@ -65,8 +65,6 @@ export default function Login() {
       if(sessionStorage.getItem('token')){
       history.push("/");}
     }, 2500);
-    
-    
   }
 
   return (
