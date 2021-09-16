@@ -14,7 +14,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import {Grid, Badge} from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import stateLogout from '../../actions/stateLogout'
 import swal from 'sweetalert';
 import jwt from 'jsonwebtoken'
 const dotenv = require("dotenv");
@@ -110,22 +109,21 @@ export default function NavBar() {
   const open = Boolean(anchorEl);
 
 
-  const login = localStorage.getItem('login')
 
-  //------------------------------
-const numero = JSON.parse(sessionStorage.getItem("token")).token
-const decoded = jwt.verify(numero, 'secret')
+//TOKEN
+  const key = JSON.parse(sessionStorage.getItem("token"))?.token
+  if(key){
+    const decoded = jwt.verify(key, 'secret')
+    var userRole = (decoded.role[0].name)
+    console.log(userRole);
+  }
 
-console.log(decoded)
-
-
-
-//-------------------------
- 
-
+//CART BADGE
   const a = useSelector(state => state.cartReducer)
   const { cartItems } = a
 
+
+//HANDLERS
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -135,10 +133,10 @@ console.log(decoded)
   };
 
   const handleLogout = () => {
-    dispatch(stateLogout())
+    sessionStorage.removeItem("token")
     swal({
-      title: "Cerraste sesión!",
-      text: "Te esperamos!!",
+      title: "Sesión finalizada",
+      text: "Volvé pronto!",
       buttons: false,
       timer: 2000
     });
@@ -164,7 +162,9 @@ console.log(decoded)
             E-Market
             </Typography>                
           </Button>
-          <div className={classes.dashboard}>
+          {
+            userRole === 'admin'
+            ? <div className={classes.dashboard}>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -175,7 +175,9 @@ console.log(decoded)
               >
                   Administrador
               </Button>
-          </div>
+            </div>
+            : null
+          }
           <div className={classes.dashboard}>
               <Button
                   color="inherit"
@@ -189,18 +191,18 @@ console.log(decoded)
               </Button>
           </div>
           <div className={classes.dashboard}>
-            {(login === 'true') ?
-            <div>
+            {(key) 
+            ? <div>
               <Button
-                  color="inherit"
-                  aria-label="open drawer"
-                  className={classes.button}
-                  id='button'
-                  component={Link}
-                  to='/cart'
+                color="inherit"
+                aria-label="open drawer"
+                className={classes.button}
+                id='button'
+                component={Link}
+                to='/cart'
               >
                 <StyledBadge badgeContent={cartItems.length} color="secondary" overlap="circular" max={99} anchorOrigin={{vertical: 'top',horizontal: 'right',}}>
-                  <ShoppingCartIcon />
+                 <ShoppingCartIcon />
                 </StyledBadge>
               </Button>
               <IconButton
@@ -230,9 +232,8 @@ console.log(decoded)
                 <MenuItem component={Link} to='/'>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
-              </div>
-:
-              <div>
+            </div>
+            : <div>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -246,16 +247,17 @@ console.log(decoded)
                 </StyledBadge>
               </Button>
               <Button
-                  color="inherit"
-                  aria-label="open drawer"
-                  className={classes.button}
-                  id='button'
-                  component={Link}
-                  to='/login'
+                color="inherit"
+                aria-label="open drawer"
+                className={classes.button}
+                id='button'
+                component={Link}
+                to='/login'
               >
-                  Ingresar
+                Ingresar
               </Button>
             </div>
+              
             }
             </div>
         </Toolbar>

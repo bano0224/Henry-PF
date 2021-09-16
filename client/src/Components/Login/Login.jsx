@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { Container, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
-import stateLogin from "../../actions/stateLogin";
 import style from "./Login.module.css";
 import GoogleLogin from "react-google-login";
 import swal from "sweetalert";
@@ -28,7 +27,6 @@ export default function Login() {
   //GOOGLE
   function responseGoogle(respuesta) {
     if (respuesta.profileObj) {
-      dispatch(stateLogin());
 
       swal({
         title: "Bienvenida/o",
