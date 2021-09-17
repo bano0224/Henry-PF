@@ -1,4 +1,7 @@
 const jwt = require("jsonwebtoken");
+const crypto = require('crypto')
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
 const config = require("../config");
 const Product = require("../models/Product.js");
 const User = require("../models/User.js");
@@ -311,34 +314,7 @@ const logUp = async (req, res) => {
       role: [{ _id: "613b80dc8317c3f59f461b67" }],
     });
 
-    /*     if (roles) {
-      const findRoles = await Role.find({ name: `${roles}` });
-      newUser.roles = findRoles.map((role) => role._id);
-      console.log('estoy entrando al if')
-    } else {
-      const role = await Role.findOne({ name: "user" }); // busco un solo usuario
-      newUser.roles = [role._id]; */
-
     const saveUser = await newUser.save();
-
-    /* } */
-
-    /* newUser.save((err) => {
-      if(err) return res.status(500).send({message: `Error al crear el usuario: ${err}`})
-
-      return res.status(200).send({token: services.createToken(user)})
-    }) */
-    /*  const token = jwt.sign({
-      name: newUser.name,
-      id: saveUser._id
-    }, 'secret')
-
-    res.header('auth-token', token).json({
-      error: null,
-      data: { token },
-      message: 'Bienvenido'
-  })
- */
     const token = jwt.sign(
       { id: saveUser._id },
       `${process.env.JWT_SECRET_KEY}` /* 'secret' */,
@@ -470,9 +446,41 @@ const checkout = async (req, res) => {
     }
   } catch (error) {
     return res.json({ message: "Error en su tarjeta 2" });
-    console.log(error);
   }
 };
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+  auth:{
+      api_key:SENDGRID_API
+    }
+  }))
+
+const resetPassword = async (req, res) => {
+  const { email } = req.body
+  crypto.randomBytes(32,(err,buffer) => {
+    if(err) {
+      console.log(err)
+    }
+    const token = buffer.toString('hex')
+    const user = await User.findOne({email: email})
+    if(!user) {
+      return res.status(422).json({message: 'No hay ningún usuario registrado con ese email'})
+    }
+    user.resetToken = token
+    user.expireTiken = Date.now() + 3600000
+    user.save() 
+      let info = transporter.sendEmail({
+        to: user.email,
+        from: 'no-replay@supermarketHenry.com',
+        subject: 'Password reset',
+        html: `<p>You requested for password reset</p>
+        <h5>click in this <a href="${EMAIL}/reset/${token}">link</a> to reset password</h5>`
+      })
+      res.json({message: 'Por favor, verificar su casilla de mail'})
+  })
+}
+
+
 module.exports = {
   getProducts,
   createProduct,
@@ -496,6 +504,7 @@ module.exports = {
   getReviews,
   getReviewById,
   productStock,
+  resetPassword
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

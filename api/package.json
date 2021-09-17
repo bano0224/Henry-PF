@@ -17,6 +17,7 @@
     "jwt-simple": "^0.5.6",
     "moment": "^2.29.1",
     "mongoose": "^6.0.3",
+    "nodemailer": "^6.6.3",
     "react-facebook-login": "^4.1.1",
     "react-hook-form": "^7.15.1",
     "redux-devtools-extension": "^2.13.9",

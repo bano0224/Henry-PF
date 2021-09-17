@@ -64,8 +64,13 @@ const userSchema = new Schema({
   },
   token: [{
       type: String,
-    }]
-
+    }],
+  resetToken: {
+    type: String,
+  },
+  expireToken: {
+    type: Date,
+  },
 });
 
 userSchema.statics.encryptPassword = async (password) => {
