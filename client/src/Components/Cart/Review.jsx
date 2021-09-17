@@ -24,6 +24,7 @@ const Review = () => {
     );
   };
   const handlerQty = (id, qty) => {
+    console.log('ESTE ES EL HANDLER', id, qty)
     dispatch(addToCart(id, qty));
   };
 

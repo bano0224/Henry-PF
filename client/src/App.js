@@ -21,6 +21,7 @@ import Checkout from './components/Cart/Checkout'
 import Confirmation from "./components/Cart/Confirmation";
 import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory/AdminModifyCategory";
 import AdminModifyUser from "./components/AdminDashboard/AdminModifyUser/AdminModifyUser";
+import UserDetail from "./components/Login/User/UserDetail";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/create" component={CreateProduct} />
         <Route exact path="/detail" component={DetailProduct} />
+        <Route exact path='/user/:id' component={UserDetail} />
         <Route exact path="/admin" component={AdminNav} />
         <Route exact path="/admin/products" component={AdminProduct} />
         <Route exact path="/admin/products/add" component={AdminAddProduct} />

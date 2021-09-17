@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useParams } from "react";
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -215,7 +215,7 @@ export default function NavBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to='/'>Perfil</MenuItem>
+                <MenuItem component={Link} to={`/user/` }>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
               </div>

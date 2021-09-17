@@ -14,6 +14,7 @@ export const URL_SET_LOGIN = 'http://localhost:5000/user/login'
 export const URL_UPDATE_USER = 'http://localhost:5000/user/update/'
 export const URL_DELETE_USER = 'http://localhost:5000/user/delete/'
 export const URL_GET_USER_ID = 'http://localhost:5000/user/'
+export const URL_SET_SUBSCRIPTION = 'http://localhost:5000/user/subscription'
 
 //ROLES
 export const URL_GET_ROLES = 'http://localhost:5000/role'

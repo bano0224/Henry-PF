@@ -34,6 +34,7 @@ export default function Cards({currentProducts}) {
               <Card
                 name={product.name}
                 image={product.imageUrl}
+                stock={product.countInStock}
                 id={product._id}
                 description={product.description}
                 price= {product.price}
