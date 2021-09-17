@@ -2,20 +2,22 @@ const { Schema, model } = require("mongoose");
 
 const orderSchema = new Schema({
   status: {
-    enum: ["approved", "canceled", "pending", "cart", "created"],
-    default: "cart",
-    required: true,
+    type: String,
+    enum: ["Aprobada", "Cancelada", "pendiente", "Finalizada"],
+    default: 'pendiente',
+    required: true
   },
   products: {
     type: [{
-      _id: Schema.Types.ObjectId, //o String
+      _id: String,
       name: String,
       price: Number,
       qty: Number,
+      image: String
     }]
   },
   user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.ObjectId,
       ref: 'User',
   },
   shippingAddress: {
@@ -30,12 +32,9 @@ const orderSchema = new Schema({
       type: String,
       required: true,
   },
-  phone: {
-    type: String,
-    required: true,
-  },
   totalPrice: {
     type: Number,
+    required: true
   },
   dateOrdered: {
       type: Date,

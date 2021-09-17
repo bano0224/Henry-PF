@@ -37,7 +37,6 @@ const getProducts = async (req, res, next) => {
 };
 
 const createProduct = async (req, res) => {
-  console.log("QUE PASAAAAAA: ", req.body);
   try {
     await Product.insertMany(req.body);
     res.status(200).send("productos creados ok");
@@ -64,7 +63,7 @@ const getUsers = async (req, res) => {
       console.log(req.query);
       let userFind = await User.find({
         email: { $regex: email, $options: "i" },
-      }).populate("role", { name: 1 });
+      }).populate("order", {status: 1});
       if (userFind.length) {
         res.status(200).json(userFind);
       } else {

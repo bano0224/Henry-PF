@@ -7,6 +7,7 @@ import { useState } from 'react';
 const PrivateRouteCheckout = ({component:Component, ...rest}) => {
     const [decoded, setDecoded] = useState([])
     const numero = JSON.parse(sessionStorage.getItem("token"))?.token
+    
     useEffect(() => {
         setDecoded([
             numero? jwt.verify(numero, 'secret'):null
