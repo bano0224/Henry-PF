@@ -7,7 +7,7 @@ const PrivateRoute = ({component:Component, ...rest}) => {
     return(
 
     <Route {...rest} render={props => (
-        decoded?.role[0]?.name === "admin" ?
+        decoded.role[0]?.name === "admin" ?
             <Component {...props} />
             
         : <Redirect to="/" />
