@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 const crypto = require('crypto')
-const nodemailer = require('nodemailer')
-const sendgridTransport = require('nodemailer-sendgrid-transport')
-const config = require("../config");
+const transporter = require('../config/mailer')
 const Product = require("../models/Product.js");
 const User = require("../models/User.js");
 const Category = require("../models/Category.js");
@@ -449,35 +447,41 @@ const checkout = async (req, res) => {
   }
 };
 
-const transporter = nodemailer.createTransport(sendgridTransport({
-  auth:{
-      api_key:SENDGRID_API
-    }
-  }))
-
 const resetPassword = async (req, res) => {
-  const { email } = req.body
-  crypto.randomBytes(32,(err,buffer) => {
+ try {
+  crypto.randomBytes(32,async(err,buffer) => {
     if(err) {
       console.log(err)
     }
     const token = buffer.toString('hex')
-    const user = await User.findOne({email: email})
+
+    const user = User.findOne({ email: req.body.email })
+    console.log('ESTE ES EL USER', user)
     if(!user) {
       return res.status(422).json({message: 'No hay ningún usuario registrado con ese email'})
     }
     user.resetToken = token
     user.expireTiken = Date.now() + 3600000
-    user.save() 
-      let info = transporter.sendEmail({
-        to: user.email,
-        from: 'no-replay@supermarketHenry.com',
+    /* const userSave = await user.save() */
+    /* console.log('ESTE ES EL EMAIL',user.email) */
+    const verificationLink = `http://localhost:3000/user/resetPassword/${token}`
+      await transporter.sendMail({
+        to: req.body.email,
+        from: 'supermarkethenry@gmail.com',
         subject: 'Password reset',
         html: `<p>You requested for password reset</p>
-        <h5>click in this <a href="${EMAIL}/reset/${token}">link</a> to reset password</h5>`
+        <b>Por favor hacer click en el siguiente enlace para poder continuar con la recuperación de su contraseña:</b>
+        <a href="${verificationLink}">${verificationLink}</a>`
       })
       res.json({message: 'Por favor, verificar su casilla de mail'})
   })
+ } catch(error) {
+   console.log('No se ha podido restablecer la contraseña')
+ }
+}
+
+const setSubscription = (req, res) => {
+
 }
 
 
@@ -504,7 +508,8 @@ module.exports = {
   getReviews,
   getReviewById,
   productStock,
-  resetPassword
+  resetPassword,
+  setSubscription
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

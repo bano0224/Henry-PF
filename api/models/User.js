@@ -71,6 +71,10 @@ const userSchema = new Schema({
   expireToken: {
     type: Date,
   },
+  subscription: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 userSchema.statics.encryptPassword = async (password) => {
