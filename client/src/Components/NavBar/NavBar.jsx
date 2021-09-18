@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppBar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +16,7 @@ import {Grid, Badge} from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import swal from 'sweetalert';
 import jwt from 'jsonwebtoken'
+import getUserById from "../../actions/users/getUserById";
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -107,15 +108,15 @@ export default function NavBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const history = useHistory()
 
 
 
 //TOKEN
   const key = JSON.parse(sessionStorage.getItem("token"))?.token
   if(key){
-    const decoded = jwt.verify(key, 'secret')
+    var decoded = jwt.verify(key, 'secret')
     var userRole = (decoded.role[0].name)
-    console.log(userRole);
   }
 
 //CART BADGE
@@ -131,6 +132,11 @@ export default function NavBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleUserDetail = () => {
+    dispatch(getUserById(decoded.id))
+    history.push('/user/profile')
+  }
 
   const handleLogout = () => {
     sessionStorage.removeItem("token")
@@ -229,7 +235,7 @@ export default function NavBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to='/'>Perfil</MenuItem>
+                <MenuItem onClick={() => {handleUserDetail()}}>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
             </div>
