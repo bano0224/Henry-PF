@@ -46,10 +46,7 @@ const useStyles = makeStyles((theme) => ({
         newPassword: yup
         .string("contraseña")
         .required("la constraseña es requerida"),
-        token: yup
-        .number()
-        .min(5)
-        .required("Token requerido")
+        
     });
     
 
@@ -62,7 +59,7 @@ export default function ResetPassword(){
         onSubmit: (values) => {
             axios
             // crear POST  en el back
-            .post(`/login/reset?token=${values.token}`, {password : values.newPassword})
+            // .post(`/login/reset=${values}`, {password : values.newPassword})
             .then((res) => {
                 
                 swal({
@@ -109,15 +106,7 @@ export default function ResetPassword(){
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 label="Email">Email</TextField>
-            <TextField color="secondary"
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="token"
-                value={formik.values.token}
-                onChange={formik.handleChange}
-                label="Token">Token</TextField>
+          
             <TextField color="secondary"
                 variant="outlined"
                 margin="normal"
