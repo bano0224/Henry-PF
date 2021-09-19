@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NavBar() {
-
+  
   const dispatch = useDispatch();
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);

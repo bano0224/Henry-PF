@@ -22,6 +22,8 @@ import Confirmation from "./components/Cart/Confirmation";
 import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory/AdminModifyCategory";
 import AdminModifyUser from "./components/AdminDashboard/AdminModifyUser/AdminModifyUser";
 import UserDetail from "./components/Login/User/UserDetail";
+import ResetPassword from './components/Login/ResetPassword';
+import Confirm from './components/Login/Confirm';
 
 function App() {
   return (
@@ -30,7 +32,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/create" component={CreateProduct} />
         <Route exact path="/detail" component={DetailProduct} />
-        <Route exact path='/user/:id' component={UserDetail} />
+        <Route exact path="/user/:id" render={({ match }) => <Confirm id={match.params.id}/>}></Route>
         <Route exact path="/admin" component={AdminNav} />
         <Route exact path="/admin/products" component={AdminProduct} />
         <Route exact path="/admin/products/add" component={AdminAddProduct} />
@@ -42,6 +44,9 @@ function App() {
         <Route exact path="/reviews/:id" render={({ match }) => <Reviews id={match.params.id}/>}></Route>
         <Route exact path="/login" component={Login}/>
         <Route exact path='/logup' component={Logup} />
+        <Route exact path="/login/profile" component={UserDetail}/>
+        <Route exact path='/login/reset' component={ResetPassword} />
+        <Route exact path="/login/resetPassword/:token" render={({ match }) => <Confirm id={match.params.id}/>}></Route>
         <Route exact path='/cart' component={ScreenCart} />
         <Route exact path='/cart/addressform' component={AddressForm} />
         <Route exact path='/cart/checkout' component={Checkout} />
@@ -49,9 +54,10 @@ function App() {
         <Route exact path='/admin/categories/:id' component={AdminModifyCategory} />
         <Route exact path='/admin/users/:id' component={AdminModifyUser} />
         <Route path='*' component={NotFound} />
+        
       </Switch>
     </BrowserRouter>
   );
 }
-// la ruta NotFound siempre tiene que quedar ultima si creas otras otra
+// la ruta NotFound siempre tiene que quedar ultima si creas otras otras
 export default App;

@@ -75,6 +75,10 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  expiredLogin: {
+    type: Number,
+    default: 0
+  }
 });
 
 userSchema.statics.encryptPassword = async (password) => {

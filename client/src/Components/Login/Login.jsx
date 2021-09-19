@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { Container, Button } from "@material-ui/core";
@@ -10,8 +11,11 @@ import style from "./Login.module.css";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import swal from "sweetalert";
+import checkLogin from "../../actions/checkLogin";
 
 export default function Login() {
+
+  const productReducer = useSelector(state => state.productReducer)
   const history = useHistory();
   const dispatch = useDispatch();
   const onSubmit = (data) => {
@@ -21,6 +25,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [erroMessage, setErrorMessage] = useState("");
+
 
   function responseGoogle(respuesta) {
     if (respuesta.profileObj) {
@@ -39,6 +44,8 @@ export default function Login() {
       }, 2500);
     }
   }
+
+
 
   function responseFacebook(respuesta) {
     console.log('ESTA ES LA RESPUESTA',respuesta)
@@ -67,7 +74,6 @@ export default function Login() {
         password,
       });
       
-
       dispatch(stateLogin());
 
       swal({
@@ -150,6 +156,9 @@ export default function Login() {
             <Button variant="contained" color="secondary" type="submit">
               Login
             </Button>
+            <div className={style.link}>
+            <Link to="/login/reset">¿Olvidaste tu contraseña?</Link>
+            </div>
             <div className={style.link}>
             <Button
             id='button'

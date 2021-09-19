@@ -41,7 +41,7 @@ const getProducts = async (req, res, next) => {
 };
 
 const createProduct = async (req, res) => {
-  console.log("QUE PASAAAAAA: ", req.body);
+  
   try {
     await Product.insertMany(req.body);
     res.status(200).send("productos creados ok");
@@ -315,7 +315,7 @@ const logUp = async (req, res) => {
     const saveUser = await newUser.save();
     const token = jwt.sign(
       { id: saveUser._id },
-      `${process.env.JWT_SECRET_KEY}` /* 'secret' */,
+      /* `${process.env.JWT_SECRET_KEY}` */ 'secret',
       {
         expiresIn: 3600, //una hora expira el token
       }
@@ -350,6 +350,10 @@ const logIn = async (req, res) => {
     }
   );
 
+  userFound.expiredLogin = userFound.expiredLogin + 1
+
+  await userFound.save()
+
   res.json({ token });
 };
 
@@ -360,7 +364,7 @@ const updateUser = async (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      password: req.body.password,
+      password: await User.encryptPassword(req.body.password),
       phone: req.body.phone,
       discount: req.body.discount,
       address_line1: req.body.address_line1,
@@ -455,18 +459,19 @@ const resetPassword = async (req, res) => {
     }
     const token = buffer.toString('hex')
 
-    const user = User.findOne({ email: req.body.email })
-    console.log('ESTE ES EL USER', user)
+    const user = await User.findOne({ email: req.body.email })
+    
     if(!user) {
       return res.status(422).json({message: 'No hay ningún usuario registrado con ese email'})
     }
     user.resetToken = token
-    user.expireTiken = Date.now() + 3600000
-    /* const userSave = await user.save() */
-    /* console.log('ESTE ES EL EMAIL',user.email) */
-    const verificationLink = `http://localhost:3000/user/resetPassword/${token}`
+    user.expireToken = Date.now() + 3600000
+
+    await user.save()
+    
+    const verificationLink = `http://localhost:3000/login/resetPassword/${token}`
       await transporter.sendMail({
-        to: req.body.email,
+        to: user.email,
         from: 'supermarkethenry@gmail.com',
         subject: 'Password reset',
         html: `<p>You requested for password reset</p>
@@ -480,10 +485,45 @@ const resetPassword = async (req, res) => {
  }
 }
 
+const confirmPassword = async (req, res) => {
+  
+  const { token } = req.params
+  const { password } = req.body
+  try {
+    const user = await User.findOne({resetToken: token})
+    
+  if(!user) {
+    return res.status(422).json({message: 'El enlace no es correcto'})
+  }
+  
+  user.password = await User.encryptPassword(password)
+  await user.save()
+
+  res.send(200).json({message: 'Su contraseña ha sido modificada con éxito'})
+
+  } catch(error) {
+    console.log('Error al cambiar la contraseña')
+  }
+}
+
 const setSubscription = (req, res) => {
 
 }
 
+const checkLogin = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email })
+  
+  if(!user) {
+    return res.status(422).json({message: 'Usuario no encontrado'})
+  } else {
+    res.sendStatus(200)
+  }
+  } catch(error) {
+    console.log('Error en la solicitud de usuario')
+  }
+  
+}
 
 module.exports = {
   getProducts,
@@ -509,7 +549,9 @@ module.exports = {
   getReviewById,
   productStock,
   resetPassword,
-  setSubscription
+  setSubscription,
+  confirmPassword,
+  checkLogin
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

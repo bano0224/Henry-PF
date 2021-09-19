@@ -10,11 +10,13 @@ export const URL_DELETE_PRODUCT = 'http://localhost:5000/product/delete/'
 
 //USERS
 export const URL_GET_USERS = 'http://localhost:5000/user'
+export const URL_CHECK_LOGIN = 'http://localhost:5000/user/checkLogin'
 export const URL_SET_LOGIN = 'http://localhost:5000/user/login'
 export const URL_UPDATE_USER = 'http://localhost:5000/user/update/'
 export const URL_DELETE_USER = 'http://localhost:5000/user/delete/'
 export const URL_GET_USER_ID = 'http://localhost:5000/user/'
 export const URL_SET_SUBSCRIPTION = 'http://localhost:5000/user/subscription'
+export const URL_RESET_PASSWORD = 'http://localhost:5000/user/resetPassword'
 
 //ROLES
 export const URL_GET_ROLES = 'http://localhost:5000/role'

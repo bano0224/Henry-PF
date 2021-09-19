@@ -19,6 +19,7 @@
     "fetch": "^1.1.0",
     "firebase": "8.2.4",
     "formik": "^2.2.9",
+    "jsonwebtoken": "^8.5.1",
     "material-ui-dropzone": "^3.5.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",

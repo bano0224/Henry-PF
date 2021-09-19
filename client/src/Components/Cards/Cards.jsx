@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import checkLogin from "../../actions/checkLogin";
 import getProducts from "../../actions/getProducts";
-
+import jwt from "jsonwebtoken";
 import Card from "../Card/Card";
 import style from "./Cards.module.css";
 
@@ -9,11 +10,8 @@ import style from "./Cards.module.css";
 
 
 export default function Cards({currentProducts}) {
-  const dispatch = useDispatch();
-  console.log('CURRENT', currentProducts)
-  
-  const lengthProd = currentProducts.length
-  
+  const dispatch = useDispatch(); 
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
