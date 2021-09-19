@@ -17,8 +17,8 @@ const orderSchema = new Schema({
     }]
   },
   user: {
-    type: String,
-    required: true,
+    ref: 'User',
+    type: Schema.ObjectId
   },
   address1: {
     type: String,

@@ -27,6 +27,5 @@ export const SET_LOADING = 'SET_LOADING';
 export const GET_REVIEWS = 'GET_REVIEWS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const RESET_ERROR = 'RESET_ERROR';
+export const GET_ORDER_BY_USER = 'GET_ORDER_BY_USER';
 
-export const RESET_ERROR = 'RESET_ERROR'
-export const GET_ORDER_BY_USER = 'GET_ORDER_BY_USER'

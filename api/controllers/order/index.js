@@ -1,9 +1,18 @@
 const Order = require("../../models/Order");
 
 
+const getOrders = async(req, res) => {
+    try {
+        const orders = await Order.find({})
+        console.log(orders);
+        res.status(200).json(orders)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const createOrder = async(req, res) => {
     try {
-        console.log("BOOODY",req.body);
         await Order.insertMany(req.body);
         
         res.status(200).send("orden creada");
@@ -23,5 +32,6 @@ const getOrderByUser = async (req, res) => {
 
 module.exports = {
     createOrder,
-    getOrderByUser
+    getOrderByUser,
+    getOrders
 }
