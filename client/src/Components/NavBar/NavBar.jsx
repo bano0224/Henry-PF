@@ -133,11 +133,6 @@ export default function NavBar() {
     setAnchorEl(null);
   };
 
-  const handleUserDetail = () => {
-    dispatch(getUserById(decoded.id))
-    history.push('/user/profile')
-  }
-
   const handleLogout = () => {
     sessionStorage.removeItem("token")
     swal({
@@ -235,7 +230,7 @@ export default function NavBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={() => {handleUserDetail()}}>Perfil</MenuItem>
+                <MenuItem component={Link} to='/user/profile'>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
             </div>
