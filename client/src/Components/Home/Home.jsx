@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import s from "./Home.module.css";
@@ -9,8 +9,7 @@ import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
 import Search from "../Search/Search";
 import landing from '../../media/landing.mp4'
 import ChangeOrder from '../Filter/ChangeOrder/ChangeOrder'
-import Container from '@material-ui/core/Container';
-import clsx from 'clsx';
+import getProducts from "../../actions/getProducts";
 
 export default function Home() {
   const productReducer = useSelector((state) => state.productReducer)
@@ -19,6 +18,11 @@ export default function Home() {
   const [productsPerPage, setProductsPerPage] = useState(9);
   const lastIndex = currentPage * productsPerPage;
   const firstIndex = lastIndex - productsPerPage;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
 
   const currentProducts = products.slice(firstIndex, lastIndex);
 

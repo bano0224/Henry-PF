@@ -16,7 +16,7 @@ export default function ChangeOrder(props) {
   return (
     <div id="filter">
       {/* {props.products.length ? <label></label> : null} */}
-      {products.length ? (
+      
         <div class="mb-2">
           <label for="exampleFormControlInput1" class="form-label">
             Orden
@@ -34,7 +34,6 @@ export default function ChangeOrder(props) {
             <option value="min">Precios Más Bajos</option>
           </select>
         </div>
-      ) : null}
     </div>
   );
 }

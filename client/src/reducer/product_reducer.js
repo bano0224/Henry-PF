@@ -38,6 +38,7 @@ export default function productReducer(state = initialState, action) {
             }
 
         case actionConst.GET_PRODUCT_BY_QUERY:
+          console.log('REDUCER',action.payload);
             return {
                 ...state,
                 products: action.payload,

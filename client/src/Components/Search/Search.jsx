@@ -15,8 +15,7 @@ export default function Search() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(getProductByQuery(input));
-    setInput({
-    }) 
+    setInput("") 
   }
 
 
@@ -31,7 +30,7 @@ export default function Search() {
                 onChange={(e) => handleChange(e)}
                 value={input.name}
                 type="text"
-                class="form-control"
+                class="form-control inputFrom"
                 id="exampleFormControlInput1"
                 name="name"
               />
