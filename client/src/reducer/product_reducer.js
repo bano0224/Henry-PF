@@ -14,7 +14,8 @@ export const initialState = {
     userDetail: [],
     roles: [],
     login: false,
-    error: []
+    error: [],
+    orderByUser: []
 };
 
 export default function productReducer(state = initialState, action) {
@@ -175,6 +176,13 @@ export default function productReducer(state = initialState, action) {
               ...state,
               users: action.payload
             }
+
+        case actionConst.GET_ORDER_BY_USER:
+          return {
+              ...state,
+              orderByUser: action.payload
+          }
+              
 
         case actionConst.GET_USER_BY_ID:
           return {

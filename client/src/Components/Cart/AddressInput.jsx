@@ -10,23 +10,22 @@ import TextField from '@material-ui/core/TextField';
         const isError = false;
     return (
         <>
-                
-                <Grid item xs={12} sm={6 }> 
-                    <Controller 
-                        name={name}
-                        control={control} 
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                fullWidth
-                                label={label}
-                                defaultValue=""
-                                required
+            <Grid item xs={12} sm={6 }> 
+                <Controller 
+                    name={name}
+                    control={control} 
+                    render={({ field }) => (
+                        <TextField
+                            {...field}
+                            fullWidth
+                            label={label}
+                            defaultValue=""
+                            required
 
-                            />
-                        )}
-                    />    
-                </Grid>
+                        />
+                    )}
+                />    
+            </Grid>
         </>
     )
 }

@@ -23,6 +23,7 @@ import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory
 import AdminModifyUser from "./components/AdminDashboard/AdminModifyUser/AdminModifyUser";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout";
+import UserProfile from "./components/userProfile/userProfile";
 function App() {
   return (
     <BrowserRouter>
@@ -47,7 +48,7 @@ function App() {
         <PrivateRoute exact path="/admin/users" component={AdminUsers} />
         <PrivateRoute exact path="/admin/categories/:id" component={AdminModifyCategory} />
         <PrivateRoute exact path="/admin/users/:id" component={AdminModifyUser}/>
-
+        <Route path='/user/profile' component={UserProfile} />
         <Route path='*' component={NotFound} />
       </Switch>
     </BrowserRouter>

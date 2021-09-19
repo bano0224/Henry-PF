@@ -60,7 +60,6 @@ const getUsers = async (req, res) => {
   const {email } = req.query;
   try {
     if (email) {
-      console.log(req.query);
       let userFind = await User.find({
         email: { $regex: email, $options: "i" },
       }).populate("order", {status: 1});

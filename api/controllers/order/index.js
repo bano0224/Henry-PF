@@ -13,4 +13,15 @@ const createOrder = async(req, res) => {
     }
 }
 
-module.exports = {createOrder}
+const getOrderByUser = async (req, res) => {
+    const {id} = req.params
+
+    const orders = await Order.find({ user: id})
+
+    res.status(200).json(orders)
+}
+
+module.exports = {
+    createOrder,
+    getOrderByUser
+}
