@@ -156,8 +156,11 @@ export default function CartScreen() {
 
                                     </Grid>
                                     <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
-                                        <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
-                                       
+                                        {
+                                            cartItems?.length
+                                            ? <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                            : <Button type="submit" disabled variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                        }
                                     </div>
                                 </Grid>
                             </Paper>

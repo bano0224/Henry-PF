@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Review from './Review'
-import {Typography, Grid, Divider, Button} from '@material-ui/core';
+import {Typography, Grid, Divider, Button, CircularProgress, Box} from '@material-ui/core';
 import { Elements, CardElement, useStripe,useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import addToCart from '../../actions/cart/addToCart';
@@ -148,9 +148,15 @@ const CheckoutForm =({backStep, nextStep})=>{
             <CardElement options={CARD_ELEMENTS_OPTIONS}/>
             <div style={{display: "flex", justifyContent:"space-between", marginTop:"1rem"}}>
             <Button variant='outlined' onClick={backStep}>Back</Button>
-            <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
+            {
+                processing
+                ? <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                </Box>
+                : <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
+            }
+            
             </div>
-
         </form>
         </> 
     )  
