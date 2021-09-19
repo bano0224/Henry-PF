@@ -26,3 +26,5 @@ export const URL_DELETE_CATEGORY = 'http://localhost:5000/category/delete/';
 export const URL_MODIFY_CATEGORY = 'http://localhost:5000/category/update'
 
 export const URL_CREATE_VIEWERS = 'http://localhost:5000/viewers/create'
+
+export const URL_ORDER_CREATE = 'http://localhost:5000/order/create'

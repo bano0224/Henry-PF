@@ -3,8 +3,8 @@ const { Schema, model } = require("mongoose");
 const orderSchema = new Schema({
   status: {
     type: String,
-    enum: ["Aprobada", "Cancelada", "pendiente", "Finalizada"],
-    default: 'pendiente',
+    enum: ["Aprobada", "Cancelada", "Pendiente", "Finalizada"],
+    default: 'Pendiente',
     required: true
   },
   products: {
@@ -17,10 +17,10 @@ const orderSchema = new Schema({
     }]
   },
   user: {
-      type: Schema.ObjectId,
-      ref: 'User',
+    type: String,
+    required: true,
   },
-  shippingAddress: {
+  address1: {
     type: String,
     required: true,
   },
@@ -28,7 +28,7 @@ const orderSchema = new Schema({
     type: String,
     required: true,
   },
-  zip: {
+  postCode: {
       type: String,
       required: true,
   },

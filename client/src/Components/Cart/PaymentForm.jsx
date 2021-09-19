@@ -13,6 +13,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import accounting from "accounting";
 import axios from 'axios';
 import swal from "sweetalert";
+import createOrder from '../../actions/cart/createOrder';
+import jwt from 'jsonwebtoken'
+
 
 const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
 const CARD_ELEMENTS_OPTIONS={
@@ -36,19 +39,36 @@ const CARD_ELEMENTS_OPTIONS={
     },
 };
 const CheckoutForm =({backStep, nextStep})=>{
+    const dispatch = useDispatch()
     const history = useHistory();
     const [processing, setProcessing] = useState('');
     const [error, setError] = useState(null);
     const [succeeded, setSucceeded] = useState(false);
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
+
     const getSubtotal=()=>{
         return  cartItems
                 .reduce((price,item)=> price + item.price * parseInt(item.qty), 0)
         }
     const stripe = useStripe(); 
     const elements = useElements();    
-    
+    const {shippingData} = cartReducer
+    const key = JSON.parse(sessionStorage.getItem("token"))?.token
+    if(key){
+    const decoded = jwt.verify(key, 'secret')
+    var id = (decoded.id)
+    }
+
+    const order = {
+        address1: shippingData.address1,
+        city: shippingData.city,
+        postCode: shippingData.postCode,
+        user: id,
+        products: cartItems,
+        totalPrice: getSubtotal()
+    }
+
     // let axiosConfig = {
     //     headers: {
     //         'Content-Type': 'application/json;charset=UTF-8',
@@ -59,6 +79,10 @@ const CheckoutForm =({backStep, nextStep})=>{
     const handleSubmit = async (e)=>{
         e.preventDefault();
         setProcessing(true);
+        dispatch(createOrder(order)) 
+
+
+
         // devuelve error y paymethod
         const {error, paymentMethod}= await stripe.createPaymentMethod({
             type:"card",
