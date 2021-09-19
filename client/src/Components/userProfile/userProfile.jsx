@@ -1,13 +1,25 @@
 import React, { useEffect } from 'react'
 import NavBar from '../NavBar/NavBar'
 import {Grid} from '@material-ui/core'
+import { makeStyles, Accordion, AccordionSummary, Typography, AccordionDetails, Divider } from '@material-ui/core'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useDispatch, useSelector } from 'react-redux'
 import getOrderByUser from '../../actions/order/getOrderByUser'
 import jwt from 'jsonwebtoken'
 import getUserById from "../../actions/users/getUserById";
+import ProductItem from './productItem'
+
+//Style
+const useStyles = makeStyles((theme) => ({
+    name: {
+      textTransform: 'capitalize',
+    },
+
+}));
 
 
 export default function UserProfile(props) {
+    const classes = useStyles();
     const productReducer = useSelector(state => state.productReducer)
     const {userDetail, orderByUser} = productReducer
     const dispatch = useDispatch()
@@ -34,18 +46,43 @@ export default function UserProfile(props) {
                     <NavBar />
                     <br />
                 </Grid>
-                <Grid item xs={12} justifyContent='center'>
-                    <Grid container direction='row' xs={10}>
-                        <Grid item xs={3}>
-                            <span>Ordenes:</span>
-                            <ul>
-                                {
-                                    orderByUser?.map(o => <li>{o._id}</li>)
-                                }
-                            </ul>
+                <Grid container xs={12} justifyContent='center' alignItems='center'>
+                    <Grid container item direction='column' xs={10}>
+                        <Grid item xs={12}>
+                            <h1 className={classes.name}>{`${userDetail.firstName} ${userDetail.lastName}`}</h1>
                         </Grid>
-                        <Grid item xs={9}>
-                            <h1>{`${userDetail.firstName} ${userDetail.lastName}`}</h1>
+                        <hr />
+                        <Grid item xs={12}>
+                            <h5>Ordenes:</h5>
+                            {
+                                orderByUser?.map(o => {
+                                    return (
+                                        <Accordion>
+                                            <AccordionSummary
+                                            expandIcon={<ExpandMoreIcon />}
+                                            aria-controls="panel1a-content"
+                                            id="cart"
+                                            >
+                                                <Typography className={classes.heading} id="cart">Orden #{o._id}</Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Grid container direction='column' spacing={2}>
+                                                    {o.products?.map(product => (
+                                                            <>
+                                                                <ProductItem
+                                                                product={product}
+                                                                />
+                                                                <Divider />
+                                                            </>
+                                                    ))}
+                                                </Grid>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                    )
+                                })
+                            }
+                            
+                            
                         </Grid>
                     </Grid>
                 </Grid>

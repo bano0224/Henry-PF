@@ -67,7 +67,7 @@ const CheckoutForm =({backStep, nextStep})=>{
         postCode: shippingData.postCode,
         user: id,
         products: cartItems,
-        totalPrice: getSubtotal()
+        totalPrice: getSubtotal(),
     }
 
     useEffect(() => {
