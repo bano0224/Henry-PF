@@ -7,10 +7,13 @@ import NavBar from "../NavBar/NavBar";
 import style from "./Login.module.css";
 import GoogleLogin from "react-google-login";
 import swal from "sweetalert";
+import checkLogin from "../../actions/checkLogin";
 import login from "../../actions/users/login";
 import resetError from "../../actions/users/resetError";
 
 export default function Login() {
+
+  const productReducer = useSelector(state => state.productReducer)
   const history = useHistory();
   const dispatch = useDispatch();
   const [userLogin, setUserlogin] = useState({
@@ -41,6 +44,25 @@ export default function Login() {
       }, 2500);
     }
   }
+
+  /* function responseFacebook(respuesta) {
+    console.log('ESTA ES LA RESPUESTA',respuesta)
+    if (respuesta.accesToken) {
+      dispatch(dispatch(stateLogin()));
+
+      swal({
+        title: "Bienvenida/o",
+        text: "Disfrutá de las mejores ofertas!",
+        icon: "success",
+        buttons: false,
+        timer: 2000,
+      });
+
+      setTimeout(() => {
+        history.push("/");
+      }, 2500);
+    }
+  } */
 
   //LOGIN
   const handleChange = (e) => {
@@ -127,6 +149,9 @@ export default function Login() {
             <Button variant="contained" color="secondary" type="submit">
               Login
             </Button>
+            <div className={style.link}>
+            <Link to="/login/reset">¿Olvidaste tu contraseña?</Link>
+            </div>
             <div className={style.link}>
             <Button
             id='button'

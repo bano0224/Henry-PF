@@ -21,6 +21,7 @@ export default function Reviews({id}) {
     rating:"",
     product: id
   });
+
   
   function handleChange(e) {
     setInput({

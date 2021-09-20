@@ -14,6 +14,8 @@ export const initialState = {
     userDetail: [],
     roles: [],
     login: false,
+    promociones: false,
+    checkLogin: [],
     error: [],
     orderByUser: []
 };
@@ -70,6 +72,13 @@ export default function productReducer(state = initialState, action) {
             ...state,
             login: false
             }
+
+        case actionConst.CHECK_LOGIN:
+          console.log('ESTOY ENTRANDO AL REDUCER')
+          return {
+            ...state,
+            checkLogin: action.payload
+          }
 
         case actionConst.FILTER_BY_CATEGORY: 
             const allProducts = state.clearProducts;

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useParams } from "react";
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NavBar() {
-
+  
   const dispatch = useDispatch();
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
