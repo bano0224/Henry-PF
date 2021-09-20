@@ -24,7 +24,8 @@ export default function Home() {
     dispatch(getProducts());
   }, []);
 
-  const currentProducts = products.slice(firstIndex, lastIndex);
+  const inStock = products.filter(p => p.countInStock > 1)
+  const currentProducts = inStock.slice(firstIndex, lastIndex);
   
 
   const paginate = (pageNumber) => {

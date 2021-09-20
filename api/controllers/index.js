@@ -295,7 +295,7 @@ const logUp = async (req, res) => {
       lastName,
       email,
       password: await User.encryptPassword(password),
-      role: [{ _id: "613b80dc8317c3f59f461b67" }],
+      role: [{ _id: "6138eb1ba01acaa7a0649d97" }],
     });
 
     const saveUser = await newUser.save();
