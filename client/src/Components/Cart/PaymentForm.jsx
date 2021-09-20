@@ -40,13 +40,14 @@ const CARD_ELEMENTS_OPTIONS={
     },
 };
 const CheckoutForm =({backStep, nextStep})=>{
+    const dispatch = useDispatch()
     const history = useHistory();
-    const dispatch = useDispatch();
     const [processing, setProcessing] = useState('');
     const [error, setError] = useState(null);
     const [succeeded, setSucceeded] = useState(false);
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
+
     const getSubtotal=()=>{
         return  cartItems
                 .reduce((price,item)=> price + item.price * parseInt(item.qty), 0)
@@ -91,7 +92,7 @@ const CheckoutForm =({backStep, nextStep})=>{
         const {error, paymentMethod}= await stripe.createPaymentMethod({
             type:"card",
             card: elements.getElement(CardElement)  
-        })
+        } )
     
             if(error){
                 setError(`Payment failed ${error.message}`);
@@ -102,12 +103,13 @@ const CheckoutForm =({backStep, nextStep})=>{
                 try{
                 const { data } = await axios.post("http://localhost:5000/checkout/create",
                     {  id: id, amount: getSubtotal(),  } );
+                    console.log(data)
                 
                 setError(null);
                 setProcessing(false);
                 setSucceeded(true);
-                dispatch(productStock(filterIdQty))
-                /* if(data == 'succeeded') {
+                
+                if(data == 'succeeded') {
                 swal({
                     title: "Tu pago fue realizado con éxito",
                     icon: "success",
@@ -126,7 +128,7 @@ const CheckoutForm =({backStep, nextStep})=>{
                         buttons: false,
                         timer: 3000,
                       });
-                } */
+                }
                 // elements.getElement(CardElement).clear();
                 // nextStep();   
                 
@@ -136,11 +138,7 @@ const CheckoutForm =({backStep, nextStep})=>{
               }
     }    
 
-    /* const handleStock = (e) => {
-        console.log('ESTE ES EL EVENTO',e)
-        e.preventDefault()
-        dispatch(productStock(e))
-    } */
+    
         
       
 
@@ -178,4 +176,6 @@ export default function PaymentForm({backStep, nextStep}) {
     </React.Fragment>
   );
 }
+
+
 
