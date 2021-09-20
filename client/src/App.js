@@ -26,6 +26,8 @@ import Confirm from './components/Login/Confirm';
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout";
 import UserProfile from "./components/UserProfile/UserProfile";
+import Promotions from "./components/Promotions/Promotions";
+
 function App() {
   return (
     <BrowserRouter>
@@ -49,7 +51,8 @@ function App() {
         <Route exact path="/login/resetPassword/:token" render={({ match }) => <Confirm id={match.params.id}/>}></Route>
         <Route exact path='/cart' component={ScreenCart} />
         <Route exact path='/cart/addressform' component={AddressForm} />
-        <Route exact path='/cart/confirmation' component={Confirmation} /> 
+        <Route exact path='/cart/confirmation' component={Confirmation} />
+        <Route exact path='/promotions' component={Promotions} />
         <PrivateRouteCheckout exact path='/cart/checkout' component={Checkout} /> 
         <PrivateRoute exact path="/admin" component={AdminNav} />
         <PrivateRoute exact path="/admin/products" component={AdminProduct} />
