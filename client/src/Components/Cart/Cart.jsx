@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-export default function Cart({item, handlerQty, handlerRemove}) {
+export default function Cart({item, handlerQty, handlerRemove, value}) {
     const classes = useStyles();
     
     return (
@@ -39,7 +39,7 @@ export default function Cart({item, handlerQty, handlerRemove}) {
                     <Grid item>
                         <Grid container direction='row' justifyContent='space-between' alignItems='center' spacing={1}>
                             <Grid item>
-                                <input type='number' min='1' max={`${item.countInStock}`} onChange={e=>handlerQty(item._id, e.target.value)} />
+                                <input type='number' value={value} min='1' max={`${item.countInStock}`} onChange={e=>handlerQty(item._id, e.target.value)} />
                             </Grid>
                             <Grid>
                                 <IconButton aria-label="delete" className={classes.margin} onClick={()=>{handlerRemove(item._id)}}>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Cart from "./Cart";
 import { makeStyles } from "@material-ui/core/styles";
@@ -54,8 +54,10 @@ export default function CartScreen() {
   const { cartItems } = cartReducer;
   const productReducer = useSelector((state) => state.productReducer);
   const { login } = productReducer;
+  const [value, setValue] = useState(1)
 
   const handlerQty = (id, qty) => {
+    setValue(qty)
     dispatch(addToCart(id, qty));
   };
 
@@ -120,7 +122,8 @@ export default function CartScreen() {
                                                 key={item._id}
                                                 item={item}
                                                 handlerQty= {handlerQty}
-                                                handlerRemove={handlerRemove} 
+                                                handlerRemove={handlerRemove}
+                                                value={value} 
                                                 />
                                                 <Divider />
                                             </>
