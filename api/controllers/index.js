@@ -25,9 +25,8 @@ const getProducts = async (req, res, next) => {
       if (productFind.length) {
         res.status(200).json(productFind);
       } else {
-        res
-          .status(200)
-          .json([{ error: "No se encontró el producto solicitado" }]);
+        res.status(200).json([]);
+        
       }
     } else {
       const productFind = await Product.find({}).populate("category", {
@@ -41,7 +40,6 @@ const getProducts = async (req, res, next) => {
 };
 
 const createProduct = async (req, res) => {
-  
   try {
     await Product.insertMany(req.body);
     res.status(200).send("productos creados ok");
@@ -64,10 +62,9 @@ const getUsers = async (req, res) => {
   const { email } = req.query;
   try {
     if (email) {
-      console.log(req.query);
       let userFind = await User.find({
         email: { $regex: email, $options: "i" },
-      }).populate("role", { name: 1 });
+      }).populate("order", {status: 1});
       if (userFind.length) {
         res.status(200).json(userFind);
       } else {
@@ -87,7 +84,6 @@ const getUsers = async (req, res) => {
 };
 const getUserById = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const userId = await User.findById(id).populate("role", {
       name: 1,
@@ -143,21 +139,10 @@ const removeProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const { id } = req.params
   try {
-    if (id) {
-      const {
-        name,
-        price,
-        description,
-        countInStock,
-        imageUrl,
-        featured,
-        discount,
-        category,
-      } = req.body;
-      
-      const product = await Product.findById(id);
+    if (req.params.id) {
+      const { name, price, description, countInStock, imageUrl, featured, discount, category } = req.body;
+      const product = await Product.findById(req.params.id);
       product.name = name;
       product.price = price;
       product.description = description;
@@ -174,13 +159,14 @@ const updateProduct = async (req, res) => {
       res.status(404).send("El producto no fue encontrado");
     }
   } catch (err) {
-    return err;
+    console.log(err);
   }
 };
 
 const modifiedCategory = (idProducto, idCategory) => {
   const product = Product.findById({ idProducto }).stringify();
   const category = product.category;
+
 
   category.includes(idCategory) ? category : category.push(idCategory);
 };
@@ -333,27 +319,18 @@ const logIn = async (req, res) => {
     { name: 1 }
   );
 
-  if (!userFound)
-    return res.status(400).json({ message: "El usuario no existe" });
+  if (!userFound) return res.status(404).json({ message: "El usuario o la contraseña son inválidos" });
 
-  const matchPassword = await User.matchPassword(
-    req.body.password,
-    userFound.password
-  );
-  if (!matchPassword)
-    return res.status(401).json({ token: null, message: "Invalid password" });
-  const token = jwt.sign(
-    { id: userFound._id },
-    `${process.env.JWT_SECRET_KEY}`,
-    {
-      expiresIn: 3600,
-    }
-  );
+  const matchPassword = await User.matchPassword(req.body.password, userFound.password);
+  
+  if (!matchPassword) return res.status(401).json({ message: "El usuario o la contraseña son inválidos" });
+    
+  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 3600});
 
   userFound.expiredLogin = userFound.expiredLogin + 1
 
   await userFound.save()
-
+  
   res.json({ token });
 };
 

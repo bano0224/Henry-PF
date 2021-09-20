@@ -128,9 +128,9 @@ export default function AdminModifyProduct({ match }) {
             <br />
             <Container maxWidth='md'>
                 <Breadcrumbs aria-label="breadcrumb">
-                    <Link color="secondary" to="/admin/categories" id='bread'>
+                    <Link color="secondary" to="/admin/products" id='bread'>
                     <CategoryIcon className={classes.icon} />
-                        Categorías
+                        Productos
                     </Link>
                     <Typography color="textPrimary">Crear nuevo producto</Typography>
                 </Breadcrumbs>

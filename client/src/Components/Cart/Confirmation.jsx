@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Confirmation.css'
 import NavBar from '../../components/NavBar/NavBar'
 import {Grid} from '@material-ui/core'
 
+
+
 const Confirmation = () => {
+   
     return (
         <Grid container xs={12}>
         <NavBar/>

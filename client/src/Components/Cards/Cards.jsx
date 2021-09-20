@@ -10,18 +10,8 @@ import style from "./Cards.module.css";
 
 
 export default function Cards({currentProducts}) {
-  const dispatch = useDispatch(); 
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
-
-  /* function handleDelete () {
-    dispatch(DelFromCart())
-  } */
-/*   function handleUp () {
-    dispatch(AddToCart())
-  } */
+  const lengthProd = currentProducts.length
+  
 
   return (
 

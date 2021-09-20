@@ -2,18 +2,13 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { Avatar, Button, TextField, Grid, Typography, Container, Paper }from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { CssBaseline } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
 import style from "./Logup.module.css";
 import setLogup from "../../actions/setLogup";
-import AdminLogin from "./AdminLogin/AdminLogin";
+import NavLogup from "./NavLogup";
 import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +71,7 @@ export default function Logup() {
 
   return (
     <div className={style.container}>
-      <AdminLogin />
+      <NavLogup/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -105,10 +100,6 @@ export default function Logup() {
                   {errors.firstName?.type === "required" &&
                     "Se requiere un nombre"}
                 </span>
-                {/* <span className="text-danger text-small d-block mb-2">
-                  {errors.firstName?.type === "minLength" &&
-                    "Se requiere un nombre"}
-                </span> */}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -187,7 +178,7 @@ export default function Logup() {
           href="/login"
         >
           Ya tenés una cuenta? Login...
-        </Button>
+        </Button> 
         <p class="warnings" id="warnings"></p>
       </Container>
     </div>

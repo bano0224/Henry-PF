@@ -15,14 +15,15 @@ export const initialState = {
     roles: [],
     login: false,
     promociones: false,
-    checkLogin: []
+    checkLogin: [],
+    error: [],
+    orderByUser: []
 };
 
 export default function productReducer(state = initialState, action) {
     switch (action.type) {
   
         case actionConst.CREATE_PRODUCT:
-          console.log('REDUCER')
             return {
                 ...state,
                 // products: [...state.products, action.post]
@@ -41,7 +42,7 @@ export default function productReducer(state = initialState, action) {
             return {
                 ...state,
                 products: action.payload,
-            }
+            } 
 
         case actionConst.GET_PRODUCT_BY_ID:
             return {
@@ -184,6 +185,13 @@ export default function productReducer(state = initialState, action) {
               users: action.payload
             }
 
+        case actionConst.GET_ORDER_BY_USER:
+          return {
+              ...state,
+              orderByUser: action.payload
+          }
+              
+
         case actionConst.GET_USER_BY_ID:
           return {
             ...state,
@@ -201,6 +209,18 @@ export default function productReducer(state = initialState, action) {
           return {
             ...state,
             roles: action.payload
+          }
+
+        case actionConst.LOGIN_ERROR:
+          return {
+            ...state,
+            error: action.payload
+          }
+
+        case actionConst.RESET_ERROR:
+          return {
+            ...state,
+            error: []
           }
 
         default: 

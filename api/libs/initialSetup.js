@@ -12,7 +12,6 @@ const categoryRoles = async () => {
       new Role({ name: "moderator" }).save(),
     ]);
   
-    console.log(roles)
   } catch (err) {
       return err
   }
