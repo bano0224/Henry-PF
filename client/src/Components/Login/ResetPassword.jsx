@@ -17,8 +17,7 @@ import swal from "sweetalert";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import NavBar from "../NavBar/NavBar";
-// import { Link } from 'react-router-dom';
-// import { Formik } from 'formik';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,13 +60,6 @@ const validationShema = yup.object({
       
     });
 
-//   function validate(input) {   
-
-//   let errors = {},
-//   if(input.txtemail1 != txtemail2) {
-//     errors.txtemail = ("El email no coincide")
-//   } 
-// }
   export default function ResetPassword() {
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -84,11 +76,7 @@ const validationShema = yup.object({
   const [input, setInput] = useState({
     email: ""
   });
-  const [text, setText] = useState({
-    email2: ""
-  });
 
-  // console.log('ESTE ES EL INPUT',input)
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -97,18 +85,17 @@ const validationShema = yup.object({
     }
     );
   }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(resetPassword(input));
       swal({
-        title: "Felicidades",
+        title: "Tu contraseña ha sido reseteada",
         text: "Validamos tu mail, revisa tu correo",
         icon: "success",
         buttons: false,
-        timer: 4000,
+        timer: 3000,
       });
-      /* history.push("/login/reset/confirm"); */
+      
   }
 
   return (
@@ -142,22 +129,6 @@ const validationShema = yup.object({
           >
             Email
           </TextField>
-          <TextField
-            color="secondary"
-            variant="outlined"
-            margin="normal"
-            type="email"
-            required
-            fullWidth
-            id="txtemail2"
-            name="confirmar email"
-            value={text.email2}
-            onChange={(e) => handleChange(e)}
-            label="Confirmar Email"
-          >
-            Confirmar Email
-          </TextField>
-
           <Button
             variant="contained"
             fullWidth

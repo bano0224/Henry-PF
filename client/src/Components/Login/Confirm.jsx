@@ -37,16 +37,9 @@ const useStyles = makeStyles((theme) => ({
     },
     }));
 
-    const validationShema = yup.object({
-        email: yup
-        .string("email")
-        .email("El email no es valido")
-        .required("Email requerido"),
-        newPassword: yup
-        .string("contraseña")
-        .required("la constraseña es requerida"),
-        
-    });
+    function validate(input) {
+      return input.password == input.password2
+    }
     
 
 export default function Confirm(){
@@ -54,37 +47,10 @@ export default function Confirm(){
   const {token} = useParams();
     const classes = useStyles();
     let history = useHistory();
-    const formik = useFormik({
-        initialValues: { email: "", newPassword: "" },
-        validationSchema: validationShema,
-        onSubmit: (values) => {
-            axios
-            
-            .then((res) => {
-                
-                swal({
-                    title: "Felicidades",
-                    text: "Se ah restablecido la contraseña",
-                    icon: "success",
-                    buttons: false,
-                    timer: 4000,
-                  });
-                history.push("/login")
-            })
-            .catch((error) => {
-                
-                swal({
-                    title: "Upss...",
-                    text: "La constraseña no es correcta",
-                    icon: "warning",
-                    buttons: false,
-                    timer: 4000,
-                  });
-            });
-        },
-    });
+    
     const [input, setInput] = useState({
-      password: ""
+      password: "",
+      password2: ""
     });
 
     const handleChange = (e) => {
@@ -95,9 +61,29 @@ export default function Confirm(){
     }
     const handleSubmit = (e) => {
       e.preventDefault()
-      axios.patch(`${URL_UPDATE_USER}${token}`, input)
-    }
+      if(validate(input)){
+      axios.patch(`${URL_UPDATE_USER}${token}`, input);
+      swal({
+        title: "Su contraseña fue actualizada",
+        text: "Recuerda cuidar tus credenciales",
+        icon: "success",
+        buttons: false,
+        timer: 2500,
+        
+      });
 
+      history.push('/login')
+      } else {
+        swal({
+          title: "La constraseña no coincide",
+          text: "Revisa los caracteres y vuelve a intentarlo",
+          icon: "error",
+          buttons: false,
+          timer: 2500,
+          
+        });
+      }
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -128,9 +114,9 @@ export default function Confirm(){
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="password2"
                 type="password"
-                value={input.password}
+                value={input.password2}
                 onChange={(e) => handleChange(e)}
                 label="Confirmar contraseña"
                 >
