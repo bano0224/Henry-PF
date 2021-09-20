@@ -141,6 +141,7 @@ export default function NavBar() {
       buttons: false,
       timer: 2000
     });
+    history.push('/')
   }
 
   return (
