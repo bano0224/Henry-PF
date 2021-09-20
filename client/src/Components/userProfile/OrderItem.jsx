@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-export default function ProductItem({product}) {
+export default function OrderItem({product}) {
     const classes = useStyles();
 
     return (
@@ -32,7 +32,7 @@ export default function ProductItem({product}) {
                 </Grid>
                 <Grid container xs={3} justifyContent='space-around' alignItems='center' direction='row'>
                     <Grid item>
-                        <span>{`${product.qty} u`}</span>
+                        <span>{`x${product.qty}`}</span>
                     </Grid>
                     <Grid item>
                         <span>${parseInt(product.price) * product.qty}</span>

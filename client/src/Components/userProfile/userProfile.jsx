@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import getOrderByUser from '../../actions/order/getOrderByUser'
 import jwt from 'jsonwebtoken'
 import getUserById from "../../actions/users/getUserById";
-import ProductItem from './productItem'
+import OrderItem from './OrderItem'
 
 //Style
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +29,7 @@ export default function UserProfile(props) {
     if(key){
         var decoded = jwt.verify(key, 'secret')
     }
-    console.log('DETAIL', userDetail._id);
+    
 
     useEffect(() => {
         dispatch(getUserById(decoded.id))
@@ -69,20 +69,28 @@ export default function UserProfile(props) {
                                                 <Grid container direction='column' spacing={2}>
                                                     {o.products?.map(product => (
                                                             <>
-                                                                <ProductItem
+                                                                <OrderItem
                                                                 product={product}
                                                                 />
-                                                                <Divider />
                                                             </>
                                                     ))}
+                                                    <Divider />
+                                                    <Grid container justifyContent='flex-end' alignItems='center' className={classes.container}>
+                                                        <Grid container xs={3} justifyContent='space-around' alignItems='center' direction='row'>
+                                                            <Grid item>
+                                                                <span>Total</span>
+                                                            </Grid>
+                                                            <Grid item>
+                                                                <span>{`$${o.products?.map(p => p.price).reduce((a,b) => a+b)}`}</span>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                             </AccordionDetails>
                                         </Accordion>
                                     )
                                 })
                             }
-                            
-                            
                         </Grid>
                     </Grid>
                 </Grid>
