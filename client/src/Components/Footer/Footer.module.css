@@ -1,0 +1,10 @@
+.menu {
+    background-color: #e9183b;
+    height:75px;
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #fff;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, .6);
+  }

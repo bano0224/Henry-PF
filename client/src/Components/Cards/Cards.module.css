@@ -1,0 +1,25 @@
+.cardsModule {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .cardsContainer {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 100px;
+    padding: 10px;
+  }
+  
+  .pagination {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .link {
+    text-decoration: none;
+  }

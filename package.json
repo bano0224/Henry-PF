@@ -1,9 +1,14 @@
 {
   "dependencies": {
     "@coreui/coreui": "^4.0.1",
-    "dotenv": "^10.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^6.0.3"
+    "mongoose": "^6.0.3",
+    "react-hook-form": "^7.15.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0",
+    "sweetalert": "^2.1.2",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",

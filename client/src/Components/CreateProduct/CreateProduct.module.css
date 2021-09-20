@@ -1,14 +1,14 @@
 .createproduct {
   background: (100deg, #00000057 30%, #0e0d0d 150%);
-  background-image: url("");
-  padding-left: 0;
-  padding-right: 0;
-  height: 100%;
+  background-image: url("https://wallpaperaccess.com/full/1624843.jpg");
+  position: fixed;
   width: 100%;
-  background-size: cover;
+  height: 100%;
+  margin: 0;
   background-position: center center;
-  background-repeat: no-repeat;
-  text-align: center;
+  background-size: cover;
+  background-attachment: fixed;
+  display: grid;
 }
 
 .wrapper {
@@ -18,7 +18,7 @@
 }
 
 .container {
-  background: linear-gradient(100deg, #fbfbfb57 30%, #000000 150%);
+  background: linear-gradient(100deg, #ebebeb57 30%, #000000 150%);
   border-radius: 1%;
   margin: 4%;
   height: 670px;
@@ -41,7 +41,6 @@
   max-width: 250px;
   min-height: 30px;
 }
-
 
 .label {
   font-size: 25px;
