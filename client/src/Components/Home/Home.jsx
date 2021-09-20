@@ -26,9 +26,6 @@ export default function Home() {
 
   const currentProducts = products.slice(firstIndex, lastIndex);
   
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);

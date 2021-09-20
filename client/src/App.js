@@ -60,7 +60,7 @@ function App() {
         <PrivateRoute exact path="/admin/users" component={AdminUsers} />
         <PrivateRoute exact path="/admin/categories/:id" component={AdminModifyCategory} />
         <PrivateRoute exact path="/admin/users/:id" component={AdminModifyUser}/>
-        <Route path='/user/profile' component={UserProfile} />
+        <Route path='/profile' component={UserProfile} />
         <Route path='*' component={NotFound} />
         
       </Switch>

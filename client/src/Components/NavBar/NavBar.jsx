@@ -230,7 +230,7 @@ export default function NavBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to='/user/profile'>Perfil</MenuItem>
+                <MenuItem component={Link} to='/profile'>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
             </div>
