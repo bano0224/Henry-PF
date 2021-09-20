@@ -40,7 +40,6 @@ const CARD_ELEMENTS_OPTIONS={
     },
 };
 const CheckoutForm =({backStep, nextStep})=>{
-    const dispatch = useDispatch()
     const history = useHistory();
     const dispatch = useDispatch();
     const [processing, setProcessing] = useState('');

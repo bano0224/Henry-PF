@@ -71,184 +71,118 @@ export default function CartScreen() {
 
   return (
     <Grid container xs={12}>
-      <Grid item xs={12}>
-        <NavBar />
-      </Grid>
-      <Grid item xs={12}>
-        <br />
-        <Container>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link color="secondary" to="/" id="bread">
-              <HomeIcon className={classes.icon} />
-              Home
-            </Link>
-            <Typography color="textPrimary">Carrito</Typography>
-          </Breadcrumbs>
-          <br />
-          <Typography variant="h3" className={classes.h1}>
-            Detalles del carrito
-          </Typography>
-          <br />
-          <Grid
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-start"
-            spacing={2}
-          >
-            <Grid item xs={8}>
-              <Accordion defaultExpanded>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="cart"
-                >
-                  <Typography className={classes.heading} id="cart">
-                    Carrito
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Grid container direction="column" spacing={2}>
-                    {cartItems.length === 0 ? (
-                      <span>Carrito vacío.</span>
-                    ) : (
-                      cartItems.map((item) => (
-                        <>
-                          <Cart
-                            key={item._id}
-                            item={item}
-                            handlerQty={handlerQty}
-                            handlerRemove={handlerRemove}
-                          />
-                          <Divider />
-                        </>
-                      ))
-                    )}
-                  </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.total}>
+        <Grid item xs={12}>
+            <NavBar />
+        </Grid>
+        <Grid item xs={12}>  
+            <br />
+            <Container>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="secondary" to="/" id='bread'>
+                    <HomeIcon className={classes.icon} />
+                        Home
+                    </Link>
+                    <Typography color="textPrimary">Carrito</Typography>
+                </Breadcrumbs>
+                <br />
+                <Typography variant="h3" className={classes.h1}>Detalles del carrito</Typography>
+                <br />
                 <Grid
-                  container
-                  direction="column"
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                  className={classes.total}
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="flex-start"
+                    spacing={2}
                 >
-                  <Grid item>
-                    <h6>Detalle de compra</h6>
-                  </Grid>
-                  <Grid item>
-                    <Divider />
-                    <span className={classes.topay}> TOTAL A PAGAR: </span>
-                    <span>{accounting.formatMoney(getSubtotal())}</span>
-                  </Grid>
-                  <div
-                    style={{
-                      display: "flex-end",
-                      justifyContent: "space-between",
-                      marginTop: "1rem",
-                    }}
-                  >
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="secondary"
-                      component={Link}
-                      to="/cart/checkout"
-                      id="button"
-                    >
-                        <Grid item xs={8}>
-                            <Accordion defaultExpanded>
-                                <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="cart"
-                                >
-                                    <Typography className={classes.heading} id="cart">Carrito</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Grid container direction='column' spacing={2}>
-                                    {
-                                        cartItems.length === 0 
-                                        ?(
-                                            <span>
-                                                Carrito vacío.
-                                            </span>
-                                        )
-                                        :(
-                                            cartItems.map(item=>(
-                                               
-                                                <>
-                                                    <Cart
-                                                    key={item._id}
-                                                    item={item}
-                                                    handlerQty= {handlerQty}
-                                                    handlerRemove={handlerRemove} 
-                                                    />
-                                                    <Divider />
-                                                </>
-                                            ))
-                                        )
-                                    } 
-                                    </Grid>
-                                </AccordionDetails>
-                            </Accordion>
-                            {/* <Accordion>
-                                <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                                >
-                                    <Typography className={classes.heading}>2. Detalles de envío</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    {
-                                        login
-                                        ? <p>Estas logueado bro</p>
-                                        : <p> No estas logueado bro </p>
-                                    }
-                                </AccordionDetails>
-                            </Accordion>
-                            <Accordion >
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel3a-content"
-                                    id="panel3a-header"
-                                    >
-                                    <Typography className={classes.heading}>3. Detalles de pago</Typography>
-                                </AccordionSummary>
-                            </Accordion> */}
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper className={classes.total}>
-                                <Grid container direction='column' justifyContent='space-between' alignItems='flex-start' className={classes.total}>
-                                    <Grid item>
-                                        <h6>Detalle de compra</h6>
-                                    </Grid>
-                                    <Grid item>
-                                        <Divider />
-                                        <span className={classes.topay}> TOTAL A PAGAR: </span><span>{accounting.formatMoney(getSubtotal())}</span>
-
-                                    </Grid>
-                                    <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
-                                        {
-                                            cartItems?.length
-                                            ? <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
-                                            : <Button type="submit" disabled variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
-                                        }
-                                    </div>
+                    <Grid item xs={8}>
+                        <Accordion defaultExpanded>
+                            <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="cart"
+                            >
+                                <Typography className={classes.heading} id="cart">Carrito</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Grid container direction='column' spacing={2}>
+                                {
+                                    cartItems.length === 0 
+                                    ?(
+                                        <span>
+                                            Carrito vacío.
+                                        </span>
+                                    )
+                                    :(
+                                        cartItems.map(item=>(
+                                           
+                                            <>
+                                                <Cart
+                                                key={item._id}
+                                                item={item}
+                                                handlerQty= {handlerQty}
+                                                handlerRemove={handlerRemove} 
+                                                />
+                                                <Divider />
+                                            </>
+                                        ))
+                                    )
+                                } 
                                 </Grid>
-                            </Paper>
-                        </Grid>
+                            </AccordionDetails>
+                        </Accordion>
+                        {/* <Accordion>
+                            <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel2a-content"
+                            id="panel2a-header"
+                            >
+                                <Typography className={classes.heading}>2. Detalles de envío</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                {
+                                    login
+                                    ? <p>Estas logueado bro</p>
+                                    : <p> No estas logueado bro </p>
+                                }
+                            </AccordionDetails>
+                        </Accordion>
+                        <Accordion >
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel3a-content"
+                                id="panel3a-header"
+                                >
+                                <Typography className={classes.heading}>3. Detalles de pago</Typography>
+                            </AccordionSummary>
+                        </Accordion> */}
                     </Grid>
-                </Container>
-            </Grid>
-          </Grid>
-        </Container>
-      </Grid>
+                    <Grid item xs={4}>
+                        <Paper className={classes.total}>
+                            <Grid container direction='column' justifyContent='space-between' alignItems='flex-start' className={classes.total}>
+                                <Grid item>
+                                    <h6>Detalle de compra</h6>
+                                </Grid>
+                                <Grid item>
+                                    <Divider />
+                                    <span className={classes.topay}> TOTAL A PAGAR: </span><span>{accounting.formatMoney(getSubtotal())}</span>
+
+                                </Grid>
+                                <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
+                                    {
+                                        cartItems?.length
+                                        ? <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                        : <Button type="submit" disabled variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                    }
+                                </div>
+                            </Grid>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </Container>
+        </Grid>
+
+
     </Grid>
-  );
+
+);
 }

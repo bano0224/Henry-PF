@@ -21,7 +21,6 @@ import Checkout from './components/Cart/Checkout'
 import Confirmation from "./components/Cart/Confirmation";
 import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory/AdminModifyCategory";
 import AdminModifyUser from "./components/AdminDashboard/AdminModifyUser/AdminModifyUser";
-import UserDetail from "./components/Login/User/UserDetail";
 import ResetPassword from './components/Login/ResetPassword';
 import Confirm from './components/Login/Confirm';
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -46,7 +45,6 @@ function App() {
         <Route exact path="/reviews/:id" render={({ match }) => <Reviews id={match.params.id}/>}></Route>
         <Route exact path="/login" component={Login}/>
         <Route exact path='/logup' component={Logup} />
-        <Route exact path="/login/profile" component={UserDetail}/>
         <Route exact path='/login/reset' component={ResetPassword} />
         <Route exact path="/login/resetPassword/:token" render={({ match }) => <Confirm id={match.params.id}/>}></Route>
         <Route exact path='/cart' component={ScreenCart} />

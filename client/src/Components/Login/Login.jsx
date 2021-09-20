@@ -13,7 +13,6 @@ import resetError from "../../actions/users/resetError";
 
 export default function Login() {
 
-  const productReducer = useSelector(state => state.productReducer)
   const history = useHistory();
   const dispatch = useDispatch();
   const [userLogin, setUserlogin] = useState({
