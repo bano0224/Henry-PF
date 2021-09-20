@@ -16,11 +16,6 @@ import {Grid, Badge} from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import swal from 'sweetalert';
 import jwt from 'jsonwebtoken'
-import getUserById from "../../actions/users/getUserById";
-const dotenv = require("dotenv");
-dotenv.config();
-
-const { JWT_SECRET_KEY } = process.env;
 
 
 const StyledBadge = withStyles((theme) => ({
