@@ -17,7 +17,8 @@ export const initialState = {
     promociones: false,
     checkLogin: [],
     error: [],
-    orderByUser: []
+    orderByUser: [],
+    orders: []
 };
 
 export default function productReducer(state = initialState, action) {
@@ -54,6 +55,12 @@ export default function productReducer(state = initialState, action) {
             return {
                 ...state,
                 products: action.payload
+            }
+
+          case actionConst.GET_ORDERS:
+            return {
+              ...state,
+              orders: action.payload
             }
 
         case actionConst.SET_REVIEWS:

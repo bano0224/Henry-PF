@@ -26,6 +26,7 @@ import Confirm from './components/Login/Confirm';
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout";
 import UserProfile from "./components/UserProfile/UserProfile";
+import AdminOrder from "./components/AdminDashboard/AdminOrder/AdminOrder";
 function App() {
   return (
     <BrowserRouter>
@@ -60,6 +61,7 @@ function App() {
         <PrivateRoute exact path="/admin/users" component={AdminUsers} />
         <PrivateRoute exact path="/admin/categories/:id" component={AdminModifyCategory} />
         <PrivateRoute exact path="/admin/users/:id" component={AdminModifyUser}/>
+        <PrivateRoute exact path="/admin/orders" component={AdminOrder}/>
         <Route path='/profile' component={UserProfile} />
         <Route path='*' component={NotFound} />
         
