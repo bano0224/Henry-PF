@@ -10,10 +10,16 @@ const stripe = require("stripe")(
   "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
 );
 // Private key
+const dotenv = require("dotenv");
+dotenv.config();
+
+const { ID_ROLE_USER } = process.env;
+
 
 const services = require("../services/services");
 
 const getProducts = async (req, res, next) => {
+  console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
   const { name } = req.query;
   try {
     if (name) {
@@ -295,7 +301,7 @@ const logUp = async (req, res) => {
       lastName,
       email,
       password: await User.encryptPassword(password),
-      role: [{ _id: "6138eb1ba01acaa7a0649d97" }],
+      role: [{ _id: {ID_ROLE_USER} }],
     });
 
     const saveUser = await newUser.save();
