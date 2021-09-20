@@ -15,8 +15,7 @@ export default function Search() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(getProductByQuery(input));
-    setInput({
-    }) 
+    setInput("") 
   }
 
 
@@ -32,6 +31,7 @@ export default function Search() {
                 value={input.name}
                 type="text"
                 class="form-control inputFrom"
+                id="exampleFormControlInput1"
                 name="name"
               />
             </Grid>

@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppBar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,16 +8,19 @@ import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import clsx from 'clsx';
 import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import {Grid, Badge} from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import stateLogout from '../../actions/stateLogout'
 import swal from 'sweetalert';
+import jwt from 'jsonwebtoken'
+import getUserById from "../../actions/users/getUserById";
+const dotenv = require("dotenv");
+dotenv.config();
+
+const { JWT_SECRET_KEY } = process.env;
 
 
 const StyledBadge = withStyles((theme) => ({
@@ -92,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       alignItems: 'center',
       padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
       ...theme.mixins.toolbar,
       justifyContent: 'flex-end',
   },
@@ -106,14 +108,23 @@ export default function NavBar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const history = useHistory()
 
 
-  const login = localStorage.getItem('login')
- 
 
+//TOKEN
+  const key = JSON.parse(sessionStorage.getItem("token"))?.token
+  if(key){
+    var decoded = jwt.verify(key, 'secret')
+    var userRole = (decoded.role[0].name)
+  }
+
+//CART BADGE
   const a = useSelector(state => state.cartReducer)
   const { cartItems } = a
 
+
+//HANDLERS
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -123,10 +134,10 @@ export default function NavBar() {
   };
 
   const handleLogout = () => {
-    dispatch(stateLogout())
+    sessionStorage.removeItem("token")
     swal({
-      title: "Cerraste sesión!",
-      text: "Te esperamos!!",
+      title: "Sesión finalizada",
+      text: "Volvé pronto!",
       buttons: false,
       timer: 2000
     });
@@ -152,7 +163,9 @@ export default function NavBar() {
             E-Market
             </Typography>                
           </Button>
-          <div className={classes.dashboard}>
+          {
+            userRole === 'admin'
+            ? <div className={classes.dashboard}>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -163,7 +176,9 @@ export default function NavBar() {
               >
                   Administrador
               </Button>
-          </div>
+            </div>
+            : null
+          }
           <div className={classes.dashboard}>
               <Button
                   color="inherit"
@@ -177,18 +192,18 @@ export default function NavBar() {
               </Button>
           </div>
           <div className={classes.dashboard}>
-            {(login === 'true') ?
-            <div>
+            {(key) 
+            ? <div>
               <Button
-                  color="inherit"
-                  aria-label="open drawer"
-                  className={classes.button}
-                  id='button'
-                  component={Link}
-                  to='/cart'
+                color="inherit"
+                aria-label="open drawer"
+                className={classes.button}
+                id='button'
+                component={Link}
+                to='/cart'
               >
                 <StyledBadge badgeContent={cartItems.length} color="secondary" overlap="circular" max={99} anchorOrigin={{vertical: 'top',horizontal: 'right',}}>
-                  <ShoppingCartIcon />
+                 <ShoppingCartIcon />
                 </StyledBadge>
               </Button>
               <IconButton
@@ -215,12 +230,11 @@ export default function NavBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to='/'>Perfil</MenuItem>
+                <MenuItem component={Link} to='/user/profile'>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
-              </div>
-:
-              <div>
+            </div>
+            : <div>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -234,16 +248,17 @@ export default function NavBar() {
                 </StyledBadge>
               </Button>
               <Button
-                  color="inherit"
-                  aria-label="open drawer"
-                  className={classes.button}
-                  id='button'
-                  component={Link}
-                  to='/login'
+                color="inherit"
+                aria-label="open drawer"
+                className={classes.button}
+                id='button'
+                component={Link}
+                to='/login'
               >
-                  Ingresar
+                Ingresar
               </Button>
             </div>
+              
             }
             </div>
         </Toolbar>

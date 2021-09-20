@@ -61,7 +61,7 @@ const getUsers = async (req, res) => {
     if (email) {
       let userFind = await User.find({
         email: { $regex: email, $options: "i" },
-      }).populate("role", { name: 1 });
+      }).populate("order", {status: 1});
       if (userFind.length) {
         res.status(200).json(userFind);
       } else {
@@ -136,9 +136,9 @@ const removeProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    if (id) {
+    if (req.params.id) {
       const { name, price, description, countInStock, imageUrl, featured, discount, category } = req.body;
-      const product = await Product.findById(id);
+      const product = await Product.findById(req.params.id);
       product.name = name;
       product.price = price;
       product.description = description;
@@ -155,7 +155,7 @@ const updateProduct = async (req, res) => {
       res.status(404).send("El producto no fue encontrado");
     }
   } catch (err) {
-    return err;
+    console.log(err);
   }
 };
 
@@ -292,17 +292,9 @@ const logUp = async (req, res) => {
       lastName,
       email,
       password: await User.encryptPassword(password),
-      role:[{_id:"613b80dc8317c3f59f461b67"}]
+      role:[{_id:"613981193e40a78ef29c793b"}]
     });
 
-/*     if (roles) {
-      const findRoles = await Role.find({ name: `${roles}` });
-      newUser.roles = findRoles.map((role) => role._id);
-      console.log('estoy entrando al if')
-    } else {
-      const role = await Role.findOne({ name: "user" }); // busco un solo usuario
-      newUser.roles = [role._id]; */
-      
     const saveUser = await newUser.save();
   /* } */
 
@@ -329,7 +321,6 @@ const logUp = async (req, res) => {
         expiresIn: 3600, //una hora expira el token
       }
     );
-    console.log('ESTE ES EL TOKEN DEL USUARIO')
     res.status(200).json(token);
   } catch (err) {
     return err;
@@ -340,18 +331,13 @@ const logIn = async (req, res) => {
   
   const userFound = await User.findOne({ email: req.body.email }).populate("role", { name: 1 });
 
-  if (!userFound)
-    return res.status(400).json({ message: "El usuario no existe" });
+  if (!userFound) return res.status(404).json({ message: "El usuario o la contraseña son inválidos" });
 
-  const matchPassword = await User.matchPassword(
-    req.body.password,
-    userFound.password
-  );
-  if (!matchPassword)
-    return res.status(401).json({ token: null, message: "Invalid password" });
-    const token = jwt.sign({ id: userFound._id },`${process.env.JWT_SECRET_KEY}`, {
-    expiresIn: 3600,
-  });
+  const matchPassword = await User.matchPassword(req.body.password, userFound.password);
+  
+  if (!matchPassword) return res.status(401).json({ message: "El usuario o la contraseña son inválidos" });
+    
+  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 3600});
   
   res.json({ token });
 };

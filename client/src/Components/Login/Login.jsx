@@ -1,30 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { Container, Button } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
-import login from "../../actions/setLogin";
-import stateLogin from "../../actions/stateLogin";
 import style from "./Login.module.css";
 import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login";
 import swal from "sweetalert";
+import login from "../../actions/users/login";
+import resetError from "../../actions/users/resetError";
 
 export default function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
-  };
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
-  const [erroMessage, setErrorMessage] = useState("");
+  const [userLogin, setUserlogin] = useState({
+    email: '',
+    password: ''
+  })
+  const productReducer = useSelector(state => state.productReducer)
+  const { error } = productReducer
 
+  useEffect(() => {
+    dispatch(resetError())
+  }, [])
+
+  //GOOGLE
   function responseGoogle(respuesta) {
     if (respuesta.profileObj) {
-      dispatch(stateLogin());
 
       swal({
         title: "Bienvenida/o",
@@ -40,59 +42,29 @@ export default function Login() {
     }
   }
 
-  function responseFacebook(respuesta) {
-    console.log('ESTA ES LA RESPUESTA',respuesta)
-    if (respuesta.accesToken) {
-      dispatch(dispatch(stateLogin()));
-
-      swal({
-        title: "Bienvenida/o",
-        text: "Disfrutá de las mejores ofertas!",
-        icon: "success",
-        buttons: false,
-        timer: 2000,
-      });
-
-      setTimeout(() => {
-        history.push("/");
-      }, 2500);
-    }
+  //LOGIN
+  const handleChange = (e) => {
+    setUserlogin({
+      ...userLogin,
+      [e.target.name]: e.target.value
+    })
   }
 
-  async function handleLogin(e) {
+  // console.log(sessionStorage.getItem('token'));
+
+  function handleLogin(e) {
     e.preventDefault();
-    try {
-      const user = await login({
-        email,
-        password,
-      });
+    dispatch(login(userLogin))
+
+    setUserlogin({
+      email: '',
+      password: ''
+    })
       
-
-      dispatch(stateLogin());
-
-      swal({
-        title: "Bienvenida/o",
-        text: "Disfrutá de las mejores ofertas!",
-        icon: "success",
-        buttons: false,
-        timer: 2000,
-      });
-
-      setTimeout(() => {
-        history.push("/");
-      }, 2500);
-
-      console.log(user);
-      setUser(user);
-      setEmail("");
-      setPassword("");
-    } catch (err) {
-      setErrorMessage("Error en el usuario y/o contraseña");
-
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 5000);
-    }
+    setTimeout(() => {
+      if(sessionStorage.getItem('token')){
+      history.push("/");}
+    }, 2500);
   }
 
   return (
@@ -109,7 +81,7 @@ export default function Login() {
         <form onSubmit={(e) => handleLogin(e)}>
           <div class="mb-2">
             <label
-              for="exampleFormControlInput1"
+              for="email"
               className={style.label}
               class="form-label"
             >
@@ -117,18 +89,18 @@ export default function Login() {
             </label>
             <input
               required
-              placeholder="email"
-              value={email}
+              placeholder="ejemplo@ejemplo.com"
+              value={userLogin.email}
               type="text"
               class="form-control inputFrom"
-              onChange={({ target }) => setEmail(target.value)}
-              id="exampleFormControlInput1"
+              onChange={(e) => {handleChange(e)}}
+              id="email"
               name="email"
             />
           </div>
           <div class="mb-3">
             <label
-              for="exampleFormControlTextarea1"
+              for="password"
               className={style.label}
               class="form-label"
             >
@@ -138,15 +110,20 @@ export default function Login() {
               required
               placeholder="password"
               type="password"
-              value={password}
+              value={userLogin.password}
               name="password"
-              onChange={({ target }) => setPassword(target.value)}
+              onChange={(e) => {handleChange(e)}}
               class="form-control inputFrom"
-              id="exampleFormControlTextarea1"
+              id="password"
               rows="3"
             ></input>
           </div>
           <Container className={style.buttonLogup}>
+            {
+              typeof error !== 'object'
+              ? <span>{error}</span>
+              : <p></p>
+            }
             <Button variant="contained" color="secondary" type="submit">
               Login
             </Button>
@@ -157,7 +134,6 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="secondary"
-            /* className={classes.submit} */
             component={Link}
                     to='/logup'
           >
@@ -178,15 +154,6 @@ export default function Login() {
             <div className={style.containerFB}>
               <br />
               <br />
-              {/* <FacebookLogin className={style.facebookButton}
-                appId="906354623292808"
-                autoLoad={false}
-                fields="name,email,picture"
-                callback={responseFacebook}
-                textButton='Iniciar sesión'
-                icon="fa-facebook"
-                className={style.FBbutton}
-              /> */}
             </div>
           </Container>
         </form>

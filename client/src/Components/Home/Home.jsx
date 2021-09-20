@@ -18,6 +18,12 @@ export default function Home() {
   const [productsPerPage, setProductsPerPage] = useState(9);
   const lastIndex = currentPage * productsPerPage;
   const firstIndex = lastIndex - productsPerPage;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
   const currentProducts = products.slice(firstIndex, lastIndex);
   const dispatch = useDispatch();
   
