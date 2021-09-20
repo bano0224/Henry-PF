@@ -22,7 +22,7 @@ const getProducts = async (req, res, next) => {
       if (productFind.length) {
         res.status(200).json(productFind);
       } else {
-        res.status(200).json([{error:"No se encontró el producto solicitado"}]);
+        res.status(200).json([]);
         
       }
     } else {
@@ -47,7 +47,6 @@ const createProduct = async (req, res) => {
 
 const getProductsById = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const productId = await Product.findById(id);
     res.status(200).json(productId);
@@ -57,7 +56,7 @@ const getProductsById = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const {email } = req.query;
+  const { email } = req.query;
   try {
     if (email) {
       let userFind = await User.find({
@@ -81,7 +80,6 @@ const getUsers = async (req, res) => {
 };
 const getUserById = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const userId = await User.findById(id).populate("role", {
       name: 1,
@@ -165,7 +163,6 @@ const modifiedCategory = (idProducto, idCategory) => {
   const product = Product.findById({ idProducto }).stringify();
   const category = product.category;
 
-  console.log(product.name);
 
   category.includes(idCategory) ? category : category.push(idCategory);
 };
@@ -299,7 +296,24 @@ const logUp = async (req, res) => {
     });
 
     const saveUser = await newUser.save();
- 
+  /* } */
+
+    /* newUser.save((err) => {
+      if(err) return res.status(500).send({message: `Error al crear el usuario: ${err}`})
+
+      return res.status(200).send({token: services.createToken(user)})
+    }) */
+   /*  const token = jwt.sign({
+      name: newUser.name,
+      id: saveUser._id
+    }, 'secret')
+
+    res.header('auth-token', token).json({
+      error: null,
+      data: { token },
+      message: 'Bienvenido'
+  })
+ */
     const token = jwt.sign(
       { id: saveUser._id },
       `${process.env.JWT_SECRET_KEY}` /* 'secret' */,

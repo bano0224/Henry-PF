@@ -25,6 +25,11 @@ export default function Home() {
   }, []);
 
   const currentProducts = products.slice(firstIndex, lastIndex);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -64,10 +69,11 @@ export default function Home() {
           </div>
         </div>
         <div className={s.bodyCards}>
-        { products[0]?.error ? (
-            <h4>{products[0]?.error}</h4>
-          ) :
-          <Cards currentProducts={currentProducts} />}
+        { 
+          products.length === 0
+          ? <h4>No se encontraron productos</h4>
+          : <Cards currentProducts={currentProducts} />
+        }
         </div>
       </div>
       <div className={s.paginationContainer}>
@@ -79,8 +85,6 @@ export default function Home() {
         />
       </div>
       <Footer />
-     {/* <Container /> */}
-
     </div>
   );
 }
