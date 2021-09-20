@@ -75,7 +75,7 @@ export default function Confirm(){
       history.push('/login')
       } else {
         swal({
-          title: "La constraseña no coincide",
+          title: "La contraseña no coincide",
           text: "Revisa los caracteres y vuelve a intentarlo",
           icon: "error",
           buttons: false,
