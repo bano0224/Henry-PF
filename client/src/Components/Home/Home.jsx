@@ -25,7 +25,6 @@ export default function Home() {
   }, []);
 
   const currentProducts = products.slice(firstIndex, lastIndex);
-  const dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(getProducts());

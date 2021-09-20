@@ -23,7 +23,7 @@ import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory
 import AdminModifyUser from "./components/AdminDashboard/AdminModifyUser/AdminModifyUser";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout";
-import UserProfile from "./components/userProfile/UserProfile";
+import UserProfile from "./components/UserProfile/UserProfile";
 function App() {
   return (
     <BrowserRouter>
