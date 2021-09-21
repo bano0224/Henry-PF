@@ -410,6 +410,7 @@ const productStock = async (req, res) => {
 
       await product.save();
 
+      
       res.status(200).send("El stock fue actualizado");
     } else {
       res.status(404).send("No se pudo actualizar el stock");

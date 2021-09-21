@@ -16,6 +16,7 @@ import swal from "sweetalert";
 import createOrder from '../../actions/cart/createOrder';
 import jwt from 'jsonwebtoken'
 import resetCart from '../../actions/cart/resetCart';
+import productStock from '../../actions/productStock'
 import sendEmailCheckout from '../../actions/sendEmailCheckout';
 
 const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
@@ -48,6 +49,7 @@ const CheckoutForm =({backStep, nextStep})=>{
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
 
+    console.log('ESTOS SON LOS ITEMS DEL CARRITO',cartItems)
     const getSubtotal=()=>{
         return  cartItems
                 .reduce((price,item)=> price + item.price * parseInt(item.qty), 0)
@@ -86,7 +88,7 @@ const CheckoutForm =({backStep, nextStep})=>{
         setProcessing(true);
         dispatch(sendEmailCheckout(id))
         dispatch(createOrder(order)) 
-
+        dispatch(productStock(cartItems))
 
 
         // devuelve error y paymethod
