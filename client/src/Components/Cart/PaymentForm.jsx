@@ -18,7 +18,6 @@ import jwt from 'jsonwebtoken'
 import resetCart from '../../actions/cart/resetCart';
 import sendEmailCheckout from '../../actions/sendEmailCheckout';
 
-
 const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
 const CARD_ELEMENTS_OPTIONS={
     iconStyle: "solid",

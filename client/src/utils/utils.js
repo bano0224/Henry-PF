@@ -35,3 +35,6 @@ export const URL_MODIFY_CATEGORY = 'http://localhost:5000/category/update'
 export const URL_GET_ORDER_BY_USER = 'http://localhost:5000/order/user/'
 export const URL_CREATE_VIEWERS = 'http://localhost:5000/viewers/create'
 export const URL_ORDER_CREATE = 'http://localhost:5000/order/create'
+
+// MERCADOPAGO
+export const MERCADOPAGO_URL = 'http://localhost:5000/mercadopago';
