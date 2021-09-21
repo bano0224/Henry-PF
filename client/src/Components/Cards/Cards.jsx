@@ -18,25 +18,17 @@ export default function Cards({currentProducts}) {
   const dispatch = useDispatch();
   const classes = useStyles();
   
-  const lengthProd = currentProducts.length
+  /* const lengthProd = currentProducts.length */
   
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  /* function handleDelete () {
-    dispatch(DelFromCart())
-  } */
-/*   function handleUp () {
-    dispatch(AddToCart())
-  } */
-
   return (
-
-    <Grid container spacing={4} className={classes.gridContainer} justify="center">
+    <Grid container spacing={4} className={classes.gridContainer} justify="center" >
       {currentProducts?.map((product, index) => (
         
-              <Grid item xs={12} sm={6} md={4} lg={2}>
+              <Grid item xs={12} sm={6} md={4} lg={4} >
                 <div key={index}>
                       <Card
                         name={product.name}
@@ -44,6 +36,8 @@ export default function Cards({currentProducts}) {
                         id={product._id}
                         description={product.description}
                         price= {product.price}
+                        stock={product.countInStock}
+                        discount={product.discount}
                       />
                 </div>
               </Grid>
@@ -51,19 +45,3 @@ export default function Cards({currentProducts}) {
     </Grid>
   );
 }
-{/* <div className={style.cardsContainer}>
-{currentProducts?.map((product, index) => (
-    <div key={index}>
-      {
-        <Card
-          name={product.name}
-          image={product.imageUrl}
-          id={product._id}
-          description={product.description}
-          price= {product.price}
-        />
-      }       
-    </div>
-          
-))}
-</div> */}

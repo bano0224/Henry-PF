@@ -15,12 +15,25 @@ import Container from '@material-ui/core/Container';
 import CardMedia from '@material-ui/core/CardMedia';
 import { IoChevronDown } from "react-icons/io5";
 import clsx from 'clsx';
+import {Grid} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
+container:{
+
+},
 media: {
   height: 0,
   paddingTop: '56.25%', // 16:9
 },
+paginationContainer: {
+  fontSize: '90%',
+  paddingTop: '5%',
+  display: 'flex',
+  flexDirection: 'row',
+  /* justifyContent: 'auto', */
+  boxSizing: 'content-box',
+  width: '100%',
+}
 }))
 
 export default function Home() {
@@ -39,12 +52,11 @@ export default function Home() {
     window.scrollTo({top: 500, behavior: 'smooth'});
   };
 
-  return (
-    <div className={s.container}>
-      {/* <Container maxWidth="sm"> */}
+  const howManyPages = Math.ceil(products.length /productsPerPage)
 
-      <NavBar />
-{/*       <div > */}
+  return (
+    <Grid className={classes.container}>
+      <NavBar fontSize="100%"/>
         <div className={s.videoContainer}>
           <video muted autoPlay loop className={s.video}>
             <source src={landing} type="video/mp4"/>
@@ -52,47 +64,38 @@ export default function Home() {
           <div className={s.gray}></div>
           <div className={s.h3Container}>
             <h3 className={s.titleB}>Welcome to </h3>
-            <h3 className={s.titleC}>E-Market{/* <IoChevronDown/><IoChevronDown/> */}</h3>
-            <h3 className={s.titleF1}><IoChevronDown/>{/*< br/><IoChevronDown/> */}</h3>
+            <h3 className={s.titleC}>E-Market</h3>
+            <h3 className={s.titleF1}><IoChevronDown/></h3>
             <h3 className={s.titleF2}><IoChevronDown/></h3>
-            {/* <h3 className={s.titleF3}><IoChevronDown/></h3> */}
           </div>
         </div>
-{/*       </div> */}
-      <div className={s.body3}>
+      <Grid xs={12} sm={12} md={12} lg={12} className={s.body3}>
         <div className={s.navBar}>
           
           <div className={s.filter}>
             <AllFilters/>
-            {/*<div className={s.search}>
-              <Search id='search' />
-            </div>
-            <div className={s.filterByCategory}>
-              <FilterByCategory />
-            </div>
-            <div className={s.change}>
-              <ChangeOrder />
-            </div> */}
           </div>
         </div>
-        <div className={s.bodyCards}>
+        <Grid xs={12} sm={12} md={12} lg={12} className={s.bodyCards}>
         { products[0]?.error ? (
             <h4>{products[0]?.error}</h4>
           ) :
           <Cards currentProducts={currentProducts} />}
-        </div>
-      </div>
-      <div className={s.paginationContainer}>
+        </Grid>
+      </Grid>
+      <Grid xs={12} sm={12} md={12} lg={12} className={classes.paginationContainer}>
         <Pagination
           products={products.length}
           productsPerPage={productsPerPage}
+          pages={howManyPages}
           paginate={paginate}
           currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
-      </div>
+      </Grid>
       <Footer />
      {/* <Container /> */}
 
-    </div>
+    </Grid>
   );
 }

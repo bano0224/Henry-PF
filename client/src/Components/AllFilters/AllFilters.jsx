@@ -20,13 +20,16 @@ export default function AllFilters() {
   return (
   
       <Grid container spacing={1} className={classes.gridContainer} justify="center">
-          <Grid item xs={12} sm={6} md={4} lg={2}>
+          <br />
+          <Grid item xs={9} sm={7} md={5} lg={4}>
+          <br />
+          
                   <Search/>
         </Grid>
-        <Grid item xs={12} sm={6} md={4}lg={2}>
+        <Grid item xs={10} sm={6} md={3}lg={4}>
                   <FilterO/>
         </Grid>
-        <Grid item xs={12} sm={6}md={4}lg={2}>
+        <Grid item xs={10} sm={6}md={4}lg={4}>
                   <FilterC/>
         </Grid>
       </Grid>

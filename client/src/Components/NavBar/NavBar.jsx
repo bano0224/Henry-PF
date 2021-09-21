@@ -1,10 +1,9 @@
 import React, {useEffect} from "react";
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppBar } from '@material-ui/core';
-import { makeStyles, useTheme, alpha } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme, alpha, withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -35,84 +34,6 @@ import stateLogout from '../../actions/stateLogout'
 import swal from 'sweetalert';
 
 
-/* const StyledBadge = withStyles((theme) => ({
-  badge: {
-    right: -3,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: '0 4px',
-  },
-}))(Badge);
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-    offset: theme.mixins.toolbar,
-    root: {
-    display: 'flex'
-    },
-    appBar: {
-      [theme.breakpoints.up('sm')]:{
-        transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    }
-    },
-    appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    },
-    title: {
-      fontFamily: 'Kalam',
-      fontSize: '2.5em'
-    },
-    menuButton: {
-      marginRigth: theme.spacing(2),
-      [theme.breakpoints.up('sm')]:{
-        display: 'none',
-      },
-    },
-    hide: {
-        display: 'none',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    link: {
-        textDecoration: 'none',
-        color: 'white'
-    },
-    dashboard: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    drawerPaper: {
-    width: drawerWidth,
-    },
-    toolbar: theme.mixins.toolbar,
-    container: {
-        justifyContent: 'space-between'
-    },
-    containerT: {
-      justifyContent: 'flex-end'
-    },
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
-  },
-
-})); */
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -183,6 +104,12 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  link: {
+    color: 'black',
+    '&:hover': {
+      color: "black",
+    },
+  }
 }));
 const StyledBadge = withStyles((theme) => ({
     badge: {
@@ -214,7 +141,7 @@ export default function NavBar() {
   const [abrir, setAbrir] = React.useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const history = useHistory();
   const dispatch = useDispatch();
   const [auth, setAuth] = React.useState(true);
   const login = localStorage.getItem('login');
@@ -228,6 +155,9 @@ export default function NavBar() {
       buttons: false,
       timer: 2000
     });
+    setTimeout(() => {
+      history.push("/");
+    }, 2500);
   }
 
 
@@ -258,7 +188,9 @@ export default function NavBar() {
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-    
+    <Toolbar>
+    {(login === 'true') ?
+      
         <Menu
           anchorEl={anchorEl}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -268,14 +200,116 @@ export default function NavBar() {
           open={isMenuOpen}
           onClose={handleMenuClose}
         >
-        <MenuItem>
+        <MenuItem 
+              className={classes.link}
+              component={Link}
+              to='/login'>
             <IconButton 
               aria-label="Crear una cuenta" 
-              color="inherit"
-              id='button'
+              color="inherit">
+                <StyledBadge color="secondary">
+                    <ArrowForwardIcon />
+                </StyledBadge>
+            </IconButton> 
+            <p>Perfil</p>
+        </MenuItem >
+        <MenuItem onClick={handleLogout} className={classes.link}>
+            <IconButton aria-label="Crear una cuenta" color="inherit" >
+                <StyledBadge color="secondary">
+                    <CreateIcon />
+                </StyledBadge>
+            </IconButton>
+            <p>Cerrar Sesion</p>
+        </MenuItem>
+        </Menu>
+    :
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+        >
+        <MenuItem 
+              className={classes.link}
               component={Link}
-              to='/login'
+              to='/login'>
+            <IconButton 
+              aria-label="Crear una cuenta" 
+              color="inherit"  
             >
+                <StyledBadge color="secondary">
+                    <ArrowForwardIcon />
+                </StyledBadge>
+            </IconButton>
+            <p>Ingresar</p>
+        </MenuItem>
+        <MenuItem
+            className={classes.link}
+            component={Link}
+            to='/logup'>
+            <IconButton aria-label="Crear una cuenta" color="inherit">
+                <StyledBadge color="secondary">
+                    <CreateIcon />
+                </StyledBadge>
+            </IconButton>
+            <p>Crear Cuenta</p>
+        </MenuItem>
+        </Menu>
+      }
+      </Toolbar>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    
+        <Toolbar>
+        <Typography 
+          className={clsx(classes.title)} 
+          variant="h6" >
+            E-Market
+        </Typography>
+        {(login === 'true') ?
+        <Menu
+          anchorEl={mobileMoreAnchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={mobileMenuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMobileMenuOpen}
+          onClose={handleMobileMenuClose}
+        >
+        <MenuItem>
+            <IconButton aria-label="Crear una cuenta" color="inherit">
+                <StyledBadge color="secondary">
+                    <ArrowForwardIcon />
+                </StyledBadge>
+            </IconButton>
+            <p>Perfil</p>
+        </MenuItem>
+        <MenuItem>
+            <IconButton aria-label="Crear una cuenta" color="inherit">
+                <StyledBadge color="secondary">
+                    <CreateIcon />
+                </StyledBadge>
+            </IconButton>
+            <p>Cerrar sesion</p>
+        </MenuItem>
+        </Menu>
+    :
+        <Menu
+          anchorEl={mobileMoreAnchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={mobileMenuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMobileMenuOpen}
+          onClose={handleMobileMenuClose}
+        >
+        <MenuItem>
+            <IconButton aria-label="Crear una cuenta" color="inherit">
                 <StyledBadge color="secondary">
                     <ArrowForwardIcon />
                 </StyledBadge>
@@ -291,45 +325,9 @@ export default function NavBar() {
             <p>Crear una cuenta</p>
         </MenuItem>
         </Menu>
-  );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-
-    <Toolbar>
-    <Typography 
-      className={clsx(classes.title)} 
-      variant="h6" >
-        E-Market
-    </Typography>
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-    <MenuItem>
-        <IconButton aria-label="Crear una cuenta" color="inherit">
-            <StyledBadge color="secondary">
-                <ArrowForwardIcon />
-            </StyledBadge>
-        </IconButton>
-        <p>Entrar</p>
-    </MenuItem>
-    <MenuItem>
-        <IconButton aria-label="Crear una cuenta" color="inherit">
-            <StyledBadge color="secondary">
-                <CreateIcon />
-            </StyledBadge>
-        </IconButton>
-        <p>Crear una cuenta</p>
-    </MenuItem>
-
-    </Menu>
-    </Toolbar>
+        }
+        </Toolbar>
+    
   );
 
   return (
@@ -372,7 +370,7 @@ export default function NavBar() {
             >
             <IconButton aria-label="cart" color="inherit">
                 <StyledBadge badgeContent={cartItems.length} color="secondary" max={99}>
-                    <ShoppingCartIcon />
+                    <ShoppingCartIcon/>
                 </StyledBadge>
             </IconButton>
           </Button>
@@ -419,18 +417,16 @@ export default function NavBar() {
           {['Administrador', 'Promociones'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <Button
-                                                  color="inherit"
-                                                  className={classes.button}
+                                                  className={classes.link}
                                                   id='button'
                                                   component={Link}
                                                   to='/admin/products'
-              ><SettingsIcon/></Button> : <Button
-                                                  color="inherit"
-                                                  className={classes.button}
+              ><SettingsIcon className={classes.link}/></Button> : <Button
+                                                  className={classes.link}
                                                   id='button'
                                                   component={Link}
                                                   to='/cart'
-              ><CardGiftcardIcon/></Button>}</ListItemIcon>
+              ><CardGiftcardIcon className={classes.link}/></Button>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -441,17 +437,17 @@ export default function NavBar() {
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <Button
                                                   color="inherit"
-                                                  className={classes.button}
+                                                  className={classes.link}
                                                   id='button'
                                                   component={Link}
                                                   to='/admin/products'
-              ><ContactMailIcon /></Button> : <Button
+              ><ContactMailIcon className={classes.link}/></Button> : <Button
                                                   color="inherit"
-                                                  className={classes.button}
+                                                  className={classes.link}
                                                   id='button'
                                                   component={Link}
                                                   to='/admin/products'
-              ><InfoIcon /></Button>}</ListItemIcon>
+              ><InfoIcon className={classes.link}/></Button>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -462,155 +458,3 @@ export default function NavBar() {
     </div>
   );
 }
-
-/* 
-const dispatch = useDispatch();
-const classes = useStyles();
-const [auth, setAuth] = React.useState(true);
-const [anchorEl, setAnchorEl] = React.useState(null);
-const open = Boolean(anchorEl);
-
-
-const login = localStorage.getItem('login')
-
-
-const a = useSelector(state => state.cartReducer)
-const { cartItems } = a
-
-const handleMenu = (event) => {
-  setAnchorEl(event.currentTarget);
-};
-
-const handleClose = () => {
-  setAnchorEl(null);
-};
-
-const handleLogout = () => {
-  dispatch(stateLogout())
-  swal({
-    title: "Cerraste sesión!",
-    text: "Te esperamos!!",
-    buttons: false,
-    timer: 2000
-  });
-}
-
-return (
-  <Grid container xs={12}>
-      <AppBar
-        className={classes.positionFixed}
-        color="secondary"
-        position="fixed"
-      >
-      <Toolbar className={classes.container}>
-        <Button
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.button}
-              id='button'
-              component={Link}
-              to='/'
-        >
-          <Typography variant="h6" className={classes.title}>
-          E-Market
-          </Typography>                
-        </Button>
-        <div className={classes.dashboard}>
-            <Button
-                color="inherit"
-                aria-label="open drawer"
-                className={classes.button}
-                id='button'
-                component={Link}
-                to='/admin/products'
-            >
-                Administrador
-            </Button>
-        </div>
-        <div className={classes.dashboard}>
-            <Button
-                color="inherit"
-                aria-label="open drawer"
-                className={classes.button}
-                id='button'
-                component={Link}
-                to='/cart'
-            >
-                Promociones
-            </Button>
-        </div>
-        <div className={classes.dashboard}>
-          {(login === 'true') ?
-          <div>
-            <Button
-                color="inherit"
-                aria-label="open drawer"
-                className={classes.button}
-                id='button'
-                component={Link}
-                to='/cart'
-            >
-              <StyledBadge badgeContent={cartItems.length} color="secondary" overlap="circular" max={99} anchorOrigin={{vertical: 'top',horizontal: 'right',}}>
-                <ShoppingCartIcon />
-              </StyledBadge>
-            </Button>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem component={Link} to='/'>Perfil</MenuItem>
-              <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
-            </Menu>
-            </div>
-:
-            <div>
-            <Button
-                color="inherit"
-                aria-label="open drawer"
-                className={classes.button}
-                id='button'
-                component={Link}
-                to='/cart'
-            >
-              <StyledBadge badgeContent={cartItems.length} color="secondary" overlap="circular" max={99} anchorOrigin={{vertical: 'top',horizontal: 'right',}}>
-                <ShoppingCartIcon />
-              </StyledBadge>
-            </Button>
-            <Button
-                color="inherit"
-                aria-label="open drawer"
-                className={classes.button}
-                id='button'
-                component={Link}
-                to='/login'
-            >
-                Ingresar
-            </Button>
-          </div>
-          }
-          </div>
-      </Toolbar>
-    </AppBar>
-    <div className={classes.offset}></div>
-  </Grid>
-); */

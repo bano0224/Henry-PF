@@ -11,6 +11,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HomeIcon from '@material-ui/icons/Home'
 import Button from '@material-ui/core/Button';
 import accounting from "accounting";
+import Box from '@mui/material/Box';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 //Style
 const useStyles = makeStyles((theme) => ({
@@ -23,14 +25,15 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Raleway',
       },
       h1: {
-        fontFamily: 'Raleway'
+        fontFamily: 'Raleway',
+        fontSize: '120%'
       },
       icon: {
         color: 'firebrick'
       },
       total: {
           padding: '5px',
-          minHeight: '300px'
+          minHeight: '100px'
       },
       topay: {
           fontWeight: '700'
@@ -58,11 +61,11 @@ export default function CartScreen() {
     }
 
     return (
-        <Grid container xs={12}>
-            <Grid item xs={12}>
+        <Grid container xs={12} sm={12} md={12} lg={12}>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
                 <NavBar />
             </Grid>
-            <Grid item xs={12}>  
+            <Grid item xs={12} sm={12} md={12} lg={12}>  
                 <br />
                 <Container>
                     <Breadcrumbs aria-label="breadcrumb">
@@ -73,7 +76,7 @@ export default function CartScreen() {
                         <Typography color="textPrimary">Carrito</Typography>
                     </Breadcrumbs>
                     <br />
-                    <Typography variant="h3" className={classes.h1}>Detalles del carrito</Typography>
+                    {/* <Typography variant="h3" className={classes.h1}>Detalles del carrito</Typography> */}
                     <br />
                     <Grid
                         container
@@ -82,14 +85,14 @@ export default function CartScreen() {
                         alignItems="flex-start"
                         spacing={2}
                     >
-                        <Grid item xs={8}>
-                            <Accordion defaultExpanded>
+                        <Grid item xs={12} sm={8} md={8} lg={8}>
+                            <Accordion Expanded>
                                 <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel1a-content"
                                 id="cart"
                                 >
-                                    <Typography className={classes.heading} id="cart">Carrito</Typography>
+                                    <Typography className={classes.heading} id="cart">Detalles del carrito <ShoppingCartIcon/></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <Grid container direction='column' spacing={2}>
@@ -144,31 +147,36 @@ export default function CartScreen() {
                                 </AccordionSummary>
                             </Accordion> */}
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={12} sm={4} md={4} lg={4}>
                             <Paper className={classes.total}>
                                 <Grid container direction='column' justifyContent='space-between' alignItems='flex-start' className={classes.total}>
-                                    <Grid item>
+                                    {/* <Grid item>
                                         <h6>Detalle de compra</h6>
-                                    </Grid>
+                                    </Grid> */}
                                     <Grid item>
                                         <Divider />
                                         <span className={classes.topay}> TOTAL A PAGAR: </span><span>{accounting.formatMoney(getSubtotal())}</span>
 
                                     </Grid>
-                                    <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
+                                    {/* <Grid style={flexDirection:"row-reverse"} >
                                         <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
-                                       
-                                    </div>
+                                    </Grid> */}
+                                    <Box
+                                        sx={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-start',
+                                        bgcolor: 'background.paper',
+                                        }}
+                                    >
+                                        <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                    </Box>
                                 </Grid>
                             </Paper>
                         </Grid>
                     </Grid>
                 </Container>
             </Grid>
-
-
         </Grid>
-
     )
 }
 
