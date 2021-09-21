@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const crypto = require('crypto')
+const mercadopago = require('mercadopago');
 const transporter = require('../config/mailer')
 const Product = require("../models/Product.js");
 const User = require("../models/User.js");
@@ -9,6 +10,12 @@ const Role = require("../models/Role");
 const stripe = require("stripe")(
   "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
 );
+
+// mercadopago configuration
+mercadopago.configure({
+  access_token: 'TEST-1294034537296050-020319-656eec508b141c98a397a25ddd2684c7-184851111',
+});
+
 // Private key
 const dotenv = require("dotenv");
 dotenv.config();
@@ -508,6 +515,32 @@ const checkLogin = async (req, res) => {
   
 }
 
+const mercadopagoController = async (req, res, next) => {
+  try {
+    const { cart } = req.body;
+    const items = cart.map(({ name, price, qty }) => ({
+      title: name,
+      unit_price: Number(price),
+      quantity: Number(qty),
+    }));
+
+    const preference = {
+      items,
+      back_urls: {
+        success: 'http://localhost:3000',
+        failure: 'http://localhost:3000',
+        pending: 'http://localhost:3000',
+      },
+      auto_return: 'approved',
+    };
+
+    const { body } = await mercadopago.preferences.create(preference);
+    res.status(200).json(body);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
@@ -534,7 +567,8 @@ module.exports = {
   resetPassword,
   setSubscription,
   confirmPassword,
-  checkLogin
+  checkLogin,
+  mercadopagoController,
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

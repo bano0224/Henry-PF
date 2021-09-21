@@ -20,6 +20,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import HomeIcon from "@material-ui/icons/Home";
 import Button from "@material-ui/core/Button";
+import mercadopagoPayment from '../../actions/cart/mercadopagoPayment';
 import accounting from "accounting";
 
 //Style
@@ -64,6 +65,8 @@ export default function CartScreen() {
       0
     );
   };
+
+  const handleClickMP = () => dispatch(mercadopagoPayment(cartItems));
 
   return (
     <Grid container xs={12}>

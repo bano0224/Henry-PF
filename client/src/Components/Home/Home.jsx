@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import s from "./Home.module.css";
 import Cards from "../Cards/Cards";
@@ -34,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Home() {
+  const querys = new URLSearchParams(useLocation().search.slice(1));
+  const status = querys.get("status"); // string con estado de la compra en mercadopago.
   const productReducer = useSelector((state) => state.productReducer)
   const { products } = productReducer
   const [currentPage, setCurrentPage] = useState(1);
