@@ -19,6 +19,9 @@ export const URL_SET_SUBSCRIPTION = 'http://localhost:5000/user/subscription'
 export const URL_RESET_PASSWORD = 'http://localhost:5000/user/resetPassword'
 export const URL_LOGIN = 'http://localhost:5000/user/login'
 
+// MERCADOPAGO
+export const MERCADOPAGO_URL = 'http://localhost:5000/mercadopago';
+
 //ROLES
 export const URL_GET_ROLES = 'http://localhost:5000/role'
 

@@ -16,7 +16,7 @@ import swal from "sweetalert";
 import createOrder from '../../actions/cart/createOrder';
 import jwt from 'jsonwebtoken'
 import resetCart from '../../actions/cart/resetCart';
-
+import mercadopagoPayment from '../../actions/cart/mercadopagoPayment';
 
 const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
 const CARD_ELEMENTS_OPTIONS={
@@ -73,7 +73,7 @@ const CheckoutForm =({backStep, nextStep})=>{
     useEffect(() => {
         return () => dispatch(resetCart())
     },[])
-
+  
     // let axiosConfig = {
     //     headers: {
     //         'Content-Type': 'application/json;charset=UTF-8',
@@ -136,7 +136,8 @@ const CheckoutForm =({backStep, nextStep})=>{
                         console.log(error)
                     } 
               }
-    }    
+    }
+
 
     
         
@@ -155,7 +156,6 @@ const CheckoutForm =({backStep, nextStep})=>{
                 </Box>
                 : <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
             }
-            
             </div>
         </form>
         </> 
