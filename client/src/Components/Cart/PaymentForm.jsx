@@ -16,7 +16,6 @@ import swal from "sweetalert";
 import createOrder from '../../actions/cart/createOrder';
 import jwt from 'jsonwebtoken'
 import resetCart from '../../actions/cart/resetCart';
-import mercadopagoPayment from '../../actions/cart/mercadopagoPayment';
 
 const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
 const CARD_ELEMENTS_OPTIONS={
