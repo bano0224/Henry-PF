@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Review from './Review'
-import {Typography, Grid, Divider, Button} from '@material-ui/core';
+import {Typography, Grid, Divider, Button, CircularProgress, Box} from '@material-ui/core';
 import { Elements, CardElement, useStripe,useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import addToCart from '../../actions/cart/addToCart';
@@ -13,6 +13,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import accounting from "accounting";
 import axios from 'axios';
 import swal from "sweetalert";
+import createOrder from '../../actions/cart/createOrder';
+import jwt from 'jsonwebtoken'
+import resetCart from '../../actions/cart/resetCart';
 import mercadopagoPayment from '../../actions/cart/mercadopagoPayment';
 
 const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
@@ -37,19 +40,40 @@ const CARD_ELEMENTS_OPTIONS={
     },
 };
 const CheckoutForm =({backStep, nextStep})=>{
+    const dispatch = useDispatch()
     const history = useHistory();
     const [processing, setProcessing] = useState('');
     const [error, setError] = useState(null);
     const [succeeded, setSucceeded] = useState(false);
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
+
     const getSubtotal=()=>{
         return  cartItems
                 .reduce((price,item)=> price + item.price * parseInt(item.qty), 0)
         }
     const stripe = useStripe(); 
-    const elements = useElements();
-    
+    const elements = useElements();    
+    const {shippingData} = cartReducer
+    const key = JSON.parse(sessionStorage.getItem("token"))?.token
+    if(key){
+    const decoded = jwt.verify(key, 'secret')
+    var id = (decoded.id)
+    }
+
+    const order = {
+        address1: shippingData.address1,
+        city: shippingData.city,
+        postCode: shippingData.postCode,
+        user: id,
+        products: cartItems,
+        totalPrice: getSubtotal(),
+    }
+
+    useEffect(() => {
+        return () => dispatch(resetCart())
+    },[])
+  
     // let axiosConfig = {
     //     headers: {
     //         'Content-Type': 'application/json;charset=UTF-8',
@@ -60,6 +84,10 @@ const CheckoutForm =({backStep, nextStep})=>{
     const handleSubmit = async (e)=>{
         e.preventDefault();
         setProcessing(true);
+        dispatch(createOrder(order)) 
+
+
+
         // devuelve error y paymethod
         const {error, paymentMethod}= await stripe.createPaymentMethod({
             type:"card",
@@ -121,9 +149,14 @@ const CheckoutForm =({backStep, nextStep})=>{
             <CardElement options={CARD_ELEMENTS_OPTIONS}/>
             <div style={{display: "flex", justifyContent:"space-between", marginTop:"1rem"}}>
             <Button variant='outlined' onClick={backStep}>Back</Button>
-            <Button disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
+            {
+                processing
+                ? <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                </Box>
+                : <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
+            }
             </div>
-
         </form>
         </> 
     )  
@@ -143,4 +176,6 @@ export default function PaymentForm({backStep, nextStep}) {
     </React.Fragment>
   );
 }
+
+
 

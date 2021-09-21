@@ -13,7 +13,11 @@ export const initialState = {
     users: [],
     userDetail: [],
     roles: [],
-    login: false
+    login: false,
+    promociones: false,
+    checkLogin: [],
+    error: [],
+    orderByUser: []
 };
 
 export default function productReducer(state = initialState, action) {
@@ -35,8 +39,6 @@ export default function productReducer(state = initialState, action) {
             }
 
         case actionConst.GET_PRODUCT_BY_QUERY:
-          console.log('REDUCER!!!',action.payload);
-          
             return {
                 ...state,
                 products: action.payload,
@@ -70,6 +72,13 @@ export default function productReducer(state = initialState, action) {
             ...state,
             login: false
             }
+
+        case actionConst.CHECK_LOGIN:
+          console.log('ESTOY ENTRANDO AL REDUCER')
+          return {
+            ...state,
+            checkLogin: action.payload
+          }
 
         case actionConst.FILTER_BY_CATEGORY: 
             const allProducts = state.clearProducts;
@@ -176,6 +185,13 @@ export default function productReducer(state = initialState, action) {
               users: action.payload
             }
 
+        case actionConst.GET_ORDER_BY_USER:
+          return {
+              ...state,
+              orderByUser: action.payload
+          }
+              
+
         case actionConst.GET_USER_BY_ID:
           return {
             ...state,
@@ -193,6 +209,18 @@ export default function productReducer(state = initialState, action) {
           return {
             ...state,
             roles: action.payload
+          }
+
+        case actionConst.LOGIN_ERROR:
+          return {
+            ...state,
+            error: action.payload
+          }
+
+        case actionConst.RESET_ERROR:
+          return {
+            ...state,
+            error: []
           }
 
         default: 

@@ -38,24 +38,6 @@ const userSchema = new Schema({
     type: Schema.ObjectId,
     /* required:true, */
   }],
-  address_line1: {
-    type: String,
-  },
-  address_line2: {
-    type: String,
-  },
-  city: {
-    type: String,
-  },
-  state: {
-    type: String,
-  },
-  postal_code: {
-    type: Number,
-  },
-  country: {
-    type: String,
-  },
   email_notification: {
     type: Boolean,
   },
@@ -64,8 +46,21 @@ const userSchema = new Schema({
   },
   token: [{
       type: String,
-    }]
-
+    }],
+  resetToken: {
+    type: String,
+  },
+  expireToken: {
+    type: Date,
+  },
+  subscription: {
+    type: Boolean,
+    default: false,
+  },
+  expiredLogin: {
+    type: Number,
+    default: 0
+  }
 });
 
 userSchema.statics.encryptPassword = async (password) => {

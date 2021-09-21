@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
     overflow:"hidden",
     textOverflow: "ellipsis",
   },
+  stock:{
+    color: 'red'
+  },
   media: {
     height: "100%",
     width: "100%",
@@ -56,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ProductCard({name, image, description, price, id}) {
+export default function ProductCard({name, image, description, price, id, stock}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const dispatch = useDispatch()
@@ -87,6 +90,13 @@ export default function ProductCard({name, image, description, price, id}) {
           className={classes.title}
           >
             {name}
+          </Typography>
+        }
+        subheader={
+          <Typography
+          className={classes.stock}
+          >
+           {stock > 0 ? null : 'SIN STOCK'}
           </Typography>
         }
       />

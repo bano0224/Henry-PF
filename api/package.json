@@ -19,6 +19,8 @@
     "mercadopago": "^1.5.8",
     "moment": "^2.29.1",
     "mongoose": "^6.0.3",
+    "nodemailer": "^6.6.3",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^2.0.12",
     "react-facebook-login": "^4.1.1",
     "react-hook-form": "^7.15.1",

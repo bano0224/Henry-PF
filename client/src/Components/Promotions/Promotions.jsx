@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../NavBar/NavBar";
-import s from "./Home.module.css";
+import s from "./Promotions.module.css"
 import Cards from "../Cards/Cards";
 import Pagination from "../Pagination/Pagination";
 import Footer from "../Footer/Footer";
@@ -14,43 +14,44 @@ import {Grid} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
-  container:{
-  
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  paginationContainer: {
-    fontSize: '90%',
-    paddingTop: '5%',
-    display: 'flex',
-    flexDirection: 'row',
-    /* justifyContent: 'auto', */
-    boxSizing: 'content-box',
-    width: '100%',
-  }
-  }))
+    container:{
+    
+    },
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    paginationContainer: {
+      fontSize: '90%',
+      paddingTop: '5%',
+      display: 'flex',
+      flexDirection: 'row',
+      /* justifyContent: 'auto', */
+      boxSizing: 'content-box',
+      width: '100%',
+    }
+    }))
 
+export default function Promotions() {
+    const productReducer = useSelector((state) => state.productReducer)
+    const { products } = productReducer
+    const [currentPage, setCurrentPage] = useState(1);
+    const [productsPerPage, setProductsPerPage] = useState(9);
+    const lastIndex = currentPage * productsPerPage;
+    const firstIndex = lastIndex - productsPerPage;
+    const dispatch = useDispatch();
+    const classes = useStyles();
+    
 
-export default function Home() {
-  const productReducer = useSelector((state) => state.productReducer)
-  const { products } = productReducer
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(9);
-  const lastIndex = currentPage * productsPerPage;
-  const firstIndex = lastIndex - productsPerPage;
-  const dispatch = useDispatch();
-  const classes = useStyles();
-  
 
   useEffect(() => {
     dispatch(getProducts());
   }, []);
 
   const inStock = products.filter(p => p.countInStock >= 1)
-  const currentProducts = inStock.slice(firstIndex, lastIndex);
-  const howManyPages = Math.ceil(inStock.length /productsPerPage)
+    const inDiscount = inStock.filter(p => p.discount > 0)
+  const currentProducts = inDiscount.slice(firstIndex, lastIndex);
+  const howManyPages = Math.ceil(inDiscount.length /productsPerPage)
   
 
   const paginate = (pageNumber) => {
@@ -98,16 +99,14 @@ export default function Home() {
         }
         </div>
       </div>
-      <Grid xs={12} sm={12} md={12} lg={12} className={classes.paginationContainer}>
-        <Pagination
-          products={inStock.length}
+      <Pagination
+          products={inDiscount.length}
           productsPerPage={productsPerPage}
           pages={howManyPages}
           paginate={paginate}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
-      </Grid>
       <Footer />
     </div>
   );
