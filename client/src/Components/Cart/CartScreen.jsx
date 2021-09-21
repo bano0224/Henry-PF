@@ -54,12 +54,6 @@ export default function CartScreen() {
   const { cartItems } = cartReducer;
   const productReducer = useSelector((state) => state.productReducer);
   const { login } = productReducer;
-  const [value, setValue] = useState(1)
-
-  const handlerQty = (id, qty) => {
-    setValue(qty)
-    dispatch(addToCart(id, qty));
-  };
 
   const handlerRemove = (id) => {
     dispatch(removeFromCart(id));
@@ -121,9 +115,7 @@ export default function CartScreen() {
                                                 <Cart
                                                 key={item._id}
                                                 item={item}
-                                                handlerQty= {handlerQty}
                                                 handlerRemove={handlerRemove}
-                                                value={value} 
                                                 />
                                                 <Divider />
                                             </>
@@ -168,12 +160,16 @@ export default function CartScreen() {
                                 <Grid item>
                                     <Divider />
                                     <span className={classes.topay}> TOTAL A PAGAR: </span><span>{accounting.formatMoney(getSubtotal())}</span>
-
                                 </Grid>
                                 <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
                                     {
                                         cartItems?.length
-                                        ? <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                        ? (
+                                            <div>
+                                                <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                                <Button onClick={handleClickMP} variant='contained' color='primary'>Mercadopago</Button>
+                                            </div>
+                                        )
                                         : <Button type="submit" disabled variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
                                     }
                                 </div>
