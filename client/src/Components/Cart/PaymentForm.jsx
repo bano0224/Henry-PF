@@ -72,7 +72,7 @@ const CheckoutForm =({backStep, nextStep})=>{
     useEffect(() => {
         return () => dispatch(resetCart())
     },[])
-  
+
     // let axiosConfig = {
     //     headers: {
     //         'Content-Type': 'application/json;charset=UTF-8',
@@ -135,8 +135,7 @@ const CheckoutForm =({backStep, nextStep})=>{
                         console.log(error)
                     } 
               }
-    }
-
+    }    
 
     
         
@@ -155,6 +154,7 @@ const CheckoutForm =({backStep, nextStep})=>{
                 </Box>
                 : <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
             }
+            
             </div>
         </form>
         </> 
