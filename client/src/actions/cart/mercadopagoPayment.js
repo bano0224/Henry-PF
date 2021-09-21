@@ -5,7 +5,8 @@ import { MERCADOPAGO_PAYMENT } from './const';
 const mercadopagoPayment =  cart => async dispatch => {
     try {
         const { data } = await axios.post(`${MERCADOPAGO_URL}`, { cart });
-        dispatch({ type: MERCADOPAGO_PAYMENT, payload: data.init_point });
+        dispatch({ type: MERCADOPAGO_PAYMENT });
+        window.location.href = data.init_point;
     } catch (error) {
         console.log(error);
     }

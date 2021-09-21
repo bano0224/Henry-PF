@@ -1,26 +1,26 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./components/Home/Home";
-import CreateProduct from "./components/CreateProduct/CreateProduct";
-import DetailProduct from "./components/DetailProduct/DetailProduct"
-import AdminNav from "./components/AdminDashboard/AdminNav/AdminNav";
-import AdminProduct from "./components/AdminDashboard/AdminProduct/AdminProduct";
-import AdminUsers from "./components/AdminDashboard/AdminUsers/AdminUsers";
-import AdminCategories from "./components/AdminDashboard/AdminCategories/AdminCategories";
-import AdminAddProduct from "./components/AdminDashboard/AdminAddProduct/AdminAddProduct";
+import Home from "./Components/Home/Home";
+import CreateProduct from "./Components/CreateProduct/CreateProduct";
+import DetailProduct from "./Components/DetailProduct/DetailProduct"
+import AdminNav from "./Components/AdminDashboard/AdminNav/AdminNav";
+import AdminProduct from "./Components/AdminDashboard/AdminProduct/AdminProduct";
+import AdminUsers from "./Components/AdminDashboard/AdminUsers/AdminUsers";
+import AdminCategories from "./Components/AdminDashboard/AdminCategories/AdminCategories";
+import AdminAddProduct from "./Components/AdminDashboard/AdminAddProduct/AdminAddProduct";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import AdminModifyProduct from "./components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
-import AdminAddCategory from "./components/AdminDashboard/AdminAddCategory/AdminAddCategory";
-import Reviews from "./components/Reviews/Reviews";
-import Login from "./components/Login/Login";
-import Logup from './components/Login/Logup'
-import NotFound from "./components/404/NotFound";
-import ScreenCart from './components/Cart/CartScreen'
-import AddressForm from './components/Cart/AddressForm'
-import Checkout from './components/Cart/Checkout'
-import Confirmation from "./components/Cart/Confirmation";
-import AdminModifyCategory from "./components/AdminDashboard/AdminModifyCategory/AdminModifyCategory";
-import AdminModifyUser from "./components/AdminDashboard/AdminModifyUser/AdminModifyUser";
+import AdminModifyProduct from "./Components/AdminDashboard/AdminModifyProduct/AdminModifyProduct";
+import AdminAddCategory from "./Components/AdminDashboard/AdminAddCategory/AdminAddCategory";
+import Reviews from "./Components/Reviews/Reviews";
+import Login from "./Components/Login/Login";
+import Logup from './Components/Login/Logup'
+import NotFound from "./Components/404/NotFound";
+import ScreenCart from './Components/Cart/CartScreen'
+import AddressForm from './Components/Cart/AddressForm'
+import Checkout from './Components/Cart/Checkout'
+import Confirmation from "./Components/Cart/Confirmation";
+import AdminModifyCategory from "./Components/AdminDashboard/AdminModifyCategory/AdminModifyCategory";
+import AdminModifyUser from "./Components/AdminDashboard/AdminModifyUser/AdminModifyUser";
 
 function App() {
   return (

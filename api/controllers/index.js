@@ -443,7 +443,7 @@ const checkout = async (req, res) =>{
 const mercadopagoController = async (req, res, next) => {
   try {
     const { cart } = req.body;
-    const items = cart.map(({ name, price, quantity }) => ({
+    const items = cart.map(({ name, price, qty }) => ({
       title: name,
       unit_price: Number(price),
       quantity: Number(qty),
@@ -459,7 +459,7 @@ const mercadopagoController = async (req, res, next) => {
       auto_return: 'approved',
     };
 
-    const { body } = mercadopago.preferences.create(preference);
+    const { body } = await mercadopago.preferences.create(preference);
     res.status(200).json(body);
   } catch (err) {
     next(err);

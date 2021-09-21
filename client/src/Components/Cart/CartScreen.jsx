@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import Cart from './Cart';
 import { makeStyles } from '@material-ui/core/styles';
 import NavBar from '../NavBar/NavBar';
@@ -39,17 +38,13 @@ const useStyles = makeStyles((theme) => ({
       }
 }));
 
-export default function CartScreen() {
+export default function CartScreen(props) {
     const classes = useStyles();
-    const history = useHistory();
     const dispatch= useDispatch()
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
-    const { paymentLink } = useSelector(state => state.cartReducer);
     const productReducer = useSelector(state => state.productReducer)
     const { login } = productReducer
-
-    useEffect(() => history.push(paymentLink), [paymentLink]);
     
     const handlerQty= (id, qty)=>{
         dispatch(addToCart(id,qty))

@@ -1,6 +1,6 @@
 import React from 'react'
 import './Confirmation.css'
-import NavBar from '../../components/NavBar/NavBar'
+import NavBar from '../../Components/NavBar/NavBar'
 import {Grid} from '@material-ui/core'
 
 const Confirmation = () => {

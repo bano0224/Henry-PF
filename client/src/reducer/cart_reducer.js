@@ -3,7 +3,6 @@ import * as actionTypes from '../actions/cart/const'
 const initialState={
     cartItems:[],
     shippingData: [],
-    paymentLink: ''
 };
 
 export default function cartReducer(state = initialState, action){
@@ -39,7 +38,7 @@ export default function cartReducer(state = initialState, action){
         case actionTypes.MERCADOPAGO_PAYMENT:
             return {
                 ...state,
-                paymentLink: action.payload
+                cartItems: [],
             };
         default:
             return state
