@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Cart from "./Cart";
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,6 +20,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import HomeIcon from "@material-ui/icons/Home";
 import Button from "@material-ui/core/Button";
+import mercadopagoPayment from '../../actions/cart/mercadopagoPayment';
 import accounting from "accounting";
 
 //Style
@@ -55,10 +56,6 @@ export default function CartScreen() {
   const productReducer = useSelector((state) => state.productReducer);
   const { login } = productReducer;
 
-  const handlerQty = (id, qty) => {
-    dispatch(addToCart(id, qty));
-  };
-
   const handlerRemove = (id) => {
     dispatch(removeFromCart(id));
   };
@@ -68,6 +65,8 @@ export default function CartScreen() {
       0
     );
   };
+  
+  const handleClickMP = () => dispatch(mercadopagoPayment(cartItems));
 
   return (
     <Grid container xs={12}>
@@ -119,8 +118,7 @@ export default function CartScreen() {
                                                 <Cart
                                                 key={item._id}
                                                 item={item}
-                                                handlerQty= {handlerQty}
-                                                handlerRemove={handlerRemove} 
+                                                handlerRemove={handlerRemove}
                                                 />
                                                 <Divider />
                                             </>
@@ -165,12 +163,16 @@ export default function CartScreen() {
                                 <Grid item>
                                     <Divider />
                                     <span className={classes.topay}> TOTAL A PAGAR: </span><span>{accounting.formatMoney(getSubtotal())}</span>
-
                                 </Grid>
                                 <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
                                     {
                                         cartItems?.length
-                                        ? <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                        ? (
+                                            <div>
+                                                <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                                <Button onClick={handleClickMP} variant='contained' color='primary'>Mercadopago</Button>
+                                            </div>
+                                        )
                                         : <Button type="submit" disabled variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
                                     }
                                 </div>

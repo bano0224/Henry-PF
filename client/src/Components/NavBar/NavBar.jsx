@@ -184,7 +184,7 @@ export default function NavBar() {
                   className={classes.button}
                   id='button'
                   component={Link}
-                  to='/cart'
+                  to='/promotions'
               >
                   Promociones
               </Button>
