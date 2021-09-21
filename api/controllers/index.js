@@ -6,6 +6,7 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
+/* const ofertas = require("../../client/src/media/ofertas") */
 const stripe = require("stripe")(
   "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
 );
@@ -13,7 +14,7 @@ const stripe = require("stripe")(
 const dotenv = require("dotenv");
 dotenv.config();
 
-const { ID_ROLE_USER } = process.env;
+const {ID_ROLE_USER} = process.env;
 
 
 const services = require("../services/services");
@@ -301,7 +302,7 @@ const logUp = async (req, res) => {
       lastName,
       email,
       password: await User.encryptPassword(password),
-      role: [{ _id: {ID_ROLE_USER} }],
+      role: [{ _id: ID_ROLE_USER }],
     });
 
     const saveUser = await newUser.save();
@@ -508,6 +509,48 @@ const checkLogin = async (req, res) => {
   
 }
 
+const sendEmail = async (req, res) => {
+  const users = req.body
+  try {
+    users.map(u => {
+       transporter.sendMail({
+        to: u.email,
+        from: 'supermarkethenry@gmail.com',
+        subject: 'Tenemos las mejores ofertas para vos',
+        html: '<img src="https://firebasestorage.googleapis.com/v0/b/e-market-838a5.appspot.com/o/product_images%2Fofertas.png?alt=media&token=4fe8d93d-ce3a-4c74-92ee-9e4554cec474"/>',
+        /* attachments: [{
+            filename: 'image.png',
+            path: '/path/to/file',
+            cid: 'unique@kreata.ee' //same cid value as in the html img src
+        }] */
+      })
+    })
+    
+    res.json({message: 'Email de suscripción enviado correctamente'})
+  } catch(error) {
+    console.log('Error al enviar el mail')
+  }
+}
+
+const sendEmailCheckout = async (req, res) => {
+  try {
+    const user = User.findById(req.params)
+    /* console.log('ESTE ES EL USER REQ BODY', req.body._id) */
+    console.log('ESTE ES EL USER', user)
+
+    transporter.sendMail({
+      to: user.email,
+      from: 'supermarkethenry@gmail.com',
+      subject: 'Tu compra ha sido confirmada',
+      html: '<img src="https://firebasestorage.googleapis.com/v0/b/e-market-838a5.appspot.com/o/product_images%2Fcompra.png?alt=media&token=2a63364e-714c-4f9b-ad4f-97d6e0e19cfa"/>'
+    })
+    res.json({message: 'Email de confirmación de pago enviado correctamente'})
+  } catch(error) {
+    console.log('Error al enviar el email')
+  }
+}
+
+
 module.exports = {
   getProducts,
   createProduct,
@@ -534,7 +577,9 @@ module.exports = {
   resetPassword,
   setSubscription,
   confirmPassword,
-  checkLogin
+  checkLogin,
+  sendEmail,
+  sendEmailCheckout
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */
