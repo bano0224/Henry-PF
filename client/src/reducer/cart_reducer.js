@@ -37,7 +37,7 @@ export default function cartReducer(state = initialState, action){
                 ...state,
                 shippingData: action.payload
             }    
-        
+
         case actionConst.RESET_CART:
             localStorage.removeItem('cart')
             return {
@@ -45,11 +45,6 @@ export default function cartReducer(state = initialState, action){
                 cartItems: []
             }
         
-        case actionTypes.MERCADOPAGO_PAYMENT:
-            return {
-                ...state,
-                cartItems: [],
-            };
         default:
             return state
     }
