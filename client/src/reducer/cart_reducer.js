@@ -45,7 +45,7 @@ export default function cartReducer(state = initialState, action){
                 cartItems: []
             }
         
-        case actionTypes.MERCADOPAGO_PAYMENT:
+        case actionConst.MERCADOPAGO_PAYMENT:
             return {
                 ...state,
                 cartItems: [],
