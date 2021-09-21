@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import "./Detail.css";
 import Navbar from "../NavBar/NavBar";
 import getProductById from "../../actions/getProductById";
+import getUserById from "../../actions/users/getUserById";
+import getOrderByUser from "../../actions/order/getOrderByUser";
 import productReset from "../../actions/productReset";
 import addToCart from "../../actions/cart/addToCart";
 import StarIcon from '@material-ui/icons/Star';
@@ -14,22 +16,53 @@ import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HomeIcon from '@material-ui/icons/Home'
 import getReviews from "../../actions/getReviews";
+import jwt from 'jsonwebtoken'
+
 
 export default function DetailProduct({name, image, description, price, id}) {
   
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const productReducer = useSelector((state) => state.productReducer);
-  const {productDetail, productReviews} = productReducer
+  const {productDetail, productReviews, userDetail, orderByUser} = productReducer
+
+  const prod = orderByUser.map(o => o.products.map(p => p._id)).flat()
   
+  const rev = productReviews?.filter(r => r.product[0]._id === productDetail._id)
+  
+
+
+  
+  const inc = prod?.includes(productDetail._id)
+ 
+
   const [input, setInput] = React.useState('Controlled');
   const handleChange = (event) => {
     setInput(event.target.value);
   };
+  const key = JSON.parse(sessionStorage.getItem("token"))?.token
+  if(key){
+      var decoded = jwt.verify(key, 'secret')
+  }
+  const inc2 = rev.map(r => r.user[0].includes(decoded?.id))
+  
+
+  useEffect(() => {
+    dispatch(getReviews())
+}, [])
+
+  useEffect(() => {
+      dispatch(getUserById(decoded?.id))
+      dispatch(getReviews())
+  }, [])
+
+  useEffect(() => {
+      dispatch(getOrderByUser(userDetail?._id))
+  }, [])
 
   useEffect(() => {
     dispatch(getProductById(id));
-    dispatch(getReviews())
+    
   }, []);
 
   useEffect(() => {
@@ -51,7 +84,7 @@ export default function DetailProduct({name, image, description, price, id}) {
         <Grid item xs={12}>
         <div className="productscreen">
       
-      {productDetail.length !== 0 ? (
+      {productDetail.length !== 0 && rev.length !== 0 || rev!== undefined? (
                 <>
                 <div className="productscreen__left">
                   <div className="left__image">
@@ -114,15 +147,22 @@ export default function DetailProduct({name, image, description, price, id}) {
                         Añadir al Carrito 
                       </button>
                     </p>
+                    {decoded && inc && inc2[0] !== true ?
                     <p>
-                      <Link to={`/reviews/${id}`} className="info__button">
+                    <Link 
+                      to={`/reviews/${id}`} className="info__button">
                         Reseña <StarIcon style={{ color: yellow[500]}} />
                       </Link>
+                      </p>:null
+                      }
+                    <p>
+
                     <br></br>
                       <Link to={`/`} className="info__button">
                         Home <HomeIcon style={{ color: blueGrey[50]}} style={{ borderColor: blueGrey[500] }}/>
                       </Link>
                     </p>
+                      
                   </div>
                 </div>
               </>

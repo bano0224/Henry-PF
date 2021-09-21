@@ -19,6 +19,7 @@ import addToCart from "../../actions/cart/addToCart";
 import { useDispatch } from "react-redux";
 import InfoIcon from '@material-ui/icons/Info';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,

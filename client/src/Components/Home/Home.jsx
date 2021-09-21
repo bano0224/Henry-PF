@@ -11,6 +11,8 @@ import landing from '../../media/landing.mp4'
 import ChangeOrder from '../Filter/ChangeOrder/ChangeOrder'
 import getProducts from "../../actions/getProducts";
 
+
+
 export default function Home() {
   const productReducer = useSelector((state) => state.productReducer)
   const { products } = productReducer
@@ -29,7 +31,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
-
+  
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({top: 500, behavior: 'smooth'});
