@@ -1,26 +1,30 @@
 const jwt = require("jsonwebtoken");
 const crypto = require('crypto')
+const mercadopago = require('mercadopago');
 const transporter = require('../config/mailer')
 const Product = require("../models/Product.js");
 const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
-const stripe = require("stripe")("sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65");
-const mercadopago = require("mercadopago");
+/* const ofertas = require("../../client/src/media/ofertas") */
+const stripe = require("stripe")(
+  "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
+);
+
+// mercadopago configuration
+mercadopago.configure({
+  access_token: 'TEST-1294034537296050-020319-656eec508b141c98a397a25ddd2684c7-184851111',
+});
+
 // Private key
 const dotenv = require("dotenv");
 dotenv.config();
 
-const { ID_ROLE_USER } = process.env;
+const {ID_ROLE_USER} = process.env;
 
 
 const services = require("../services/services");
-
-// mercadopago configuration
-mercadopago.configure({
-  access_token: 'TEST-7303199554218809-091514-1683cdb45476c671f50eac5f0e88ddef-190598525',
-});
 
 const getProducts = async (req, res, next) => {
   console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
@@ -305,7 +309,7 @@ const logUp = async (req, res) => {
       lastName,
       email,
       password: await User.encryptPassword(password),
-      role: [{ _id: {ID_ROLE_USER} }],
+      role: [{ _id: ID_ROLE_USER }],
     });
 
     const saveUser = await newUser.save();
@@ -406,6 +410,7 @@ const productStock = async (req, res) => {
 
       await product.save();
 
+      
       res.status(200).send("El stock fue actualizado");
     } else {
       res.status(404).send("No se pudo actualizar el stock");
@@ -512,6 +517,47 @@ const checkLogin = async (req, res) => {
   
 }
 
+const sendEmail = async (req, res) => {
+  const users = req.body
+  try {
+    users.map(u => {
+       transporter.sendMail({
+        to: u.email,
+        from: 'supermarkethenry@gmail.com',
+        subject: 'Tenemos las mejores ofertas para vos',
+        html: '<img src="https://firebasestorage.googleapis.com/v0/b/e-market-838a5.appspot.com/o/product_images%2Fofertas.png?alt=media&token=4fe8d93d-ce3a-4c74-92ee-9e4554cec474"/>',
+        /* attachments: [{
+            filename: 'image.png',
+            path: '/path/to/file',
+            cid: 'unique@kreata.ee' //same cid value as in the html img src
+        }] */
+      })
+    })
+    
+    res.json({message: 'Email de suscripción enviado correctamente'})
+  } catch(error) {
+    console.log('Error al enviar el mail')
+  }
+}
+
+const sendEmailCheckout = async (req, res) => {
+  try {
+    const user = User.findById(req.params)
+    /* console.log('ESTE ES EL USER REQ BODY', req.body._id) */
+    console.log('ESTE ES EL USER', user)
+
+    transporter.sendMail({
+      to: user.email,
+      from: 'supermarkethenry@gmail.com',
+      subject: 'Tu compra ha sido confirmada',
+      html: '<img src="https://firebasestorage.googleapis.com/v0/b/e-market-838a5.appspot.com/o/product_images%2Fcompra.png?alt=media&token=2a63364e-714c-4f9b-ad4f-97d6e0e19cfa"/>'
+    })
+    res.json({message: 'Email de confirmación de pago enviado correctamente'})
+  } catch(error) {
+    console.log('Error al enviar el email')
+  }
+}
+
 const mercadopagoController = async (req, res, next) => {
   try {
     const { cart } = req.body;
@@ -565,8 +611,9 @@ module.exports = {
   setSubscription,
   confirmPassword,
   checkLogin,
+  sendEmail,
+  sendEmailCheckout,
   mercadopagoController,
-
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

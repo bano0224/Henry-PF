@@ -18,9 +18,8 @@ export const URL_GET_USER_ID = 'http://localhost:5000/user/'
 export const URL_SET_SUBSCRIPTION = 'http://localhost:5000/user/subscription'
 export const URL_RESET_PASSWORD = 'http://localhost:5000/user/resetPassword'
 export const URL_LOGIN = 'http://localhost:5000/user/login'
-
-// MERCADOPAGO
-export const MERCADOPAGO_URL = 'http://localhost:5000/mercadopago';
+export const URL_SEND_EMAIL = 'http://localhost:5000/user/sendEmail'
+export const URL_SEND_EMAIL_CHECKOUT = 'http://localhost:5000/user/sendEmailCheckout'
 
 //ROLES
 export const URL_GET_ROLES = 'http://localhost:5000/role'
@@ -36,3 +35,6 @@ export const URL_MODIFY_CATEGORY = 'http://localhost:5000/category/update'
 export const URL_GET_ORDER_BY_USER = 'http://localhost:5000/order/user/'
 export const URL_CREATE_VIEWERS = 'http://localhost:5000/viewers/create'
 export const URL_ORDER_CREATE = 'http://localhost:5000/order/create'
+
+// MERCADOPAGO
+export const MERCADOPAGO_URL = 'http://localhost:5000/mercadopago';

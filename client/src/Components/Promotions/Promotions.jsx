@@ -7,7 +7,7 @@ import Pagination from "../Pagination/Pagination";
 import Footer from "../Footer/Footer";
 import FilterByCategory from "../Filter/FilterByCategory/FilterByCategory";
 import Search from "../Search/Search";
-import landing from '../../media/landing.mp4'
+import landing from '../../media/promotionsnew.mp4'
 import ChangeOrder from '../Filter/ChangeOrder/ChangeOrder'
 import getProducts from "../../actions/getProducts";
 import {Grid} from '@material-ui/core'
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: '5%',
       display: 'flex',
       flexDirection: 'row',
-      /* justifyContent: 'auto', */
+      /* justifyContent: 'auto', */ 
       boxSizing: 'content-box',
       width: '100%',
     }
@@ -71,8 +71,8 @@ export default function Promotions() {
           </video>
           <div className={s.gray}></div>
           <div className={s.h3Container}>
-            <h3 className={s.titleB}>Welcome to </h3>
-            <h3 className={s.title}>E-Market</h3>
+            <h3 className={s.title}>Feria de </h3>
+            <h3 className={s.title}>Descuentos</h3>
           </div>
         </div>
       </div>

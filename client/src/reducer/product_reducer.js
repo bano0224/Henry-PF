@@ -4,6 +4,7 @@ import * as actionConst from '../actions/index'
 export const initialState = {
     products: [],
     clearProducts: [],
+    allProducts: [],
     productDetail: [],
     productReviews: [],
     categories: [],
@@ -36,6 +37,7 @@ export default function productReducer(state = initialState, action) {
                 return Math.random() - 0.3;
                 }),
                 clearProducts: action.payload,
+                allProducts: action.payload
             }
 
         case actionConst.GET_PRODUCT_BY_QUERY:

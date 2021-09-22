@@ -3,7 +3,7 @@ import axios from 'axios'
 import URL_PRODUCTS_ID from '../index'
 
 
-export const addToCart= (id,qty)=> async ()=>{
+export const addToCart= (id,qty)=> async (dispatch)=>{
     const {data}= await axios.get(`${URL_PRODUCTS_ID}${id}`)
     dispatch({
         type: actionTypes.ADD_TO_CART,
