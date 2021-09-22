@@ -23,7 +23,7 @@ export default function UserProfile(props) {
     const productReducer = useSelector(state => state.productReducer)
     const {userDetail, orderByUser} = productReducer
     const dispatch = useDispatch()
-
+console.log(orderByUser);
     //TOKEN
     const key = JSON.parse(sessionStorage.getItem("token"))?.token
     if(key){
@@ -63,7 +63,18 @@ export default function UserProfile(props) {
                                             aria-controls="panel1a-content"
                                             id="cart"
                                             >
-                                                <Typography className={classes.heading} id="cart">Orden #{o._id}</Typography>
+                                                <Grid container justifyContent='space-between'>
+                                                    <Grid item>
+                                                         <Typography className={classes.heading} id="cart">Orden #{o._id}</Typography>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Typography>
+                                                            Fecha: {o.dateOrdered}
+                                                        </Typography>
+                                                    </Grid>
+                                                   
+                                                </Grid>
+                                                
                                             </AccordionSummary>
                                             <AccordionDetails>
                                                 <Grid container direction='column' spacing={2}>
