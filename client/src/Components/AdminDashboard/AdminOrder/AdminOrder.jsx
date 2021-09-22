@@ -1,11 +1,12 @@
 import React, { useDebugValue, useEffect } from 'react'
 import AdminNav from '../AdminNav/AdminNav'
 import { makeStyles } from '@material-ui/core/styles';
-import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@material-ui/core'
+import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, Box, TablePagination, TableRow } from '@material-ui/core'
 import getOrders from '../../../actions/order/getOrders'
 import { Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import FilterByStatus from './FilterByStatus';
 
 const columns = [
     { id: '_id', label: 'ID Orden', minWidth: 170 },
@@ -38,11 +39,11 @@ export default function AdminOrder() {
     }, [])
 
     const productReducer = useSelector(state => state.productReducer)
-    const {orders} = productReducer
+    const {ordersToShow} = productReducer
 
     useEffect(() => {
-        setRows(orders)
-    }, [orders])
+        setRows(ordersToShow)
+    }, [ordersToShow])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -61,6 +62,9 @@ export default function AdminOrder() {
             <br />
             <Container>
                 <h1>Ordenes</h1>
+                <Box display="flex" justifyContent='space-around' alignItems='center'>
+                    <FilterByStatus />
+                </Box>
                 <br />
                 <Paper className={classes.root}>
                     <TableContainer className={classes.container}>

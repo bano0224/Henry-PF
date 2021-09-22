@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import filterByCategory from '../../../actions/filterByCategory';
+import filterByStatus from '../../../actions/order/filterByStatus';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -18,23 +18,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterByCategory() {
+export default function FilterByStatus() {
   const [open, setOpen] = React.useState(false);
-  const [category, setCategory] = React.useState('')
-  const dispatch = useDispatch();
+  const [status, setStatus] = React.useState('')
   const classes = useStyles();
-
-  const allCategories = useSelector(state => state.productReducer)
-  const { categories } = allCategories
+  const dispatch = useDispatch()
 
 
   const handleChange = (event) => {
-    setCategory(event.target.value)
+    setStatus(event.target.value)
   };
 
   useEffect(() => {
-    dispatch(filterByCategory(category));
-  }, [category])
+    dispatch(filterByStatus(status));
+  }, [status])
 
 
   const handleClose = () => {
@@ -48,12 +45,12 @@ export default function FilterByCategory() {
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">Filtro</InputLabel>
+        <InputLabel id="demo-controlled-open-select-label">Estado</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
           open={open}
-          value={category}
+          value={status}
           onClose={handleClose}
           onOpen={handleOpen}
           onChange={handleChange}
@@ -61,9 +58,15 @@ export default function FilterByCategory() {
           <MenuItem value="all">
             <em>Todas</em>
           </MenuItem>
-          {
-            categories?.map(c => <MenuItem value={c.name}>{c.name}</MenuItem>)
-          }
+          <MenuItem value="pendiente">
+            <em>Pendiente</em>
+          </MenuItem>
+          <MenuItem value="completada">
+            <em>Completada</em>
+          </MenuItem>
+          <MenuItem value="cancelada">
+            <em>Cancelada</em>
+          </MenuItem>
         </Select>
       </FormControl>
     </div>

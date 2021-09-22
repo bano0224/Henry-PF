@@ -19,6 +19,7 @@ export const initialState = {
     error: [],
     orderByUser: [],
     orders: [],
+    ordersToShow: [],
     orderDetail: []
 };
 
@@ -61,7 +62,8 @@ export default function productReducer(state = initialState, action) {
           case actionConst.GET_ORDERS:
             return {
               ...state,
-              orders: action.payload
+              orders: action.payload,
+              ordersToShow: action.payload
             }
 
         case actionConst.GET_ORDER_BY_ID:
@@ -109,6 +111,18 @@ export default function productReducer(state = initialState, action) {
                 ...state,
                 products: filterProduct,
             }
+
+        case actionConst.FILTER_BY_STATUS:
+            const allOrders = state.orders
+            const filterOrder =
+                action.payload === "all"
+                ? allOrders
+                : allOrders.filter(e =>  e.status.toLowerCase() === action.payload);
+            return {
+                ...state,
+                ordersToShow: filterOrder,
+            }
+            
 
         case actionConst.CREATE_CATEGORY:
             return {
