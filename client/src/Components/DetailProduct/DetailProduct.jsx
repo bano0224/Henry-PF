@@ -73,7 +73,7 @@ export default function DetailProduct({name, image, description, price, id}) {
                                     <Typography>Ver reseñas</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    <Grid container direction='column' spacing={2}>
+                                    <Grid container direction='column' spacing={1}>
                                     { 
                                       <List>
                                       {
