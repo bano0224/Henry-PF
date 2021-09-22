@@ -4,32 +4,38 @@ import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppBar } from '@material-ui/core';
 import { makeStyles, useTheme, alpha, withStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import clsx from 'clsx';
-import Menu from '@material-ui/core/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Button from '@material-ui/core/Button';
-import {Grid, Badge} from '@material-ui/core'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import CreateIcon from '@material-ui/icons/Create';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import SettingsIcon from '@material-ui/icons/Settings';
-import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
-import ContactMailIcon from '@material-ui/icons/ContactMail';
-import InfoIcon from '@material-ui/icons/Info';
+import { 
+        Menu,
+        Typography,
+        Toolbar,
+        IconButton,
+        MenuItem,
+        Button,
+        Grid, 
+        Badge,
+        Drawer,
+        List,
+        Divider,
+        ListItem,
+        ListItemIcon,
+        ListItemText,
+        CssBaseline
+      } from '@material-ui/core';
+import { 
+  AccountCircle,
+  ShoppingCartIcon,
+  CreateIcon,
+  ArrowForwardIcon,
+  MenuIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  SettingsIcon,
+  CardGiftcardIcon,
+  ContactMailIcon,
+  InfoIcon
+} from '@material-ui/icons/AccountCircle';
+
 import stateLogout from '../../actions/stateLogout'
 import swal from 'sweetalert';
 
@@ -190,7 +196,6 @@ export default function NavBar() {
   const renderMenu = (
     <Toolbar>
     {(login === 'true') ?
-      
         <Menu
           anchorEl={anchorEl}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
