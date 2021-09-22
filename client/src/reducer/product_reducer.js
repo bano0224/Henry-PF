@@ -4,6 +4,7 @@ import * as actionConst from '../actions/index'
 export const initialState = {
     products: [],
     clearProducts: [],
+    allProducts: [],
     productDetail: [],
     productReviews: [],
     categories: [],
@@ -13,14 +14,17 @@ export const initialState = {
     users: [],
     userDetail: [],
     roles: [],
-    login: false
+    login: false,
+    promociones: false,
+    checkLogin: [],
+    error: [],
+    orderByUser: []
 };
 
 export default function productReducer(state = initialState, action) {
     switch (action.type) {
   
         case actionConst.CREATE_PRODUCT:
-          console.log('REDUCER')
             return {
                 ...state,
                 // products: [...state.products, action.post]
@@ -33,13 +37,14 @@ export default function productReducer(state = initialState, action) {
                 return Math.random() - 0.3;
                 }),
                 clearProducts: action.payload,
+                allProducts: action.payload
             }
 
         case actionConst.GET_PRODUCT_BY_QUERY:
             return {
                 ...state,
                 products: action.payload,
-            }
+            } 
 
         case actionConst.GET_PRODUCT_BY_ID:
             return {
@@ -69,6 +74,13 @@ export default function productReducer(state = initialState, action) {
             ...state,
             login: false
             }
+
+        case actionConst.CHECK_LOGIN:
+          console.log('ESTOY ENTRANDO AL REDUCER')
+          return {
+            ...state,
+            checkLogin: action.payload
+          }
 
         case actionConst.FILTER_BY_CATEGORY: 
             const allProducts = state.clearProducts;
@@ -175,6 +187,13 @@ export default function productReducer(state = initialState, action) {
               users: action.payload
             }
 
+        case actionConst.GET_ORDER_BY_USER:
+          return {
+              ...state,
+              orderByUser: action.payload
+          }
+              
+
         case actionConst.GET_USER_BY_ID:
           return {
             ...state,
@@ -192,6 +211,18 @@ export default function productReducer(state = initialState, action) {
           return {
             ...state,
             roles: action.payload
+          }
+
+        case actionConst.LOGIN_ERROR:
+          return {
+            ...state,
+            error: action.payload
+          }
+
+        case actionConst.RESET_ERROR:
+          return {
+            ...state,
+            error: []
           }
 
         default: 

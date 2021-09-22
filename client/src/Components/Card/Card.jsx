@@ -11,7 +11,6 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import { blueGrey } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AddShoppingCart } from "@material-ui/icons";
@@ -44,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     overflow:"hidden",
     textOverflow: "ellipsis",
     color: "black"
+  },
+  stock:{
+    color: 'red'
   },
   media: {
     height: "100%",
@@ -142,7 +144,13 @@ export default function ProductCard({name, image, description, price, id, stock,
             {name}
           </Typography>
         }
-        subheader={accounting.formatMoney(price)}
+        subheader={
+          <Typography
+          className={classes.stock}
+          >
+           {stock > 0 ? null : 'SIN STOCK'}
+          </Typography>
+        }
       />
       <CardMedia
         className={classes.media}

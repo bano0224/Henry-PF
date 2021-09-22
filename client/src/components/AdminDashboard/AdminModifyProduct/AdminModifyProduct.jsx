@@ -11,6 +11,8 @@ import modifyProduct from '../../../actions/modifyProduct'
 import getCategories from '../../../actions/getCategories'
 import { makeStyles } from '@material-ui/core/styles';
 import CategoryIcon from '@material-ui/icons/Category'
+import getUsers from '../../../actions/getUsers'
+import sendEmail from '../../../actions/sendEmail'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,10 +56,16 @@ export default function AdminModifyProduct({ match }) {
     useEffect(() => {
         dispatch(getProductById(match.params.id))
         dispatch(getCategories());
+        dispatch(getUsers());
     }, [])
 
     const detail = useSelector( state => state.productReducer)
     const {productDetail, categories} = detail
+    const productReducer = useSelector((state) => state.productReducer)
+    const { users } = productReducer
+
+    const userSubscription = users.filter(user => user.subscription === true)
+    
 
     useEffect(() => {
         if (productDetail.category && categories) {
@@ -109,6 +117,7 @@ export default function AdminModifyProduct({ match }) {
 
     const handleSubmmit = (e) => {
         e.preventDefault()
+        dispatch(sendEmail(userSubscription))
         dispatch(modifyProduct({...product, category: categoriesToShow.map(cat => cat._id), _id: productDetail._id}));
         alert(`${product.name} modified`)
         setProduct({
@@ -120,6 +129,8 @@ export default function AdminModifyProduct({ match }) {
             featured: 0,
             discount: '' || 0
         })
+
+
     }
 
     return (
@@ -128,9 +139,9 @@ export default function AdminModifyProduct({ match }) {
             <br />
             <Container maxWidth='md'>
                 <Breadcrumbs aria-label="breadcrumb">
-                    <Link color="secondary" to="/admin/categories" id='bread'>
+                    <Link color="secondary" to="/admin/products" id='bread'>
                     <CategoryIcon className={classes.icon} />
-                        Categorías
+                        Productos
                     </Link>
                     <Typography color="textPrimary">Crear nuevo producto</Typography>
                 </Breadcrumbs>

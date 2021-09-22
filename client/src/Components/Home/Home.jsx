@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import s from "./Home.module.css";
 import Cards from "../Cards/Cards";
@@ -37,15 +38,25 @@ paginationContainer: {
 }))
 
 export default function Home() {
+  const querys = new URLSearchParams(useLocation().search.slice(1));
+  const status = querys.get("status"); // string con estado de la compra en mercadopago.
   const productReducer = useSelector((state) => state.productReducer)
   const { products } = productReducer
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(9);
   const lastIndex = currentPage * productsPerPage;
   const firstIndex = lastIndex - productsPerPage;
+  const dispatch = useDispatch();
   const classes = useStyles();
 
-  const currentProducts = products.slice(firstIndex, lastIndex);
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
+  const inStock = products.filter(p => p.countInStock >= 1)
+  const currentProducts = inStock.slice(firstIndex, lastIndex);
+  const howManyPages = Math.ceil(inStock.length /productsPerPage)
+  
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -76,16 +87,17 @@ export default function Home() {
             <AllFilters/>
           </div>
         </div>
-        <Grid xs={12} sm={12} md={12} lg={12} className={s.bodyCards}>
-        { products[0]?.error ? (
-            <h4>{products[0]?.error}</h4>
-          ) :
-          <Cards currentProducts={currentProducts} />}
+      <Grid xs={12} sm={12} md={12} lg={12} className={s.bodyCards}>
+        { 
+          products.length === 0
+          ? <h4>No se encontraron productos</h4>
+          : <Cards currentProducts={currentProducts} />
+        }
         </Grid>
       </Grid>
       <Grid xs={12} sm={12} md={12} lg={12} className={classes.paginationContainer}>
         <Pagination
-          products={products.length}
+          products={inStock.length}
           productsPerPage={productsPerPage}
           pages={howManyPages}
           paginate={paginate}
@@ -94,8 +106,6 @@ export default function Home() {
         />
       </Grid>
       <Footer />
-     {/* <Container /> */}
-
     </Grid>
   );
 }

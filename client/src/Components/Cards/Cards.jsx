@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import getProducts from "../../actions/getProducts";
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
 import Card from "../Card/Card";
 /* import style from "./Cards.module.css"; */
 
@@ -15,15 +11,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Cards({currentProducts}) {
-  const dispatch = useDispatch();
-  const classes = useStyles();
-  
-  /* const lengthProd = currentProducts.length */
-  
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
-
   return (
     <Grid container spacing={4} className={classes.gridContainer} justify="center" >
       {currentProducts?.map((product, index) => (

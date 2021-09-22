@@ -4,8 +4,10 @@ const category = require('./category')
 const review = require('./review')
 const user = require('./user')
 const role = require('./role')
-var bodyParser = require('body-parser');
 const checkout = require('./checkout')
+const order = require('./order')
+const mercadopago = require('./mercadopago');
+var bodyParser = require('body-parser');
 
 const router = Router();
 
@@ -17,7 +19,8 @@ router.use('/checkout', checkout);
 router.use('/review', review)
 router.use('/role', role)
 router.use('/user', user)
-
+router.use('/order', order)
+router.use('/mercadopago', mercadopago);
 
 
 module.exports = router;

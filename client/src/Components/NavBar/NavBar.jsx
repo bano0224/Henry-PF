@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useParams } from "react";
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -38,6 +38,7 @@ import {
 
 import stateLogout from '../../actions/stateLogout'
 import swal from 'sweetalert';
+import jwt from 'jsonwebtoken'
 
 
 const drawerWidth = 240;
@@ -138,8 +139,10 @@ const StyledBadge = withStyles((theme) => ({
       width: 'auto',
     },
   }))(Badge);
-export default function NavBar() {
 
+export default function NavBar() {
+  
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -147,23 +150,48 @@ export default function NavBar() {
   const [abrir, setAbrir] = React.useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const history = useHistory();
   const dispatch = useDispatch();
   const [auth, setAuth] = React.useState(true);
   const login = localStorage.getItem('login');
   const a = useSelector(state => state.cartReducer)
   const { cartItems } = a
+  const open = Boolean(anchorEl);
+  const history = useHistory()
+
+
+
+//TOKEN
+  const key = JSON.parse(sessionStorage.getItem("token"))?.token
+  if(key){
+    var decoded = jwt.verify(key, 'secret')
+    console.log('ESTE ES EL DECODED',decoded)
+    var userRole = (decoded.role[0].name)
+  }
+  
+
+//CART BADGE
+  const a = useSelector(state => state.cartReducer)
+  const { cartItems } = a
+
+
+//HANDLERS
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleLogout = () => {
-    dispatch(stateLogout())
+    sessionStorage.removeItem("token")
     swal({
-      title: "Cerraste sesión!",
-      text: "Te esperamos!!",
+      title: "Sesión finalizada",
+      text: "Volvé pronto!",
       buttons: false,
       timer: 2000
     });
-    setTimeout(() => {
-      history.push("/");
-    }, 2500);
+    history.push('/')
   }
 
 
@@ -379,28 +407,104 @@ export default function NavBar() {
                 </StyledBadge>
             </IconButton>
           </Button>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+          {
+            userRole === 'admin'
+            ? <div className={classes.dashboard}>
+              <Button
+                  color="inherit"
+                  aria-label="open drawer"
+                  className={classes.button}
+                  id='button'
+                  component={Link}
+                  to='/admin/products'
+              >
+                  Administrador
+              </Button>
+            </div>
+            : null
+          }
+          <div className={classes.dashboard}>
+              <Button
+                  color="inherit"
+                  aria-label="open drawer"
+                  className={classes.button}
+                  id='button'
+                  component={Link}
+                  to='/promotions'
+              >
+                  Promociones
+              </Button>
           </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
+          <div className={classes.dashboard}>
+            {(key) 
+            ? <div>
+              <Button
+                color="inherit"
+                aria-label="open drawer"
+                className={classes.button}
+                id='button'
+                component={Link}
+                to='/cart'
+              >
+                <StyledBadge badgeContent={cartItems.length} color="secondary" overlap="circular" max={99} anchorOrigin={{vertical: 'top',horizontal: 'right',}}>
+                 <ShoppingCartIcon />
+                </StyledBadge>
+              </Button>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem component={Link} to='/profile'>Perfil</MenuItem>
+                <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
+              </Menu>
+            </div>
+            : <div>
+              <Button
+                  color="inherit"
+                  aria-label="open drawer"
+                  className={classes.button}
+                  id='button'
+                  component={Link}
+                  to='/cart'
+              >
+                <StyledBadge badgeContent={cartItems.length} color="secondary" overlap="circular" max={99} anchorOrigin={{vertical: 'top',horizontal: 'right',}}>
+                  <ShoppingCartIcon />
+                </StyledBadge>
+              </Button>
+              <Button
+                color="inherit"
+                aria-label="open drawer"
+                className={classes.button}
+                id='button'
+                component={Link}
+                to='/login'
+              >
+                Ingresar
+              </Button>
+            </div>
+              
+            }
+            </div>
         </Toolbar>
       </AppBar>
       <Drawer
