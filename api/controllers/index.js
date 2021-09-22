@@ -5,10 +5,12 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
-const stripe = require("stripe")("sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65");
+const stripe = require("stripe")("sk_test_51JYn4nDpSNCyvuRizsfvAUMBg1KU0WYv6Qihrip7VekY3nrHGOpnDATg5h4VhDLkgGvuhHT5pEEr7ZBkCYRoGv2d00QRjqu6Sb");
 // Private key
-
-const services = require('../services/services')
+const nodemailer = require("nodemailer");
+const services = require('../services/services');
+var fs = require('fs');
+var handlebars = require('handlebars');
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
@@ -410,10 +412,10 @@ const getRoles = async (req, res) => {
 
 const checkout = async (req, res) =>{
   const { id, amount } = req.body;
-
-  
-  // res.send("Recibido Stripe");
   try{
+
+  // res.send("Recibido Stripe");
+  
     const payment = await stripe.paymentIntents.create({
       amount: amount,
       currency:"usd",
@@ -421,18 +423,129 @@ const checkout = async (req, res) =>{
       payment_method:id,
       confirm:true,
     })
+
     // res.send("Pago procesado");
     if(payment.cancellation_reason == null){
       res.status(200).json(payment.status)
     } else {
       res.status(200).json({rejected})
+     
     }
   }catch(error){
     return res.json({message: "Error en su tarjeta 2"});
     console.log(error)
   }
-  
 }
+  const sendMail = async (req, res) =>{
+          // Factura
+          const {firstName,lastName, address1, email, amount, items} = req.body;      
+          const emailclient = email;
+          const size = items.length;
+
+          // const contentHtml =`
+          //   <h1>Invoice</h1>
+          //   <h4>¡Gracias por tu compra ${firstName}! </h4>
+          //   <p>A continuacion los detalles de tu compra:</p>
+          //   <br>
+          //   <ul>
+          //     <il>Name: ${firstName}</il>
+          //     <il>Last Name: ${lastName}</il>
+          //     <il>Address: ${address1}</il>
+          //     <il>Email: ${email}</il>
+          //   </ul>
+          //   <p>¡Gracias por tu compra </p>
+          // `;
+        try{
+          // Fs
+          var readHTMLFile = function(path, callback) {
+            fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+                if (err) {
+                    throw err;
+                    callback(err);
+                }
+                else {
+                    callback(null, html);
+                }
+            });
+        };
+        // FS
+          const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+                user: 'supermarkethenry@gmail.com', // generated ethereal user,
+                pass: 'pcozgycvxiqwttuu', // generated ethereal password
+            }
+        });
+         // FS
+         readHTMLFile(__dirname + '/template_email.html', function(err, html) {
+          var template = handlebars.compile(html);
+          var replacements = {
+            firstName: firstName,
+            lastName: lastName,
+            address1: address1,
+            email: email,
+            amount: amount,
+            items: items
+          };
+          var htmlToSend = template(replacements);
+          let mailOption = {
+            from: "'E-MArket'<shanie.fadel60@ethereal.email> ",
+            to: emailclient,
+            subject: "Invoice e-market",
+            html : htmlToSend
+            };
+            transporter.sendMail(mailOption, (error,info)=>{
+                  if(error){
+                    res.status(500).send(error.message);
+                  }else{
+                    console.log("Email enviado", info);
+                    // res.status(200).json(req.body);
+          
+                  }
+                });
+        });
+          // FS
+
+        transporter.verify().then(() => {
+          console.log('Ready for send')
+        })
+        
+
+
+
+        //  const info = await transporter.sendMail(mailOption, (error,info)=>{
+        //     if(error){
+        //       res.status(500).send(error.message);
+        //     }else{
+        //       console.log("Email enviado", info);
+        //       // res.status(200).json(req.body);
+    
+        //     }
+        //   });
+
+
+          transporter.verify(function(error, success) {
+            if (error) {
+             console.log(error);
+            } else {
+             console.log('Server is ready to take our messages');
+            }
+            }); 
+        }catch(error){
+          return res.json({message: "Error en envio de mail"});
+          console.log(error);
+        } 
+          };
+    // const email_template =  (req, res) =>{
+    //   res.render(`product/templates/email/${req.params.template}`, {
+    //     data: req.body        
+    //   })
+    // }      
+
+  
+
 module.exports = {
   getProducts,
   createProduct,
@@ -454,7 +567,9 @@ module.exports = {
   removeUser,
   getRoles,
   getReviews,
-  getReviewById
+  getReviewById,
+  sendMail,
+
   
 };
 

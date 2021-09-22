@@ -9,12 +9,13 @@ import { Elements, CardElement, useStripe,useElements } from '@stripe/react-stri
 import { loadStripe } from '@stripe/stripe-js';
 import addToCart from '../../actions/cart/addToCart';
 import removeFromCart from '../../actions/cart/removeFromCart';
+import cartShipping from '../../actions/cart/cartShipping'
 import {useSelector, useDispatch} from 'react-redux';
 import accounting from "accounting";
 import axios from 'axios';
 import swal from "sweetalert";
 
-const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
+const stripePromise =loadStripe("pk_test_51JYn4nDpSNCyvuRiS1bLRUqB7fT8XFxMovwZoNYQM1xVN9jyp3slDkoNGXhcupYkbr3Ph3oPNZHqHK4CaiR8tO4k00o7uKPlg7");
 const CARD_ELEMENTS_OPTIONS={
     iconStyle: "solid",
     hidePostalCode: true,
@@ -41,11 +42,21 @@ const CheckoutForm =({backStep, nextStep})=>{
     const [error, setError] = useState(null);
     const [succeeded, setSucceeded] = useState(false);
     const cartReducer = useSelector(state => state.cartReducer)
-    const {cartItems} = cartReducer
+    const {cartItems} = cartReducer;
+    const { shippingData } = cartReducer;
+    const dispatch = useDispatch()
     const getSubtotal=()=>{
         return  cartItems
                 .reduce((price,item)=> price + item.price * parseInt(item.qty), 0)
         }
+
+        
+        let items = cartItems.map(item=>({
+            name: item.name,
+            price: item.price,
+            qty: item.qty
+        }));
+ 
     const stripe = useStripe(); 
     const elements = useElements();    
     
@@ -63,24 +74,34 @@ const CheckoutForm =({backStep, nextStep})=>{
         const {error, paymentMethod}= await stripe.createPaymentMethod({
             type:"card",
             card: elements.getElement(CardElement)  
-        } )
-    
+            });
+
+         
             if(error){
                 setError(`Payment failed ${error.message}`);
                 setProcessing(false);
-                
+                    
             }else {
                 const { id } = paymentMethod;
                 try{
                 const { data } = await axios.post("http://localhost:5000/checkout/create",
-                    {  id: id, amount: getSubtotal(),  } );
-                    console.log(data)
+                    {  id: id, amount: getSubtotal(),} );
+                    console.log(data);
+                // Envio de facutura
+                const { data2 } =  await axios.post("http://localhost:5000/checkout/sendMail",
+                { firstName: shippingData.firstName,lastName: shippingData.lastName,
+                     address1: shippingData.address1, email:shippingData.email,
+                     amount: getSubtotal(), items:items} );
+
+                        
+                // Envio de facutura
                 
                 setError(null);
                 setProcessing(false);
                 setSucceeded(true);
-                
-                if(data == 'succeeded') {
+                console.log("Nombre del producto:", items[0].name);
+                const result = Promise.all(data, data2).then((info) => { 
+                    if(data == 'succeeded') {
                 swal({
                     title: "Tu pago fue realizado con éxito",
                     icon: "success",
@@ -100,6 +121,8 @@ const CheckoutForm =({backStep, nextStep})=>{
                         timer: 3000,
                       });
                 }
+                 });
+ 
                 // elements.getElement(CardElement).clear();
                 // nextStep();   
                 
@@ -119,7 +142,7 @@ const CheckoutForm =({backStep, nextStep})=>{
             <CardElement options={CARD_ELEMENTS_OPTIONS}/>
             <div style={{display: "flex", justifyContent:"space-between", marginTop:"1rem"}}>
             <Button variant='outlined' onClick={backStep}>Back</Button>
-            <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
+            <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pagar ${accounting.formatMoney(getSubtotal())}`}</Button>
             </div>
 
         </form>

@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux';
 import cartShipping from '../../actions/cart/cartShipping'
-
+import axios from 'axios';
 
 const AddressForm = ({nextStep}) => {
 const methods = useForm();
@@ -26,6 +26,8 @@ const dispatch = useDispatch()
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(data=>{
                 dispatch(cartShipping(data)) 
+                // console.log(data.firstName)
+                // email(data.firstName,data.lastName, data.address1, data.email);
                 nextStep()    
                 console.log(data)
                         })}>
