@@ -10,10 +10,12 @@ import StarIcon from '@material-ui/icons/Star';
 import { yellow } from "@material-ui/core/colors";
 import { blueGrey } from "@material-ui/core/colors";
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, Divider, Typography, Breadcrumbs } from '@material-ui/core';
+import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, Divider, Typography, Breadcrumbs} from '@material-ui/core';
+import { List, ListItem} from '@mui/material';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HomeIcon from '@material-ui/icons/Home'
 import getReviews from "../../actions/getReviews";
+
 
 export default function DetailProduct({name, image, description, price, id}) {
   
@@ -61,26 +63,30 @@ export default function DetailProduct({name, image, description, price, id}) {
                     <p className="left__name">{productDetail.name}</p>
                     <p>Precio: ${productDetail.price}</p>
                     <p>Descripcion: {productDetail.description}</p>
+                  
                     <Accordion defaultExpanded>
                                 <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel1a-content"
                                 id="cart"
                                 >
-                                    <Typography /* className={classes.heading} */>Ver reseñas</Typography>
+                                    <Typography>Ver reseñas</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    <Grid container direction='column' spacing={2}>
+                                    <Grid container direction='column' spacing={1}>
                                     { 
-                                      <span>
+                                      <List>
                                       {
                                       productReviews.filter(e => e.product[0]?._id === id).map(r => (
-                                      <div>
-                                        <b>{r.name}</b>
-                                        <p>{r.comment}</p>
-                                        <p>{`${r.rating} estrellas`}</p>
-                                        </div> )) }
-                                    </span>
+                                      <ListItem className="right__info1">
+                                        <div className="reseña">{r.name}</div>
+                                        <p>
+                                        <div>{r.comment} {/* {`${r.rating}`}<StarIcon style={{ color: yellow[500]}}sx={{ fontSize: 40 }}  />*/}</div>
+                                        <div className="star">{r.rating}<StarIcon style={{ color: yellow[500]}} /></div>
+                                        </p>
+                                      </ListItem> 
+                                      ))}
+                                    </List>
                                     } 
                                     </Grid>
                                 </AccordionDetails>
@@ -135,19 +141,8 @@ export default function DetailProduct({name, image, description, price, id}) {
             alt="LoadingGif"
             className="loadingGif"
           />
-{/*           <div>
-                  <Link to="/">
-                  <Button variant="contained" color="secondary" style= {{textDecoration: 'none'}} component={Link} to='/'>
-                  Home
-                </Button>
-                  </Link>
-          </div> */}
         </div>
       )}
-
-      {/* <div className={s.footer}>
-        <Footer />
-      </div> */}
     </div>
         </Grid>
       </Grid>
