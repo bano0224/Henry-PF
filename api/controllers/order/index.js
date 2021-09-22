@@ -38,9 +38,19 @@ const getOrderById = async (req, res) => {
     res.status(200).json(order)
 }
 
+const modifyStatus = async (req, res) => {
+    const {status, id} = req.body
+
+    const order = await Order.findByIdAndUpdate(id, {status: status})
+
+    res.status(200).json('estado modificado')
+
+}
+
 module.exports = {
     createOrder,
     getOrderByUser,
     getOrders,
-    getOrderById
+    getOrderById,
+    modifyStatus
 }

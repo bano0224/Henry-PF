@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminNav from '../AdminNav/AdminNav'
-import { Breadcrumbs, Typography, Container, Grid, Paper, Accordion, AccordionSummary, AccordionDetails, Divider } from '@material-ui/core'
+import { Breadcrumbs, Typography, IconButton, Button, Container, Grid, Paper, Accordion, AccordionSummary, AccordionDetails, Divider } from '@material-ui/core'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import OrderItem from '../../UserProfile/OrderItem'
 import getOrderById from '../../../actions/order/getOrderById'
+import ModifyStatus from './ModifyStatus'
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -24,13 +26,19 @@ const useStyles = makeStyles((theme) => ({
 export default function AdminOrderDetail({match}) {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const [editStatus, setEditStatus] = useState(false)
 
     useEffect(() => {
         dispatch(getOrderById(match.params.id))
+        setEditStatus(false)
     }, [dispatch])
 
     const productReducer = useSelector(state => state.productReducer)
     const { orderDetail } = productReducer
+    
+    const handleClick = () => {
+        setEditStatus(true)
+    }
 
     return (
         <>
@@ -56,9 +64,29 @@ export default function AdminOrderDetail({match}) {
                                     <hr />
                                 </Grid>
                                 <Grid item >
-                                    <Grid container direction='column' justifyContent='space-around'>
+                                    <Grid container direction='row' justifyContent='space-around'>
                                         <Grid item xs={6}>
-                                            <h5>{`Estado: ${orderDetail.status}`}</h5>
+                                            {
+                                                editStatus
+                                                ? <Grid container direction='row' xs={12} alignItems='center'>
+                                                    <Grid item>
+                                                        <h5>{`Estado: `}</h5>
+                                                    </Grid> 
+                                                    <Grid item>
+                                                        <ModifyStatus id={orderDetail._id}/>
+                                                    </Grid>
+                                                </Grid>
+                                                : <Grid container direction='row' alignItems='center'  xs={12}>
+                                                    <Grid item>
+                                                        <h5>{`Estado: ${orderDetail.status}`}</h5> 
+                                                    </Grid> 
+                                                    <Grid item>
+                                                        <Button onClick={()=>{handleClick()}}>
+                                                            <EditIcon/>
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            }
                                         </Grid>
                                         <Grid item xs={6}>
                                             <h5>{`Fecha: ${orderDetail.dateOrdered}`}</h5>
