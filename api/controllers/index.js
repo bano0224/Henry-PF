@@ -19,7 +19,6 @@ const { ID_ROLE_USER } = process.env;
 const services = require("../services/services");
 
 const getProducts = async (req, res, next) => {
-  console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
   const { name } = req.query;
   try {
     if (name) {
@@ -301,7 +300,7 @@ const logUp = async (req, res) => {
       lastName,
       email,
       password: await User.encryptPassword(password),
-      role: [{ _id: {ID_ROLE_USER} }],
+      role: [{ _id: ID_ROLE_USER }],
     });
 
     const saveUser = await newUser.save();

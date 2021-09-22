@@ -30,8 +30,17 @@ const getOrderByUser = async (req, res) => {
     res.status(200).json(orders)
 }
 
+const getOrderById = async (req, res) => {
+    const { id } = req.params
+
+    const order = await Order.find({_id: id}).populate('user')
+
+    res.status(200).json(order)
+}
+
 module.exports = {
     createOrder,
     getOrderByUser,
-    getOrders
+    getOrders,
+    getOrderById
 }

@@ -5,12 +5,13 @@ import { TableContainer, Paper, Table, TableBody, TableCell, TableHead, TablePag
 import getOrders from '../../../actions/order/getOrders'
 import { Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const columns = [
     { id: '_id', label: 'ID Orden', minWidth: 170 },
     { id: 'user', label: 'ID Usuario', minWidth: 100 },
     { id: 'status', label: 'Estado', minWidth: 100, align: 'center'},
-    // { id: 'detail', label: 'Detalles', minWidth: 100, align: 'center' },
+    { id: 'detail', label: 'Detalles', minWidth: 100, align: 'center' },
   ];
 
   const useStyles = makeStyles({
@@ -41,7 +42,7 @@ export default function AdminOrder() {
 
     useEffect(() => {
         setRows(orders)
-    }, [])
+    }, [orders])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -78,29 +79,36 @@ export default function AdminOrder() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} >
-                                    {columns.map((column) => {
-                                        const value = row[column.id];
-                                        if(column.id === 'user'){
-                                            // console.log('entra');
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {value._id}
-                                                </TableCell>
-                                            )
-                                        } else {
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {value}
-                                                </TableCell>
-                                            );
-                                        } 
-                                    })}
-                                    </TableRow>
-                                );
-                                })}
+                                {
+                                    rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} >
+                                            {columns.map((column) => {
+                                                const value = row[column.id];
+                                                if(column.id === 'user'){
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align}>
+                                                            {value._id}
+                                                        </TableCell>
+                                                    )
+                                                } else if (column.id === 'detail'){
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align}>
+                                                            <Link to={`/admin/orders/${row._id}`} id='link'> Ver detalles </Link>
+                                                        </TableCell>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align}>
+                                                            {value}
+                                                        </TableCell>
+                                                    );
+                                                } 
+                                            })}
+                                            </TableRow>
+                                        );
+                                    })
+                                }
                             </TableBody>
                         </Table>
                     </TableContainer>
