@@ -45,7 +45,6 @@ export default function Home() {
   const firstIndex = lastIndex - productsPerPage;
   const dispatch = useDispatch();
   const classes = useStyles();
-  
 
   useEffect(() => {
     dispatch(getProducts());

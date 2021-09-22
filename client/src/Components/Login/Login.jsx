@@ -10,6 +10,7 @@ import swal from "sweetalert";
 import checkLogin from "../../actions/checkLogin";
 import login from "../../actions/users/login";
 import resetError from "../../actions/users/resetError";
+import loginGoogle from "../../actions/users/loginGoogle";
 
 export default function Login() {
 
@@ -29,6 +30,9 @@ export default function Login() {
   //GOOGLE
   function responseGoogle(respuesta) {
     if (respuesta.profileObj) {
+      console.log(respuesta)
+      const user = respuesta.
+      dispatch(loginGoogle({}))
 
       swal({
         title: "Bienvenida/o",
