@@ -1,27 +1,16 @@
 import axios from "axios";
-import { LOGIN_ERROR } from "..";
-import { URL_LOGIN } from '../../utils/utils'
-import swal from "sweetalert";
+import { URL_LOGIN_GOOGLE } from '../../utils/utils'
 
-export default function loginGoogle(userLogin){
+
+export default function loginGoogle(payload){
+    console.log('ÉSTE ES EL PAYLOAD DE GOOGLE', payload)
     return async function(dispatch){
         try {
-            const response = await axios.post(`${URL_LOGIN}`, userLogin)
-            sessionStorage.setItem("tokenGoogle", JSON.stringify(response.data)) 
-            
-            swal({
-                title: "Bienvenida/o",
-                text: "Disfrutá de las mejores ofertas!",
-                icon: "success",
-                buttons: false,
-                timer: 2000,
-            });
-            
+            const response = await axios.post(`${URL_LOGIN_GOOGLE}`, payload)
+            sessionStorage.setItem("token", JSON.stringify(response.data))
+            console.log('ESTE ES EL RESPONSE', response.data)
         } catch (error) {
-            dispatch({
-                type: LOGIN_ERROR,
-                payload: error.response.data.message
-            })
+            console.log('Error al iniciar sesión')
         }
     }
 }

@@ -111,9 +111,9 @@ export default function NavBar() {
   const key = JSON.parse(sessionStorage.getItem("token"))?.token
   if(key){
     var decoded = jwt.verify(key, 'secret')
-    console.log('ESTE ES EL DECODED',decoded)
-    var userRole = (decoded.role[0].name)
+    var userRole = (decoded?.role[0].name)
   }
+  
   
 
 //CART BADGE

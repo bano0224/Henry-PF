@@ -7,6 +7,7 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
+const WishList = require("../models/WishList")
 /* const ofertas = require("../../client/src/media/ofertas") */
 const stripe = require("stripe")(
   "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
@@ -25,6 +26,8 @@ const {ID_ROLE_USER} = process.env;
 
 
 const services = require("../services/services");
+
+
 
 const getProducts = async (req, res, next) => {
   console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
@@ -584,6 +587,60 @@ const mercadopagoController = async (req, res, next) => {
   }
 };
 
+const addToWishList = async(req, res) => {
+  
+  const { id } = req.body
+  try {
+    const user = User.findById(id)
+    const product = Product.findById(idProduct)
+    
+    await WishList.create(idProduct)
+
+  } catch(error) {
+    console.log('No se encontró el usuario solicitado')
+  }
+};
+
+const loginGoogle = async(req, res) => {
+  const { email, firstName, lastName } = req.body
+  
+  try {
+    const user = await User.findOne({ email: req.body.email }).populate(
+      "role",
+      { name: 1 }
+    );
+    
+    if(user) {
+      
+      const token = jwt.sign({ id: user._id, role: user.role }, 'secret', {expiresIn: 3600});
+      
+      res.json({token})
+
+    } else {
+      
+      const newUser = new User({
+        firstName,
+        lastName,
+        email,
+        role: [{ _id: ID_ROLE_USER }],
+      });
+  
+      const saveUser = await newUser.save();
+      const token = jwt.sign(
+        { id: saveUser._id, role: saveUser.role },
+        'secret',
+        {
+          expiresIn: 3600, //una hora expira el token
+        }
+      );
+      res.json({token});
+    }
+    
+  } catch(error) {
+    console.log('No se encontró el usuario solicitado')
+  }
+
+}
 module.exports = {
   getProducts,
   createProduct,
@@ -614,6 +671,8 @@ module.exports = {
   sendEmail,
   sendEmailCheckout,
   mercadopagoController,
+  addToWishList,
+  loginGoogle
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

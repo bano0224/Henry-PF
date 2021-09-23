@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete'
 import addToCart from "../../actions/cart/addToCart";
 
+
 const useStyles = makeStyles((theme) => ({
     margin: {
       margin: theme.spacing(1),

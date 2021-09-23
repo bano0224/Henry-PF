@@ -14,7 +14,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+    /* required: true, */
     minlength:[8,'La contraseña debe tener 8 caracteres como mínimo'],
   },
   firstName: {
@@ -36,7 +36,6 @@ const userSchema = new Schema({
   role: [{
     ref: 'Role',
     type: Schema.ObjectId,
-    /* required:true, */
   }],
   email_notification: {
     type: Boolean,
@@ -60,7 +59,13 @@ const userSchema = new Schema({
   expiredLogin: {
     type: Number,
     default: 0
-  }
+  },
+  wishlist: [
+    {
+      type: Schema.ObjectId,
+      ref: "WishList",
+    }
+  ],
 });
 
 userSchema.statics.encryptPassword = async (password) => {

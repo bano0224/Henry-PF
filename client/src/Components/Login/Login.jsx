@@ -30,9 +30,10 @@ export default function Login() {
   //GOOGLE
   function responseGoogle(respuesta) {
     if (respuesta.profileObj) {
-      console.log(respuesta)
-      const user = respuesta.
-      dispatch(loginGoogle({}))
+      const userEmail = respuesta.profileObj.email
+      const userFirstName = respuesta.profileObj.givenName
+      const userLastName = respuesta.profileObj.familyName
+      dispatch(loginGoogle({email: userEmail, firstName: userFirstName, lastName: userLastName}))
 
       swal({
         title: "Bienvenida/o",
@@ -47,6 +48,7 @@ export default function Login() {
       }, 2500);
     }
   }
+
 
   /* function responseFacebook(respuesta) {
     console.log('ESTA ES LA RESPUESTA',respuesta)
@@ -75,7 +77,6 @@ export default function Login() {
     })
   }
 
-  // console.log(sessionStorage.getItem('token'));
 
   function handleLogin(e) {
     e.preventDefault();

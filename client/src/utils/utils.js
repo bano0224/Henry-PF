@@ -18,8 +18,10 @@ export const URL_GET_USER_ID = 'http://localhost:5000/user/'
 export const URL_SET_SUBSCRIPTION = 'http://localhost:5000/user/subscription'
 export const URL_RESET_PASSWORD = 'http://localhost:5000/user/resetPassword'
 export const URL_LOGIN = 'http://localhost:5000/user/login'
+export const URL_LOGIN_GOOGLE = 'http://localhost:5000/user/loginGoogle'
 export const URL_SEND_EMAIL = 'http://localhost:5000/user/sendEmail'
 export const URL_SEND_EMAIL_CHECKOUT = 'http://localhost:5000/user/sendEmailCheckout'
+export const URL_ADD_TO_WISHLIST = 'http://localhost:5000/user/addToWishList'
 
 //ROLES
 export const URL_GET_ROLES = 'http://localhost:5000/role'
