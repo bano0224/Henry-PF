@@ -37,6 +37,8 @@ paginationContainer: {
 }
 }))
 
+
+
 export default function Home() {
   const querys = new URLSearchParams(useLocation().search.slice(1));
   const status = querys.get("status"); // string con estado de la compra en mercadopago.
@@ -53,6 +55,12 @@ export default function Home() {
     dispatch(getProducts());
   }, []);
 
+  const currentProducts = products.slice(firstIndex, lastIndex);
+  
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+  
   const inStock = products.filter(p => p.countInStock >= 1)
   const currentProducts = inStock.slice(firstIndex, lastIndex);
   const howManyPages = Math.ceil(inStock.length /productsPerPage)
