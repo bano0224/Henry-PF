@@ -67,89 +67,34 @@ export default function CartScreen() {
     );
   };
 
-  const handleClickMP = () => {
-      dispatch(mercadopagoPayment(cartItems))
-      /* dispatch(productStock(cartItems)) */
-    };
-
-  return (
-    <Grid container xs={12}>
-        <Grid item xs={12}>
-            <NavBar />
-        </Grid>
-        <Grid item xs={12}>  
-            <br />
-            <Container>
-                <Breadcrumbs aria-label="breadcrumb">
-                    <Link color="secondary" to="/" id='bread'>
-                    <HomeIcon className={classes.icon} />
-                        Home
-                    </Link>
-                    <Typography color="textPrimary">Carrito</Typography>
-                </Breadcrumbs>
+    return (
+        <Grid container xs={12} sm={12} md={12} lg={12}>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+                <NavBar />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>  
                 <br />
-                <Typography variant="h3" className={classes.h1}>Detalles del carrito</Typography>
-                <br />
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="flex-start"
-                    spacing={2}
-                >
-                    <Grid item xs={8}>
-                        <Accordion defaultExpanded>
-                            <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="cart"
-                            >
-                                <Typography className={classes.heading} id="cart">Carrito</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Grid container direction='column' spacing={2}>
-                                {
-                                    cartItems.length === 0 
-                                    ?(
-                                        <span>
-                                            Carrito vacío.
-                                        </span>
-                                    )
-                                    :(
-                                        cartItems.map(item=>(
-                                           
-                                            <>
-                                                <Cart
-                                                key={item._id}
-                                                item={item}
-                                                handlerRemove={handlerRemove}
-                                                />
-                                                <Divider />
-                                            </>
-                                        ))
-                                    )
-                                } 
-                                </Grid>
-                            </AccordionDetails>
-                        </Accordion>
-                        {/* <Accordion>
-                            <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                            >
-                                <Typography className={classes.heading}>2. Detalles de envío</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                {
-                                    login
-                                    ? <p>Estas logueado bro</p>
-                                    : <p> No estas logueado bro </p>
-                                }
-                            </AccordionDetails>
-                        </Accordion>
-                        <Accordion >
-                            <AccordionSummary
+                <Container>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link color="secondary" to="/" id='bread'>
+                        <HomeIcon className={classes.icon} />
+                            Home
+                        </Link>
+                        <Typography color="textPrimary">Carrito</Typography>
+                    </Breadcrumbs>
+                    <br />
+                    {/* <Typography variant="h3" className={classes.h1}>Detalles del carrito</Typography> */}
+                    <br />
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="flex-start"
+                        spacing={2}
+                    >
+                        <Grid item xs={12} sm={8} md={8} lg={8}>
+                            <Accordion Expanded>
+                                <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel3a-content"
                                 id="panel3a-header"
@@ -186,9 +131,8 @@ export default function CartScreen() {
                 </Grid>
             </Container>
         </Grid>
-
-
     </Grid>
 
 );
 }
+

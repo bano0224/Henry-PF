@@ -30,7 +30,6 @@ export default function UserProfile(props) {
         var decoded = jwt.verify(key, 'secret')
     }
     
-
     useEffect(() => {
         dispatch(getUserById(decoded.id))
     }, [])
