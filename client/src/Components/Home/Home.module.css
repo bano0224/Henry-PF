@@ -20,6 +20,7 @@
 .h3Container {
   position: absolute;
   color: white;
+  width: 100%;
 }
 
 .title {
@@ -31,7 +32,7 @@
 
 .titleB {
   font-family: "Raleway", sans-serif;
-  font-size: 6em;
+  font-size: 3em;
   text-align: center;
   font-weight: 800;
 }

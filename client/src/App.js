@@ -27,7 +27,7 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout";
 import UserProfile from "./components/UserProfile/UserProfile";
 import Promotions from "./components/Promotions/Promotions";
-/* import Landing from "./components/Landing/Landing"; */
+import Landing from "./components/Landing/Landing";
 
 function App() {
   return (
@@ -57,7 +57,7 @@ function App() {
         <PrivateRoute exact path="/admin/categories/:id" component={AdminModifyCategory} />
         <PrivateRoute exact path="/admin/users/:id" component={AdminModifyUser}/>
         <Route path='/profile' component={UserProfile} />
-        {/* <Route exact path='/landing' component={Landing} /> */}
+        <Route exact path='/landing' component={Landing} />
         <Route path='*' component={NotFound} />
         
       </Switch>
