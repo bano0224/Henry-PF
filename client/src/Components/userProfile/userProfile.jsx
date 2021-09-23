@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function UserProfile(props) {
+export default function UserProfile() {
     const classes = useStyles();
     const productReducer = useSelector(state => state.productReducer)
     const {userDetail, orderByUser} = productReducer

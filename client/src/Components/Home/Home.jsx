@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '5%',
     display: 'flex',
     flexDirection: 'row',
-    /* justifyContent: 'auto', */
     boxSizing: 'content-box',
     width: '100%',
   }

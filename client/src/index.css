@@ -23,6 +23,11 @@ select:focus{
   border-color: #b2102f !important;
 }
 
+#spanError{
+  text-align: center;
+  color: #b2102f;
+}
+
 #title{
   font-family: 'Raleway';
 }

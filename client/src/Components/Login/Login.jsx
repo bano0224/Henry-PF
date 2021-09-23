@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import { Container, Button } from "@material-ui/core";
+import { Container, Button, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import style from "./Login.module.css";
@@ -94,6 +94,7 @@ export default function Login() {
   }
 
   return (
+
     <div className={style.body}>
       <NavBar />
       <div className={style.container}>
@@ -147,7 +148,7 @@ export default function Login() {
           <Container className={style.buttonLogup}>
             {
               typeof error !== 'object'
-              ? <span>{error}</span>
+              ? <h6 id='spanError'>{error}</h6>
               : <p></p>
             }
             <Button variant="contained" color="secondary" type="submit">
