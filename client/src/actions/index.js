@@ -29,4 +29,6 @@ export const CHECK_LOGIN = 'CHECK_LOGIN';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const RESET_ERROR = 'RESET_ERROR';
 export const GET_ORDER_BY_USER = 'GET_ORDER_BY_USER';
-
+export const GET_ORDERS = 'GET_ORDERS';
+export const GET_ORDER_BY_ID = 'GET_ORDER_BY_ID';
+export const FILTER_BY_STATUS = 'FILTER_BY_STATUS'

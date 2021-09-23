@@ -31,7 +31,6 @@ const { Console } = require("console");
 
 
 const getProducts = async (req, res, next) => {
-  console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
   const { name } = req.query;
   try {
     if (name) {
@@ -309,7 +308,7 @@ const logIn = async (req, res) => {
   
   if (!matchPassword) return res.status(401).json({ message: "El usuario o la contraseña son inválidos" });
     
-  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 3600});
+  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 36000});
 
   userFound.expiredLogin = userFound.expiredLogin + 1
 

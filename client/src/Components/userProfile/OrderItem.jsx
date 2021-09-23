@@ -1,6 +1,7 @@
 import React from 'react'
-import { Grid, IconButton } from '@material-ui/core'
+import { Grid, IconButton, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -19,14 +20,14 @@ export default function OrderItem({product}) {
 
     return (
         <>
-            <Grid container justifyContent='space-between' alignItems='center' className={classes.container}>
+            <Grid container justifyContent='space-between' alignItems='center' className={classes.container} style={{marginTop: '2px'}}>
                 <Grid item>
                     <Grid container direction='row' justifyContent='center' alignItems='flex-end' spacing={1}>
                         <Grid item>
                             <img src={product.imageUrl} width='30px' height='30px'/>
                         </Grid>
                         <Grid item>
-                            <h6>{product.name}</h6>
+                            <Typography id='link' component={Link} to={`/detail/${product._id}`}>{product.name}</Typography>
                         </Grid>
                     </Grid> 
                 </Grid>

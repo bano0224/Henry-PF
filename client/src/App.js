@@ -26,6 +26,9 @@ import Confirm from './components/Login/Confirm';
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout";
 import UserProfile from "./components/UserProfile/UserProfile";
+import AdminOrder from "./components/AdminDashboard/AdminOrder/AdminOrder";
+import AdminOrderDetail from "./components/AdminDashboard/AdminOrder/AdminOrderDetail";
+import Landing from "./components/Landing/Landing";
 import Promotions from "./components/Promotions/Promotions";
 
 function App() {
@@ -55,6 +58,10 @@ function App() {
         <PrivateRoute exact path="/admin/users" component={AdminUsers} />
         <PrivateRoute exact path="/admin/categories/:id" component={AdminModifyCategory} />
         <PrivateRoute exact path="/admin/users/:id" component={AdminModifyUser}/>
+        <Route exact path="/admin/orders" component={AdminOrder}/>
+        <Route exact path="/admin/orders/:id" component={AdminOrderDetail}/>
+        <Route exact path='/landing' component={Landing} />
+        {/* <PrivateRoute exact path="/admin/orders/:id" component={AdminOrder}/> */}
         <Route path='/profile' component={UserProfile} />
         <Route path='*' component={NotFound} />
         

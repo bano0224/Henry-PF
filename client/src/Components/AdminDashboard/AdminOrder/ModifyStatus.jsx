@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
+import {InputLabel, Grid} from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import filterByCategory from '../../../actions/filterByCategory';
+import modifyStatus from '../../../actions/order/modifyStatus';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -18,23 +18,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterByCategory() {
+export default function FilterByStatus({id}) {
   const [open, setOpen] = React.useState(false);
-  const [category, setCategory] = React.useState('')
-  const dispatch = useDispatch();
+  const [status, setStatus] = React.useState('')
   const classes = useStyles();
-
-  const allCategories = useSelector(state => state.productReducer)
-  const { categories } = allCategories
+  const dispatch = useDispatch()
 
 
   const handleChange = (event) => {
-    setCategory(event.target.value)
+    setStatus(event.target.value)
   };
 
   useEffect(() => {
-    dispatch(filterByCategory(category));
-  }, [category])
+    dispatch(modifyStatus(status, id));
+  }, [status])
 
 
   const handleClose = () => {
@@ -46,26 +43,28 @@ export default function FilterByCategory() {
   };
 
   return (
-    <div>
+    <Grid item container alignItems='center' style={{margin: '0'}}>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">Filtro</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
           open={open}
-          value={category}
+          value={status}
           onClose={handleClose}
           onOpen={handleOpen}
           onChange={handleChange}
         >
-          <MenuItem value="all">
-            <em>Todas</em>
+          <MenuItem value="Pendiente">
+            <em>Pendiente</em>
           </MenuItem>
-          {
-            categories?.map(c => <MenuItem value={c.name}>{c.name}</MenuItem>)
-          }
+          <MenuItem selected value="Completada">
+            <em>Completada</em>
+          </MenuItem>
+          <MenuItem value="Cancelada">
+            <em>Cancelada</em>
+          </MenuItem>
         </Select>
       </FormControl>
-    </div>
+    </Grid>
   );
 }

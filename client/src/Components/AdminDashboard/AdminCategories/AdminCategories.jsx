@@ -4,17 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import getCategories from '../../../actions/getCategories'
 import AdminNav from '../AdminNav/AdminNav'
 import { Container } from 'react-bootstrap'
-import TableContainer from '@material-ui/core/TableContainer'
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 import AddIcon from '@material-ui/icons/Add';
-import { Box, Button, IconButton } from '@material-ui/core'
+import { Box, Button, IconButton, TableContainer, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import deleteUser from '../../../actions/users/deleteUser';

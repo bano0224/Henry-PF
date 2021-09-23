@@ -21,6 +21,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import Container from '@material-ui/core/Container'
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import Button from '@material-ui/core/Button';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -174,6 +175,10 @@ export default function AdminNav() {
                     <ListItem button key='Users' component={Link} id='side' to="/admin/users">
                         <ListItemIcon>{<PeopleIcon />}</ListItemIcon>
                         <ListItemText primary='Usuarios' />
+                    </ListItem>
+                    <ListItem button key='Orders' component={Link} id='side' to="/admin/orders">
+                        <ListItemIcon>{<ShoppingBasketIcon />}</ListItemIcon>
+                        <ListItemText primary='Orders' />
                     </ListItem>
                 </List>
             <Divider />

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import AdminNav from '../AdminNav/AdminNav'
-import { Container, Button } from '@material-ui/core';
+import { Container, Button, Breadcrumbs, Typography } from '@material-ui/core';
 import { DropzoneArea } from 'material-ui-dropzone';
 import createCategory from '../../../actions/createCategory';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import CategoryIcon from '@material-ui/icons/Category';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,18 +57,16 @@ export default function AdminAddCategory(props) {
         <>
             <AdminNav /> 
             <br />
-            <Button
-                    variant="contained"
-                    color="secondary"
-                    className={classes.button}
-                    startIcon={<ArrowBackIcon />}
-                    component={Link} 
-                    to='/admin/categories'
-                    style= {{textDecoration: 'none'}}
-                    id='button'
-                >
-                    Volver
-                </Button>
+            <Container>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link color="secondary" to="/admin/categories" id='bread'>
+                    <CategoryIcon className={classes.icon} />
+                        Categorías
+                    </Link>
+                    <Typography color="textPrimary">Crear categoría</Typography>
+                </Breadcrumbs>
+            </Container>
+            <br />
             <Container>
                 <h1>Agregar Categoría</h1>
             </Container>

@@ -18,7 +18,10 @@ export const initialState = {
     promociones: false,
     checkLogin: [],
     error: [],
-    orderByUser: []
+    orderByUser: [],
+    orders: [],
+    ordersToShow: [],
+    orderDetail: []
 };
 
 export default function productReducer(state = initialState, action) {
@@ -57,6 +60,19 @@ export default function productReducer(state = initialState, action) {
                 ...state,
                 products: action.payload
             }
+
+          case actionConst.GET_ORDERS:
+            return {
+              ...state,
+              orders: action.payload,
+              ordersToShow: action.payload
+            }
+
+        case actionConst.GET_ORDER_BY_ID:
+          return {
+            ...state,
+            orderDetail: action.payload[0]
+          }
 
         case actionConst.SET_REVIEWS:
             return {
@@ -97,6 +113,18 @@ export default function productReducer(state = initialState, action) {
                 ...state,
                 products: filterProduct,
             }
+
+        case actionConst.FILTER_BY_STATUS:
+            const allOrders = state.orders
+            const filterOrder =
+                action.payload === "all"
+                ? allOrders
+                : allOrders.filter(e =>  e.status.toLowerCase() === action.payload);
+            return {
+                ...state,
+                ordersToShow: filterOrder,
+            }
+            
 
         case actionConst.CREATE_CATEGORY:
             return {

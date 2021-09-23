@@ -34,7 +34,8 @@ import { blueGrey } from "@material-ui/core/colors";
 import Label from '@mui/icons-material/Label';
 /* import stateLogout from '../../actions/stateLogout' */
 import swal from 'sweetalert';
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
+import logo from '../../media/logo.png'
 
 
 const drawerWidth = 240;
@@ -91,14 +92,24 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(3),
       width: 'auto',
     },
-    marginRight: theme.spacing(4),
-    marginLeft: 4,
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('xs')]: {
-      display: 'flex',
-      width: 'auto',
+    title: {
+      fontFamily: 'Kalam',
+      fontSize: '2.5em',
+      marginLeft: '5px'
+      
+    },
+    menuButton: {
+      marginRigth: theme.spacing(2),
+      [theme.breakpoints.up('sm')]:{
+        display: 'none',
+      },
+    },
+    hide: {
+        display: 'none',
+    },
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
     },
   },
   sectionMobile: {
@@ -162,7 +173,6 @@ export default function NavBar() {
   const key = JSON.parse(sessionStorage.getItem("token"))?.token
   if(key){
     var decoded = jwt.verify(key, 'secret')
-    console.log('ESTE ES EL DECODED',decoded)
     var userRole = (decoded.role[0]?.name)
   }
   
