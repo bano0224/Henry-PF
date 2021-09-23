@@ -112,7 +112,7 @@ export default function NavBar() {
   if(key){
     var decoded = jwt.verify(key, 'secret')
     console.log('ESTE ES EL DECODED',decoded)
-    var userRole = (decoded.role[0].name)
+    var userRole = (decoded.role[0]?.name)
   }
   
 
