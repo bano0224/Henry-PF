@@ -27,6 +27,7 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout";
 import UserProfile from "./components/UserProfile/UserProfile";
 import Promotions from "./components/Promotions/Promotions";
+import Landing from "./components/Landing/Landing";
 
 function App() {
   return (
@@ -34,15 +35,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/create" component={CreateProduct} />
-        <Route exact path="/detail" component={DetailProduct} />
         <Route exact path="/user/:id" render={({ match }) => <Confirm id={match.params.id}/>}></Route>
-        <Route exact path="/admin" component={AdminNav} />
-        <Route exact path="/admin/products" component={AdminProduct} />
-        <Route exact path="/admin/products/add" component={AdminAddProduct} />
-        <Route exact path="/admin/products/modify/:id" component={AdminModifyProduct} />
-        <Route exact path="/admin/categories" component={AdminCategories} />
-        <Route exact path='/admin/categories/add' component={AdminAddCategory} />
-        <Route exact path="/admin/users" component={AdminUsers} />
         <Route exact path="/detail/:id" render={({ match }) => <DetailProduct id={match.params.id} />}></Route>
         <Route exact path="/reviews/:id" render={({ match }) => <Reviews id={match.params.id}/>}></Route>
         <Route exact path="/login" component={Login}/>
@@ -64,6 +57,7 @@ function App() {
         <PrivateRoute exact path="/admin/categories/:id" component={AdminModifyCategory} />
         <PrivateRoute exact path="/admin/users/:id" component={AdminModifyUser}/>
         <Route path='/profile' component={UserProfile} />
+        <Route exact path='/landing' component={Landing} />
         <Route path='*' component={NotFound} />
         
       </Switch>
