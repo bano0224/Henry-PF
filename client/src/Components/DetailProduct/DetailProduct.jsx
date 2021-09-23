@@ -12,8 +12,9 @@ import { blueGrey } from "@material-ui/core/colors";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, Divider, Typography, Breadcrumbs } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import HomeIcon from '@material-ui/icons/Home'
+import HomeIcon from '@material-ui/icons/Home';
 import getReviews from "../../actions/getReviews";
+import Swal from 'sweetalert2'
 
 export default function DetailProduct({name, image, description, price, id}) {
   
@@ -40,7 +41,14 @@ export default function DetailProduct({name, image, description, price, id}) {
 
   const handleCart = () => {
     dispatch(addToCart(id, qty))
-    alert("El producto a sido agregado al carrito");
+    
+    Swal.fire({
+      position: 'top',
+      icon: 'success',
+      title: 'El producto ha sido añadido al carrito',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
  
   return (
