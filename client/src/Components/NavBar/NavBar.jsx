@@ -1,44 +1,40 @@
-import React, { useParams } from "react";
-import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { AppBar } from '@material-ui/core';
+import React from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { makeStyles, useTheme, alpha, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import {Menu, MenuItem, Typography, Toolbar,} from '@mui/material';
 import { 
-        Menu,
-        Typography,
-        Toolbar,
         IconButton,
-        MenuItem,
         Button,
         Grid, 
         Badge,
         Drawer,
         List,
         Divider,
-        ListItem,
-        ListItemIcon,
-        ListItemText,
-        CssBaseline
-      } from '@material-ui/core';
-import { 
-  AccountCircle,
-  ShoppingCartIcon,
-  CreateIcon,
-  ArrowForwardIcon,
-  MenuIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  SettingsIcon,
-  CardGiftcardIcon,
-  ContactMailIcon,
-  InfoIcon
-} from '@material-ui/icons/AccountCircle';
-
-import stateLogout from '../../actions/stateLogout'
+        CssBaseline,
+        AppBar
+} from '@mui/material';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CreateIcon from '@mui/icons-material/Create';
+import InfoIcon from '@mui/icons-material/Info';
+import MenuIcon from '@mui/icons-material/Menu';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LoginIcon from '@mui/icons-material/Login';
+import { blueGrey } from "@material-ui/core/colors";
+import Label from '@mui/icons-material/Label';
+/* import stateLogout from '../../actions/stateLogout' */
 import swal from 'sweetalert';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 
 const drawerWidth = 240;
@@ -116,6 +112,11 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       color: "black",
     },
+  },
+  drawerD:{
+    color: 'black',
+    justifyContent: 'center',
+    marginLeft: '10px',
   }
 }));
 const StyledBadge = withStyles((theme) => ({
@@ -150,11 +151,8 @@ export default function NavBar() {
   const [abrir, setAbrir] = React.useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const dispatch = useDispatch();
   const [auth, setAuth] = React.useState(true);
   const login = localStorage.getItem('login');
-  const a = useSelector(state => state.cartReducer)
-  const { cartItems } = a
   const open = Boolean(anchorEl);
   const history = useHistory()
 
@@ -164,9 +162,9 @@ export default function NavBar() {
   const key = JSON.parse(sessionStorage.getItem("token"))?.token
   if(key){
     var decoded = jwt.verify(key, 'secret')
-    var userRole = (decoded?.role[0].name)
+    console.log('ESTE ES EL DECODED',decoded)
+    var userRole = (decoded.role[0]?.name)
   }
-  
   
 
 //CART BADGE
@@ -220,156 +218,15 @@ export default function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Toolbar>
-    {(login === 'true') ?
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          id={menuId}
-          keepMounted
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={isMenuOpen}
-          onClose={handleMenuClose}
-        >
-        <MenuItem 
-              className={classes.link}
-              component={Link}
-              to='/login'>
-            <IconButton 
-              aria-label="Crear una cuenta" 
-              color="inherit">
-                <StyledBadge color="secondary">
-                    <ArrowForwardIcon />
-                </StyledBadge>
-            </IconButton> 
-            <p>Perfil</p>
-        </MenuItem >
-        <MenuItem onClick={handleLogout} className={classes.link}>
-            <IconButton aria-label="Crear una cuenta" color="inherit" >
-                <StyledBadge color="secondary">
-                    <CreateIcon />
-                </StyledBadge>
-            </IconButton>
-            <p>Cerrar Sesion</p>
-        </MenuItem>
-        </Menu>
-    :
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          id={menuId}
-          keepMounted
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={isMenuOpen}
-          onClose={handleMenuClose}
-        >
-        <MenuItem 
-              className={classes.link}
-              component={Link}
-              to='/login'>
-            <IconButton 
-              aria-label="Crear una cuenta" 
-              color="inherit"  
-            >
-                <StyledBadge color="secondary">
-                    <ArrowForwardIcon />
-                </StyledBadge>
-            </IconButton>
-            <p>Ingresar</p>
-        </MenuItem>
-        <MenuItem
-            className={classes.link}
-            component={Link}
-            to='/logup'>
-            <IconButton aria-label="Crear una cuenta" color="inherit">
-                <StyledBadge color="secondary">
-                    <CreateIcon />
-                </StyledBadge>
-            </IconButton>
-            <p>Crear Cuenta</p>
-        </MenuItem>
-        </Menu>
-      }
-      </Toolbar>
-  );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    
-        <Toolbar>
-        <Typography 
-          className={clsx(classes.title)} 
-          variant="h6" >
-            E-Market
-        </Typography>
-        {(login === 'true') ?
-        <Menu
-          anchorEl={mobileMoreAnchorEl}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          id={mobileMenuId}
-          keepMounted
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={isMobileMenuOpen}
-          onClose={handleMobileMenuClose}
-        >
-        <MenuItem>
-            <IconButton aria-label="Crear una cuenta" color="inherit">
-                <StyledBadge color="secondary">
-                    <ArrowForwardIcon />
-                </StyledBadge>
-            </IconButton>
-            <p>Perfil</p>
-        </MenuItem>
-        <MenuItem>
-            <IconButton aria-label="Crear una cuenta" color="inherit">
-                <StyledBadge color="secondary">
-                    <CreateIcon />
-                </StyledBadge>
-            </IconButton>
-            <p>Cerrar sesion</p>
-        </MenuItem>
-        </Menu>
-    :
-        <Menu
-          anchorEl={mobileMoreAnchorEl}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          id={mobileMenuId}
-          keepMounted
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={isMobileMenuOpen}
-          onClose={handleMobileMenuClose}
-        >
-        <MenuItem>
-            <IconButton aria-label="Crear una cuenta" color="inherit">
-                <StyledBadge color="secondary">
-                    <ArrowForwardIcon />
-                </StyledBadge>
-            </IconButton>
-            <p>Entrar</p>
-        </MenuItem>
-        <MenuItem>
-            <IconButton aria-label="Crear una cuenta" color="inherit">
-                <StyledBadge color="secondary">
-                    <CreateIcon />
-                </StyledBadge>
-            </IconButton>
-            <p>Crear una cuenta</p>
-        </MenuItem>
-        </Menu>
-        }
-        </Toolbar>
-    
-  );
 
   return (
-    <div className={classes.grow}>
+    <Grid className={classes.grow}>
       <AppBar position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: abrir,
         })}>
         <Toolbar>
+          <Grid xs={6} sm={6} md={10} lg={9}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -386,30 +243,17 @@ export default function NavBar() {
               id='button'
               component={Link}
               to='/'
-        >
+          >
           <Typography variant="h6" className={classes.title}>
           E-Market
           </Typography>                
         </Button>
+        </Grid>
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-          <Button
-                color="inherit"
-                aria-label="open drawer"
-                className={classes.button}
-                id='button'
-                component={Link}
-                to='/cart'
-            >
-            <IconButton aria-label="cart" color="inherit">
-                <StyledBadge badgeContent={cartItems.length} color="secondary" max={99}>
-                    <ShoppingCartIcon/>
-                </StyledBadge>
-            </IconButton>
-          </Button>
+          <Grid xs={6} sm={6} md={4} lg={3} className={classes.sectionDesktop}>
           {
             userRole === 'admin'
-            ? <div className={classes.dashboard}>
+            ? <Grid className={classes.dashboard}>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -420,10 +264,10 @@ export default function NavBar() {
               >
                   Administrador
               </Button>
-            </div>
+            </Grid>
             : null
           }
-          <div className={classes.dashboard}>
+          <Grid className={classes.dashboard}>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -432,12 +276,24 @@ export default function NavBar() {
                   component={Link}
                   to='/promotions'
               >
-                  Promociones
+              <IconButton
+              style={{ color: blueGrey[900] }}
+              aria-label="show more"
+              className={classes.button}
+            >
+              <StyledBadge 
+                 badgeContent={
+                    `%`
+                  }
+                  color="secondary">
+                  <Label/>
+              </StyledBadge>
+            </IconButton>
               </Button>
-          </div>
-          <div className={classes.dashboard}>
+          </Grid>
+          <Grid className={classes.dashboard}>
             {(key) 
-            ? <div>
+            ? <Grid>
               <Button
                 color="inherit"
                 aria-label="open drawer"
@@ -457,7 +313,7 @@ export default function NavBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <AccountCircleIcon />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -477,8 +333,9 @@ export default function NavBar() {
                 <MenuItem component={Link} to='/profile'>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
-            </div>
-            : <div>
+            </Grid>
+            : 
+            <Grid >
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -499,12 +356,13 @@ export default function NavBar() {
                 component={Link}
                 to='/login'
               >
-                Ingresar
+                <LoginIcon/>
               </Button>
-            </div>
+            </Grid>
               
             }
-            </div>
+            </Grid>
+            </Grid>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -522,48 +380,73 @@ export default function NavBar() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {['Administrador', 'Promociones'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <Button
-                                                  className={classes.link}
-                                                  id='button'
-                                                  component={Link}
-                                                  to='/admin/products'
-              ><SettingsIcon className={classes.link}/></Button> : <Button
-                                                  className={classes.link}
-                                                  id='button'
-                                                  component={Link}
-                                                  to='/cart'
-              ><CardGiftcardIcon className={classes.link}/></Button>}</ListItemIcon>
-              <ListItemText primary={text} />
+        {
+            userRole === 'admin'
+            ?
+              <List>
+            <ListItem button>
+              <ListItemIcon>
+                <Button
+                    className={classes.link}
+                    id='button'
+                    component={Link}
+                    to='/admin/products'
+                >
+                  <SettingsIcon className={classes.link}/><Typography className={classes.drawerD}>Administrador</Typography>
+                </Button>
+              </ListItemIcon>
             </ListItem>
-          ))}
+        </List>
+        : null
+        }
+        <List>
+            <ListItem>
+              <ListItemIcon>
+                <Button
+                      className={classes.link}
+                      id='button'
+                      component={Link}
+                      to='/promotions'
+                >
+                  <CardGiftcardIcon className={classes.link}/><Typography className={classes.drawerD}>Promociones</Typography>
+                </Button>
+              </ListItemIcon>
+              <ListItemText  />
+            </ListItem>
         </List>
         <Divider />
-        <List>
-          {['Contact', 'Quienes somos?'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <Button
-                                                  color="inherit"
-                                                  className={classes.link}
-                                                  id='button'
-                                                  component={Link}
-                                                  to='/admin/products'
-              ><ContactMailIcon className={classes.link}/></Button> : <Button
-                                                  color="inherit"
-                                                  className={classes.link}
-                                                  id='button'
-                                                  component={Link}
-                                                  to='/admin/products'
-              ><InfoIcon className={classes.link}/></Button>}</ListItemIcon>
-              <ListItemText primary={text} />
+        <List className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <Button
+                    className={classes.link}
+                    id='button'
+                    component={Link}
+                    to='/admin/products'
+                >
+                  <ContactMailIcon className={classes.link}/><Typography className={classes.drawerD}>Contacto</Typography>
+                </Button>
+              </ListItemIcon>
             </ListItem>
-          ))}
+        </List>
+        <List>
+            <ListItem>
+              <ListItemIcon>
+                <Button
+                      className={classes.link}
+                      id='button'
+                      component={Link}
+                      to='/cart'
+                >
+                  <InfoIcon className={classes.link}/><Typography className={classes.drawerD}> Sobre Nosotros</Typography>
+                </Button>
+              </ListItemIcon>
+              <ListItemText  />
+            </ListItem>
         </List>
       </Drawer>
-      {renderMobileMenu}
-      {renderMenu}
-    </div>
+      {/* {renderMobileMenu}
+      {renderMenu} */}
+    </Grid>
   );
-}
+};

@@ -44,6 +44,8 @@ export default function UserProfile(props) {
                 <Grid item xs={12}>
                     <NavBar />
                     <br />
+                    <br />
+                    <br />
                 </Grid>
                 <Grid container xs={12} justifyContent='center' alignItems='center'>
                     <Grid container item direction='column' xs={10}>

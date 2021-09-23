@@ -27,10 +27,10 @@ export default function AllFilters() {
                   <Search/>
         </Grid>
         <Grid item xs={10} sm={6} md={3}lg={4}>
-                  <FilterO/>
+                  <FilterC/>
         </Grid>
         <Grid item xs={10} sm={6}md={4}lg={4}>
-                  <FilterC/>
+                  <FilterO/>
         </Grid>
       </Grid>
 

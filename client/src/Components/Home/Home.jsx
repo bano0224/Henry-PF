@@ -17,6 +17,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { IoChevronDown } from "react-icons/io5";
 import clsx from 'clsx';
 import {Grid} from '@material-ui/core'
+import getProducts from '../../actions/getProducts'
 
 const useStyles = makeStyles((theme) => ({
 container:{
@@ -54,8 +55,6 @@ export default function Home() {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
-
-  const currentProducts = products.slice(firstIndex, lastIndex);
   
   useEffect(() => {
     dispatch(getProducts());
@@ -71,12 +70,10 @@ export default function Home() {
     window.scrollTo({top: 500, behavior: 'smooth'});
   };
 
-  const howManyPages = Math.ceil(products.length /productsPerPage)
-
   return (
     <Grid className={classes.container}>
       <NavBar fontSize="100%"/>
-        <div className={s.videoContainer}>
+        <div className={s.videoContainer}> 
           <video muted autoPlay loop className={s.video}>
             <source src={landing} type="video/mp4"/>
           </video>

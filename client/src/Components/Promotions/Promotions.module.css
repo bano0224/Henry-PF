@@ -3,12 +3,13 @@
   }
   .videoContainer {
     overflow: hidden;
-    display: flex;
-    height: 500px;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  display: flex;
+  height: 50%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: -13%;
   }
   .gray {
     height: 100%;

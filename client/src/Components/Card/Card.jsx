@@ -11,6 +11,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import { red } from "@material-ui/core/colors";
 import { blueGrey } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AddShoppingCart } from "@material-ui/icons";
@@ -18,8 +19,6 @@ import accounting from "accounting";
 import addToCart from "../../actions/cart/addToCart";
 import { useDispatch } from "react-redux";
 import InfoIcon from '@material-ui/icons/Info';
-import swal from "sweetalert";
-
 import StoreIcon from '@material-ui/icons/Store';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Label from '@mui/icons-material/Label';
@@ -28,6 +27,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Button from '@mui/material/Button';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import swal from "sweetalert";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,

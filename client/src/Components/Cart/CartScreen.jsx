@@ -20,9 +20,11 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import HomeIcon from "@material-ui/icons/Home";
 import Button from "@material-ui/core/Button";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import mercadopagoPayment from '../../actions/cart/mercadopagoPayment';
 import accounting from "accounting";
 import productStock from '../../actions/productStock'
+
 
 //Style
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +68,13 @@ export default function CartScreen() {
       0
     );
   };
+  const handleClickMP = () => {
+    dispatch(mercadopagoPayment(cartItems))
+  }
 
+  const handlerQty= (id, qty)=>{
+    dispatch(addToCart(id,qty))
+}
     return (
         <Grid container xs={12} sm={12} md={12} lg={12}>
             <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -96,43 +104,56 @@ export default function CartScreen() {
                             <Accordion Expanded>
                                 <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel3a-content"
-                                id="panel3a-header"
+                                aria-controls="panel1a-content"
+                                id="cart"
                                 >
-                                <Typography className={classes.heading}>3. Detalles de pago</Typography>
-                            </AccordionSummary>
-                        </Accordion> */}
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Paper className={classes.total}>
-                            <Grid container direction='column' justifyContent='space-between' alignItems='flex-start' className={classes.total}>
-                                <Grid item>
-                                    <h6>Detalle de compra</h6>
-                                </Grid>
-                                <Grid item>
-                                    <Divider />
-                                    <span className={classes.topay}> TOTAL A PAGAR: </span><span>{accounting.formatMoney(getSubtotal())}</span>
-                                </Grid>
-                                <div style={{display: "flex-end", justifyContent:"space-between", marginTop:"1rem", }} >
+                                    <Typography className={classes.heading} id="cart">Detalles del carrito <ShoppingCartIcon/></Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                  <Paper className={classes.total}>
+                                    <Grid container direction='column' spacing={2}>
                                     {
-                                        cartItems?.length
+                                        cartItems.length === 0 
+                                        ?(
+                                            <span>
+                                                Carrito vacío.
+                                            </span>
+                                        )
+                                        :(
+                                            cartItems.map(item=>(
+                                               
+                                                <>
+                                                    <Cart
+                                                    key={item._id}
+                                                    item={item}
+                                                    handlerQty= {handlerQty}
+                                                    handlerRemove={handlerRemove} 
+                                                    />
+                                                    <Divider />
+                                                </>
+                                            ))
+                                        )}
+                                    </Grid>
+                                  </Paper>
+                                </AccordionDetails>
+                            </Accordion>
+                        </Grid>
+                        <Grid>
+                        {cartItems?.length
                                         ? (
                                             <div>
                                                 <Button type="submit" variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
                                                 <Button onClick={handleClickMP} variant='contained' color='primary'>Mercadopago</Button>
                                             </div>
                                         )
-                                        : <Button type="submit" disabled variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
-                                    }
-                                </div>
-                            </Grid>
-                        </Paper>
+                                        :
+                                         <Button type="submit" disabled variant="contained" color="secondary" component={Link} to="/cart/checkout" id='button'>Ir a pagar!</Button>
+                                      }
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Container>
-        </Grid>
+                </Container>
+            </Grid>
     </Grid>
 
 );
 }
-
