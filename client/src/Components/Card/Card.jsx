@@ -17,6 +17,7 @@ import accounting from "accounting";
 import addToCart from "../../actions/cart/addToCart";
 import { useDispatch } from "react-redux";
 import InfoIcon from '@material-ui/icons/Info';
+import Swal from 'sweetalert2'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,7 +70,14 @@ export default function ProductCard({name, image, description, price, id, stock}
 
   const handleCart = () => {
     dispatch(addToCart(id, 1))
-    alert("El producto a sido agregado al carrito");
+    
+    Swal.fire({
+      position: 'top',
+      icon: 'success',
+      title: 'El producto ha sido añadido al carrito',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   return (

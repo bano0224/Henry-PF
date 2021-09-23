@@ -8,6 +8,7 @@ import getOrderByUser from '../../actions/order/getOrderByUser'
 import jwt from 'jsonwebtoken'
 import getUserById from "../../actions/users/getUserById";
 import OrderItem from './OrderItem'
+import Swal from 'sweetalert2'
 
 //Style
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +30,29 @@ export default function UserProfile(props) {
     if(key){
         var decoded = jwt.verify(key, 'secret')
     }
+     
     
+
+      setTimeout(() => {
+        Swal.fire({
+            title: 'Hey! No te cuelgues!',
+            text: "¿Querés recibir las últimas ofertas y promociones?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, quiero subscribirme!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Te vamos a estar informando las últimas novedades',
+                'success'
+              )
+            }
+          })
+      }, 5000);
+    
+  
 
     useEffect(() => {
         dispatch(getUserById(decoded.id))
