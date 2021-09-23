@@ -4,11 +4,12 @@
 .videoContainer {
   overflow: hidden;
   display: flex;
-  height: 500px;
+  height: 50%;
   width: 100%;
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-top: -13%;
 }
 .gray {
   height: 100%;
@@ -31,13 +32,33 @@
 
 .titleB {
   font-family: "Raleway", sans-serif;
-  font-size: 6em;
+  font-size: 250%;
   text-align: center;
   font-weight: 800;
 }
+.titleC {
+  font-family: "Kalam", sans-serif;
+  font-size: 350%;
+  text-align: center;
+  font-weight: 100;
+}
+.titleF1 {
+  font-family: "Kalam", sans-serif;
+  font-size: 300%;
+  text-align: center;
+  font-weight: 100;
+  margin-top: -10px;
+}
+.titleF2 {
+  font-family: "Kalam", sans-serif;
+  font-size: 200%;
+  text-align: center;
+  font-weight: 100;
+  margin-top: -30px;
+}
 
 .filter {
-  width: 100%;
+  width: 90%;
   margin: 15px;
   margin-left: 15px;
   display: flex;
@@ -77,7 +98,6 @@
 .bodyCards {
   height: 100%;
   width: 80%;
-  /* border: 2px solid red; */
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -88,17 +108,16 @@
   width: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  margin: 20px;
+  margin: 5%;
 }
 
 .navBar {
-  min-width: 100%;
-
+  min-width: 80%;
   display: flex;
   justify-content: center;
-
+  margin-top: 20px;
   flex-direction: row;
 }
 

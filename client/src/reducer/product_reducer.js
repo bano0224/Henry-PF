@@ -4,6 +4,7 @@ import * as actionConst from '../actions/index'
 export const initialState = {
     products: [],
     clearProducts: [],
+    allProducts: [],
     productDetail: [],
     productReviews: [],
     categories: [],
@@ -14,6 +15,8 @@ export const initialState = {
     userDetail: [],
     roles: [],
     login: false,
+    promociones: false,
+    checkLogin: [],
     error: [],
     orderByUser: []
 };
@@ -34,6 +37,7 @@ export default function productReducer(state = initialState, action) {
                 return Math.random() - 0.3;
                 }),
                 clearProducts: action.payload,
+                allProducts: action.payload
             }
 
         case actionConst.GET_PRODUCT_BY_QUERY:
@@ -70,6 +74,13 @@ export default function productReducer(state = initialState, action) {
             ...state,
             login: false
             }
+
+        case actionConst.CHECK_LOGIN:
+          console.log('ESTOY ENTRANDO AL REDUCER')
+          return {
+            ...state,
+            checkLogin: action.payload
+          }
 
         case actionConst.FILTER_BY_CATEGORY: 
             const allProducts = state.clearProducts;

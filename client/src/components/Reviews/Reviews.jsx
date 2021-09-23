@@ -28,6 +28,7 @@ export default function Reviews({id}) {
     product: id,
     user: decoded.id
   });
+
   
   function handleChange(e) {
     setInput({

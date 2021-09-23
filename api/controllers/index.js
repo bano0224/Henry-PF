@@ -1,16 +1,33 @@
 const jwt = require("jsonwebtoken");
-const config = require("../config");
+const crypto = require('crypto')
+const mercadopago = require('mercadopago');
+const transporter = require('../config/mailer')
 const Product = require("../models/Product.js");
 const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
-const stripe = require("stripe")("sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65");
-// Private key
+/* const ofertas = require("../../client/src/media/ofertas") */
+const stripe = require("stripe")(
+  "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
+);
 
-const services = require('../services/services')
+// mercadopago configuration
+mercadopago.configure({
+  access_token: 'TEST-1294034537296050-020319-656eec508b141c98a397a25ddd2684c7-184851111',
+});
+
+// Private key
+const dotenv = require("dotenv");
+dotenv.config();
+
+const {ID_ROLE_USER} = process.env;
+
+
+const services = require("../services/services");
 
 const getProducts = async (req, res, next) => {
+  console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
   const { name } = req.query;
   try {
     if (name) {
@@ -65,8 +82,9 @@ const getUsers = async (req, res) => {
       if (userFind.length) {
         res.status(200).json(userFind);
       } else {
-        res.status(200).json([{error:"No se encontró el usuario solicitado"}]);
-        
+        res
+          .status(200)
+          .json([{ error: "No se encontró el usuario solicitado" }]);
       }
     } else {
       const userFind = await User.find({}).populate("role", {
@@ -89,7 +107,7 @@ const getUserById = async (req, res) => {
     return err;
   }
 };
-  /* const { email } = req.query;
+/* const { email } = req.query;
   try {
       let userFind = await User.find({ onst getUsers = async (req, res) => {
   const {email } = req.query;
@@ -149,7 +167,7 @@ const updateProduct = async (req, res) => {
       product.category = category;
 
       await product.save();
-      
+
       res.status(200).send("El producto fue actualizado");
     } else {
       res.status(404).send("El producto no fue encontrado");
@@ -189,10 +207,10 @@ const getCategory = async (req, res) => {
 };
 
 const getCategoryById = async (req, res) => {
-  const {id} = req.params
-  const findd = await Category.findById(id)
-  res.json(findd)
-}
+  const { id } = req.params;
+  const findd = await Category.findById(id);
+  res.json(findd);
+};
 
 const createCategory = async (req, res) => {
   const { name, description, image } = req.body;
@@ -218,7 +236,7 @@ const deleteCategory = async (req, res) => {
     } else {
       res.send("La categoría ingresada no existe");
     }
-  } catch (err) { 
+  } catch (err) {
     return err;
   }
 };
@@ -227,7 +245,7 @@ const updateCategory = async (req, res) => {
   const { _id, name, description, image } = req.body;
   try {
     if (_id) {
-      const catego = await Category.findById(_id );
+      const catego = await Category.findById(_id);
       catego.name = name;
       catego.description = description;
       catego.image = image;
@@ -244,24 +262,23 @@ const updateCategory = async (req, res) => {
 };
 
 const createReviews = async (req, res) => {
-  
   try {
-    let createReview = await Review.create(
-      req.body
-    );
+    let createReview = await Review.create(req.body);
     res.status(200).send("Comentario agregado");
   } catch (err) {
     return err;
   }
 };
 const getReviews = async (req, res) => {
-  const {name} = req.query;
+  const { name } = req.query;
   try {
     if (name) {
-      let reviewFind = await Review.find({name: req.query.user},
-      ).populate("product", {
-        name: 1,
-      });;
+      let reviewFind = await Review.find({ name: req.query.user }).populate(
+        "product",
+        {
+          name: 1,
+        }
+      );
       if (reviewFind) {
         res.status(200).json(reviewFind);
       } else {
@@ -270,7 +287,7 @@ const getReviews = async (req, res) => {
     } else {
       let reviewFind = await Review.find().populate("product", {
         name: 1,
-      });;
+      });
       res.status(200).json(reviewFind);
     }
   } catch (err) {
@@ -279,48 +296,31 @@ const getReviews = async (req, res) => {
 };
 
 const getReviewById = async (req, res) => {
-  const {id} = req.params
-  const findd = await Review.findById(id)
-  res.json(findd)
-}
+  const { id } = req.params;
+  const findd = await Review.findById(id);
+  res.json(findd);
+};
 
 const logUp = async (req, res) => {
-  const { firstName, lastName, email, password, } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   try {
     const newUser = new User({
       firstName,
       lastName,
       email,
       password: await User.encryptPassword(password),
-      role:[{_id:"613981193e40a78ef29c793b"}]
+      role: [{ _id: ID_ROLE_USER }],
     });
 
     const saveUser = await newUser.save();
-  /* } */
-
-    /* newUser.save((err) => {
-      if(err) return res.status(500).send({message: `Error al crear el usuario: ${err}`})
-
-      return res.status(200).send({token: services.createToken(user)})
-    }) */
-   /*  const token = jwt.sign({
-      name: newUser.name,
-      id: saveUser._id
-    }, 'secret')
-
-    res.header('auth-token', token).json({
-      error: null,
-      data: { token },
-      message: 'Bienvenido'
-  })
- */
     const token = jwt.sign(
       { id: saveUser._id },
-      `${process.env.JWT_SECRET_KEY}` /* 'secret' */,
+      /* `${process.env.JWT_SECRET_KEY}` */ 'secret',
       {
         expiresIn: 3600, //una hora expira el token
       }
     );
+
     res.status(200).json(token);
   } catch (err) {
     return err;
@@ -328,8 +328,10 @@ const logUp = async (req, res) => {
 };
 
 const logIn = async (req, res) => {
-  
-  const userFound = await User.findOne({ email: req.body.email }).populate("role", { name: 1 });
+  const userFound = await User.findOne({ email: req.body.email }).populate(
+    "role",
+    { name: 1 }
+  );
 
   if (!userFound) return res.status(404).json({ message: "El usuario o la contraseña son inválidos" });
 
@@ -338,32 +340,36 @@ const logIn = async (req, res) => {
   if (!matchPassword) return res.status(401).json({ message: "El usuario o la contraseña son inválidos" });
     
   const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 3600});
+
+  userFound.expiredLogin = userFound.expiredLogin + 1
+
+  await userFound.save()
   
   res.json({ token });
 };
 
 const updateUser = async (req, res) => {
-    if (req.params.id) {
-      await User.findByIdAndUpdate(req.params.id, {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-        phone: req.body.phone,
-        discount: req.body.discount,
-        address_line1: req.body.address_line1,
-        address_line2: req.body.address_line2,
-        city: req.body.city,
-        state: req.body.state,
-        postal_code: req.body.postal_code,
-        country: req.body.country,
-        role: [{_id: req.body.role}],
-      });
-      res.status(200).send("El usuario fue actualizado");
-    } else {
-      res.status(404).send("El usuario no fue encontrado");
-    }
+  if (req.params.id) {
+    await User.findByIdAndUpdate(req.params.id, {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      username: req.body.username,
+      password: await User.encryptPassword(req.body.password),
+      phone: req.body.phone,
+      discount: req.body.discount,
+      address_line1: req.body.address_line1,
+      address_line2: req.body.address_line2,
+      city: req.body.city,
+      state: req.body.state,
+      postal_code: req.body.postal_code,
+      country: req.body.country,
+      role: [{ _id: req.body.role }],
+    });
+    res.status(200).send("El usuario fue actualizado");
+  } else {
+    res.status(404).send("El usuario no fue encontrado");
+  }
 };
 
 const removeUser = async (req, res) => {
@@ -376,49 +382,208 @@ const removeUser = async (req, res) => {
   }
 };
 const getRoles = async (req, res) => {
-  const {name} = req.query;
+  const { name } = req.query;
   try {
     if (req.query.name) {
-      let roleFind = await Role.find( {name: req.query.name} )
+      let roleFind = await Role.find({ name: req.query.name });
       if (roleFind) {
         res.status(200).json(roleFind);
       } else {
-        res.status(200).json([{error:"No se encontró el rol solicitado"}]);
+        res.status(200).json([{ error: "No se encontró el rol solicitado" }]);
       }
     } else {
-      const roleFind = await Role.find({})
+      const roleFind = await Role.find({});
       res.status(200).json(roleFind);
-     } 
+    }
   } catch (err) {
     return err;
   }
 };
 
-const checkout = async (req, res) =>{
+const productStock = async (req, res) => {
+  const { id, qty } = req.params;
+
+  try {
+    if (id) {
+      const product = await Product.findById(id);
+      product.countInStock = product.countInStock - qty;
+
+      await product.save();
+
+      
+      res.status(200).send("El stock fue actualizado");
+    } else {
+      res.status(404).send("No se pudo actualizar el stock");
+    }
+  } catch (err) {
+    return err;
+  }
+};
+
+const checkout = async (req, res) => {
   const { id, amount } = req.body;
 
-  
   // res.send("Recibido Stripe");
-  try{
+  try {
     const payment = await stripe.paymentIntents.create({
       amount: amount,
-      currency:"usd",
+      currency: "usd",
       description: "ecommerce henry products",
-      payment_method:id,
-      confirm:true,
-    })
+      payment_method: id,
+      confirm: true,
+    });
     // res.send("Pago procesado");
-    if(payment.cancellation_reason == null){
-      res.status(200).json(payment.status)
+    if (payment.cancellation_reason == null) {
+      res.status(200).json(payment.status);
     } else {
-      res.status(200).json({rejected})
+      res.status(200).json({ rejected });
     }
-  }catch(error){
-    return res.json({message: "Error en su tarjeta 2"});
-    console.log(error)
+  } catch (error) {
+    return res.json({ message: "Error en su tarjeta 2" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+ try {
+  crypto.randomBytes(32,async(err,buffer) => {
+    if(err) {
+      console.log(err)
+    }
+    const token = buffer.toString('hex')
+
+    const user = await User.findOne({ email: req.body.email })
+    
+    if(!user) {
+      return res.status(422).json({message: 'No hay ningún usuario registrado con ese email'})
+    }
+    user.resetToken = token
+    user.expireToken = Date.now() + 3600000
+
+    await user.save()
+    
+    const verificationLink = `http://localhost:3000/login/resetPassword/${token}`
+      await transporter.sendMail({
+        to: user.email,
+        from: 'supermarkethenry@gmail.com',
+        subject: 'Password reset',
+        html: `<p>You requested for password reset</p>
+        <b>Por favor hacer click en el siguiente enlace para poder continuar con la recuperación de su contraseña:</b>
+        <a href="${verificationLink}">${verificationLink}</a>`
+      })
+      res.json({message: 'Por favor, verificar su casilla de mail'})
+  })
+ } catch(error) {
+   console.log('No se ha podido restablecer la contraseña')
+ }
+}
+
+const confirmPassword = async (req, res) => {
+  
+  const { token } = req.params
+  const { password } = req.body
+  try {
+    const user = await User.findOne({resetToken: token})
+    
+  if(!user) {
+    return res.status(422).json({message: 'El enlace no es correcto'})
+  }
+  
+  user.password = await User.encryptPassword(password)
+  await user.save()
+
+  res.send(200).json({message: 'Su contraseña ha sido modificada con éxito'})
+
+  } catch(error) {
+    console.log('Error al cambiar la contraseña')
+  }
+}
+
+const setSubscription = (req, res) => {
+
+}
+
+const checkLogin = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email })
+  
+  if(!user) {
+    return res.status(422).json({message: 'Usuario no encontrado'})
+  } else {
+    res.sendStatus(200)
+  }
+  } catch(error) {
+    console.log('Error en la solicitud de usuario')
   }
   
 }
+
+const sendEmail = async (req, res) => {
+  const users = req.body
+  try {
+    users.map(u => {
+       transporter.sendMail({
+        to: u.email,
+        from: 'supermarkethenry@gmail.com',
+        subject: 'Tenemos las mejores ofertas para vos',
+        html: '<img src="https://firebasestorage.googleapis.com/v0/b/e-market-838a5.appspot.com/o/product_images%2Fofertas.png?alt=media&token=4fe8d93d-ce3a-4c74-92ee-9e4554cec474"/>',
+        /* attachments: [{
+            filename: 'image.png',
+            path: '/path/to/file',
+            cid: 'unique@kreata.ee' //same cid value as in the html img src
+        }] */
+      })
+    })
+    
+    res.json({message: 'Email de suscripción enviado correctamente'})
+  } catch(error) {
+    console.log('Error al enviar el mail')
+  }
+}
+
+const sendEmailCheckout = async (req, res) => {
+  try {
+    const user = User.findById(req.params)
+    /* console.log('ESTE ES EL USER REQ BODY', req.body._id) */
+    console.log('ESTE ES EL USER', user)
+
+    transporter.sendMail({
+      to: user.email,
+      from: 'supermarkethenry@gmail.com',
+      subject: 'Tu compra ha sido confirmada',
+      html: '<img src="https://firebasestorage.googleapis.com/v0/b/e-market-838a5.appspot.com/o/product_images%2Fcompra.png?alt=media&token=2a63364e-714c-4f9b-ad4f-97d6e0e19cfa"/>'
+    })
+    res.json({message: 'Email de confirmación de pago enviado correctamente'})
+  } catch(error) {
+    console.log('Error al enviar el email')
+  }
+}
+
+const mercadopagoController = async (req, res, next) => {
+  try {
+    const { cart } = req.body;
+    const items = cart.map(({ name, price, qty }) => ({
+      title: name,
+      unit_price: Number(price),
+      quantity: Number(qty),
+    }));
+
+    const preference = {
+      items,
+      back_urls: {
+        success: 'http://localhost:3000',
+        failure: 'http://localhost:3000',
+        pending: 'http://localhost:3000',
+      },
+      auto_return: 'approved',
+    };
+
+    const { body } = await mercadopago.preferences.create(preference);
+    res.status(200).json(body);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
@@ -440,14 +605,16 @@ module.exports = {
   removeUser,
   getRoles,
   getReviews,
-  getReviewById
-  
+  getReviewById,
+  productStock,
+  resetPassword,
+  setSubscription,
+  confirmPassword,
+  checkLogin,
+  sendEmail,
+  sendEmailCheckout,
+  mercadopagoController,
 };
-
-
-
-
-
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */
 /* const polka = require('polka');
