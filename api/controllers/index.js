@@ -26,6 +26,7 @@ const {ID_ROLE_USER} = process.env;
 
 
 const services = require("../services/services");
+const { Console } = require("console");
 
 
 
@@ -110,41 +111,7 @@ const getUserById = async (req, res) => {
     return err;
   }
 };
-/* const { email } = req.query;
-  try {
-      let userFind = await User.find({ onst getUsers = async (req, res) => {
-  const {email } = req.query;
-  try {
-    if (email) {
-      let userFind = await User.find({
-        email: { $regex: email, $options: "i" },
-      }).populate("role", { name: 1 });
-      if (userFind.length) {
-        res.status(200).json(userFind);
-      } else {
-        res.status(200).json([{error:"No se encontró el usuario solicitado"}]);
-        
-      }
-    } else {
-      const userFind = await User.find({}).populate("role", {
-        name: 1,
-      });
-      res.status(200).json(userFind);
-    }
-  } catch (err) {
-    return err;
-  }
-};});
-      if (userFind.length) {
-        res.status(200).json(userFind);
-      } else {
-        res.status(400).send("No se encontró el producto solicitado")
-  } 
-  } catch (err) {
-    return err;
-  }
-};
- */
+
 const removeProduct = async (req, res) => {
   const { id } = req.params;
   try {
@@ -352,13 +319,13 @@ const logIn = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  
   if (req.params.id) {
-    await User.findByIdAndUpdate(req.params.id, {
+      await User.findByIdAndUpdate(req.params.id, {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      password: await User.encryptPassword(req.body.password),
       phone: req.body.phone,
       discount: req.body.discount,
       address_line1: req.body.address_line1,
@@ -369,6 +336,7 @@ const updateUser = async (req, res) => {
       country: req.body.country,
       role: [{ _id: req.body.role }],
     });
+    
     res.status(200).send("El usuario fue actualizado");
   } else {
     res.status(404).send("El usuario no fue encontrado");
@@ -613,7 +581,7 @@ const loginGoogle = async(req, res) => {
     if(user) {
       
       const token = jwt.sign({ id: user._id, role: user.role }, 'secret', {expiresIn: 3600});
-      
+      console.log('ESTE ES EL TOKEN', token)
       res.json({token})
 
     } else {
@@ -624,7 +592,7 @@ const loginGoogle = async(req, res) => {
         email,
         role: [{ _id: ID_ROLE_USER }],
       });
-  
+      
       const saveUser = await newUser.save();
       const token = jwt.sign(
         { id: saveUser._id, role: saveUser.role },
@@ -633,6 +601,7 @@ const loginGoogle = async(req, res) => {
           expiresIn: 3600, //una hora expira el token
         }
       );
+      console.log('ESTE ES EL TOKEN', token)
       res.json({token});
     }
     
