@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   }))
 
 
-export default function Home() {
+export default function Home(props) {
   const querys = new URLSearchParams(useLocation().search.slice(1));
   const status = querys.get("status"); // string con estado de la compra en mercadopago.
   const productReducer = useSelector((state) => state.productReducer)
@@ -48,6 +48,9 @@ export default function Home() {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
+
+  const { data } = props.location
+  console.log(data);
 
   const inStock = products.filter(p => p.countInStock >= 1)
   const currentProducts = inStock.slice(firstIndex, lastIndex);

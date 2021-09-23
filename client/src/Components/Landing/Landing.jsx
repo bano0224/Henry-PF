@@ -75,7 +75,7 @@ export default function Landing() {
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <Grid container justifyContent='center' component={Link} to='/panaderia'>
+                            <Grid container justifyContent='center' component={Link} to={{pathname: "/", data: 'nariz' }}>
                                 <img width="40%" src={panaderia} />
                             </Grid>
                             <h6 style={{marginTop: '5px'}}>Panadería</h6>

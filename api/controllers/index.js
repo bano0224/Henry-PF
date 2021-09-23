@@ -498,9 +498,18 @@ const confirmPassword = async (req, res) => {
   }
 }
 
-const setSubscription = (req, res) => {
+const setSubscription = async(req, res) => {
+  const { id } = req.body
 
-}
+  if(id) {
+    await User.findByIdAndUpdate(id, {
+    subscription: true
+  })
+  res.status(200).send("El usuario ha sido suscripto");
+  } else {
+    res.status(404).send("El usuario no fue encontrado");
+  }
+};
 
 const checkLogin = async (req, res) => {
   try {
@@ -658,54 +667,4 @@ module.exports = {
   loginGoogle
 };
 
-/* /* Voy pegando para el CRUD completo y despúes las adaptamos */
-/* const polka = require('polka');
-const { MongoClient } = require("mongodb");
 
-polka() */
-
-/* async function run() {
-      try {
-        await client.connect();
-        const database = client.db("intro");
-        const collection = database.collection("quotes");
-
-        const result = await collection.insertOne({"quote":"Life is what happens to you while you're busy making other plans."});
-        res.end(JSON.stringify(result));
-      } catch (e) {
-        console.log("Error: " + e);
-      } finally {
-        await client.close();
-      }
-    }
-    run().catch(console.dir);
-  })
-  .listen(3000, err => {
-    if (err) throw err;
-    console.log(`> Running on localhost:3000`); */
-
-/* .get('/update', (req, res) => {
-    const client = new MongoClient("mongodb://localhost:27017");
-    async function run() {
-      try {
-        await client.connect();
-        const database = client.db("intro");
-        const collection = database.collection("quotes");
-
-        const updateDoc = {
-          $set: {
-            author:
-              "John Lennon",
-          },
-        };
-
-        const result = await collection.updateOne({}, updateDoc, {}); // <-- empty filter matches all docs
-        res.end("Updated: " + result.modifiedCount);
-      } catch (e) {
-        errCallback(e);
-      } finally {
-        await client.close();
-      }
-    }
-    run().catch(console.dir);
-  }) */
