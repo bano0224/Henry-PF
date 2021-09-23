@@ -340,13 +340,14 @@ const logIn = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  console.log('ACAAAAAAAAA', req.body);
   if (req.params.id) {
     await User.findByIdAndUpdate(req.params.id, {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      password: await User.encryptPassword(req.body.password),
+      // password: await User.encryptPassword(req.body.password),
       phone: req.body.phone,
       discount: req.body.discount,
       address_line1: req.body.address_line1,

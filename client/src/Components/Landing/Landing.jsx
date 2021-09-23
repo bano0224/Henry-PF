@@ -142,7 +142,7 @@ export default function Landing() {
             </Grid>
             <Grid item xs={10}>
                 <br />
-                <Carousel cols={5} rows={1} gap={10} loop style={{marginTop: '20px'}}>
+                <Carousel cols={4} rows={1} gap={10} loop style={{marginTop: '20px'}}>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
                             <Card />
@@ -170,32 +170,27 @@ export default function Landing() {
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={congelados} />
-                            <h6 style={{marginTop: '5px'}}>Congelados</h6>
+                            <Card />
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={fiambre} />
-                            <h6 style={{marginTop: '5px'}}>Fiambres y Quesos</h6>
+                            <Card />
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={frutas} />
-                            <h6 style={{marginTop: '5px'}}>Frutas y Verduras</h6>
+                            <Card />
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={lacteos} />
-                            <h6 style={{marginTop: '5px'}}>Lácteos</h6>
+                            <Card />
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={mascotas} />
-                            <h6 style={{marginTop: '5px'}}>Mascotas</h6>
+                            <Card />
                         </Grid>
                     </Carousel.Item>
                 </Carousel>
