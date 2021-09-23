@@ -236,7 +236,7 @@ export default function NavBar() {
           [classes.appBarShift]: abrir,
         })}>
         <Toolbar>
-          <Grid xs={6} sm={6} md={10} lg={9}>
+          <Grid xs={6} sm={6} md={10} lg={6}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -260,7 +260,7 @@ export default function NavBar() {
         </Button>
         </Grid>
           <div className={classes.grow} />
-          <Grid xs={6} sm={6} md={4} lg={3} className={classes.sectionDesktop}>
+          <Grid xs={6} sm={6} md={4} lg={6} className={classes.sectionDesktop}>
           {
             userRole === 'admin'
             ? <Grid className={classes.dashboard}>

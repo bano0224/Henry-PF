@@ -1,4 +1,4 @@
-import { FILTER_BY_STATUS } from ".."
+import { FILTER_BY_STATUS } from "../index"
 
 export default function filterByStatus(payload){
     console.log('aca',payload)
