@@ -1,22 +1,34 @@
 const jwt = require("jsonwebtoken");
 const crypto = require('crypto')
+const mercadopago = require('mercadopago');
 const transporter = require('../config/mailer')
 const Product = require("../models/Product.js");
 const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
+const WishList = require("../models/WishList")
+/* const ofertas = require("../../client/src/media/ofertas") */
 const stripe = require("stripe")(
   "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
 );
+
+// mercadopago configuration
+mercadopago.configure({
+  access_token: 'TEST-1294034537296050-020319-656eec508b141c98a397a25ddd2684c7-184851111',
+});
+
 // Private key
 const dotenv = require("dotenv");
 dotenv.config();
 
-const { ID_ROLE_USER } = process.env;
+const {ID_ROLE_USER} = process.env;
 
 
 const services = require("../services/services");
+const { Console } = require("console");
+
+
 
 const getProducts = async (req, res, next) => {
   const { name } = req.query;
@@ -98,41 +110,7 @@ const getUserById = async (req, res) => {
     return err;
   }
 };
-/* const { email } = req.query;
-  try {
-      let userFind = await User.find({ onst getUsers = async (req, res) => {
-  const {email } = req.query;
-  try {
-    if (email) {
-      let userFind = await User.find({
-        email: { $regex: email, $options: "i" },
-      }).populate("role", { name: 1 });
-      if (userFind.length) {
-        res.status(200).json(userFind);
-      } else {
-        res.status(200).json([{error:"No se encontró el usuario solicitado"}]);
-        
-      }
-    } else {
-      const userFind = await User.find({}).populate("role", {
-        name: 1,
-      });
-      res.status(200).json(userFind);
-    }
-  } catch (err) {
-    return err;
-  }
-};});
-      if (userFind.length) {
-        res.status(200).json(userFind);
-      } else {
-        res.status(400).send("No se encontró el producto solicitado")
-  } 
-  } catch (err) {
-    return err;
-  }
-};
- */
+
 const removeProduct = async (req, res) => {
   const { id } = req.params;
   try {
@@ -340,14 +318,13 @@ const logIn = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  console.log('ACAAAAAAAAA', req.body);
+  
   if (req.params.id) {
-    await User.findByIdAndUpdate(req.params.id, {
+      await User.findByIdAndUpdate(req.params.id, {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      // password: await User.encryptPassword(req.body.password),
       phone: req.body.phone,
       discount: req.body.discount,
       address_line1: req.body.address_line1,
@@ -358,6 +335,7 @@ const updateUser = async (req, res) => {
       country: req.body.country,
       role: [{ _id: req.body.role }],
     });
+    
     res.status(200).send("El usuario fue actualizado");
   } else {
     res.status(404).send("El usuario no fue encontrado");
@@ -402,6 +380,7 @@ const productStock = async (req, res) => {
 
       await product.save();
 
+      
       res.status(200).send("El stock fue actualizado");
     } else {
       res.status(404).send("No se pudo actualizar el stock");
@@ -508,6 +487,128 @@ const checkLogin = async (req, res) => {
   
 }
 
+const sendEmail = async (req, res) => {
+  const users = req.body
+  try {
+    users.map(u => {
+       transporter.sendMail({
+        to: u.email,
+        from: 'supermarkethenry@gmail.com',
+        subject: 'Tenemos las mejores ofertas para vos',
+        html: '<img src="https://firebasestorage.googleapis.com/v0/b/e-market-838a5.appspot.com/o/product_images%2Fofertas.png?alt=media&token=4fe8d93d-ce3a-4c74-92ee-9e4554cec474"/>',
+        /* attachments: [{
+            filename: 'image.png',
+            path: '/path/to/file',
+            cid: 'unique@kreata.ee' //same cid value as in the html img src
+        }] */
+      })
+    })
+    
+    res.json({message: 'Email de suscripción enviado correctamente'})
+  } catch(error) {
+    console.log('Error al enviar el mail')
+  }
+}
+
+const sendEmailCheckout = async (req, res) => {
+  try {
+    const user = User.findById(req.params)
+    /* console.log('ESTE ES EL USER REQ BODY', req.body._id) */
+    console.log('ESTE ES EL USER', user)
+
+    transporter.sendMail({
+      to: user.email,
+      from: 'supermarkethenry@gmail.com',
+      subject: 'Tu compra ha sido confirmada',
+      html: '<img src="https://firebasestorage.googleapis.com/v0/b/e-market-838a5.appspot.com/o/product_images%2Fcompra.png?alt=media&token=2a63364e-714c-4f9b-ad4f-97d6e0e19cfa"/>'
+    })
+    res.json({message: 'Email de confirmación de pago enviado correctamente'})
+  } catch(error) {
+    console.log('Error al enviar el email')
+  }
+}
+
+const mercadopagoController = async (req, res, next) => {
+  try {
+    const { cart } = req.body;
+    const items = cart.map(({ name, price, qty }) => ({
+      title: name,
+      unit_price: Number(price),
+      quantity: Number(qty),
+    }));
+
+    const preference = {
+      items,
+      back_urls: {
+        success: 'http://localhost:3000',
+        failure: 'http://localhost:3000',
+        pending: 'http://localhost:3000',
+      },
+      auto_return: 'approved',
+    };
+
+    const { body } = await mercadopago.preferences.create(preference);
+    res.status(200).json(body);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const addToWishList = async(req, res) => {
+  
+  const { id } = req.body
+  try {
+    const user = User.findById(id)
+    const product = Product.findById(idProduct)
+    
+    await WishList.create(idProduct)
+
+  } catch(error) {
+    console.log('No se encontró el usuario solicitado')
+  }
+};
+
+const loginGoogle = async(req, res) => {
+  const { email, firstName, lastName } = req.body
+  
+  try {
+    const user = await User.findOne({ email: req.body.email }).populate(
+      "role",
+      { name: 1 }
+    );
+    
+    if(user) {
+      
+      const token = jwt.sign({ id: user._id, role: user.role }, 'secret', {expiresIn: 3600});
+      console.log('ESTE ES EL TOKEN', token)
+      res.json({token})
+
+    } else {
+      
+      const newUser = new User({
+        firstName,
+        lastName,
+        email,
+        role: [{ _id: ID_ROLE_USER }],
+      });
+      
+      const saveUser = await newUser.save();
+      const token = jwt.sign(
+        { id: saveUser._id, role: saveUser.role },
+        'secret',
+        {
+          expiresIn: 3600, //una hora expira el token
+        }
+      );
+      console.log('ESTE ES EL TOKEN', token)
+      res.json({token});
+    }
+    
+  } catch(error) {
+    console.log('No se encontró el usuario solicitado')
+  }
+
+}
 module.exports = {
   getProducts,
   createProduct,
@@ -534,7 +635,12 @@ module.exports = {
   resetPassword,
   setSubscription,
   confirmPassword,
-  checkLogin
+  checkLogin,
+  sendEmail,
+  sendEmailCheckout,
+  mercadopagoController,
+  addToWishList,
+  loginGoogle
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */

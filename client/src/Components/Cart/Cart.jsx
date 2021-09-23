@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { Grid, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete'
+import addToCart from "../../actions/cart/addToCart";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -12,17 +14,30 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(1),
     },
     container: {
-        fontFamily: 'Raleway'
+        fontFamily: 'Raleway',
+        /* fontSize: "30%" */
     }
   }));
 
-export default function Cart({item, handlerQty, handlerRemove, value}) {
+export default function Cart({item, handlerRemove}) {
+    const dispatch = useDispatch();
     const classes = useStyles();
+    const [value, setValue] = useState(1);
+
     
+  const handlerQty = (id, qty) => {
+    setValue(qty)
+    dispatch(addToCart(id, qty));
+  };
+
+  useEffect(() => {
+    setValue(item.qty);
+  }, [item.qty]);
+
     return (
         <>
             <Grid container justifyContent='space-between' alignItems='center' className={classes.container}>
-                <Grid item>
+                <Grid item >
                     <Grid container direction='row' justifyContent='center' alignItems='flex-end' spacing={1}>
                         <Grid item>
                             <img src={item.imageUrl} alt={item.name} width='30px' height='30px'/>
@@ -32,7 +47,7 @@ export default function Cart({item, handlerQty, handlerRemove, value}) {
                         </Grid>
                     </Grid> 
                 </Grid>
-                <Grid container xs={3} justifyContent='space-between' alignItems='center' direction='row'>
+                <Grid container xs={12} justifyContent='space-between' alignItems='center' direction='row'>
                     <Grid item>
                         <span>${parseInt(item.price) * item.qty}</span>
                     </Grid>

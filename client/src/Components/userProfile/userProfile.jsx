@@ -30,7 +30,6 @@ console.log(orderByUser);
         var decoded = jwt.verify(key, 'secret')
     }
     
-
     useEffect(() => {
         dispatch(getUserById(decoded.id))
     }, [])
@@ -44,6 +43,8 @@ console.log(orderByUser);
             <Grid container xs={12}>
                 <Grid item xs={12}>
                     <NavBar />
+                    <br />
+                    <br />
                     <br />
                 </Grid>
                 <Grid container xs={12} justifyContent='center' alignItems='center'>

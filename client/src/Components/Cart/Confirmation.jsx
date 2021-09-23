@@ -1,40 +1,57 @@
-import React, { useState, useEffect } from 'react'
-import './Confirmation.css'
-import NavBar from '../../components/NavBar/NavBar'
-import {Grid} from '@material-ui/core'
-
-
+import React from "react";
+import s from "./Confirmation.module.css";
+import NavBar from "../NavBar/NavBar";
+import { Grid } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 const Confirmation = () => {
-   
-    return (
-        <Grid container xs={12}>
-        <NavBar/>
-        <div class='body'>
-            <div class="card">
-    <div class="title">Su orden fue confirmada!</div>
-    <div class="info">
-        <div class="imageContainer">
-            <img class='image' src='https://images.vexels.com/media/users/3/157931/isolated/lists/604a0cadf94914c7ee6c6e552e9b4487-icono-de-circulo-de-marca-de-verificacion-curvo.png' alt='Compra confirmada' />
-        </div>
-    </div>
-    <div class="tracking">
-        <div class="title">Seguimiento del pedido</div>
-    </div>
-    <div class="progress-track">
-        <ul id="progressbar">
-            <li class="step0 active " id="step1">Carrito</li>
-            <li class="step0 active text-center" id="step2">Enviado</li>
-            <li class="step0 active text-right" id="step3">En camino</li>
-            <li class="step0 text-right" id="step4">Entregado</li>
-        </ul>
-    </div>
-    <div class="footer">
-    </div>
-</div>
-        </div>
-        </Grid>
-    )
-}
+  return (
+    <Grid container xs={12}>
+      <NavBar />
+      <div className={s.body4}>
+        <div className={s.title}>
+          <div className={s.title}>
+            Su orden fue confirmada
+            <img
+              class="image"
+              src="https://i.gifer.com/7efs.gif"
+              alt="Compra"
+              width="450"
+              height="300"
+            />
+          </div>
+          <img
+              class="image"
+              src="https://media3.giphy.com/media/d96nYrQsxeufEGZ6pi/giphy.gif?cid=790b7611a15a4d02fc900c7e9243795b702046306cc22f6a&rid=giphy.gif&ct=g"
+              alt="envio"
+              width="550"
+              height="170"
 
-export default Confirmation
+            />
+          <div className={s.info}>
+            <div class="imageContainer">
+              <img
+                class="image"
+                src="https://www.cotodigital3.com.ar/sitios/cdigi/static/content/images/company/nosotros_gracias.gif"
+                alt="Compra confirmada"
+                width="750"
+                height="300"
+              />
+           <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              href="/"
+              id="button"
+            >
+              Volver a comprar 🏠
+            </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Grid>
+  );
+};
+
+export default Confirmation;
