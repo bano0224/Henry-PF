@@ -16,6 +16,7 @@ import {Grid, Badge} from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import swal from 'sweetalert';
 import jwt from 'jsonwebtoken'
+import logo from '../../media/logo.png'
 
 
 const StyledBadge = withStyles((theme) => ({
@@ -52,7 +53,9 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
       fontFamily: 'Kalam',
-      fontSize: '2.5em'
+      fontSize: '2.5em',
+      marginLeft: '5px'
+      
     },
     menuButton: {
       marginRigth: theme.spacing(2),
@@ -156,9 +159,13 @@ export default function NavBar() {
                 component={Link}
                 to='/'
           >
-            <Typography variant="h6" className={classes.title}>
-            E-Market
-            </Typography>                
+            <Grid container alignItems='center'> 
+              <img src={logo} width='40px' height='40px' />
+              <Typography variant="h6" className={classes.title}>
+              E-Market
+              </Typography> 
+            </Grid>
+                           
           </Button>
           {
             userRole === 'admin'

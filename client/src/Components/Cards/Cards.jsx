@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import checkLogin from "../../actions/checkLogin";
-import getProducts from "../../actions/getProducts";
-import jwt from "jsonwebtoken";
+import React from "react";
 import Card from "../Card/Card";
 import style from "./Cards.module.css";
 
