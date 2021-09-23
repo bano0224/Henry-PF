@@ -83,6 +83,7 @@ export default function productReducer(state = initialState, action) {
           }
 
         case actionConst.FILTER_BY_CATEGORY: 
+        console.log('REDUCER', action.payload);
             const allProducts = state.clearProducts;
             const mapeo = allProducts.map((e) => {
                 return { ...e, category: e.category.map((n) => n.name) };
@@ -93,6 +94,7 @@ export default function productReducer(state = initialState, action) {
                 : mapeo.filter((e) => {
                     return e.category.includes(action.payload);
                     });
+                    console.log('FILTRADO', filterProduct);
             return {
                 ...state,
                 products: filterProduct,

@@ -45,12 +45,9 @@ export default function Home(props) {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+  
 
   const { data } = props.location
-  console.log(data);
 
   const inStock = products.filter(p => p.countInStock >= 1)
   const currentProducts = inStock.slice(firstIndex, lastIndex);
@@ -87,7 +84,7 @@ export default function Home(props) {
               <Search id='search' />
             </div>
             <div className={s.filterByCategory}>
-              <FilterByCategory />
+              <FilterByCategory landing={data}/>
             </div>
             <div className={s.change}>
               <ChangeOrder />
