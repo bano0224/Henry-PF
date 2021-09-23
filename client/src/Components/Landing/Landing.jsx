@@ -20,6 +20,7 @@ import trio from '../../media/banner-trio.png'
 import patagonia from '../../media/banner-patagonia.png'
 import doritos from '../../media/banner-doritos.png'
 import Card from '../../components/Card/Card'
+import { Link } from 'react-router-dom'
 
 export default function Landing() {
     
@@ -67,62 +68,82 @@ export default function Landing() {
                 <br />
                 <Carousel cols={5} rows={1} gap={10} loop style={{marginTop: '20px'}}>
                     <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={limpieza} />
-                            <h6 style={{marginTop: '5px'}}>Limpieza</h6>
+                        <Grid container direction='column' alignItems='center' >
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={limpieza} />
+                            </Grid>
+                            <h6 style={{marginTop: '5px'}} id='categories'>Limpieza</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={panaderia} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={panaderia} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Panadería</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={perfumeria} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={perfumeria} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Perfumería</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={bebidas} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={bebidas} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Bebidas</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={carnes} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={carnes} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Carnes</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={congelados} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={congelados} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Congelados</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={fiambre} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={fiambre} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Fiambres y Quesos</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={frutas} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={frutas} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Frutas y Verduras</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={lacteos} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={lacteos} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Lácteos</h6>
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
-                            <img width="40%" src={mascotas} />
+                            <Grid container justifyContent='center' component={Link} to='/'>
+                                <img width="40%" src={mascotas} />
+                            </Grid>
                             <h6 style={{marginTop: '5px'}}>Mascotas</h6>
                         </Grid>
                     </Carousel.Item>

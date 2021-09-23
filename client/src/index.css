@@ -23,6 +23,10 @@ select:focus{
   border-color: #b2102f !important;
 }
 
+#title{
+  font-family: 'Raleway';
+}
+
 #edit:hover{
   color: #757575;
 }
