@@ -30,9 +30,10 @@ export default function Login() {
   //GOOGLE
   function responseGoogle(respuesta) {
     if (respuesta.profileObj) {
-      console.log(respuesta)
-      const user = respuesta.
-      dispatch(loginGoogle({}))
+      const userEmail = respuesta.profileObj.email
+      const userFirstName = respuesta.profileObj.givenName
+      const userLastName = respuesta.profileObj.familyName
+      dispatch(loginGoogle({email: userEmail, firstName: userFirstName, lastName: userLastName}))
 
       swal({
         title: "Bienvenida/o",

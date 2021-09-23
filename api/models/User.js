@@ -14,7 +14,6 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
     minlength:[8,'La contraseña debe tener 8 caracteres como mínimo'],
   },
   firstName: {
