@@ -584,6 +584,47 @@ const mercadopagoController = async (req, res, next) => {
   }
 };
 
+const loginGoogle = async(req, res) => {
+  const { email, firstName, lastName } = req.body
+  
+  try {
+    const user = await User.findOne({ email: req.body.email }).populate(
+      "role",
+      { name: 1 }
+    );
+    
+    if(user) {
+      
+      const token = jwt.sign({ id: user._id, role: user.role }, 'secret', {expiresIn: 3600});
+      console.log('ESTE ES EL TOKEN', token)
+      res.json({token})
+
+    } else {
+      
+      const newUser = new User({
+        firstName,
+        lastName,
+        email,
+        role: [{ _id: ID_ROLE_USER }],
+      });
+      
+      const saveUser = await newUser.save();
+      const token = jwt.sign(
+        { id: saveUser._id, role: saveUser.role },
+        'secret',
+        {
+          expiresIn: 3600, //una hora expira el token
+        }
+      );
+      console.log('ESTE ES EL TOKEN', token)
+      res.json({token});
+    }
+    
+  } catch(error) {
+    console.log('No se encontró el usuario solicitado')
+  }
+};
+
 module.exports = {
   getProducts,
   createProduct,
@@ -614,6 +655,7 @@ module.exports = {
   sendEmail,
   sendEmailCheckout,
   mercadopagoController,
+  loginGoogle
 };
 
 /* /* Voy pegando para el CRUD completo y despúes las adaptamos */
