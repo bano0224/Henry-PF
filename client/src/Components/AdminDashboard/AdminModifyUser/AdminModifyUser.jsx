@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import AdminNav from '../AdminNav/AdminNav'
 import { Grid, Container, Breadcrumbs, Typography, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
@@ -8,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import getRoles from '../../../actions/users/getRoles';
 import getUserById from '../../../actions/users/getUserById';
 import modifyUser from '../../../actions/users/modifyUser';
+import swal from "sweetalert";
 
 //Style
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AdminModifyUser({match}) {
+    const history = useHistory();
     const classes = useStyles();
     const [user, setUser] = useState({
         firstName: '',
@@ -59,13 +62,24 @@ export default function AdminModifyUser({match}) {
     const handleSubmmit = (e) => {
         e.preventDefault()
         dispatch(modifyUser(user, userDetail._id))
-        alert(`Usuario modificado`)
         setUser({
             firstName: '',
             lastName: '',
             email: '',
             role: []
         })
+
+        swal({
+            title: "Cambio de usuario realizado",
+            text: "La modificación ha sido exitosa!",
+            icon: "success",
+            buttons: false,
+            timer: 2000,
+          });
+
+          setTimeout(() => {
+            history.push("/admin/users");
+          }, 2500);
     }
     
     const handleRole = (e) => {
