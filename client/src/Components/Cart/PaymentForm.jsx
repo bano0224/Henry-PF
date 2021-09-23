@@ -83,26 +83,18 @@ const CheckoutForm =({backStep, nextStep})=>{
                     
             }else {
                 const { id } = paymentMethod;
-                try{
-                const { data } = await axios.post("http://localhost:5000/checkout/create",
-                    {  id: id, amount: getSubtotal(),} );
-                    console.log(data);
-                // Envio de facutura
-                const { data2 } =  await axios.post("http://localhost:5000/checkout/sendMail",
-                { firstName: shippingData.firstName,lastName: shippingData.lastName,
-                     address1: shippingData.address1, email:shippingData.email,
-                     amount: getSubtotal(), items:items} );
+            try{
+                 
+                const { data } =  await  axios.post("http://localhost:5000/checkout/create",
+                            {  id: id, amount: getSubtotal(),} )
 
-                        
-                // Envio de facutura
-                
+                console.log(data)
                 setError(null);
                 setProcessing(false);
                 setSucceeded(true);
-                console.log("Nombre del producto:", items[0].name);
-                const result = Promise.all(data, data2).then((info) => { 
-                    if(data == 'succeeded') {
-                swal({
+                // const data = 'succeeded';
+            if(data == 'succeeded'){
+                swal({  
                     title: "Tu pago fue realizado con éxito",
                     icon: "success",
                     buttons: false,
@@ -121,15 +113,21 @@ const CheckoutForm =({backStep, nextStep})=>{
                         timer: 3000,
                       });
                 }
-                 });
+                 
  
                 // elements.getElement(CardElement).clear();
                 // nextStep();   
-                
+         
                     }catch(error){
                         console.log(error)
                     } 
               }
+                    // Envio de facutura
+            const data2 = await axios.post("http://localhost:5000/checkout/sendMail",
+                            { firstName: shippingData.firstName,lastName: shippingData.lastName,
+                            address1: shippingData.address1, email:shippingData.email,
+                            amount: getSubtotal(), items:items} )
+                console.log("response email", data2)
     }    
 
     
