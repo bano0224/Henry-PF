@@ -58,7 +58,7 @@ export default function Home(props) {
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
-    window.scrollTo({top: 500, behavior: 'smooth'});
+    window.scrollTo({top: 100, behavior: 'smooth'});
   };
 
   return (

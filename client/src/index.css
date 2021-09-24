@@ -52,7 +52,9 @@ select:focus{
   height:100%;
   width: 100%;
 }
-
+#link{
+  color: #b2102f;
+}
 body {
   height: 100%;
   width:100%;

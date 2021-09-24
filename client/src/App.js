@@ -28,6 +28,8 @@ import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout
 import UserProfile from "./components/UserProfile/UserProfile";
 import Promotions from "./components/Promotions/Promotions";
 import Landing from "./components/Landing/Landing";
+import AdminOrder from "./components/AdminDashboard/AdminOrder/AdminOrder";
+import AdminOrderDetail from "./components/AdminDashboard/AdminOrder/AdminOrderDetail";
 
 function App() {
   return (
@@ -46,6 +48,8 @@ function App() {
         <Route exact path='/cart/addressform' component={AddressForm} />
         <Route exact path='/cart/confirmation' component={Confirmation} />
         <Route exact path='/promotions' component={Promotions} />
+        <PrivateRoute exact path="/admin/orders" component={AdminOrder}/>
+        <PrivateRoute exact path="/admin/orders/:id" component={AdminOrderDetail}/>
         <PrivateRouteCheckout exact path='/cart/checkout' component={Checkout} /> 
         <PrivateRoute exact path="/admin" component={AdminNav} />
         <PrivateRoute exact path="/admin/products" component={AdminProduct} />
