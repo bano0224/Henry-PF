@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import { Container, Button, Grid } from "@material-ui/core";
+import { Container, Button, Grid, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import style from "./Login.module.css";
 import GoogleLogin from "react-google-login";
 import swal from "sweetalert";
-import checkLogin from "../../actions/checkLogin";
 import login from "../../actions/users/login";
 import resetError from "../../actions/users/resetError";
 import loginGoogle from "../../actions/users/loginGoogle";
@@ -94,10 +93,12 @@ export default function Login() {
   }
 
   return (
+    
 
     <div className={style.body}>
       <NavBar />
       <div className={style.container}>
+      <Paper className={style.paper} elevation={16}>
         <label
           for="exampleFormControlInput1"
           className={style.label}
@@ -194,7 +195,9 @@ export default function Login() {
             </div>
           </Container>
         </form>
+        </Paper>
       </div>
     </div>
+    
   );
 }

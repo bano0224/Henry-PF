@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import OrderItem from '../../userProfile/OrderItem'
+import OrderItem from '../../UserProfile/OrderItem'
 import getOrderById from '../../../actions/order/getOrderById'
 import ModifyStatus from './ModifyStatus'
 import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
-    icon: {
+    icon: { 
       color: 'firebrick'
     },
     paper: {
