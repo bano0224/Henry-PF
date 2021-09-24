@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { logIn, logUp, updateUser, getUsers,getUserById, removeUser, resetPassword, setSubscription, confirmPassword, checkLogin, sendEmail, sendEmailCheckout, loginGoogle, addToWishList,
-    getWishList } = require('../controllers/index.js')
+    getWishList, deleteWishItem } = require('../controllers/index.js')
 
 
 const server = Router();
@@ -21,5 +21,6 @@ server.post('/sendEmailCheckout/:id', sendEmailCheckout)
 server.post("/loginGoogle", loginGoogle)
 server.post("/addToWishList", addToWishList);
 server.get("/wishlist/:id", getWishList);
+server.delete('/wishlist/delete', deleteWishItem)
 
 module.exports = server;

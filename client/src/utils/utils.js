@@ -23,6 +23,7 @@ export const URL_SEND_EMAIL = 'http://localhost:5000/user/sendEmail'
 export const URL_SEND_EMAIL_CHECKOUT = 'http://localhost:5000/user/sendEmailCheckout'
 export const URL_ADD_TO_WISHLIST = 'http://localhost:5000/user/addToWishList'
 export const URL_GET_WISHLIST = 'http://localhost:5000/user/whishlist/'
+export const URL_DELETE_WISH_ITEM = 'http://localhost:5000/user/wishlist/delete'
 
 //ROLES
 export const URL_GET_ROLES = 'http://localhost:5000/role'

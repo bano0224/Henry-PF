@@ -753,6 +753,18 @@ const getWishList = async(req, res) => {
   res.json(user.wishList)
 };
 
+const deleteWishItem = async (req, res) => {
+  const {itemid, usuarioid} = req.query
+  const user = await User.findById(usuarioid)
+  
+  user.wishList = user.wishList.filter(i => console.log(i))
+
+  // await user.save()
+
+  res.status(200).json({msg: 'Item borrado'})
+
+}
+
 module.exports = {
   getProducts,
   createProduct,
@@ -786,7 +798,8 @@ module.exports = {
   loginGoogle,
   sendMail,
   addToWishList,
-  getWishList
+  getWishList,
+  deleteWishItem
 };
 
 
