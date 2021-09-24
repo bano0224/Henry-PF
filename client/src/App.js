@@ -16,6 +16,7 @@ import Login from "./components/Login/Login";
 import Logup from './components/Login/Logup'
 import NotFound from "./components/404/NotFound";
 import ScreenCart from './components/Cart/CartScreen'
+import Wishlist from "./components/Wishlist/Wishlist";
 import AddressForm from './components/Cart/AddressForm'
 import Checkout from './components/Cart/Checkout'
 import Confirmation from "./components/Cart/Confirmation";
@@ -48,6 +49,7 @@ function App() {
         <Route exact path='/cart/addressform' component={AddressForm} />
         <Route exact path='/cart/confirmation' component={Confirmation} />
         <Route exact path='/promotions' component={Promotions} />
+        <Route path='/wishlist' component={Wishlist} />
         <PrivateRoute exact path="/admin/orders" component={AdminOrder}/>
         <PrivateRoute exact path="/admin/orders/:id" component={AdminOrderDetail}/>
         <PrivateRouteCheckout exact path='/cart/checkout' component={Checkout} /> 

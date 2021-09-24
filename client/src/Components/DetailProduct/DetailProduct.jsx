@@ -16,8 +16,9 @@ import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HomeIcon from '@material-ui/icons/Home';
 import getReviews from "../../actions/getReviews";
-import Swal from 'sweetalert2'
-import jwt from 'jsonwebtoken'
+import Swal from 'sweetalert2';
+import jwt from 'jsonwebtoken';
+import { List, ListItem} from '@mui/material';
 
 export default function DetailProduct({name, image, description, price, id}) {
   
@@ -25,12 +26,16 @@ export default function DetailProduct({name, image, description, price, id}) {
   const dispatch = useDispatch();
   const productReducer = useSelector((state) => state.productReducer);
   const {productDetail, productReviews, userDetail, orderByUser} = productReducer
-  
+
   const prod = orderByUser.map(o => o.products.map(p => p._id)).flat()
   
   const rev = productReviews?.filter(r => r.product[0]._id === productDetail._id)
   
+
+
+  
   const inc = prod?.includes(productDetail._id)
+ 
 
   const [input, setInput] = React.useState('Controlled');
   const handleChange = (event) => {
@@ -41,8 +46,34 @@ export default function DetailProduct({name, image, description, price, id}) {
       var decoded = jwt.verify(key, 'secret')
   }
   const inc2 = rev.map(r => r.user[0]?.includes(decoded?.id))
+  console.log("REEEEVVV",rev)
+  console.log("INCCCC2", inc2)
+
 
   useEffect(() => {
+    dispatch(getReviews())
+}, [])
+
+  useEffect(() => {
+      dispatch(getUserById(decoded?.id))
+  }, [])
+
+  useEffect(() => {
+      dispatch(getOrderByUser(userDetail?._id))
+  }, [])
+
+  useEffect(() => {
+    dispatch(getProductById(id));
+    
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(productReset());
+    };
+  }, []);
+
+ /*  useEffect(() => {
     dispatch(getProductById(id));
     dispatch(getReviews())
   }, []);
@@ -61,7 +92,7 @@ useEffect(() => {
       dispatch(productReset());
     };
   }, []);
-
+ */
   const handleCart = () => {
     dispatch(addToCart(id, qty))
     
@@ -101,17 +132,20 @@ useEffect(() => {
                                     <Typography /* className={classes.heading} */>Ver reseñas</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    <Grid container direction='column' spacing={2}>
-                                    { 
-                                      <span>
+                                <Grid container direction='column' spacing={1}>
+                                    {
+                                      <List>
                                       {
                                       productReviews.filter(e => e.product[0]?._id === id).map(r => (
-                                      <div>
-                                        <b>{r.name}</b>
-                                        <p>{r.comment}</p>
-                                        <p>{`${r.rating} estrellas`}</p>
-                                        </div> )) }
-                                    </span>
+                                      <ListItem className="right__info1">
+                                        <div className="reseña">{r.name}</div>
+                                        <div className="reseña1">
+                                        <div>{r.comment} </div>
+                                        <div className="star">{r.rating}<StarIcon style={{ color: yellow[500]}} /></div>
+                                        </div>
+                                      </ListItem> 
+                                      ))}
+                                    </List>
                                     } 
                                     </Grid>
                                 </AccordionDetails>

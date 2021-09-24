@@ -151,12 +151,19 @@ export default function Login() {
               ? <h6 id='spanError'>{error}</h6>
               : <p></p>
             }
-            <Button variant="contained" color="secondary" type="submit">
-              Login
-            </Button>
-            <div className={style.link}>
-            <Link to="/login/reset">¿Olvidaste tu contraseña?</Link>
-            </div>
+            <Grid container justifyContent='center' direction='column' xs={12}>
+              <Grid item container justifyContent='center' xs={12}>
+                <Button variant="contained" color="secondary" type="submit">
+                  Login
+                </Button>
+              </Grid>
+              <br />
+              <Grid item container justifyContent='center' xs={12}>
+                <Link to="/login/reset" id='link'>¿Olvidaste tu contraseña?</Link>
+              </Grid>
+             
+            </Grid>
+            
             <div className={style.link}>
             <Button
             id='button'

@@ -32,3 +32,4 @@ export const GET_ORDER_BY_USER = 'GET_ORDER_BY_USER';
 export const GET_ORDERS = 'GET_ORDERS';
 export const GET_ORDER_BY_ID = 'GET_ORDER_BY_ID';
 export const FILTER_BY_STATUS = 'FILTER_BY_STATUS'
+export const GET_WISHLIST = 'GET_WISHLIST'

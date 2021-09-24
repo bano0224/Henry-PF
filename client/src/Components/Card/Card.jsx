@@ -28,6 +28,8 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import Button from '@mui/material/Button';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Swal from 'sweetalert2'
+import addToWishList from "../../actions/users/addToWishList";
+import jwt from 'jsonwebtoken'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,6 +121,16 @@ export default function ProductCard({name, image, description, price, id, stock,
   const [expanded, setExpanded] = React.useState(false);
   const dispatch = useDispatch()
 
+  const key = JSON.parse(sessionStorage.getItem("token"))?.token
+  if(key){
+    var decoded = jwt.verify(key, 'secret')
+    var userId = (decoded.id)
+  }
+
+  const handleFavorite = () => {
+    dispatch(addToWishList({idProduct: id, idUser: userId}))
+  }
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -150,7 +162,7 @@ export default function ProductCard({name, image, description, price, id, stock,
         action={
           <IconButton aria-label="settings" className={classes.action} >
             <Tooltip title={longTextC}>
-            <FavoriteBorderOutlinedIcon />
+            <FavoriteBorderOutlinedIcon onClick={handleFavorite}/>
             </Tooltip>
           </IconButton>
         }

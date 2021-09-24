@@ -8,18 +8,25 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import style from "./Reviews.module.css";
 import NavBar from "../NavBar/NavBar";
+import jwt from 'jsonwebtoken'
+
 
 export default function Reviews({id}) {
-  console.log('ESTE ES EL ID', id)
   const history = useHistory();
 
+  const key = JSON.parse(sessionStorage.getItem("token"))?.token
+  if(key){
+      var decoded = jwt.verify(key, 'secret')
+  }
+   console.log(decoded)
   const dispatch = useDispatch();
   /* const [value, setValue] = useState(2); */
   const [input, setInput] = useState({
     name: "",
     comment: "",
     rating:"",
-    product: id
+    product: id,
+    user: decoded.id
   });
 
   
@@ -38,7 +45,9 @@ export default function Reviews({id}) {
       name: "",
       comment: "",
       rating: "",
-      product: id
+      product: id,
+      user: decoded.id
+
     })
     /* setValue(value)
     console.log('ESTE ES EL VALUE', value) */

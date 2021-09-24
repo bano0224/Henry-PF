@@ -59,7 +59,13 @@ const userSchema = new Schema({
   expiredLogin: {
     type: Number,
     default: 0
-  }
+  },
+  wishList: [
+    {
+      type: Schema.ObjectId,
+      ref: "Product",
+    },
+  ],
 });
 
 userSchema.statics.encryptPassword = async (password) => {

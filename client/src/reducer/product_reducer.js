@@ -21,7 +21,8 @@ export const initialState = {
     orderByUser: [],
     orders: [],
     ordersToShow: [],
-    orderDetail: []
+    orderDetail: [],
+    wishlist: []
 };
 
 export default function productReducer(state = initialState, action) {
@@ -152,6 +153,12 @@ export default function productReducer(state = initialState, action) {
           return {
             ...state,
             productReviews: action.payload
+          }
+
+        case actionConst.GET_WISHLIST:
+          return {
+            ...state,
+            wishlist: action.payload
           }
 
         case actionConst.CHANGE_ORDER:
