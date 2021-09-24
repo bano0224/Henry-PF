@@ -36,6 +36,10 @@
   width: 5px;
 }
 
+.paper{
+  padding: 30px;
+}
+
 .buttonLogup {
   display: flex;
   flex-direction: column;
