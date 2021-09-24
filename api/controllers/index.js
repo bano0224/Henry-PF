@@ -124,7 +124,6 @@ transporter.verify().then(() => {
   };
 
 const getProducts = async (req, res, next) => {
-  console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
   const { name } = req.query;
   try {
     if (name) {
@@ -735,11 +734,11 @@ const addToWishList = async (req, res) => {
     const user = await User.findById(req.body.idUser)/* , {
       wishList: [...wishList, req.body.idProduct],
     }); */
-    user.wishList = [...wishList, req.body.idProduct]
+    user.wishList = [...user.wishList, req.body.idProduct]
 
     await user.save()
 
-    res.sendStatus(200).json({message: 'Producto guardado en favoritos'})
+    res.status(200).json({message: 'Producto guardado en favoritos'})
   } catch (error) {
     console.log("No se pudo guardar el producto en favoritos");
   }
