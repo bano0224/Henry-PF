@@ -7,6 +7,13 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
+const nodemailer = require("nodemailer");
+var fs = require('fs');
+var handlebars = require('handlebars');
+
+
+
+
 /* const ofertas = require("../../client/src/media/ofertas") */
 const stripe = require("stripe")(
   "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
@@ -25,6 +32,96 @@ const {ID_ROLE_USER} = process.env;
 
 
 const services = require("../services/services");
+
+const sendMail = async (req, res) =>{
+  // Factura
+  const {firstName,lastName, address1, email, amount, items} = req.body;      
+  const emailclient = email;
+  
+try{
+  // Fs
+  var readHTMLFile = function(path, callback) {
+    fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+        if (err) {
+            throw err;
+            callback(err);
+        }
+        else {
+            callback(null, html);
+        }
+    });
+};
+// FS
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+        user: 'supermarkethenry@gmail.com', // generated ethereal user,
+        pass: 'pcozgycvxiqwttuu', // generated ethereal password
+    }
+});
+ // FS
+ readHTMLFile(__dirname + '/template_email.html', function(err, html) {
+  var template = handlebars.compile(html);
+  var replacements = {
+    firstName: firstName,
+    lastName: lastName,
+    address1: address1,
+    email: email,
+    amount: amount,
+    items: items
+  };
+  var htmlToSend = template(replacements);
+  let mailOption = {
+    from: "'E-Market'<shanie.fadel60@ethereal.email> ",
+    to: emailclient,
+    subject: "Invoice e-market",
+    html : htmlToSend
+    };
+    transporter.sendMail(mailOption, (error,info)=>{
+          if(error){
+            res.status(500).send(error.message);
+          }else{
+            res.status(200).json(info)
+            console.log("Email enviado", info.response);
+            // res.status(200).json(req.body);
+  
+          }
+        });
+});
+  // FS
+
+transporter.verify().then(() => {
+  console.log('Ready for send')
+})
+
+
+
+
+//  const info = await transporter.sendMail(mailOption, (error,info)=>{
+//     if(error){
+//       res.status(500).send(error.message);
+//     }else{
+//       console.log("Email enviado", info);
+//       // res.status(200).json(req.body);
+
+//     }
+//   });
+
+
+  transporter.verify(function(error, success) {
+    if (error) {
+     console.log(error);
+    } else {
+     console.log('Server is ready to take our messages');
+    }
+    }); 
+}catch(error){
+  return res.json({message: "Error en envio de mail"});
+  console.log(error);
+} 
+  };
 
 const getProducts = async (req, res, next) => {
   console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
@@ -339,7 +436,7 @@ const logIn = async (req, res) => {
   
   if (!matchPassword) return res.status(401).json({ message: "El usuario o la contraseña son inválidos" });
     
-  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 3600});
+  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 36000});
 
   userFound.expiredLogin = userFound.expiredLogin + 1
 
@@ -355,7 +452,6 @@ const updateUser = async (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      password: await User.encryptPassword(req.body.password),
       phone: req.body.phone,
       discount: req.body.discount,
       address_line1: req.body.address_line1,
@@ -664,7 +760,8 @@ module.exports = {
   sendEmail,
   sendEmailCheckout,
   mercadopagoController,
-  loginGoogle
+  loginGoogle,
+  sendMail
 };
 
 

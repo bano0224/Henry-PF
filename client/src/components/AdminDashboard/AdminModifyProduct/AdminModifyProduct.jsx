@@ -143,25 +143,25 @@ export default function AdminModifyProduct({ match }) {
                     <CategoryIcon className={classes.icon} />
                         Productos
                     </Link>
-                    <Typography color="textPrimary">Crear nuevo producto</Typography>
+                    <Typography color="textPrimary">Modificar Producto</Typography>
                 </Breadcrumbs>
                 <br />
                 <form onSubmit={(e) => (handleSubmmit(e))}>
                     <div class="mb-2">
                         <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                        <input onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control" id="exampleFormControlInput1" name='name' placeholder={detail.name}/>
+                        <input onChange={(e) => handleChange(e)} value={product.name} type="text" class="form-control inputFrom"  id="exampleFormControlInput1" name='name' placeholder={detail.name}/>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Descripción</label>
-                        <textarea onChange={(e) => handleChange(e)} value={product.description} name='description' class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder={detail.description}></textarea>
+                        <textarea onChange={(e) => handleChange(e)} value={product.description} name='description' class="form-control inputFrom" id="exampleFormControlTextarea1" rows="3" placeholder={detail.description}></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Precio</label>
-                        <input onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control" id="price" placeholder={detail.price}/>
+                        <input onChange={(e) => handleChange(e)} value={product.price} name='price' type="number" class="form-control inputFrom" id="price" placeholder={detail.price}/>
                         <label for="stock" class="form-label">Stock</label>
-                        <input onChange={(e) => handleChange(e)} value={product.countInStock} name='countInStock' type="number" class="form-control" id="stock" placeholder={detail.countInStock}/>
+                        <input onChange={(e) => handleChange(e)} value={product.countInStock} min ='0' name='countInStock' type="number" class="form-control inputFrom" id="stock" placeholder={detail.countInStock}/>
                         <label for="exampleFormControlInput1" class="form-label">Descuento</label>
-                        <input onChange={(e) => handleChange(e)} value={product.discount} name='discount' type="number" class="form-control" id="exampleFormControlInput1" placeholder={detail.discount}/>
+                        <input onChange={(e) => handleChange(e)} value={product.discount} min ='0'name='discount' type="number" class="form-control inputFrom" id="exampleFormControlInput1" placeholder={detail.discount}/>
                     </div>   
                     <label for="exampleFormControlInput1" class="form-label">Destacado</label> 
                     <Switch
@@ -185,7 +185,7 @@ export default function AdminModifyProduct({ match }) {
                                             
                                             <li>
                                                 {el.name}
-                                                <button onClick={e => handleCategory(e, 'delete', el._id)} >X</button>
+                                                <Button onClick={e => handleCategory(e, 'delete', el._id)} >X</Button>
                                             </li>
                                         </div>
                                     ))

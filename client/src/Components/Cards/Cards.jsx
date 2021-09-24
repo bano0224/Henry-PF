@@ -6,6 +6,7 @@ import style from "./Cards.module.css";
 
 
 export default function Cards({currentProducts}) {
+  
   return (
 
     <div className={style.cardsContainer}>
@@ -19,6 +20,7 @@ export default function Cards({currentProducts}) {
                 id={product._id}
                 description={product.description}
                 price= {product.price}
+                discount={product.discount}
               />
             }   
           </div>

@@ -19,6 +19,7 @@ import resetCart from '../../actions/cart/resetCart';
 import productStock from '../../actions/productStock'
 import sendEmailCheckout from '../../actions/sendEmailCheckout';
 
+
 const stripePromise =loadStripe("pk_test_51JZ13AKV5aJajepC284bJWxY2ksDWhgQBElxV4COBEA4UFAsqXW8lhpov6Z8SbmhRKmJWM7gtN7UqOtXU2MRZ0Vr00Ea4uoGkh");
 const CARD_ELEMENTS_OPTIONS={
     iconStyle: "solid",
@@ -48,12 +49,20 @@ const CheckoutForm =({backStep, nextStep})=>{
     const [succeeded, setSucceeded] = useState(false);
     const cartReducer = useSelector(state => state.cartReducer)
     const {cartItems} = cartReducer
+    
+
 
     console.log('ESTOS SON LOS ITEMS DEL CARRITO',cartItems)
     const getSubtotal=()=>{
         return  cartItems
                 .reduce((price,item)=> price + item.price * parseInt(item.qty), 0)
         }
+        let items = cartItems.map(item=>({
+            name: item.name,
+            price: item.price,
+            qty: item.qty
+        }));
+
     const stripe = useStripe(); 
     const elements = useElements();    
     const {shippingData} = cartReducer
@@ -139,11 +148,16 @@ const CheckoutForm =({backStep, nextStep})=>{
                         console.log(error)
                     } 
               }
+                // Envio de facutura
+                const data2 = await axios.post("http://localhost:5000/checkout/sendMail",
+                { firstName: shippingData.firstName,lastName: shippingData.lastName,
+                address1: shippingData.address1, email:shippingData.email,
+                amount: getSubtotal(), items:items} )
+
     }    
 
     
-        
-      
+                          
 
     return( 
         <>  

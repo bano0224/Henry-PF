@@ -19,15 +19,24 @@ import doritos from '../../media/banner-doritos.png'
 import Card from '../../components/Card/Card'
 import { Link } from 'react-router-dom'
 import getProducts from '../../actions/getProducts'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import almacen from '../../media/categories/almacen.jpeg'
 
 
 export default function Landing() {
+    const productReducer = useSelector((state) => state.productReducer)
+    const { products } = productReducer
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getProducts());
     }, []);
-    
+
+
+    const inStock = products.filter(p => p.countInStock >= 1)
+    const inDiscount = inStock.filter(p => p.discount > 0)
+
+    console.log(inDiscount);
+
 
     return (
         <Grid container xs={12} justifyContent='center'>
@@ -144,6 +153,14 @@ export default function Landing() {
                         </Grid>
                     </Carousel.Item>
                     <Carousel.Item>
+                        <Grid container direction='column' alignItems='center' >
+                            <Grid container justifyContent='center' component={Link} to={{pathname: "/", data: 'Almacén'}}>
+                                <img width="40%" src={almacen} />
+                            </Grid>
+                            <h6 style={{marginTop: '5px'}} id='categories'>Almacen</h6>
+                        </Grid>
+                    </Carousel.Item>
+                    <Carousel.Item>
                         <Grid container direction='column' alignItems='center'>
                             <Grid container justifyContent='center' component={Link} to={{pathname: "/", data: 'Mascotas'}}>
                                 <img width="40%" src={mascotas} />
@@ -167,57 +184,26 @@ export default function Landing() {
             </Grid>
             <Grid item xs={10}>
                 <br />
-                <Carousel cols={4} rows={1} gap={10} loop style={{marginTop: '20px'}}>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <Grid container direction='column' alignItems='center'>
-                            <Card />
-                        </Grid>
-                    </Carousel.Item>
+                <Carousel cols={3} rows={1} gap={10} loop style={{marginTop: '20px'}}>
+                
+                    {
+                        inDiscount?.map(p => {
+                            return (
+                                <Carousel.Item>
+                                    <Grid container direction='column' alignItems='center'>
+                                        <Card 
+                                            name={p.name}
+                                            image={p.imageUrl}
+                                            stock={p.countInStock}
+                                            id={p._id}
+                                            description={p.description}
+                                            price= {p.price}
+                                        />
+                                    </Grid>
+                                </Carousel.Item>
+                            ) 
+                        })
+                    }
                 </Carousel>
                 <br />
             </Grid>

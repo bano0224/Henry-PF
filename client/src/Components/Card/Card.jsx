@@ -108,6 +108,13 @@ const longTextI = `Detalles del Producto`;
 const longTextC = `Añadir a Favoritos`;
 
 export default function ProductCard({name, image, description, price, id, stock, countInStock, discount}) {
+  console.log("DISCOUNTTT", discount)
+  let newPrice
+  discount > 0
+  ? 
+  newPrice= price-(price*discount/100)
+  :
+  newPrice= price
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const dispatch = useDispatch()
@@ -154,7 +161,7 @@ export default function ProductCard({name, image, description, price, id, stock,
             {name}
           </Typography>
         }
-        subheader={accounting.formatMoney(price)}
+        subheader={accounting.formatMoney(newPrice)}
       />
       <CardMedia
         className={classes.media}
@@ -199,6 +206,7 @@ export default function ProductCard({name, image, description, price, id, stock,
               aria-label="show more"
               className={classes.button}
             >
+
               <StyledBadge badgeContent={
                   discount > 0 ? 
                     `${discount}%`

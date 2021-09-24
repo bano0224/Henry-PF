@@ -1,110 +1,58 @@
-import React from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import { makeStyles, useTheme, alpha, withStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import {Menu, MenuItem, Typography, Toolbar,} from '@mui/material';
-import { 
-        IconButton,
-        Button,
-        Grid, 
-        Badge,
-        Drawer,
-        List,
-        Divider,
-        CssBaseline,
-        AppBar
-} from '@mui/material';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import CreateIcon from '@mui/icons-material/Create';
-import InfoIcon from '@mui/icons-material/Info';
-import MenuIcon from '@mui/icons-material/Menu';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import LoginIcon from '@mui/icons-material/Login';
-import { blueGrey } from "@material-ui/core/colors";
-import Label from '@mui/icons-material/Label';
-/* import stateLogout from '../../actions/stateLogout' */
+import React, { useParams } from "react";
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { AppBar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Menu from '@material-ui/core/Menu';
+import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import {Grid, Badge} from '@material-ui/core'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import swal from 'sweetalert';
 import jwt from 'jsonwebtoken'
-/* import logo from '../../media/logo.png' */
 
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}))(Badge);
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+    offset: theme.mixins.toolbar,
     root: {
-        display: 'flex',
-      },
-      appBar: {
+    display: 'flex'
+    },
+    appBar: {
+      [theme.breakpoints.up('sm')]:{
         transition: theme.transitions.create(['margin', 'width'], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-      },
-  grow: {
-    flexGrow: 1,
-    width: '100%',
-  },
-
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  appBarShift: {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    }
+    },
+    appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  sectionDesktop: {
-    textAlign: 'end',
-  },
-  iconosNav: {
-
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    fontFamily: 'Kalam',
-    fontSize: '2em',
-      position: 'relative',
-    display: 'none',
-    [theme.breakpoints.up('xs')]: {
-      display: 'block',
-      marginLeft: theme.spacing(3),
-      width: 'auto',
     },
     title: {
       fontFamily: 'Kalam',
-      fontSize: '2.5em',
-      marginLeft: '5px'
-      
+      fontSize: '2.5em'
     },
     menuButton: {
       marginRigth: theme.spacing(2),
@@ -119,59 +67,41 @@ const useStyles = makeStyles((theme) => ({
         width: drawerWidth,
         flexShrink: 0,
     },
-  },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('xs')]: {
-      display: 'none',
+    link: {
+        textDecoration: 'none',
+        color: 'white'
     },
-  },
-  link: {
-    color: 'black',
-    '&:hover': {
-      color: "black",
+    dashboard: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
+    drawerPaper: {
+    width: drawerWidth,
+    },
+    toolbar: theme.mixins.toolbar,
+    container: {
+        justifyContent: 'space-between'
+    },
+    containerT: {
+      justifyContent: 'flex-end'
+    },
+    drawerHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: theme.spacing(0, 1),
+      ...theme.mixins.toolbar,
+      justifyContent: 'flex-end',
   },
-  drawerD:{
-    color: 'black',
-    justifyContent: 'center',
-    marginLeft: '10px',
-  }
+
 }));
-const StyledBadge = withStyles((theme) => ({
-    badge: {
-      right: -1,
-      top: 3,
-      border: `2px solid ${theme.palette.background.paper}`,
-      padding: '0 4px',
-    },
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  }))(Badge);
 
 export default function NavBar() {
   
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const theme = useTheme();
-  const [abrir, setAbrir] = React.useState(false);
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [auth, setAuth] = React.useState(true);
-  const login = localStorage.getItem('login');
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const history = useHistory()
 
@@ -182,7 +112,7 @@ export default function NavBar() {
   if(key){
     var decoded = jwt.verify(key, 'secret')
     console.log('ESTE ES EL DECODED',decoded)
-    var userRole = (decoded.role[0]?.name)
+    var userRole = (decoded.role[0].name)
   }
   
 
@@ -211,68 +141,29 @@ export default function NavBar() {
     history.push('/')
   }
 
-
-  const handleDrawerOpen = () => {
-      setAbrir(true);
-  };
-
-  const handleDrawerClose = () => {
-      setAbrir(false);
-  };
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-
   return (
-    <Grid xs={12} sm={12} md={12} lg={12}className={classes.grow}>
-      <AppBar position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: abrir,
-        })}>
-        <Toolbar>
-          <Grid item xs={5} sm={6} md={6} lg={6}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, abrir && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
+    <Grid container xs={12}>
+        <AppBar
+          className={classes.positionFixed}
+          color="secondary"
+          position="fixed"
+        >
+        <Toolbar className={classes.container}>
           <Button
-              color="inherit"
-              aria-label="open drawer"
-              className={classes.button}
-              id='button'
-              component={Link}
-              to='/'
+                color="inherit"
+                aria-label="open drawer"
+                className={classes.button}
+                id='button'
+                component={Link}
+                to='/'
           >
-          <Typography variant="h6" className={classes.title}>
-          E-Market
-          </Typography>                
-        </Button>
-        </Grid>
-          {/* <div className={classes.grow} /> */}
-          <Grid item xs={7} sm={6} md={6} lg={6} className={classes.sectionDesktop}>
+            <Typography variant="h6" className={classes.title}>
+            E-Market
+            </Typography>                
+          </Button>
           {
             userRole === 'admin'
-            ? <Grid className={classes.dashboard}>
+            ? <div className={classes.dashboard}>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -283,11 +174,10 @@ export default function NavBar() {
               >
                   Administrador
               </Button>
-            </Grid>
+            </div>
             : null
           }
-          {(key) 
-            ?<Grid className={classes.dashboard}>
+          <div className={classes.dashboard}>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -296,20 +186,12 @@ export default function NavBar() {
                   component={Link}
                   to='/promotions'
               >
-              <IconButton
-              style={{ color: blueGrey[900] }}
-              aria-label="show more"
-              className={classes.button}
-              >
-              <StyledBadge 
-                 badgeContent={
-                    `%`
-                  }
-                  color="secondary">
-                  <Label/>
-              </StyledBadge>
-              </IconButton>
+                  Promociones
               </Button>
+          </div>
+          <div className={classes.dashboard}>
+            {(key) 
+            ? <div>
               <Button
                 color="inherit"
                 aria-label="open drawer"
@@ -329,7 +211,7 @@ export default function NavBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircleIcon />
+                <AccountCircle />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -349,31 +231,8 @@ export default function NavBar() {
                 <MenuItem component={Link} to='/profile'>Perfil</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
-            </Grid>
-            : 
-            <Grid className={classes.iconosNav}>
-              <Button
-                  color="inherit"
-                  aria-label="open drawer"
-                  className={classes.button}
-                  id='button'
-                  component={Link}
-                  to='/promotions'
-              >
-              <IconButton
-              style={{ color: blueGrey[900] }}
-              aria-label="show more"
-              className={classes.button}
-              >
-              <StyledBadge 
-                 badgeContent={
-                    `%`
-                  }
-                  color="secondary">
-                  <Label/>
-              </StyledBadge>
-              </IconButton>
-              </Button>
+            </div>
+            : <div>
               <Button
                   color="inherit"
                   aria-label="open drawer"
@@ -394,94 +253,15 @@ export default function NavBar() {
                 component={Link}
                 to='/login'
               >
-                <LoginIcon/>
+                Ingresar
               </Button>
-            </Grid>
+            </div>
               
             }
-            </Grid>
+            </div>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={abrir}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        {
-            userRole === 'admin'
-            ?
-              <List>
-            <ListItem button>
-              <ListItemIcon>
-                <Button
-                    className={classes.link}
-                    id='button'
-                    component={Link}
-                    to='/admin/products'
-                >
-                  <SettingsIcon className={classes.link}/><Typography className={classes.drawerD}>Administrador</Typography>
-                </Button>
-              </ListItemIcon>
-            </ListItem>
-        </List>
-        : null
-        }
-        <List>
-            <ListItem>
-              <ListItemIcon>
-                <Button
-                      className={classes.link}
-                      id='button'
-                      component={Link}
-                      to='/promotions'
-                >
-                  <CardGiftcardIcon className={classes.link}/><Typography className={classes.drawerD}>Promociones</Typography>
-                </Button>
-              </ListItemIcon>
-              <ListItemText  />
-            </ListItem>
-        </List>
-        <Divider />
-        <List className={classes.link}>
-            <ListItem button>
-              <ListItemIcon>
-                <Button
-                    className={classes.link}
-                    id='button'
-                    component={Link}
-                    to='/admin/products'
-                >
-                  <ContactMailIcon className={classes.link}/><Typography className={classes.drawerD}>Contacto</Typography>
-                </Button>
-              </ListItemIcon>
-            </ListItem>
-        </List>
-        <List>
-            <ListItem>
-              <ListItemIcon>
-                <Button
-                      className={classes.link}
-                      id='button'
-                      component={Link}
-                      to='/cart'
-                >
-                  <InfoIcon className={classes.link}/><Typography className={classes.drawerD}> Sobre Nosotros</Typography>
-                </Button>
-              </ListItemIcon>
-              <ListItemText  />
-            </ListItem>
-        </List>
-      </Drawer>
+      <div className={classes.offset}></div>
     </Grid>
   );
-};
+}
