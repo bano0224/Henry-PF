@@ -25,7 +25,7 @@ import ResetPassword from './components/Login/ResetPassword';
 import Confirm from './components/Login/Confirm';
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PrivateRouteCheckout from "./components/PrivateRoute/PrivateRouteCheckout";
-import UserProfile from "./components/userProfile/userProfile";
+import UserProfile from "./components/UserProfile/UserProfile";
 import Promotions from "./components/Promotions/Promotions";
 import Landing from "./components/Landing/Landing";
 

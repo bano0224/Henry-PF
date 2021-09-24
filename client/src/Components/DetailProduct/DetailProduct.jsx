@@ -16,11 +16,8 @@ import { Grid, Container, Paper, Accordion, AccordionSummary, AccordionDetails, 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import HomeIcon from '@material-ui/icons/Home';
 import getReviews from "../../actions/getReviews";
-<<<<<<< Updated upstream
 import Swal from 'sweetalert2'
-=======
 import jwt from 'jsonwebtoken'
->>>>>>> Stashed changes
 
 export default function DetailProduct({name, image, description, price, id}) {
   
