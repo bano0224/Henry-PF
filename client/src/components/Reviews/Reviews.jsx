@@ -52,7 +52,13 @@ export default function Reviews({id}) {
     /* setValue(value)
     console.log('ESTE ES EL VALUE', value) */
     dispatch(setReviews(input));
-    alert('¡Gracias por tu review!')
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '¡Gracias por tu review!',
+      showConfirmButton: false,
+      timer: 1500
+    })
     history.push('/')
   }
 

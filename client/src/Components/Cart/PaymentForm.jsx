@@ -170,7 +170,7 @@ const CheckoutForm =({backStep, nextStep})=>{
                 ? <Box sx={{ display: 'flex' }}>
                     <CircularProgress />
                 </Box>
-                : <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pay ${accounting.formatMoney(getSubtotal())}`}</Button>
+                : <Button /* component={Link} to="/cart/confirmation" */ disabled={false} variant='contained' color='secondary' type='submit'>{`Pagar ${accounting.formatMoney(getSubtotal())}`}</Button>
             }
             
             </div>
