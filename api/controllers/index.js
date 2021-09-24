@@ -730,6 +730,30 @@ const loginGoogle = async(req, res) => {
   }
 };
 
+const addToWishList = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.idUser)/* , {
+      wishList: [...wishList, req.body.idProduct],
+    }); */
+    user.wishList = [...wishList, req.body.idProduct]
+
+    await user.save()
+
+    res.sendStatus(200).json({message: 'Producto guardado en favoritos'})
+  } catch (error) {
+    console.log("No se pudo guardar el producto en favoritos");
+  }
+};
+
+const getWishList = async(req, res) => {
+  
+  const { id } = req.params
+  
+  const user = await User.findById(id).populate("wishList",
+  { name: 1 })
+  res.json(user.wishList)
+};
+
 module.exports = {
   getProducts,
   createProduct,
@@ -761,7 +785,9 @@ module.exports = {
   sendEmailCheckout,
   mercadopagoController,
   loginGoogle,
-  sendMail
+  sendMail,
+  addToWishList,
+  getWishList
 };
 
 
