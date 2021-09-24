@@ -731,9 +731,7 @@ const loginGoogle = async(req, res) => {
 
 const addToWishList = async (req, res) => {
   try {
-    const user = await User.findById(req.body.idUser)/* , {
-      wishList: [...wishList, req.body.idProduct],
-    }); */
+    const user = await User.findById(req.body.idUser)
     user.wishList = [...user.wishList, req.body.idProduct]
 
     await user.save()
@@ -756,10 +754,10 @@ const getWishList = async(req, res) => {
 const deleteWishItem = async (req, res) => {
   const {itemid, usuarioid} = req.query
   const user = await User.findById(usuarioid)
-  
-  user.wishList = user.wishList.filter(i => console.log(i))
+ 
+  user.wishList = user.wishList.filter(i => JSON.stringify(i) != JSON.stringify(itemid))
 
-  // await user.save()
+  await user.save()
 
   res.status(200).json({msg: 'Item borrado'})
 
