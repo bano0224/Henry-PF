@@ -129,6 +129,14 @@ export default function ProductCard({name, image, description, price, id, stock,
 
   const handleFavorite = () => {
     dispatch(addToWishList({idProduct: id, idUser: userId}))
+
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'El producto ha sido añadido a favoritos',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   const handleExpandClick = () => {
@@ -139,7 +147,7 @@ export default function ProductCard({name, image, description, price, id, stock,
     dispatch(addToCart(id, 1))
     
     Swal.fire({
-      position: 'top',
+      position: 'center',
       icon: 'success',
       title: 'El producto ha sido añadido al carrito',
       showConfirmButton: false,

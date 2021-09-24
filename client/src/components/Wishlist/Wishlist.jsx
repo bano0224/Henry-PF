@@ -36,11 +36,11 @@ export default function Wishlist(props) {
                 <NavBar />
                 <br />
             </Grid>
-            <Grid item container xs={12} justifyContent='center' direction='column'>
-                <Grid item>
+            <Grid container xs={12} justifyContent='center' direction='column' alignItems='center'>
+                <Grid item xs={10}>
                     <h1 id='title'>Favoritos</h1>
                 </Grid>
-                <Grid item>
+                <Grid item xs={10}>
                     <ul>
                         {
                             wishlist?.map(p => <li><Link to={`/detail/${p._id}`} id='link'>{p.name}</Link><Button onClick={() => {handleClick(p._id, userId)}}>x</Button></li>)
