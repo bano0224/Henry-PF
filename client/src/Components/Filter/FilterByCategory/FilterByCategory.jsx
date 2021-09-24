@@ -10,7 +10,7 @@ export default function FilterByCategory({landing}) {
 
   useEffect(() => {
     dispatch(filterByCategory(landing));
-  }, [landing]);
+  }, []);
 
   const dispatch = useDispatch();
   const productReducer = useSelector((state) => state.productReducer);

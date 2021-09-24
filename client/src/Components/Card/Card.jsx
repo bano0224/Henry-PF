@@ -27,12 +27,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Button from '@mui/material/Button';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-<<<<<<< Updated upstream
 import Swal from 'sweetalert2'
 
-=======
-import Swal from "sweetalert";
->>>>>>> Stashed changes
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,

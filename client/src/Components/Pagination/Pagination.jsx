@@ -91,14 +91,14 @@ export default function Pagination({
       tempNumberOfPages = [...sliced]
     }
 
-    else if (currentButton > 1 && currentButton < numberOfPages.length) {               // from 5 to 8 -> (10 - 2)
-      const sliced1 = numberOfPages.slice(currentButton - 2, currentButton)                 // sliced1 (5-2, 5) -> [4,5] 
-      const sliced2 = numberOfPages.slice(currentButton, currentButton + 1)                 // sliced1 (5, 5+1) -> [6]
-      tempNumberOfPages = ([ ...sliced1, ...sliced2]) // [1, '...', 4, 5, 6, '...', 10]
+    else if (currentButton > 1 && currentButton < numberOfPages.length) {              
+      const sliced1 = numberOfPages.slice(currentButton - 2, currentButton)                
+      const sliced2 = numberOfPages.slice(currentButton, currentButton + 1)                 
+      tempNumberOfPages = ([ ...sliced1, ...sliced2]) 
     }
     
-    else if (currentButton > numberOfPages.length - 2) {                 // > 7
-      const sliced = numberOfPages.slice(numberOfPages.length - 3)       // slice(10-4) 
+    else if (currentButton > numberOfPages.length - 2) {                 
+      const sliced = numberOfPages.slice(numberOfPages.length - 3)
       tempNumberOfPages = ([ ...sliced])                        
     }
     

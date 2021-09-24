@@ -46,8 +46,10 @@ export default function Home(props) {
   const classes = useStyles();
 
   
-
   const { data } = props.location
+  useEffect(() => {
+    if(!data) dispatch(getProducts());
+  }, []);
 
   const inStock = products.filter(p => p.countInStock >= 1)
   const currentProducts = inStock.slice(firstIndex, lastIndex);
