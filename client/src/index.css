@@ -23,6 +23,15 @@ select:focus{
   border-color: #b2102f !important;
 }
 
+#spanError{
+  text-align: center;
+  color: #b2102f;
+}
+
+#title{
+  font-family: 'Raleway';
+}
+
 #edit:hover{
   color: #757575;
 }
@@ -43,7 +52,9 @@ select:focus{
   height:100%;
   width: 100%;
 }
-
+#link{
+  color: #b2102f;
+}
 body {
   height: 100%;
   width:100%;

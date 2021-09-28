@@ -7,6 +7,13 @@ const User = require("../models/User.js");
 const Category = require("../models/Category.js");
 const Review = require("../models/Review.js");
 const Role = require("../models/Role");
+const nodemailer = require("nodemailer");
+var fs = require('fs');
+var handlebars = require('handlebars');
+
+
+
+
 /* const ofertas = require("../../client/src/media/ofertas") */
 const stripe = require("stripe")(
   "sk_test_51JZ13AKV5aJajepCH0cWNmrm69oEt7ELzgHQqnqpRIuoWCB74qaFEQ7t9tfSuzVpesIDMOOx4ajdjzyo5NaIDLFB00yNprdq65"
@@ -26,8 +33,97 @@ const {ID_ROLE_USER} = process.env;
 
 const services = require("../services/services");
 
+const sendMail = async (req, res) =>{
+  // Factura
+  const {firstName,lastName, address1, email, amount, items} = req.body;      
+  const emailclient = email;
+  
+try{
+  // Fs
+  var readHTMLFile = function(path, callback) {
+    fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+        if (err) {
+            throw err;
+            callback(err);
+        }
+        else {
+            callback(null, html);
+        }
+    });
+};
+// FS
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+        user: 'supermarkethenry@gmail.com', // generated ethereal user,
+        pass: 'pcozgycvxiqwttuu', // generated ethereal password
+    }
+});
+ // FS
+ readHTMLFile(__dirname + '/template_email.html', function(err, html) {
+  var template = handlebars.compile(html);
+  var replacements = {
+    firstName: firstName,
+    lastName: lastName,
+    address1: address1,
+    email: email,
+    amount: amount,
+    items: items
+  };
+  var htmlToSend = template(replacements);
+  let mailOption = {
+    from: "'E-Market'<shanie.fadel60@ethereal.email> ",
+    to: emailclient,
+    subject: "Invoice e-market",
+    html : htmlToSend
+    };
+    transporter.sendMail(mailOption, (error,info)=>{
+          if(error){
+            res.status(500).send(error.message);
+          }else{
+            res.status(200).json(info)
+            console.log("Email enviado", info.response);
+            // res.status(200).json(req.body);
+  
+          }
+        });
+});
+  // FS
+
+transporter.verify().then(() => {
+  console.log('Ready for send')
+})
+
+
+
+
+//  const info = await transporter.sendMail(mailOption, (error,info)=>{
+//     if(error){
+//       res.status(500).send(error.message);
+//     }else{
+//       console.log("Email enviado", info);
+//       // res.status(200).json(req.body);
+
+//     }
+//   });
+
+
+  transporter.verify(function(error, success) {
+    if (error) {
+     console.log(error);
+    } else {
+     console.log('Server is ready to take our messages');
+    }
+    }); 
+}catch(error){
+  return res.json({message: "Error en envio de mail"});
+  console.log(error);
+} 
+  };
+
 const getProducts = async (req, res, next) => {
-  console.log("acaaaaaaaaaaaaaaaaaaaaaaaaa", ID_ROLE_USER);
   const { name } = req.query;
   try {
     if (name) {
@@ -339,7 +435,7 @@ const logIn = async (req, res) => {
   
   if (!matchPassword) return res.status(401).json({ message: "El usuario o la contraseña son inválidos" });
     
-  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 3600});
+  const token = jwt.sign({ id: userFound._id, role: userFound.role }, 'secret', {expiresIn: 36000});
 
   userFound.expiredLogin = userFound.expiredLogin + 1
 
@@ -355,7 +451,6 @@ const updateUser = async (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      password: await User.encryptPassword(req.body.password),
       phone: req.body.phone,
       discount: req.body.discount,
       address_line1: req.body.address_line1,
@@ -498,9 +593,18 @@ const confirmPassword = async (req, res) => {
   }
 }
 
-const setSubscription = (req, res) => {
+const setSubscription = async(req, res) => {
+  const { id } = req.body
 
-}
+  if(id) {
+    await User.findByIdAndUpdate(id, {
+    subscription: true
+  })
+  res.status(200).send("El usuario ha sido suscripto");
+  } else {
+    res.status(404).send("El usuario no fue encontrado");
+  }
+};
 
 const checkLogin = async (req, res) => {
   try {
@@ -584,6 +688,81 @@ const mercadopagoController = async (req, res, next) => {
   }
 };
 
+const loginGoogle = async(req, res) => {
+  const { email, firstName, lastName } = req.body
+  
+  try {
+    const user = await User.findOne({ email: req.body.email }).populate(
+      "role",
+      { name: 1 }
+    );
+    
+    if(user) {
+      
+      const token = jwt.sign({ id: user._id, role: user.role }, 'secret', {expiresIn: 3600});
+      console.log('ESTE ES EL TOKEN', token)
+      res.json({token})
+
+    } else {
+      
+      const newUser = new User({
+        firstName,
+        lastName,
+        email,
+        role: [{ _id: ID_ROLE_USER }],
+      });
+      
+      const saveUser = await newUser.save();
+      const token = jwt.sign(
+        { id: saveUser._id, role: saveUser.role },
+        'secret',
+        {
+          expiresIn: 3600, //una hora expira el token
+        }
+      );
+      console.log('ESTE ES EL TOKEN', token)
+      res.json({token});
+    }
+    
+  } catch(error) {
+    console.log('No se encontró el usuario solicitado')
+  }
+};
+
+const addToWishList = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.idUser)
+    user.wishList = [...user.wishList, req.body.idProduct]
+
+    await user.save()
+
+    res.status(200).json({message: 'Producto guardado en favoritos'})
+  } catch (error) {
+    console.log("No se pudo guardar el producto en favoritos");
+  }
+};
+
+const getWishList = async(req, res) => {
+  
+  const { id } = req.params
+  
+  const user = await User.findById(id).populate("wishList",
+  { name: 1 })
+  res.json(user.wishList)
+};
+
+const deleteWishItem = async (req, res) => {
+  const {itemid, usuarioid} = req.query
+  const user = await User.findById(usuarioid)
+ 
+  user.wishList = user.wishList.filter(i => JSON.stringify(i) != JSON.stringify(itemid))
+
+  await user.save()
+
+  res.status(200).json({msg: 'Item borrado'})
+
+}
+
 module.exports = {
   getProducts,
   createProduct,
@@ -614,56 +793,11 @@ module.exports = {
   sendEmail,
   sendEmailCheckout,
   mercadopagoController,
+  loginGoogle,
+  sendMail,
+  addToWishList,
+  getWishList,
+  deleteWishItem
 };
 
-/* /* Voy pegando para el CRUD completo y despúes las adaptamos */
-/* const polka = require('polka');
-const { MongoClient } = require("mongodb");
 
-polka() */
-
-/* async function run() {
-      try {
-        await client.connect();
-        const database = client.db("intro");
-        const collection = database.collection("quotes");
-
-        const result = await collection.insertOne({"quote":"Life is what happens to you while you're busy making other plans."});
-        res.end(JSON.stringify(result));
-      } catch (e) {
-        console.log("Error: " + e);
-      } finally {
-        await client.close();
-      }
-    }
-    run().catch(console.dir);
-  })
-  .listen(3000, err => {
-    if (err) throw err;
-    console.log(`> Running on localhost:3000`); */
-
-/* .get('/update', (req, res) => {
-    const client = new MongoClient("mongodb://localhost:27017");
-    async function run() {
-      try {
-        await client.connect();
-        const database = client.db("intro");
-        const collection = database.collection("quotes");
-
-        const updateDoc = {
-          $set: {
-            author:
-              "John Lennon",
-          },
-        };
-
-        const result = await collection.updateOne({}, updateDoc, {}); // <-- empty filter matches all docs
-        res.end("Updated: " + result.modifiedCount);
-      } catch (e) {
-        errCallback(e);
-      } finally {
-        await client.close();
-      }
-    }
-    run().catch(console.dir);
-  }) */

@@ -18,7 +18,11 @@ export const initialState = {
     promociones: false,
     checkLogin: [],
     error: [],
-    orderByUser: []
+    orderByUser: [],
+    orders: [],
+    ordersToShow: [],
+    orderDetail: [],
+    wishlist: []
 };
 
 export default function productReducer(state = initialState, action) {
@@ -57,7 +61,28 @@ export default function productReducer(state = initialState, action) {
                 ...state,
                 products: action.payload
             }
-
+            case actionConst.GET_ORDERS:
+              return {
+                ...state,
+                orders: action.payload,
+                ordersToShow: action.payload
+              }  
+              
+              case actionConst.GET_ORDER_BY_ID:
+          return {
+            ...state,
+            orderDetail: action.payload[0]
+          }
+          case actionConst.FILTER_BY_STATUS:
+            const allOrders = state.orders
+            const filterOrder =
+                action.payload === "all"
+                ? allOrders
+                : allOrders.filter(e =>  e.status.toLowerCase() === action.payload);
+            return {
+                ...state,
+                ordersToShow: filterOrder,
+            }
         case actionConst.SET_REVIEWS:
             return {
                 ...state,
@@ -83,6 +108,7 @@ export default function productReducer(state = initialState, action) {
           }
 
         case actionConst.FILTER_BY_CATEGORY: 
+        console.log('REDUCER', action.payload);
             const allProducts = state.clearProducts;
             const mapeo = allProducts.map((e) => {
                 return { ...e, category: e.category.map((n) => n.name) };
@@ -93,6 +119,7 @@ export default function productReducer(state = initialState, action) {
                 : mapeo.filter((e) => {
                     return e.category.includes(action.payload);
                     });
+                    console.log('FILTRADO', filterProduct);
             return {
                 ...state,
                 products: filterProduct,
@@ -126,6 +153,12 @@ export default function productReducer(state = initialState, action) {
           return {
             ...state,
             productReviews: action.payload
+          }
+
+        case actionConst.GET_WISHLIST:
+          return {
+            ...state,
+            wishlist: action.payload
           }
 
         case actionConst.CHANGE_ORDER:

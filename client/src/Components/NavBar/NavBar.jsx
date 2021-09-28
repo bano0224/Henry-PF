@@ -112,7 +112,7 @@ export default function NavBar() {
   if(key){
     var decoded = jwt.verify(key, 'secret')
     console.log('ESTE ES EL DECODED',decoded)
-    var userRole = (decoded.role[0].name)
+    var userRole = (decoded?.role[0]?.name)
   }
   
 
@@ -229,6 +229,7 @@ export default function NavBar() {
                 onClose={handleClose}
               >
                 <MenuItem component={Link} to='/profile'>Perfil</MenuItem>
+                <MenuItem component={Link} to='/wishlist'>Favoritos</MenuItem>
                 <MenuItem onClick={handleLogout}>Cerrar sesion</MenuItem>
               </Menu>
             </div>
@@ -265,4 +266,3 @@ export default function NavBar() {
     </Grid>
   );
 }
-

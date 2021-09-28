@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import filterByCategory from "../../../actions/filterByCategory";
 import getCategories  from "../../../actions/getCategories";
-import getProducts from "../../../actions/getProducts";
 
-export default function FilterByCategory() {
+export default function FilterByCategory({landing}) {
   useEffect(() => {
     dispatch(getCategories());
+  }, []);
+
+  useEffect(() => {
+    dispatch(filterByCategory(landing));
   }, []);
 
   const dispatch = useDispatch();

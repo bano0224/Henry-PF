@@ -27,14 +27,13 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '5%',
     display: 'flex',
     flexDirection: 'row',
-    /* justifyContent: 'auto', */
     boxSizing: 'content-box',
     width: '100%',
   }
   }))
 
 
-export default function Home() {
+export default function Home(props) {
   const querys = new URLSearchParams(useLocation().search.slice(1));
   const status = querys.get("status"); // string con estado de la compra en mercadopago.
   const productReducer = useSelector((state) => state.productReducer)
@@ -46,8 +45,10 @@ export default function Home() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  
+  const { data } = props.location
   useEffect(() => {
-    dispatch(getProducts());
+    if(!data) dispatch(getProducts());
   }, []);
 
   const inStock = products.filter(p => p.countInStock >= 1)
@@ -57,7 +58,7 @@ export default function Home() {
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
-    window.scrollTo({top: 500, behavior: 'smooth'});
+    window.scrollTo({top: 600, behavior: 'smooth'});
   };
 
   return (
@@ -85,7 +86,7 @@ export default function Home() {
               <Search id='search' />
             </div>
             <div className={s.filterByCategory}>
-              <FilterByCategory />
+              <FilterByCategory landing={data}/>
             </div>
             <div className={s.change}>
               <ChangeOrder />

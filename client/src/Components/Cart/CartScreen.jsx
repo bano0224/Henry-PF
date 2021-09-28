@@ -69,7 +69,6 @@ export default function CartScreen() {
 
   const handleClickMP = () => {
       dispatch(mercadopagoPayment(cartItems))
-      /* dispatch(productStock(cartItems)) */
     };
 
   return (
@@ -132,31 +131,6 @@ export default function CartScreen() {
                                 </Grid>
                             </AccordionDetails>
                         </Accordion>
-                        {/* <Accordion>
-                            <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                            >
-                                <Typography className={classes.heading}>2. Detalles de envío</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                {
-                                    login
-                                    ? <p>Estas logueado bro</p>
-                                    : <p> No estas logueado bro </p>
-                                }
-                            </AccordionDetails>
-                        </Accordion>
-                        <Accordion >
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel3a-content"
-                                id="panel3a-header"
-                                >
-                                <Typography className={classes.heading}>3. Detalles de pago</Typography>
-                            </AccordionSummary>
-                        </Accordion> */}
                     </Grid>
                     <Grid item xs={4}>
                         <Paper className={classes.total}>

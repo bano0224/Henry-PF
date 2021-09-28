@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import { Container, Button } from "@material-ui/core";
+import { Container, Button, Grid, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import style from "./Login.module.css";
 import GoogleLogin from "react-google-login";
 import swal from "sweetalert";
-import checkLogin from "../../actions/checkLogin";
 import login from "../../actions/users/login";
 import resetError from "../../actions/users/resetError";
 import loginGoogle from "../../actions/users/loginGoogle";
@@ -30,9 +29,10 @@ export default function Login() {
   //GOOGLE
   function responseGoogle(respuesta) {
     if (respuesta.profileObj) {
-      console.log(respuesta)
-      const user = respuesta.
-      dispatch(loginGoogle({}))
+      const userEmail = respuesta.profileObj.email
+      const userFirstName = respuesta.profileObj.givenName
+      const userLastName = respuesta.profileObj.familyName
+      dispatch(loginGoogle({email: userEmail, firstName: userFirstName, lastName: userLastName}))
 
       swal({
         title: "Bienvenida/o",
@@ -93,9 +93,12 @@ export default function Login() {
   }
 
   return (
+    
+
     <div className={style.body}>
       <NavBar />
       <div className={style.container}>
+      <Paper className={style.paper} elevation={16}>
         <label
           for="exampleFormControlInput1"
           className={style.label}
@@ -146,15 +149,22 @@ export default function Login() {
           <Container className={style.buttonLogup}>
             {
               typeof error !== 'object'
-              ? <span>{error}</span>
+              ? <h6 id='spanError'>{error}</h6>
               : <p></p>
             }
-            <Button variant="contained" color="secondary" type="submit">
-              Login
-            </Button>
-            <div className={style.link}>
-            <Link to="/login/reset">¿Olvidaste tu contraseña?</Link>
-            </div>
+            <Grid container justifyContent='center' direction='column' xs={12}>
+              <Grid item container justifyContent='center' xs={12}>
+                <Button variant="contained" color="secondary" type="submit">
+                  Login
+                </Button>
+              </Grid>
+              <br />
+              <Grid item container justifyContent='center' xs={12}>
+                <Link to="/login/reset" id='link'>¿Olvidaste tu contraseña?</Link>
+              </Grid>
+             
+            </Grid>
+            
             <div className={style.link}>
             <Button
             id='button'
@@ -185,7 +195,9 @@ export default function Login() {
             </div>
           </Container>
         </form>
+        </Paper>
       </div>
     </div>
+    
   );
 }

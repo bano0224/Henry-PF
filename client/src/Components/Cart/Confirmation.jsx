@@ -1,40 +1,54 @@
-import React, { useState, useEffect } from 'react'
-import './Confirmation.css'
-import NavBar from '../NavBar/NavBar'
-import {Grid} from '@material-ui/core'
-
-
+import React from "react";
+import s from "./Confirmation.module.css";
+import NavBar from "../NavBar/NavBar";
+import { Button } from "@material-ui/core";
 
 const Confirmation = () => {
-   
-    return (
-        <Grid container xs={12}>
-        <NavBar/>
-        <div class='body'>
-            <div class="card">
-    <div class="title">Su orden fue confirmada!</div>
-    <div class="info">
-        <div class="imageContainer">
-            <img class='image' src='https://images.vexels.com/media/users/3/157931/isolated/lists/604a0cadf94914c7ee6c6e552e9b4487-icono-de-circulo-de-marca-de-verificacion-curvo.png' alt='Compra confirmada' />
-        </div>
-    </div>
-    <div class="tracking">
-        <div class="title">Seguimiento del pedido</div>
-    </div>
-    <div class="progress-track">
-        <ul id="progressbar">
-            <li class="step0 active " id="step1">Carrito</li>
-            <li class="step0 active text-center" id="step2">Enviado</li>
-            <li class="step0 active text-right" id="step3">En camino</li>
-            <li class="step0 text-right" id="step4">Entregado</li>
-        </ul>
-    </div>
-    <div class="footer">
-    </div>
-</div>
-        </div>
-        </Grid>
-    )
-}
+  return (
 
-export default Confirmation
+    <div className={s.body4}>
+        <NavBar />
+        <div className={s.title}>
+          <div className="">
+            <div>
+              </div>
+          </div>
+          <br/>
+          <br/>
+          <div className={s.title2}>
+              Su orden fue confirmada ! ✅
+              </div>
+              <br/>
+              ▪ Gracias por su compra
+              <br/>
+              ▪ Recibiras tu pedido en las proximas horas, enviamos la factura de la compra a tu correo
+              <br/>
+              ▪ Mientras esperas tu pedido puedes ver nuestras ofertas y productos destacados
+
+          <div>
+            <div>
+              <img
+                class="image"
+                src="https://www.cotodigital3.com.ar/sitios/cdigi/static/content/images/company/nosotros_gracias.gif"
+                alt="Compra confirmada"
+                width="750"
+                height="300"
+              />
+            </div>
+          </div>
+        </div>
+           <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              href="/"
+              id="button"
+            >
+              Volver a comprar🏠
+            </Button>
+      </div>
+
+  );
+};
+
+export default Confirmation;
