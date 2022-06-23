@@ -15,7 +15,7 @@ const stripe = require("stripe")(
 
 // mercadopago configuration
 mercadopago.configure({
-  access_token: 'TEST-1294034537296050-020319-656eec508b141c98a397a25ddd2684c7-184851111',
+  access_token: 'TEST-3767727244800077-052716-5a44de61a7aed0456ea7b395f18b46aa-1131648624',
 });
 
 // Private key
@@ -530,29 +530,40 @@ const sendEmailCheckout = async (req, res) => {
 
 const mercadopagoController = async (req, res, next) => {
   try {
-    const { cart } = req.body;
-    const items = cart.map(({ name, price, qty }) => ({
-      title: name,
-      unit_price: Number(price),
-      quantity: Number(qty),
-    }));
-
+    const course = [{unit_price: req.body.price, quantity:req.body.quantity, description: req.body.description}];
+    
     const preference = {
-      items,
+      items: course,
       back_urls: {
-        success: 'http://localhost:3000',
-        failure: 'http://localhost:3000',
-        pending: 'http://localhost:3000',
+        success: 'http://localhost:4200/#/pago-mercadopago',
+        failure: 'http://localhost:4200/#/pago-mercadopago',
+        pending: 'http://localhost:4200/#/pago-mercadopago'
       },
-      auto_return: 'approved',
+      auto_return: "all"
+      
     };
 
-    const { body } = await mercadopago.preferences.create(preference);
-    res.status(200).json(body);
+   /*  preference.notification_url = 'http://localhost:4200/#/actividad-postular'; */
+
+    const { body }  = await mercadopago.preferences.create(preference);
+    res.send(body)
   } catch (err) {
     next(err);
   }
 };
+
+
+const responseMp = async (req, res) => {
+  console.log(req.query, "QUERY")
+res.send({
+  Payment: req.query.payment_id,
+  Status: req.query.status,
+  MerchantOrder: req.query.merchant_order_id,
+})
+}
+
+
+
 
 const addToWishList = async(req, res) => {
   
@@ -639,6 +650,7 @@ module.exports = {
   sendEmail,
   sendEmailCheckout,
   mercadopagoController,
+  responseMp,
   addToWishList,
   loginGoogle
 };
